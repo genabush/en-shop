@@ -1,0 +1,7 @@
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+
+INSERT_UPDATE DestinationTarget;destinationChannel(code,itemtype(code));id[unique=true]
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];credential(id);destinationTarget(id);endpoint(id);id[unique=true];url;additionalProperties(key, value)[map-delimiter=|]

@@ -1,0 +1,24 @@
+.product-label {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 10px;
+  right: 10px;
+  color: var(--cx-color-core-secondary);
+  font-size: 24px;
+  font-family: $druk-bold;
+  text-transform: uppercase;
+  &--large {
+    font-size: 32px;
+  }
+  &--bright {
+    color: var(--cx-color-accent-orange);
+  }
+}
+
+.product-badge {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+}

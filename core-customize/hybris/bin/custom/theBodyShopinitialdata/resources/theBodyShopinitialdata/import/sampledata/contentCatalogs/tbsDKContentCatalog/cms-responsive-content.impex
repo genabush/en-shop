@@ -1,0 +1,517 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsDKContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:dk.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsDKProductCatalog
+$productCatalogName=Denmark Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-dk;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;dkroot;;dkroot;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;DKStoreFinderLink;DK Store Finder Link;/store-finder;DKStoreFinderLink;DKStoreFinderLink;;;;
+;;DKLoginLink;DK Login Link;/login;DKLoginLink;DKLoginLink;;;;
+;;DKBodyCategoryLink;DK Body Category Link;/Body/c/c00001;DKBodyCategoryLink;DKBodyCategoryLink;;c00001;;
+;;DKBodyTreatsCategoryLink;DK Body Treats Category Link;/Body/Bath-Treats/c/c00013;DKBodyTreatsCategoryLink;DKBodyTreatsCategoryLink;;c00013;;
+;;DKBodyButtersCategoryLink;DK Body Butters Category Link;/Body/Body-Butters/c/c00014;DKBodyButtersCategoryLink;DKBodyButtersCategoryLink;;c00014;;
+;;DKBodyYogurtsCategoryLink;DK Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;DKBodyYogurtsCategoryLink;DKBodyYogurtsCategoryLink;;c00284;;
+;;DKBodyMassageOilsCategoryLink;DK Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;DKBodyMassageOilsCategoryLink;DKBodyMassageOilsCategoryLink;;c00024;;
+;;DKBodyBronzingCategoryLink;DK Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;DKBodyBronzingCategoryLink;DKBodyBronzingCategoryLink;;c00018;;
+;;DKDeodorantCategoryLink;DK Deodorant Category Link;/Body/Deodorant/c/c00019;DKDeodorantCategoryLink;DKDeodorantCategoryLink;;c00019;;
+;;DKFootCareCategoryLink;DK Foot Care Category Link;/Body/Foot-Care/c/c00020;DKFootCareCategoryLink;DKFootCareCategoryLink;;c00020;;
+;;DKTravelSizesCategoryLink;DK Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;DKTravelSizesCategoryLink;DKTravelSizesCategoryLink;;c00021;;
+;;DKFaceCategoryLink;DK Face Category Link;/Face/c/c00010;DKFaceCategoryLink;DKFaceCategoryLink;;c00010;;
+;;DKFaceMasksCategoryLink;DK Face Masks Category Link;/Face/Face-Masks/c/c00143;DKFaceMasksCategoryLink;DKFaceMasksCategoryLink;;c00143;;
+;;DKMakeUpRemoversCategoryLink;DK Make-up Removers Link;/Face/Make-up-Removers/c/c00145;DKMakeUpRemoversCategoryLink;DKMakeUpRemoversCategoryLink;;c00145;;
+;;DKEyeCareCategoryLink;DK Eye Care CategoryLink;/Face/Eye-Care/c/c00144;DKEyeCareCategoryLink;DKEyeCareCategoryLink;;c00144;;
+;;DKNightTimeTreatmentsCategoryLink;DK Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;DKNightTimeTreatmentsCategoryLink;DKNightTimeTreatmentsCategoryLink;;c00149;;
+;;DKLipBalmCategoryLink;DK Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;DKLipBalmCategoryLink;DKLipBalmCategoryLink;;c00146;;
+;;DKMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;DKMenShavingCategoryLink;DKMenShavingCategoryLink;;c00147;;
+;;DKCleansersAndTonersCategoryLink;DK Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;DKCleansersAndTonersCategoryLink;DKCleansersAndTonersCategoryLink;;c00141;;
+;;DKMoisturisersCategoryLink;DK Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;DKMoisturisersCategoryLink;DKMoisturisersCategoryLink;;c00148;;
+;;DKAccessoriesCategoryLink;DK Accessories CategoryLink;/Face/Accessories/c/c00140;DKAccessoriesCategoryLink;DKAccessoriesCategoryLink;;c00140;;
+;;DKFaceScrubsCategoryLink;DK Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;DKFaceScrubsCategoryLink;DKFaceScrubsCategoryLink;;c00275;;
+;;DKHandsCategoryLink;DK Hands CategoryLink;/Hands/c/c00006;DKHandsCategoryLink;DKHandsCategoryLink;;c00006;;
+;;DKHandsMoisturisersCategoryLink;DK Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;DKHandsMoisturisersCategoryLink;DKHandsMoisturisersCategoryLink;;c00054;;
+;;DKHandWashCategoryLink;DK Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;DKHandWashCategoryLink;DKHandWashCategoryLink;;c00056;;
+;;DKTargetedTreatmentCategoryLink;DK Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;DKTargetedTreatmentCategoryLink;DKTargetedTreatmentCategoryLink;;c00055;;
+;;DKHairCategoryLink;DK Hair Category Link;/Hair/c/c00005;DKHairCategoryLink;DKHairCategoryLink;;c00005;;
+;;DKBrushesAndCombsCategoryLink;DK Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;DKBrushesAndCombsCategoryLink;DKBrushesAndCombsCategoryLink;;c00047;;
+;;DKConditionerCategoryLink;DK Conditioner Category Link;/Hair/Conditioner/c/c00048;DKConditionerCategoryLink;DKConditionerCategoryLink;;c00048;;
+;;DKShampooCategoryLink;DK Shampoo Category Link;/Hair/Shampoo/c/c00051;DKShampooCategoryLink;DKShampooCategoryLink;;c00051;;
+;;DKTreatmentCategoryLink;DK Treatment Category Link;/Hair/Treatment/c/c00050;DKTreatmentCategoryLink;DKTreatmentCategoryLink;;c00050;;
+;;DKStylingCategoryLink;DK Styling Category Link;/Hair/Styling/c/c00049;DKStylingCategoryLink;DKStylingCategoryLink;;c00049;;
+;;DKMakeUpCategoryLink;DK Make-up Category Link;/Make-up/c/c00007;DKMakeUpCategoryLink;DKMakeUpCategoryLink;;c00007;;
+;;DKFoundationsConcealersCategoryLink;DK Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;DKFoundationsConcealersCategoryLink;DKFoundationsConcealersCategoryLink;;c00065;;
+;;DKBrushesAndToolsCategoryLink;DK Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;DKBrushesAndToolsCategoryLink;DKBrushesAndToolsCategoryLink;;c00059;;
+;;DKBBCreamsCategoryLink;DK BB Creams Category Link;/Make-up/BB-Creams/c/c00060;DKBBCreamsCategoryLink;DKBBCreamsCategoryLink;;c00060;;
+;;DKBronzingCategoryLink;DK Bronzing Category Link;/Make-up/Bronzing/c/c00061;DKBronzingCategoryLink;DK BronzingCategoryLink;;c00061;;
+;;DKCheeksCategoryLink;DK Cheeks Category Link;/Make-up/Cheeks/c/c00062;DKCheeksCategoryLink;DKCheeksCategoryLink;;c00062;;DK
+;;DKEyeLinersCategoryLink;DK Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;DKEyeLinersCategoryLink;DKEyeLinersCategoryLink;;c00064;;
+;;DKEyeShadowCategoryLink;DK Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;DKEyeShadowCategoryLink;DKEyeShadowCategoryLink;;c00063;;
+;;DKLipsCategoryLink;DK Lips Category Link;/Make-up/Lips/c/c00066;DKLipsCategoryLink;DKLipsCategoryLink;;c00066;;
+;;DKMascaraCategoryLink;DK Mascara Category Link;/Make-up/Mascara/c/c00067;DKMascaraCategoryLink;DKMascaraCategoryLink;;c00067;;
+;;DKPrimersCategoryLink;DK Primers Category Link;/Make-up/Primers/c/c00069;DKPrimersCategoryLink;DKPrimersCategoryLink;;c00069;;
+;;DKDeliveryLink;DK Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";DKDeliveryLink;DKDeliveryLink;newWindow;;;
+;;DKReturnsLink;DK Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";DKReturnsLink;DKReturnsLink;newWindow;;;
+;;DKFAQLink;DK FAQ Link;/faq;DKFAQLink;DKFAQLink;;;;
+;;DKTermsAndConditionsLink;DK TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";DKTermsAndConditionsLink;DKTermsAndConditionsLink;newWindow;
+;;DKPrivacyPolicyLink;DK PrivacyPolicy Link;/privacy-policy;DKPrivacyPolicyLink;DKPrivacyPolicyLink;newWindow;
+;;DKSitemapLink;DK Sitemap Link;/sitemap;DKSitemapLink;DKSitemapLink;newWindow;
+;;DKStoresLink;DK Stores Link;"https://www.thebodyshop.com/store-finder";DKStoresLink;DKStoresLink;newWindow;
+;;DKLoveYourBodyClubLink;DK Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";DKLoveYourBodyClubLink;DKLoveYourBodyClubLink;newWindow;
+;;DKStudentDiscountLink;DK Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";DKStudentDiscountLink;DKStudentDiscountLink;newWindow;
+;;DKGiftCardsLink;DK Gift Cards Link;/gift-card-balance;DKGiftCardsLink;DKGiftCardsLink;newWindow;
+;;DKAboutUsLink;DK About us Link;"https://www.thebodyshop.com/about-us";DKAboutUsLink;DKAboutUsLink;newWindow;
+;;DKTheBodyShopAtHomeLink;DK The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";DKTheBodyShopAtHomeLink;DKTheBodyShopAtHomeLink;newWindow;
+;;DKAffiliatesLink;DK Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";DKAffiliatesLink;DKAffiliatesLink;newWindow;
+;;DKGenderPayGapLink;DK Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";DKGenderPayGapLink;DKGenderPayGapLink;newWindow;
+;;DKModernSlaveryStatementLink;DK Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";DKModernSlaveryStatementLink;DKModernSlaveryStatementLink;newWindow;
+;;DKAgainstAnimalTestingLink;DK Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";DKAgainstAnimalTestingLink;DKAgainstAnimalTestingLink;newWindow;
+;;DKTaxStrategyLink;DK Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";DKTaxStrategyLink;DKTaxStrategyLink;newWindow;
+;;DKCareersLink;DK Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";DKCareersLink;DKCareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsDKRootNode					 ;                         ; TBS DK Root Node                   ; dkroot                        ;                                                               																										; TbsDKRootNode
+                                ; TbsDKNavNode                   ;                         ; TBS DK Site Nav Node               ; TbsDKRootNode                 ;                                              																										; TbsDKNavNode
+                                ; TbsDKCategoryNavNode           ;                         ; TBS DK Category Navigation         ; TbsDKNavNode                  ;                                                               																										; TbsDKCategoryNavNode
+                                ; TbsDKDiscoverNavNode           ;                         ; TBS DK Discover Navigation         ; TbsDKNavNode                  ;                                                               																										; TbsDKDiscoverNavNode
+                                ; TbsDKFooterNavNode             ;                         ; TBS DK Footer Navigation           ; TbsDKNavNode                  ;                                                               																										; TbsDKFooterNavNode
+                                ; DKUsefullInformationNavNode    ;                         ; DK Useful Information   			; TbsDKFooterNavNode            ; DKDeliveryLink,DKReturnsLink,DKFAQLink,DKTermsAndConditionsLink,DKPrivacyPolicyLink,DKSitemapLink                                										; DKUsefullInformationNavNode
+                                ; DKWaysToShopNavNode 		     ;                         ; DK Ways To Shop 					; TbsDKFooterNavNode            ; DKStoresLink,DKLoveYourBodyClubLink,DKStudentDiscountLink,DKGiftCardsLink                                  															; DKWaysToShopNavNode
+                                ; DKAboutUsNavNode               ;                         ; DK About Us               			; TbsDKFooterNavNode            ; DKAboutUsLink,DKTheBodyShopAtHomeLink,DKAffiliatesLink,DKGenderPayGapLink,DKModernSlaveryStatementLink,DKAgainstAnimalTestingLink,DKTaxStrategyLink,DKCareersLink 	; DKAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsDKCategoryNavNode;;Tbs DK Categories;TbsDKNavNode;DKBodyCategoryNavNode,DKFaceCategoryNavNode,DKHandsCategoryNavNode,DKHairCategoryNavNode,DKMakeUpCategoryNavNode;TbsDKCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; DKBodyCategoryNavNode;;DK Body Nav Node;Body;DKBodyByProductTypeNavNode,DKBodyBySkinTypeNavNode;;DKBodyCategoryNavNode
+                               ; DKFaceCategoryNavNode;;DK Face Nav Node;Face;DKFaceByProductTypeNavNode,DKFaceBySkinTypeNavNode;;DKFaceCategoryNavNode
+                               ; DKHandsCategoryNavNode;;DK Hands Nav Node;Hands;DKHandsByProductTypeNavNode,DKHandsBySkinTypeNavNode;;DKHandsCategoryNavNode
+                               ; DKHairCategoryNavNode;;DK Hair Nav Node;Hair;DKHairByProductTypeNavNode,DKHairByHairConcernTypeNavNode;;DKHairCategoryNavNode
+                               ; DKMakeUpCategoryNavNode;;DK MakeUp Nav Node;MakeUp;DKMakeUpByProductTypeNavNode,DKMakeUpBySkinTypeNavNode;;DKMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;DKBodyByProductTypeNavNode;;DK Body By Product Type;DKBodyTreatsCategoryNavNode,DKBodyButtersCategoryNavNode,DKBodyYogurtsCategoryNavNode,DKBodyMassageOilsCategoryNavNode,DKFootCareCategoryNavNode;;DKBodyByProductTypeNavNode;
+                               ;DKBodyBySkinTypeNavNode;;DK Body By Skin Type;DKDeodorantCategoryNavNode,DKBodyBronzingCategoryNavNode,DKTravelSizesCategoryNavNode,DKBodyAllCategoryNavNode;;DKBodyBySkinTypeNavNode;
+
+#Face_Category_NavNodes
+                               ;DKFaceByProductTypeNavNode;;DK Face By Product Type;DKFaceMasksCategoryNavNode,DKMakeUpRemoversCategoryNavNode,DKEyeCareCategoryNavNode,DKNightTimeTreatmentsCategoryNavNode,DKMenShavingCategoryNavNode;;DKFaceByProductTypeNavNode;
+                               ;DKFaceBySkinTypeNavNode;;DK Face By Skin Type;DKLipBalmCategoryNavNode,DKCleansersAndTonersNavNode,DKMoisturisersCategoryNavNode,DKAccessoriesCategoryNavNode,DKFaceScrubsCategoryNavNode,DKFaceAllCategoryNavNode;;DKFaceBySkinTypeNavNode;
+
+#Hands_Category_NavNodes
+                               ;DKHandsByProductTypeNavNode;;DK Hands By Product Type;DKHandsMoisturisersCategoryNavNode,DKHandWashCategoryNavNode;;DKHandsByProductTypeNavNode;
+                               ;DKHandsBySkinTypeNavNode;;DK Hands By Skin Type;DKTargetedTreatmentCategoryNavNode,DKHandsAllCategoryNavNode;;DKHandsBySkinTypeNavNode;
+
+#Hair_Category_NavNodes
+                               ;DKHairByProductTypeNavNode;;DK Hair By Product Type;DKBrushesAndCombsCategoryNavNode,DKConditionerCategoryNavNode,DKShampooCategoryNavNode;;DKHairByProductTypeNavNode;
+                               ;DKHairByHairConcernTypeNavNode;;DK Hair By Hair Concern Type;DKTreatmentCategoryNavNode,DKStylingCategoryNavNode,DKHairAllCategoryNavNode;;DKHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;DKMakeUpByProductTypeNavNode;;DK MakeUp By Product Type;DKFoundationsConcealersCategoryNavNode,DKBrushesAndToolsCategoryNavNode,DKBBCreamsCategoryNavNode,DKBronzingCategoryNavNode,DKCheeksCategoryNavNode;;DKMakeUpByProductTypeNavNode;
+                               ;DKMakeUpBySkinTypeNavNode;;DK MakeUp By Skin Type;DKEyeLinersCategoryNavNode,DKEyeShadowCategoryNavNode,DKLipsCategoryNavNode,DKMascaraCategoryNavNode,DKPrimersCategoryNavNode,DKMakeUpAllCategoryNavNode;;DKMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;DKBodyTreatsCategoryNavNode;;DK Body Treats;;DKBodyTreatsCategoryNavNode
+                               ;DKBodyButtersCategoryNavNode;;DK Body Butters;;DKBodyButtersCategoryNavNode
+                               ;DKBodyYogurtsCategoryNavNode;;DK Body Yogurts;;DKBodyYogurtsCategoryNavNode
+                               ;DKBodyMassageOilsCategoryNavNode;;DK Body Massage Oils;;DKBodyMassageOilsCategoryNavNode
+                               ;DKFootCareCategoryNavNode;;DK Foot Care;;DKFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;DKBodyAllCategoryNavNode;;DK Body All Categories;;DKBodyAllCategoryNavNode
+                               ;DKBodyBronzingCategoryNavNode;;DK Body Bronzing;;DKBodyBronzingCategoryNavNode
+                               ;DKTravelSizesCategoryNavNode;;DK Travel Sizes;;DKTravelSizesCategoryNavNode
+                               ;DKDeodorantCategoryNavNode;;DK Deodorant;;DKDeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;DKFaceMasksCategoryNavNode;;DK Face Masks;;DKFaceMasksCategoryNavNode
+                               ;DKMakeUpRemoversCategoryNavNode;;DK Make-up Removers;;DKMakeUpRemoversCategoryNavNode
+                               ;DKEyeCareCategoryNavNode;;DK Eye Care;;DKEyeCareCategoryNavNode
+                               ;DKNightTimeTreatmentsCategoryNavNode;;DK Night Time Treatments;;DKNightTimeTreatmentsCategoryNavNode
+                               ;DKMenShavingCategoryNavNode;;DK Men's Shaving ;;DKMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;DKLipBalmCategoryNavNode;;DK Lip Balm;;DKLipBalmCategoryNavNode
+                               ;DKCleansersAndTonersNavNode;;DK Cleansers and Toners;;DKCleansersAndTonersNavNode
+                               ;DKMoisturisersCategoryNavNode;;DK Moisturisers;;DKMoisturisersCategoryNavNode
+                               ;DKAccessoriesCategoryNavNode;;DK Accessories;;DKAccessoriesCategoryNavNode
+                               ;DKFaceScrubsCategoryNavNode;;DK Face Scrubs;;DKFaceScrubsCategoryNavNode
+                               ;DKFaceAllCategoryNavNode;;DK Face All Categories;;DKFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;DKHandsMoisturisersCategoryNavNode;;DK Hands Moisturisers;;DKHandsMoisturisersCategoryNavNode
+                               ;DKHandWashCategoryNavNode;;DK Hand Wash;;DKHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;DKTargetedTreatmentCategoryNavNode;;DK Targeted Treatment;;DKTargetedTreatmentCategoryNavNode
+                               ;DKHandsAllCategoryNavNode;;DK Hands All Categories;;DKHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;DKBrushesAndCombsCategoryNavNode;;DK Brushes And Combs;;DKBrushesAndCombsCategoryNavNode
+                               ;DKConditionerCategoryNavNode;;DK Conditioner;;DKConditionerCategoryNavNode
+                               ;DKShampooCategoryNavNode;;DK Shampoo;;DKShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;DKTreatmentCategoryNavNode;;DK Treatment;;DKTreatmentCategoryNavNode
+                               ;DKStylingCategoryNavNode;;DK Styling;;DKStylingCategoryNavNode
+                               ;DKHairAllCategoryNavNode;;DK Hair All Categories;;DKHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;DKFoundationsConcealersCategoryNavNode;;DK Foundations Concealers;;DKFoundationsConcealersCategoryNavNode
+                               ;DKBrushesAndToolsCategoryNavNode;;DK Brushes and Tools;;DKBrushesAndToolsCategoryNavNode
+                               ;DKBBCreamsCategoryNavNode;;DK BB Creams;;DKBBCreamsCategoryNavNode
+                               ;DKBronzingCategoryNavNode;;DK Bronzing;;DKBronzingCategoryNavNode
+                               ;DKCheeksCategoryNavNode;;DK Cheeks;;DKCheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;DKEyeLinersCategoryNavNode;;DK Eye Liners;;DKEyeLinersCategoryNavNode
+                               ;DKEyeShadowCategoryNavNode;;DK Eye Shadow;;DKEyeShadowCategoryNavNode
+                               ;DKLipsCategoryNavNode;;DK Lips;;DKLipsCategoryNavNode
+                               ;DKMascaraCategoryNavNode;;DK Mascara;;DKMascaraCategoryNavNode
+                               ;DKPrimersCategoryNavNode;;DK Primers;;DKPrimersCategoryNavNode
+                               ;DKMakeUpAllCategoryNavNode;;DK Make-up All Categories;;DKMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;DKBodyAllCategoryNavNodeEntry;;DKBodyAllCategoryNavNodeEntry;DKBodyAllCategoryNavNode;DKBodyCategoryLink
+;DKBodyTreatsCategoryNavNodeEntry;;DKBodyTreatsCategoryNavNodeEntry;DKBodyTreatsCategoryNavNode;DKBodyTreatsCategoryLink;DK
+;DKBodyButtersCategoryNavNodeEntry;;DKBodyButtersCategoryNavNodeEntry;DKBodyButtersCategoryNavNode;DKBodyButtersCategoryLink;DK
+;DKBodyYogurtsCategoryNavNodeEntry;;DKBodyYogurtsCategoryNavNodeEntry;DKBodyYogurtsCategoryNavNode;DKBodyYogurtsCategoryLink
+;DKBodyMassageOilsCategoryNavNodeEntry;;DKBodyMassageOilsCategoryNavNodeEntry;DKBodyMassageOilsCategoryNavNode;DKBodyMassageOilsCategoryLink
+;DKBodyBronzingCategoryNavNodeEntry;;DKBodyBronzingCategoryNavNodeEntry;DKBodyBronzingCategoryNavNode;DKBodyBronzingCategoryLink
+;DKDeodorantCategoryNavNodeEntry;;DKDeodorantCategoryNavNodeEntry;DKDeodorantCategoryNavNode;DKDeodorantCategoryLink
+;DKTravelSizesCategoryNavNodeEntry;;DKTravelSizesCategoryNavNodeEntry;DKTravelSizesCategoryNavNode;DKTravelSizesCategoryLink
+;DKFootCareCategoryNavNodeEntry;;DKFootCareCategoryNavNodeEntry;DKFootCareCategoryNavNode;DKFootCareCategoryLink
+;DKFaceAllCategoryNavNodeEntry;;DKFaceAllCategoryNavNodeEntry;DKFaceAllCategoryNavNode;DKFaceCategoryLink;DK
+;DKFaceMasksCategoryNavNodeEntry;;DKFaceMasksCategoryNavNodeEntry;DKFaceMasksCategoryNavNode;DKFaceMasksCategoryLink;DK
+;DKMakeUpRemoversCategoryNavNodeEntry;;DKMakeUpRemoversCategoryNavNodeEntry;DKMakeUpRemoversCategoryNavNode;DKMakeUpRemoversCategoryLink;DK
+;DKEyeCareCategoryNavNodeEntry;;DKEyeCareCategoryNavNodeEntry;DKEyeCareCategoryNavNode;DKEyeCareCategoryLink
+;DKNightTimeTreatmentsCategoryNavNodeEntry;;DKNightTimeTreatmentsCategoryNavNodeEntry;DKNightTimeTreatmentsCategoryNavNode;DKNightTimeTreatmentsCategoryLink
+;DKMenShavingCategoryNavNodeEntry;;DKMenShavingCategoryNavNodeEntry;DKMenShavingCategoryNavNode;DKMenShavingCategoryLink
+;DKLipBalmCategoryNavNodeEntry;;DKLipBalmCategoryNavNodeEntry;DKLipBalmCategoryNavNode;DKLipBalmCategoryLink
+;DKCleansersAndTonersNavNodeEntry;;DKCleansersAndTonersNavNodeEntry;DKCleansersAndTonersNavNode;DKCleansersAndTonersCategoryLink
+;DKMoisturisersCategoryNavNodeEntry;;DKMoisturisersCategoryNavNodeEntry;DKMoisturisersCategoryNavNode;DKMoisturisersCategoryLink
+;DKAccessoriesCategoryNavNodeEntry;;DKAccessoriesCategoryNavNodeEntry;DKAccessoriesCategoryNavNode;DKAccessoriesCategoryLink
+;DKFaceScrubsCategoryNavNodeEntry;;DKFaceScrubsCategoryNavNodeEntry;DKFaceScrubsCategoryNavNode;DKFaceScrubsCategoryLink
+;DKHandsAllCategoryNavNodeEntry;;DKHandsAllCategoryNavNodeEntry;DKHandsAllCategoryNavNode;DKHandsCategoryLink
+;DKHandsMoisturisersCategoryNavNodeEntry;;DKHandsMoisturisersCategoryNavNodeEntry;DKHandsMoisturisersCategoryNavNode;DKHandsMoisturisersCategoryLink
+;DKHandWashCategoryNavNodeEntry;;DKHandWashCategoryNavNodeEntry;DKHandWashCategoryNavNode;DKHandWashCategoryLink
+;DKTargetedTreatmentCategoryNavNodeEntry;;DKTargetedTreatmentCategoryNavNodeEntry;DKTargetedTreatmentCategoryNavNode;DKTargetedTreatmentCategoryLink
+;DKHairAllCategoryNavNodeEntry;;DKHairAllCategoryNavNodeEntry;DKHairAllCategoryNavNode;DKHairCategoryLink
+;DKBrushesAndCombsCategoryNavNodeEntry;;DKBrushesAndCombsCategoryNavNodeEntry;DKBrushesAndCombsCategoryNavNode;DKBrushesAndCombsCategoryLink
+;DKConditionerCategoryNavNodeEntry;;DKConditionerCategoryNavNodeEntry;DKConditionerCategoryNavNode;DKConditionerCategoryLink
+;DKShampooCategoryNavNodeEntry;;DKShampooCategoryNavNodeEntry;DKShampooCategoryNavNode;DKShampooCategoryLink
+;DKTreatmentCategoryNavNodeEntry;;DKTreatmentCategoryNavNodeEntry;DKTreatmentCategoryNavNode;DKTreatmentCategoryLink
+;DKStylingCategoryNavNodeEntry;;DKStylingCategoryNavNodeEntry;DKStylingCategoryNavNode;DKStylingCategoryLink
+;DKMakeUpAllCategoryNavNodeEntry;;DKMakeUpAllCategoryNavNodeEntry;DKMakeUpAllCategoryNavNode;DKMakeUpCategoryLink
+;DKFoundationsConcealersCategoryNavNodeEntry;;DKFoundationsConcealersCategoryNavNodeEntry;DKFoundationsConcealersCategoryNavNode;DKFoundationsConcealersCategoryLink
+;DKBrushesAndToolsCategoryNavNodeEntry;;DKBrushesAndToolsCategoryNavNodeEntry;DKBrushesAndToolsCategoryNavNode;DKBrushesAndToolsCategoryLink
+;DKBBCreamsCategoryNavNodeEntry;;DKBBCreamsCategoryNavNodeEntry;DKBBCreamsCategoryNavNode;DKBBCreamsCategoryLink
+;DKBronzingCategoryNavNodeEntry;;DKBronzingCategoryNavNodeEntry;DKBronzingCategoryNavNode;DKBronzingCategoryLink
+;DKCheeksCategoryNavNodeEntry;;DKCheeksCategoryNavNodeEntry;DKCheeksCategoryNavNode;DKCheeksCategoryLink
+;DKEyeLinersCategoryNavNodeEntry;;DKEyeLinersCategoryNavNodeEntry;DKEyeLinersCategoryNavNode;DKEyeLinersCategoryLink
+;DKEyeShadowCategoryNavNodeEntry;;DKEyeShadowCategoryNavNodeEntry;DKEyeShadowCategoryNavNode;DKEyeShadowCategoryLink
+;DKLipsCategoryNavNodeEntry;;DKLipsCategoryNavNodeEntry;DKLipsCategoryNavNode;DKLipsCategoryLink
+;DKMascaraCategoryNavNodeEntry;;DKMascaraCategoryNavNodeEntry;DKMascaraCategoryNavNode;DKMascaraCategoryLink
+;DKPrimersCategoryNavNodeEntry;;DKPrimersCategoryNavNodeEntry;DKPrimersCategoryNavNode;DKPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsDKDiscoverNavNode;;Tbs DK Discover;TbsDKNavNode;DKDiscoverPartyNavNode,DKDiscoverTipsAndAdviceNavNode,DKDiscoverAboutUsNavNode;TbsDKDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; DKDiscoverPartyNavNode;;DK Party Nav Node;Party;DK_Discover_TheBodyShopAtHomeNavNode;;DKDiscoverPartyNavNode
+                               ; DKDiscoverTipsAndAdviceNavNode;;DK Tips & Advice Nav Node;Tips & Advice;DKSkincareArticlesNavNode,DKBodyCareArticlesNavNode,DKMake-UpAeticlesNavNode,DKLifeStyleArticlesNavNode,DKIngredientBenefitsNavNode;;DKDiscoverTipsAndAdviceNavNode
+                               ; DKDiscoverAboutUsNavNode;;DK About us Nav Node;About Us;DKWhoWeAreNavNode,DKLoyaltyProgramNavNode,DKSustainabilityNavNode,DKPlasticsNavNode;;DKDiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#DK_Discover_Party_NavNodes
+                               ;DK_Discover_TheBodyShopAtHomeNavNode;;DK BodyShop AtHome;DKBeYourOwnBossNavNode,DKHostAPartyNavNode;;DK_Discover_TheBodyShopAtHomeNavNode ;
+
+#DK_Discover_Tips_And_Advice_NavNode
+
+                               ;DKSkincareArticlesNavNode;;DK Skin Care Articles;DKHowToReduceBlackheadsNavNode,DKSummerSkincareNavNode,DKHowToGetRidOfDarkCirclesNavNode,DKBestFaceMoisturisersNavNode,DKHowToKeepSkinLookingYouthfulNavNode,DKGymSkincareTipsNavNode;;DKSkincareArticlesNavNode ;
+                               ;DKBodyCareArticlesNavNode;;DK Body Care Articles;DKBenefitsOfDryBrushingNavNode,DKUnderstandingDrySkinNavNode,DKBestBodyExfoliatorsNavNode;;DKBodyCareArticlesNavNode ;
+                               ;DKMake-UpAeticlesNavNode;;DK Make-Up Articles;DKHowToFindTheRightFoundationNavNode,DKHowToApplyFoundationNavNode,DKHowToShapeEyebrowsNavNode,DKHowToGetASunKissedGlowNavNode;;DKMake-UpAeticlesNavNode ;
+                               ;DKLifeStyleArticlesNavNode;;DK LifeStyle Articles;DKBestVeganCitiesInTheDKNavNode,DKLongHaulFlightTipsNavNode,DKGymSkincareRoutineNavNode,DKChildhoodDreamsNavNode,DKPixieGeldof’sTravelEssentialsNavNode;;DKLifeStyleArticlesNavNode ;
+                               ;DKIngredientBenefitsNavNode;;DK Ingedients Benefits;DKBenefitsOfCharcoalNavNode,DKHyaluronicAcidBenefitsNavNode,DKDiscoverAllIngredientsNavNode,DKSourcingOurIngredientsNavNode;;DKIngredientBenefitsNavNode ;
+
+#DK_Discover_AboutUs_NavNode
+
+                               ;DKWhoWeAreNavNode;;DK Who We Are;DKOurHeritageNavNode,DKForeverAgainstAnimalTestingNavNode,DKLatestNewsNavNode,DKNatura_CoNavNode,DKB_CorpNavNode,DKEducationalProgrammeNavNode,DKDonateMenstrualProductsNavNode,DKVegetarianBeautyNavNode;;DKWhoWeAreNavNode ;
+                               ;DKLoyaltyProgramNavNode;;DK Loyalty Program;DK_Loyalty_JoinNowNavNode;;DKLoyaltyProgramNavNode;
+                               ;DKSustainabilityNavNode;;DK Sustainability;DKOurCommitmentNavNode,DKCommunityTradeNavNode,DKBio-BridgesNavNode,DKReducingEnvironmentalFootprintNavNode,DKEmpoweringWomenNavNode,DKModernSlaveryNavNode;;DKSustainabilityNavNode;
+                               ;DKPlasticsNavNode;;DK Plastics;DKPlasticRecyclingInTheDKNavNode,DKTerraCycleInterviewNavNode,DKReturnRecycleRepeatNavNode,DKCommunityTradePlasticsNavNode,DKPackagingAtTheBodyShopNavNode;;DKPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;DKBeYourOwnBossNavNode;;DK Be your own boss;;DKBeYourOwnBossNavNode
+                               ;DKHostAPartyNavNode;;DK Host a party;;DKHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;DKHowToReduceBlackheadsNavNode;;DK How to reduce Blackheads;;DKHowToReduceBlackheadsNavNode
+                               ;DKSummerSkincareNavNode;;DK Summer Skincare;;DKSummerSkincareNavNode
+                               ;DKHowToGetRidOfDarkCirclesNavNode;;DK How To Get Rid Of Dark Circles;;DKHowToGetRidOfDarkCirclesNavNode
+                               ;DKBestFaceMoisturisersNavNode;;DK Best Face Moisturisers;;DKBestFaceMoisturisersNavNode
+                               ;DKHowToKeepSkinLookingYouthfulNavNode;;DK How To Keep Skin Looking Youthful;;DKHowToKeepSkinLookingYouthfulNavNode
+                               ;DKGymSkincareTipsNavNode;;DK Gym Skincare Tips;;DKGymSkincareTipsNavNode
+
+#Child_Nodes_DKBodyCareArticles_NavNode
+
+                               ;DKBenefitsOfDryBrushingNavNode;;DK Benefits Of Dry Brushing;;DKBenefitsOfDryBrushingNavNode
+                               ;DKUnderstandingDrySkinNavNode;;DK Understanding Dry Skin;;DKUnderstandingDrySkinNavNode
+                               ;DKBestBodyExfoliatorsNavNode;;DK Best Body Exfoliators;;DKBestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;DKHowToFindTheRightFoundationNavNode;;DK How to find the right foundation;;DKHowToFindTheRightFoundationNavNode
+                               ;DKHowToApplyFoundationNavNode;;DK How to apply foundation;;DKHowToApplyFoundationNavNode
+                               ;DKHowToShapeEyebrowsNavNode;;DK How to shape eyebrows;;DKHowToShapeEyebrowsNavNode
+                               ;DKHowToGetASunKissedGlowNavNode;;DK How to get a sun kissed glow;;DKHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;DKBestVeganCitiesInTheDKNavNode;;Best Vegan Cities in the DK;;DKBestVeganCitiesInTheDKNavNode
+                               ;DKLongHaulFlightTipsNavNode;;DK Long haul flight tips;;DKLongHaulFlightTipsNavNode
+                               ;DKGymSkincareRoutineNavNode;;DK Gym skincare routine;;DKGymSkincareRoutineNavNode
+                               ;DKChildhoodDreamsNavNode;;DK Childhood Dreams;;DKChildhoodDreamsNavNode
+                               ;DKPixieGeldof’sTravelEssentialsNavNode;;DK Pixie Geldof’s Travel Essentials;;DKPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;DKBenefitsOfCharcoalNavNode;;DK Benefits of charcoal;;DKBenefitsOfCharcoalNavNode
+                               ;DKHyaluronicAcidBenefitsNavNode;;DK Hyaluronic Acid Benefits;;DKHyaluronicAcidBenefitsNavNode
+                               ;DKDiscoverAllIngredientsNavNode;;DK Discover all ingredients;;DKDiscoverAllIngredientsNavNode
+                               ;DKSourcingOurIngredientsNavNode;;DK Sourcing our ingredients;;DKSourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_DKWhoWeAreNavNode
+                               ;DKOurHeritageNavNode;;DK Our Heritage;;DKOurHeritageNavNode
+                               ;DKForeverAgainstAnimalTestingNavNode;;DK Forever Against Animal Testing;;DKForeverAgainstAnimalTestingNavNode
+                               ;DKB_CorpNavNode;;DK B Corp;;DKB_CorpNavNode
+                               ;DKLatestNewsNavNode;;DK Latest News;;DKLatestNewsNavNode
+                               ;DKNatura_CoNavNode;;DK Natura & co;;DKNatura_CoNavNode
+                               ;DKEducationalProgrammeNavNode;;DK Educational Programme;;DKEducationalProgrammeNavNode
+                               ;DKDonateMenstrualProductsNavNode;;DK Donate Menstrual Products;;DKDonateMenstrualProductsNavNode
+                               ;DKVegetarianBeautyNavNode;;DK Vegetarian Beauty;;DKVegetarianBeautyNavNode
+
+#Child_Nodes_DKLoyaltyProgramNavNode
+                               ;DK_Loyalty_JoinNowNavNode;;DK Join Now;;DK_Loyalty_JoinNowNavNode
+
+#Child_Nodes_DKSustainabilityNavNode
+                               ;DKOurCommitmentNavNode;;DK Our Commitment;;DKOurCommitmentNavNode
+                               ;DKCommunityTradeNavNode;;DK Community Trade;;DKCommunityTradeNavNode
+                               ;DKBio-BridgesNavNode;;DK Bio-Bridges;;DKBio-BridgesNavNode
+                               ;DKReducingEnvironmentalFootprintNavNode;;DK Reducing Environmental Footprint;;DKReducingEnvironmentalFootprintNavNode
+                               ;DKEmpoweringWomenNavNode;;DK EmpoweringWomen;;DKEmpoweringWomenNavNode
+                               ;DKModernSlaveryNavNode;;DK ModernSlavery;;DKModernSlaveryNavNode
+
+#Child_Nodes_DKPlasticsNavNode
+                               ;DKPlasticRecyclingInTheDKNavNode;;DK Plastic Recycling In The DK;;DKPlasticRecyclingInTheDKNavNode
+                               ;DKTerraCycleInterviewNavNode;;DK Terra Cycle Interview;;DKTerraCycleInterviewNavNode
+                               ;DKReturnRecycleRepeatNavNode;;DK Return Recycle Repeat;;DKReturnRecycleRepeatNavNode
+                               ;DKCommunityTradePlasticsNavNode;;DK Community Trade Plastics;;DKCommunityTradePlasticsNavNode
+                               ;DKPackagingAtTheBodyShopNavNode;;DK Packaging At The Body Shop;;DKPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;DKBeYourOwnBossLink;DK Be your own boss Link;/;DKBeYourOwnBossLink;DKBeYourOwnBossLink;;;;
+                              ;;DKHostAPartyNavNodeLink;DK Host a party Link;/;DKHostAPartyNavNodeLink;DKHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;DKSummerSkincareLink;DK Summer Skincare Link;/;DKSummerSkincareLink;DKSummerSkincareLink;;;;
+                              ;;DKHowToReduceBlackheadsLink;DK How to reduce blackheads Link;/;DKHowToReduceBlackheadsLink;DKHowToReduceBlackheadsLink;;;;
+                              ;;DKHowToGetRidOfDarkCirclesLink;DK How to get rid of dark circles Link;/;DKHowToGetRidOfDarkCirclesLink;DKHowToGetRidOfDarkCirclesLink;;;;
+                              ;;DKBestFaceMoisturisersLink;DK Best Face Moisturisers Link;/;DKBestFaceMoisturisersLink;DKBestFaceMoisturisersLink;;;;
+                              ;;DKHowToKeepSkinLookingYouthfulLink;DK How to keep skin looking youthful Link;/;DKHowToKeepSkinLookingYouthfulLink;DKHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;DKGymSkincareTipsLink;DK Gym Skincare Tips Link;/;DKGymSkincareTipsLink;DKGymSkincareTipsLink;;;;
+
+                              ;;DKBenefitsOfDryBrushingLink;DK Benefits of dry brushing Link;/;DKBenefitsOfDryBrushingLink;DKBenefitsOfDryBrushingLink;;;;
+                              ;;DKUnderstandingDrySkinLink;DK Understanding dry skin Link;/;DKUnderstandingDrySkinLink;DKUnderstandingDrySkinLink;;;;
+                              ;;DKBestBodyExfoliatorsLink;DK Best body exfoliators Link;/;DKBestBodyExfoliatorsLink;DKBestBodyExfoliatorsLink;;;;
+
+                              ;;DKHowToFindTheRightFoundationLink;DK How to find the right foundation Link;/;DKHowToFindTheRightFoundationLink;DKHowToFindTheRightFoundationLink;;;;
+                              ;;DKHowToApplyFoundationLink;DK How to apply foundation Link;/;DKHowToApplyFoundationLink;DKHowToApplyFoundationLink;;;;
+                              ;;DKHowToShapeEyebrowsLink;DK How to shape eyebrows youthful Link;/;DKHowToShapeEyebrowsLink;DKHowToShapeEyebrowsLink;;;;
+                              ;;DKHowToGetASunKissedGlowLink;DK How to get a sun kissed glow Link;/;DKHowToGetASunKissedGlowLink;DKHowToGetASunKissedGlowLink;;;;
+
+                              ;;DKBestVeganCitiesInTheDKLink;Best Vegan Cities in the DK Link;/;DKBestVeganCitiesInTheDKLink;DKBestVeganCitiesInTheDKLink;;;;
+                              ;;DKLongHaulFlightTipsLink;DK Long haul flight tips Link;/;DKLongHaulFlightTipsLink;DKLongHaulFlightTipsLink;;;;
+                              ;;DKGymSkincareRoutineLink;DK Gym skincare routine Link;/;DKGymSkincareRoutineLink;DKGymSkincareRoutineLink;;;;
+                              ;;DKChildhoodDreamsLink;DK Childhood Dreams Link;/;DKChildhoodDreamsLink;DKChildhoodDreamsLink;;;;
+                              ;;DKPixieGeldof’sTravelEssentialsLink;DK Pixie Geldof’s Travel Essentials Link;/;DKPixieGeldof’sTravelEssentialsLink;DKPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;DKBenefitsOfCharcoalLink;DK Benefits of charcoal Link;/;DKBenefitsOfCharcoalLink;DKBenefitsOfCharcoalLink;;;;
+                              ;;DKHyaluronicAcidBenefitsLink;DK Hyaluronic Acid Benefits Link;/;DKHyaluronicAcidBenefitsLink;DKHyaluronicAcidBenefitsLink;;;;
+                              ;;DKDiscoverAllIngredientsLink;DK Discover all ingredients Link;/;DKDiscoverAllIngredientsLink;DKDiscoverAllIngredientsLink;;;;
+                              ;;DKSourcingOurIngredientsLink;DK Sourcing our ingredients Link;/;DKSourcingOurIngredientsLink;DKSourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;DKOurHeritageLink;DK Our Heritage Link;/;DKOurHeritageLink;DKOurHeritageLink;;;;
+                              ;;DKForeverAgainstAnimalTestingLink;DK How to reduce blackheads Link;/;DKForeverAgainstAnimalTestingLink;DKForeverAgainstAnimalTestingLink;;;;
+                              ;;DKB_CorpLink;DK B Corp Link;/;DKB_CorpLink;DKB_CorpLink;;;;
+                              ;;DKLatestNewsLink;DK Latest News Link;/;DKLatestNewsLink;DKLatestNewsLink;;;;
+                              ;;DKNatura_CoLink;DK Natura & co Link;/;DKNatura_CoLink;DKNatura_CoLink;;;;
+                              ;;DKEducationalProgrammeLink;DK Educational PRogramme Link;/;DKEducationalProgrammeLink;DKEducationalProgrammeLink;;;;
+                              ;;DKDonateMenstrualProductsLink;DK Donate Menstrual Products Link;/;DKDonateMenstrualProductsLink;DKDonateMenstrualProductsLink;;;;
+                              ;;DKVegetarianBeautyLink;DK Vegetarian Beauty Link;/;DKVegetarianBeautyLink;DKVegetarianBeautyLink;;;;
+
+                              ;;DK_Loyalty_JoinNowLink;DK Join Now Link;/;DK_Loyalty_JoinNowLink;DK_Loyalty_JoinNowLink;;;;
+
+                              ;;DKOurCommitmentLink;DK Our Commitment Link;/;DKOurCommitmentLink;DKOurCommitmentLink;;;;
+                              ;;DKCommunityTradeLink;DK Community Trade Link;/;DKCommunityTradeLink;DKCommunityTradeLink;;;;
+                              ;;DKBio-BridgesLink;DK Bio-Bridges Link;/;DKBio-BridgesLink;DKBio-BridgesLink;;;;
+                              ;;DKReducingEnvironmentalFootprintLink;DK Reducing Environmental Footprint Link;/;DKReducingEnvironmentalFootprintLink;DKReducingEnvironmentalFootprintLink;;;;
+                              ;;DKEmpoweringWomenLink;DK Empowering Women Link;/;DKEmpoweringWomenLink;DKEmpoweringWomenLink;;;;
+                              ;;DKModernSlaveryLink;DK Modern Slavery Link;/;DKModernSlaveryLink;DKModernSlaveryLink;;;;
+
+                              ;;DKPlasticRecyclingInTheDKLink;Plastic recycling in the DK Link;/;DKPlasticRecyclingInTheDKLink;DKPlasticRecyclingInTheDKLink;;;;
+                              ;;DKTerraCycleInterviewLink;DK TerraCycle Interview Link;/;DKTerraCycleInterviewLink;DKTerraCycleInterviewLink;;;;
+                              ;;DKReturnRecycleRepeatNavNodeLink;DK Return. Recycle. Repeat Link;/;DKReturnRecycleRepeatNavNodeLink;DKReturnRecycleRepeatNavNodeLink;;;;
+                              ;;DKCommunityTradePlasticsLink;DK Community Trade Plastics Link;/;DKCommunityTradePlasticsLink;DKCommunityTradePlasticsLink;;;;
+                              ;;DKPackagingAtTheBodyShopLink;DK Packaging at The Body Shop Link;/;DKPackagingAtTheBodyShopLink;DKPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;DKBeYourOwnBossNavNodeEntry;;DKBeYourOwnBossNavNodeEntry;DKBeYourOwnBossNavNode;DKBeYourOwnBossLink
+                                ;DKHostAPartyNavNodeEntry;;DKHostAPartyNavNodeEntry;DKHostAPartyNavNode;DKHostAPartyNavNodeLink
+
+#Entry_DKSkincareArticlesNavNode
+                                ;DKHowToReduceBlackheadsNavNodeEntry;;DKHowToReduceBlackheadsNavNodeEntry;DKHowToReduceBlackheadsNavNode;DKHowToReduceBlackheadsLink
+                                ;DKSummerSkincareNavNodeEntry;;DKSummerSkincareNavNodeEntry;DKSummerSkincareNavNode;DKSummerSkincareLink
+                                ;DKHowToGetRidOfDarkCirclesNavNodeEntry;;DKHowToGetRidOfDarkCirclesNavNodeEntry;DKHowToGetRidOfDarkCirclesNavNode;DKHowToGetRidOfDarkCirclesLink
+                                ;DKBestFaceMoisturisersNavNodeEntry;;DKBestFaceMoisturisersNavNodeEntry;DKBestFaceMoisturisersNavNode;DKBestFaceMoisturisersLink
+                                ;DKHowToKeepSkinLookingYouthfulNavNodeEntry;;DKHowToKeepSkinLookingYouthfulNavNodeEntry;DKHowToKeepSkinLookingYouthfulNavNode;DKHowToKeepSkinLookingYouthfulLink
+                                ;DKGymSkincareTipsNavNodeEntry;;DKGymSkincareTipsNavNodeEntry;DKGymSkincareTipsNavNode;DKGymSkincareTipsLink
+
+#Entry_DKBodyCareArticlesNavNode
+                                ;DKBenefitsOfDryBrushingNavNodeEntry;;DKBenefitsOfDryBrushingNavNodeEntry;DKBenefitsOfDryBrushingNavNode;DKBenefitsOfDryBrushingLink
+                                ;DKUnderstandingDrySkinNavNodeEntry;;DKUnderstandingDrySkinNavNodeEntry;DKUnderstandingDrySkinNavNode;DKUnderstandingDrySkinLink
+                                ;DKBestBodyExfoliatorsNavNodeEntry;;DKBestBodyExfoliatorsNavNodeEntry;DKBestBodyExfoliatorsNavNode;DKBestBodyExfoliatorsLink
+
+#Entry_DKMake-UpAeticlesNavNode
+                                ;DKHowToFindTheRightFoundationNavNodeEntry;;DKHowToFindTheRightFoundationNavNodeEntry;DKHowToFindTheRightFoundationNavNode;DKHowToFindTheRightFoundationLink
+                                ;DKHowToApplyFoundationNavNodeEntry;;DKHowToApplyFoundationNavNodeEntry;DKHowToApplyFoundationNavNode;DKHowToApplyFoundationLink
+                                ;DKHowToShapeEyebrowsNavNodeEntry;;DKHowToShapeEyebrowsNavNodeEntry;DKHowToShapeEyebrowsNavNode;DKHowToShapeEyebrowsLink
+                                ;DKHowToGetASunKissedGlowNavNodeEntry;;DKHowToGetASunKissedGlowNavNodeEntry;DKHowToGetASunKissedGlowNavNode;DKHowToGetASunKissedGlowLink
+
+#Entry_DKLifeStyleArticlesNavNode
+                                ;DKBestVeganCitiesInTheDKNavNodeEntry;;DKBestVeganCitiesInTheDKNavNodeEntry;DKBestVeganCitiesInTheDKNavNode;DKBestVeganCitiesInTheDKLink
+                                ;DKLongHaulFlightTipsNavNodeEntry;;DKLongHaulFlightTipsNavNodeEntry;DKLongHaulFlightTipsNavNode;DKLongHaulFlightTipsLink
+                                ;DKGymSkincareRoutineNavNodeEntry;;DKGymSkincareRoutineNavNodeEntry;DKGymSkincareRoutineNavNode;DKGymSkincareRoutineLink
+                                ;DKChildhoodDreamsNavNodeEntry;;DKChildhoodDreamsNavNodeEntry;DKChildhoodDreamsNavNode;DKChildhoodDreamsLink
+                                ;DKPixieGeldof’sTravelEssentialsNavNodeEntry;;DKPixieGeldof’sTravelEssentialsNavNodeEntry;DKPixieGeldof’sTravelEssentialsNavNode;DKPixieGeldof’sTravelEssentialsLink
+
+#Entry_DKIngredientBenefitsNavNode
+
+                                ;DKBenefitsOfCharcoalNavNodeEntry;;DKBenefitsOfCharcoalNavNodeEntry;DKBenefitsOfCharcoalNavNode;DKBenefitsOfCharcoalLink
+                                ;DKHyaluronicAcidBenefitsNavNodeEntry;;DKHyaluronicAcidBenefitsNavNodeEntry;DKHyaluronicAcidBenefitsNavNode;DKHyaluronicAcidBenefitsLink
+                                ;DKDiscoverAllIngredientsNavNodeEntry;;DKDiscoverAllIngredientsNavNodeEntry;DKDiscoverAllIngredientsNavNode;DKDiscoverAllIngredientsLink
+                                ;DKSourcingOurIngredientsNavNodeEntry;;DKSourcingOurIngredientsNavNodeEntry;DKSourcingOurIngredientsNavNode;DKSourcingOurIngredientsLink
+
+#Entry_DKWhoWeAre_NavNode
+                                ;DKOurHeritageNavNodeEntry;;DKOurHeritageNavNodeEntry;DKOurHeritageNavNode;DKOurHeritageLink
+                                ;DKForeverAgainstAnimalTestingNavNodeEntry;;DKForeverAgainstAnimalTestingNavNodeEntry;DKForeverAgainstAnimalTestingNavNode;DKForeverAgainstAnimalTestingLink
+                                ;DKB_CorpNavNodeEntry;;DKB_CorpNavNodeEntry;DKB_CorpNavNode;DKB_CorpLink
+                                ;DKLatestNewsNavNodeEntry;;DKLatestNewsNavNodeEntry;DKLatestNewsNavNode;DKLatestNewsLink
+                                ;DKNatura_CoNavNodeEntry;;DKNatura_CoNavNodeEntry;DKNatura_CoNavNode;DKNatura_CoLink
+                                ;DKEducationalProgrammeNavNodeEntry;;DKEducationalProgrammeNavNodeEntry;DKEducationalProgrammeNavNode;DKEducationalProgrammeLink
+                                ;DKDonateMenstrualProductsNavNodeEntry;;DKDonateMenstrualProductsNavNodeEntry;DKDonateMenstrualProductsNavNode;DKDonateMenstrualProductsLink
+                                ;DKVegetarianBeautyNavNodeEntry;;DKVegetarianBeautyNavNodeEntry;DKVegetarianBeautyNavNode;DKVegetarianBeautyLink
+
+#Entry_DKLoyaltyProgramNavNode
+                                ;DK_Loyalty_JoinNowNavNodeEntry;;DK_Loyalty_JoinNowNavNodeEntry;DK_Loyalty_JoinNowNavNode;DK_Loyalty_JoinNowLink
+
+#Entry_DKSustainabilityNavNode
+                                ;DKOurCommitmentNavNodeEntry;;DKOurCommitmentNavNodeEntry;DKOurCommitmentNavNode;DKOurCommitmentLink
+                                ;DKCommunityTradeNavNodeEntry;;DKCommunityTradeNavNodeEntry;DKCommunityTradeNavNode;DKCommunityTradeLink
+                                ;DKBio-BridgesNavNodeEntry;;DKBio-BridgesNavNodeEntry;DKBio-BridgesNavNode;DKBio-BridgesLink
+                                ;DKReducingEnvironmentalFootprintNavNodeEntry;;DKReducingEnvironmentalFootprintNavNodeEntry;DKReducingEnvironmentalFootprintNavNode;DKReducingEnvironmentalFootprintLink
+                                ;DKEmpoweringWomenNavNodeEntry;;DKEmpoweringWomenNavNodeEntry;DKEmpoweringWomenNavNode;DKEmpoweringWomenLink
+                                ;DKModernSlaveryNavNodeEntry;;DKModernSlaveryNavNodeEntry;DKModernSlaveryNavNode;DKModernSlaveryLink
+
+#Child_Nodes_DKPlasticsNavNode
+                                ;DKPlasticRecyclingInTheDKNavNodeEntry;;DKPlasticRecyclingInTheDKNavNodeEntry;DKPlasticRecyclingInTheDKNavNode;DKPlasticRecyclingInTheDKLink
+                                ;DKTerraCycleInterviewNavNodeEntry;;DKTerraCycleInterviewNavNodeEntry;DKTerraCycleInterviewNavNode;DKTerraCycleInterviewLink
+                                ;DKReturnRecycleRepeatNavNodeEntry;;DKReturnRecycleRepeatNavNodeEntry;DKReturnRecycleRepeatNavNode;DKReturnRecycleRepeatNavNodeLink
+                                ;DKCommunityTradePlasticsNavNodeEntry;;DKCommunityTradePlasticsNavNodeEntry;DKCommunityTradePlasticsNavNode;DKCommunityTradePlasticsLink
+                                ;DKPackagingAtTheBodyShopNavNodeEntry;;DKPackagingAtTheBodyShopNavNodeEntry;DKPackagingAtTheBodyShopNavNode;DKPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;DKUsefullInformationNavNode;;DK Useful Information;DKUsefullInformationNavNode;DKDeliveryNavNode,DKReturnsNavNode,DKFAQNavNode,DKTermsAndConditionsNavNode,DKPrivacyPolicyNavNode,DKSitemapNavNode
+;DKWaysToShopNavNode;;DK Ways to Shop;DKWaysToShopNavNode;DKStoresNavNode,DKLoveYourBodyClubNavNode,DKStudentDiscountNavNode,DKGiftCardsNavNode
+;DKAboutUsNavNode;;DK About Us;DKAboutUsNavNode;DKAboutUsInternalNavNode,DKTheBodyShopAtHomeNavNode,DKAffiliatesNavNode,DKGenderPayGapNavNode,DKModernSlaveryStatementNavNode,DKAgainstAnimalTestingNavNode,DKTaxStrategyNavNode,DKCareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;DKDeliveryNavNode;;DKDeliveryNavNode;DKDeliveryNavNode;
+;DKReturnsNavNode;;DKReturnsNavNode;DKReturnsNavNode;
+;DKFAQNavNode;;DKFAQ Page;DKFAQNavNode
+;DKTermsAndConditionsNavNode;;DKTermsAndConditionsNavNode;DKTermsAndConditionsNavNode;
+;DKPrivacyPolicyNavNode;;DKPrivacyPolicyNavNode;DKPrivacyPolicyNavNode;
+;DKSitemapNavNode;;DKSitemapNavNode;DKSitemapNavNode;
+;DKStoresNavNode;;DKStoresNavNode;DKStoresNavNode;
+;DKLoveYourBodyClubNavNode;;DKLoveYourBodyClubNavNode;DKLoveYourBodyClubNavNode;
+;DKStudentDiscountNavNode;;DKStudentDiscountNavNode;DKStudentDiscountNavNode;
+;DKGiftCardsNavNode;;DKGiftCardsNavNode;DKGiftCardsNavNode;
+;DKAboutUsInternalNavNode;;DKAboutUsInternalNavNode;DKAboutUsInternalNavNode
+;DKTheBodyShopAtHomeNavNode;;DKTheBodyShopAtHomeNavNode;DKTheBodyShopAtHomeNavNode
+;DKAffiliatesNavNode;;DKAffiliatesNavNode;DKAffiliatesNavNode
+;DKGenderPayGapNavNode;;DKGenderPayGapNavNode;DKGenderPayGapNavNode
+;DKModernSlaveryStatementNavNode;;DKModernSlaveryStatementNavNode;DKModernSlaveryStatementNavNode
+;DKAgainstAnimalTestingNavNode;;DKAgainstAnimalTestingNavNode;DKAgainstAnimalTestingNavNode
+;DKTaxStrategyNavNode;;DKTaxStrategyNavNode;DKTaxStrategyNavNode
+;DKCareersNavNode;;DKCareersNavNode;DKCareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;DKDeliveryNavNodeEntry;;DKDeliveryNavNodeEntry;DKDeliveryNavNode;DKDeliveryLink;
+;DKReturnsNavNodeEntry;;DKReturnsNavNodeEntry;DKReturnsNavNode;DKReturnsLink;
+;DKFAQNavNodeEntry;;DK FAQ Navigation Node Entry;DKFAQNavNode;DKFAQLink;
+;DKTermsAndConditionsNavNodeEntry;;DKTermsAndConditionsNavNodeEntry;DKTermsAndConditionsNavNode;DKTermsAndConditionsLink;
+;DKPrivacyPolicyNavNodeEntry;;DKPrivacyPolicyNavNodeEntry;DKPrivacyPolicyNavNode;DKPrivacyPolicyLink;
+;DKSitemapNavNodeEntry;;DKSitemapNavNodeEntry;DKSitemapNavNode;DKSitemapLink;
+;DKStoresNavNodeEntry;;DKStoresNavNodeEntry;DKStoresNavNode;DKStoresLink;
+;DKLoveYourBodyClubNavNodeEntry;;DKLoveYourBodyClubNavNodeEntry;DKLoveYourBodyClubNavNode;DKLoveYourBodyClubLink;
+;DKStudentDiscountNavNodeEntry;;DKStudentDiscountNavNodeEntry;DKStudentDiscountNavNode;DKStudentDiscountLink;
+;DKGiftCardsNavNodeEntry;;DKGiftCardsNavNodeEntry;DKGiftCardsNavNode;DKGiftCardsLink;
+;DKAboutUsInternalNavNodeEntry;;DKAboutUsInternalNavNodeEntry;DKAboutUsInternalNavNode;DKAboutUsLink;
+;DKTheBodyShopAtHomeNavNodeEntry;;DKTheBodyShopAtHomeNavNodeEntry;DKTheBodyShopAtHomeNavNode;DKTheBodyShopAtHomeLink;
+;DKAffiliatesNavNodeEntry;;DKAffiliatesNavNodeEntry;DKAffiliatesNavNode;DKAffiliatesLink;
+;DKGenderPayGapNavNodeEntry;;DKGenderPayGapNavNodeEntry;DKGenderPayGapNavNode;DKGenderPayGapLink;
+;DKModernSlaveryStatementNavNodeEntry;;DKModernSlaveryStatementNavNodeEntry;DKModernSlaveryStatementNavNode;DKModernSlaveryStatementLink;
+;DKAgainstAnimalTestingNavNodeEntry;;DKAgainstAnimalTestingNavNodeEntry;DKAgainstAnimalTestingNavNode;DKAgainstAnimalTestingLink;
+;DKTaxStrategyNavNodeEntry;;DKTaxStrategyNavNodeEntry;DKTaxStrategyNavNode;DKTaxStrategyLink;
+;DKCareersNavNodeEntry;;DKCareersNavNodeEntry;DKCareersNavNode;DKCareersLink;
+
+##CategoryBannerCMSComponent Start ##
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;DKCategoryBannerCMSComponent;DK CategoryBanner CMSComponent;DKCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-DKCategorybannerSlot;DKCategory Banner Slot;true;DKCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-DKCategoryPage;Section1;;Section1Slot-DKCategorybannerSlot;;;
+##CategorybannerCMSComponent End ##

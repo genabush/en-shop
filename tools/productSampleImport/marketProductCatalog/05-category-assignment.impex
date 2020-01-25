@@ -1,0 +1,89 @@
+#Accepted Values are tbsATProductCatalog, tbsAUProductCatalog, tbsCAProductCatalog, tbsDEProductCatalog, tbsDKProductCatalog, tbsESProductCatalog, tbsFRProductCatalog, tbsHKProductCatalog, tbsNLProductCatalog, tbsSEProductCatalog, tbsSGProductCatalog, tbsUKProductCatalog, tbsUSProductCatalog
+$productCatalog=tbsUKProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$supercategories=supercategories(code, $catalogVersion)
+$primarycategory=primarycategory(code, $catalogVersion)
+
+#
+# Assignment of all the categories the product is in
+#
+UPDATE TBSBaseProduct ; code[unique=true] ; $supercategories ; $catalogVersion ;
+						;p000019			;c00014			;;
+						;p000551;c00014;;
+						;p002347;c00014;;
+						;p000014;c00014;;
+						;p001113;c00014;;
+						;p000873;c00014;;
+						;p000016;c00014;;
+						;p000087;c00014;;
+						;p000015;c00014;;
+						;p000247;c00014;;
+						;p002421;c00014;;
+						;p000018;c00014;;
+						;p000626;c00014;;
+						;p000874;c00014;;
+						;p000379;c00014;;
+						;p000698;c00014;;
+						;p000017;c00014;;
+						;p002727;c00014;;
+						;p002811;c00014;;
+						;p000274;c00014;;
+						;p000297;c00117;;
+						;p000206;c00117;;
+						;p000810;c00117;;
+						;p000090;c00117;;
+						;p000207;c00117;;
+						;p001070;c00117;;
+						;p001065;c00117;;
+						;p002826;c00117;;
+						;p000177;c00117;;
+						;p000456;c00117;;
+						;p000150;c00117;;
+						;p003255;c00117;;
+						;p000149;c00117;;
+						;p000147;c00117;;
+						;p000148;c00117;;
+						;p000694;c00117;;
+
+
+#
+# Assignment of the product's primary category
+#
+UPDATE TBSBaseProduct ; code[unique=true] ; $primarycategory ; $catalogVersion ;
+						;p000019			;c00014			;;
+						;p000551;c00014;;
+						;p002347;c00014;;
+						;p000014;c00014;;
+						;p001113;c00014;;
+						;p000873;c00014;;
+						;p000016;c00014;;
+						;p000087;c00014;;
+						;p000015;c00014;;
+						;p000247;c00014;;
+						;p002421;c00014;;
+						;p000018;c00014;;
+						;p000626;c00014;;
+						;p000874;c00014;;
+						;p000379;c00014;;
+						;p000698;c00014;;
+						;p000017;c00014;;
+						;p002727;c00014;;
+						;p002811;c00014;;
+						;p000274;c00014;;
+						;p000297;c00117;;
+						;p000206;c00117;;
+						;p000810;c00117;;
+						;p000090;c00117;;
+						;p000207;c00117;;
+						;p001070;c00117;;
+						;p001065;c00117;;
+						;p002826;c00117;;
+						;p000177;c00117;;
+						;p000456;c00117;;
+						;p000150;c00117;;
+						;p003255;c00117;;
+						;p000149;c00117;;
+						;p000147;c00117;;
+						;p000148;c00117;;
+						;p000694;c00117;;

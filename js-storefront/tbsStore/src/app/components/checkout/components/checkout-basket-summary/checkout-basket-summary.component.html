@@ -1,0 +1,39 @@
+<ngb-accordion class="order-summary-accordion mb-4 p-0" [closeOthers]="true">
+  <!-- CREDIT CARDS PANEL -->
+  <ngb-panel *ngIf="cart$ | async as cart" id="checkout-basket-summary">
+    <!-- CREDIT CARDS PANEL HEADER-->
+    <ng-template ngbPanelHeader let-opened="opened">
+      <button
+        tabIndex="0"
+        class="card-header-btn d-flex align-items-center justify-content-start pl-4 pr-3 py-3 w-100"
+        role="button"
+        ngbPanelToggle
+      >
+        <span class="icon icon--basket"></span>
+        <span>
+          <span class="card-header-btn__count ml-3 mr-2">{{ cartTotalItems }}</span>
+          <span *ngIf="cartTotalItems == 1" class="strong">{{ 'cart.item_word' | cxTranslate }}</span>
+          <span *ngIf="cartTotalItems != 1" class="strong">{{ 'cart.items_word' | cxTranslate }}</span>
+        </span>
+        <span>&nbsp;{{ 'cart.inYourBag' | cxTranslate }}</span>
+        <span *ngIf="opened" class="icon icon--minus ml-auto"></span>
+        <span *ngIf="!opened" class="icon icon--plus ml-auto"></span>
+      </button>
+    </ng-template>
+    <!-- PANEL CONTENT-->
+    <ng-template ngbPanelContent>
+      <ng-container *ngIf="entries$ | async as entries">
+        <!-- Cart Details -->
+        <div class="cart-details-wrapper cart-details mt-1">
+          <cx-cart-item-list
+            class="px-3 mt-0"
+            [items]="entries"
+            [isReadOnly]="'true'"
+            [potentialProductPromotions]="cart.potentialProductPromotions"
+            [cartIsLoading]="!(cartLoaded$ | async)"
+          ></cx-cart-item-list>
+        </div>
+      </ng-container>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

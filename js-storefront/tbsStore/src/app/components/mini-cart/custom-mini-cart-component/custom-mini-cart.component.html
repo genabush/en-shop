@@ -1,0 +1,111 @@
+<ng-container *ngIf="appCustomCartDirective">
+  <a
+    [attr.aria-label]="'cart.miniCart.openCart' | cxTranslate"
+    tabindex="0"
+    [ngClass]="{
+      'mini-cart mini-cart--desktop d-none d-md-flex': true,
+      'mini-cart--full': cartResult?.totalItems && cartResult?.totalItems !== 0
+    }"
+    (mouseenter)="appCustomCartDirective.miniCartHover($event)"
+    (click)="appCustomCartDirective.miniCartClick($event)"
+    (keyup.enter)="appCustomCartDirective.miniCartClick($event)"
+    *ngIf="appCustomCartDirective?.cartResults | async as cartResult"
+    id="mini-cart-desktop-trigger"
+  >
+    <cx-icon [type]="'CART'"></cx-icon>
+    <span class="count" *ngIf="cartResult?.totalItems && cartResult?.totalItems !== 0">
+      {{ cartResult.totalItems }}</span
+    >
+  </a>
+  <a
+    [attr.aria-label]="'cart.miniCart.openCart' | cxTranslate"
+    tabindex="0"
+    *ngIf="appCustomCartDirective?.cartResults | async as cartResult"
+    [ngClass]="{
+      'mini-cart mini-cart--mobile d-flex d-md-none': true,
+      'mini-cart--full': cartResult?.totalItems && cartResult?.totalItems !== 0
+    }"
+    id="mini-cart-mobile-trigger"
+    (click)="appCustomCartDirective.miniCartClick($event)"
+    (keyup.enter)="appCustomCartDirective.miniCartClick($event)"
+  >
+    <cx-icon [type]="'CART'"></cx-icon>
+    <span class="count" *ngIf="cartResult?.totalItems && cartResult?.totalItems !== 0">{{
+      cartResult.totalItems
+    }}</span>
+  </a>
+  <ng-template #miniCartModal let-c="close" let-d="dismiss" id="mini-cart-modal">
+    <div class="modal-header flex-column">
+      <div class="mini-cart__header d-flex align-items-center w-100">
+        <h2 class="modal-title ml-2">
+          {{ 'cart.miniCart.modalHeader' | cxTranslate }}
+        </h2>
+        <button
+          type="button"
+          class="close"
+          [attr.aria-label]="'common.closeBtn' | cxTranslate"
+          (click)="appCustomCartDirective.openModalRef.close()"
+        >
+          <span aria-hidden="true">
+            <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+          </span>
+        </button>
+      </div>
+      <div class="col-12 p-0 ml-2">
+        <h3 class="mini-cart__msg" *ngIf="appCustomCartDirective?.results$ | async as results">
+          {{
+            'cart.miniCart.resultsText'
+              | cxTranslate
+                : {
+                    itemCount: results.length,
+                    itemTotal: appCustomCartDirective.quantity$,
+                    itemsLabel: results.length == 1 ? 'item' : 'items'
+                  }
+          }}
+        </h3>
+      </div>
+    </div>
+    <div class="modal-body d-flex flex-row flex-wrap">
+      <div
+        *ngIf="appCustomCartDirective?.results$ | async as results"
+        class="mini-cart__col col-12 flex-column flex-wrap p-0"
+      >
+        <app-custom-mini-cart-entry-item
+          class="mini-cart__entry d-flex px-0 m-0 flex-row col-12"
+          *ngFor="let cartEntry of results"
+          [cartEntry]="cartEntry"
+        ></app-custom-mini-cart-entry-item>
+      </div>
+
+      <div class="mini-cart-subtotal col-12 d-flex">
+        <span class="mini-cart-subtotal__msg">{{ 'common.subTotal' | cxTranslate }}</span>
+        <span class="mini-cart-subtotal__price" *ngIf="appCustomCartDirective?.cartResults | async as cartResult">
+          {{ cartResult.subTotal.formattedValue }}</span
+        >
+      </div>
+      <ng-container *ngIf="appCustomCartDirective?.cartResults | async as cartResult">
+        <app-promotion-free-delivery
+          [promotions]="getAllPromotionsForCart(cartResult)"
+          [minibasket]="true"
+        ></app-promotion-free-delivery>
+      </ng-container>
+    </div>
+    <div class="mini-cart-modal__footer d-flex flex-column justify-content-center align-items-center w-100">
+      <button
+        type="button"
+        class="mini-cart-modal__link-basket btn btn--primary w-100"
+        [attr.aria-label]="'common.viewBasket' | cxTranslate"
+        (click)="appCustomCartDirective.navigateToBasketPage()"
+      >
+        {{ 'common.viewBasket' | cxTranslate }}
+      </button>
+      <a
+        class="mini-cart-modal__link-continue link"
+        [attr.aria-label]="'common.closeBtn' | cxTranslate"
+        (click)="appCustomCartDirective.openModalRef.close()"
+      >
+        {{ 'common.continueShopping' | cxTranslate }}
+      </a>
+    </div>
+  </ng-template>
+</ng-container>

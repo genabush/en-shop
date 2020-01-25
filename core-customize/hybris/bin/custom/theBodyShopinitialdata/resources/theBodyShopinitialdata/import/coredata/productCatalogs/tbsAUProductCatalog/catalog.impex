@@ -1,0 +1,58 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Import the Product Catalog and Classification Catalog
+#
+
+$productCatalog=tbsAUProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$languages=en,en_AU
+
+# Product catalog
+INSERT_UPDATE Catalog;id[unique=true]
+;$productCatalog
+
+# Product versions for product catalogs
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;languages(isoCode);readPrincipals(uid)
+;$productCatalog;Staged;false;$languages;
+;$productCatalog;Online;true;$languages;
+
+# Create default tax row for all products in product catalog
+INSERT_UPDATE TaxRow;$catalogVersion;tax(code)[unique=true];pg(code)[unique=true];ug(code)[unique=true]
+;;au-vat-full;au-vat-full;au-taxes
+
+INSERT_UPDATE CatalogVersionSyncJob; code[unique = true]; sourceVersion(catalog(id), version)[unique = true]; targetVersion(catalog(id), version)[unique = true]; createNewItems[allownull = true]; removeMissingItems[allownull = true]; rootTypes(code[collection-delimiter = , ]); syncPrincipals(uid); dependentSyncJobs(code); synclanguages(isoCode);
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged"; tbsGlobalProductCatalog:Staged ; tbsAUProductCatalog:Staged ; true ; true ; Product, Media, Keyword, MediaContainer ;productmanagergroup;;en;
+
+INSERT_UPDATE CatalogVersionSyncCronJob; code[unique=true]                 ; job(code)                     ; singleExecutable; sessionLanguage(isocode); active;forceUpdate;fullSync;
+;tbsAUGlobalProductCatalogSyncCronJob;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged"; false ; en ; true ;true;true;
+
+INSERT_UPDATE SyncAttributeDescriptorConfig;syncJob(code)[unique=true,path-delimiter=!];attributeDescriptor(enclosingType(code),qualifier)[unique=true];includedInSync;copyByValue 
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:supercategories;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:approvalStatus;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:averageRating;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:onlineDate;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:offlineDate;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";TbsBaseProduct:doNotSearch;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";VariantProduct:giftWrap;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";VariantProduct:collectInStore;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";VariantProduct:bioBridge;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";VariantProduct:loyalty;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";TbsVariantProduct:size;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:unit;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Keyword:categories;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";TbsBaseProduct:primaryCategory;false;false;
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:europe1Prices;false;false;
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:ownEurope1Prices;false;false;
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:europe1Discounts;false;false;
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:ownEurope1Discounts;false;false;
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:europe1Taxes;false;false;
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:ownEurope1Taxes;false;false;
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";VariantProduct:sample;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:productBadges;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";TbsVariantProduct:colourPosition;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";TbsVariantProduct:markDownPrices;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";TbsVariantProduct:ownMarkDownPrices;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";Product:maxOrderQuantity;false;false
+;"sync tbsGlobalProductCatalogStagedTotbsAUProductCatalogStaged";VariantProduct:deliveryRestrictions;false;false

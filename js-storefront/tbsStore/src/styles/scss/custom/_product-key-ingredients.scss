@@ -1,0 +1,30 @@
+.product-key-ingredients {
+  &__section {
+    display: block;
+    margin-bottom: 1.25rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__title {
+    font-family: $headings-product-key-ingredients-title-font-family;
+  }
+
+  &__desc {
+    display: inline;
+  }
+
+  &__link {
+    display: inline;
+    font-family: $headings-product-key-ingredients-link-font-family;
+    text-decoration: underline;
+    margin-left: 0.3rem;
+
+    &--full {
+      font-family: $headings-product-key-ingredients-link-full-font-family;
+      margin-left: 0;
+    }
+  }
+}

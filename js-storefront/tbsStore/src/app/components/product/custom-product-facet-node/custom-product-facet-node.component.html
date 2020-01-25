@@ -1,0 +1,58 @@
+<div class="form-group app-facet__facet-group">
+  <h4 class="app-facet__popover-label" [attr.aria-label]="facet.name">
+    {{ facet.name }}
+  </h4>
+
+  <ng-container>
+    <div class="app-facet__group">
+      <ul class="app-facet__list row">
+        <li
+          *ngFor="let value of facet.values; index as facetValueId"
+          [ngClass]="facet.code === 'colour' ? 'colour-facet' : ''"
+          class="app-facet__list-item facet-list-item col-12 col-sm-6"
+        >
+          <div class="form-check app-facet__form-check" *ngIf="value.name">
+            <label
+              tabindex="0"
+              class="form-checkbox app-facet__label"
+              (change)="toggleValue(value.query.query.value)"
+              (keyup.enter)="toggleValue(value.query.query.value)"
+            >
+              <input
+                [ngStyle]="{ 'background-color': facet.code === 'colour' ? value.name : '' }"
+                [ngClass]="facet.code !== 'colour' ? 'app-facet__checkbox' : 'colour-swatch'"
+                class="form-check-input"
+                role="checkbox"
+                type="checkbox"
+                aria-checked="true"
+                [checked]="value.selected"
+              />
+              <span class="app-facet__text" *ngIf="facet.code !== 'colour'">{{ value.name }}</span>
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+</div>
+<ng-template #dropdown>
+  <select (change)="toggleDropdown($event)" class="custom-select app-facet__select">
+    <option value="">{{ 'common.select' | cxTranslate }}</option>
+    <option
+      *ngFor="let value of facet.values; index as facetValueId"
+      [value]="value.query.query.value"
+      [selected]="value.selected"
+      >{{ value.name }}</option
+    >
+  </select>
+</ng-template>
+<ng-template #colour>
+  <div class="d-flex justify-content-start align-items-center">
+    <ng-container *ngFor="let facet of facet.values">
+      <div class="colour-variants__swatch" [style.background-color]="facet.name" title="facet.name"></div>
+      <span class="color-variants__name">
+        {{ facet.name }}
+      </span>
+    </ng-container>
+  </div>
+</ng-template>

@@ -1,0 +1,41 @@
+<!--
+<div
+    class="d-flex align-items-center {{#lt bannerLayout '50'}} max-width--first {{/lt}}
+{{#eq bannerLayout '100'}} full-width-{{bannerLayout}} {{/eq}} amp-dc-banner amp-dc-banner--divided media-position--{{mediaPosition}}">
+
+    <div class="amp-dc-banner__media width-media-{{bannerLayout}}">
+        {{#each media}}
+        {{#if (test this.[@type] (toRegex ".*/image")) }}
+        <img class="{{#if ../mediaPadding}} media-padding-{{../mediaPadding}}{{/if}} amp-dc-banner__bg-image"
+            src="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}"
+            alt="{{this.image.name}}" />
+        {{/if}}
+        {{/each}}
+    </div>
+
+    <div class="amp-dc-banner__content d-flex">
+        <div class="amp-dc-banner__content-column"></div>
+        <div class="d-flex flex-column amp-dc-banner__content-inner width-media-text-{{bannerLayout}}">
+            {{#if heading3}}
+            <h3 class="amp-dc-banner__h3 font--{{heading3Font}}">{{heading3}}</h3>
+            {{/if}}
+
+            {{#if heading2}}
+            <h2 class="amp-dc-banner__h2 font--{{heading2Font}}">{{heading2}}</h2>
+            {{/if}}
+
+            {{#if bodyCopy}}
+            <div class="amp-dc-banner__body {{#with bodyCopyColour}}txt--{{colour}}{{/with}}">
+                <p>{{bodyCopy}}</p>
+            </div>
+            {{/if}}
+            <div class="amp-dc-banner__hero-cta-section">
+                {{#if ctaUrl}}
+                <a href="{{ctaUrl}}" {{#is ctaBehaviour 'new-tab'}} target="_blank" {{/is}}
+                    class="btn {{#contains ctaStyle "secondary"}} btn--secondary{{else}}btn--primary{{/contains}}{{#contains ctaStyle "light"}} btn--invert{{/contains}}">{{ctaCopy}}</a>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+-->

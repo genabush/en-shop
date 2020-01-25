@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://thebodyshop.com/ws/loyaltyCards" xmlns:tns="http://thebodyshop.com/ws/loyaltyCards">
+
+	<simpleType name="code">
+		<restriction base="string">
+			<pattern value="\d{3,3}" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="loyaltyCardsResponseStatus">
+		<annotation>
+			<documentation>Cards response status and a message</documentation>
+		</annotation>
+		<sequence>
+			<element name="code" type="tns:statusCode" />
+			<element minOccurs="0" name="message" type="string" />
+		</sequence>
+	</complexType>
+
+	<simpleType name="statusCode">
+		<annotation>
+			<documentation>
+				Cards response status code
+				<ul>
+					<li>SUCCESS - response contains number of requested cards</li>
+					<li>PARTIAL_SUCCESS - response contains some cards but less than requested</li>
+					<li>FAILURE - response contains no cards</li>
+				</ul>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="SUCCESS" />
+			<enumeration value="PARTIAL_SUCCESS" />
+			<enumeration value="FAILURE" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="loyaltyCardsResponseInfo">
+		<annotation>
+			<documentation>Additional response information which can be used for debug purposes</documentation>
+		</annotation>
+		<sequence>
+			<element name="cardPoolId" type="string">
+				<annotation>
+					<documentation>Identifier of an automatic card pool entity serving the cards</documentation>
+				</annotation>
+			</element>
+			<element name="requestedCards" type="int">
+				<annotation>
+					<documentation>Number of requested card numbers</documentation>
+				</annotation>
+			</element>
+			<element name="returnedCards" type="int">
+				<annotation>
+					<documentation>Number of returned card numbers</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<element name="getLoyaltyCardsRequest">
+		<complexType>
+			<sequence>
+				<element name="quantity" type="int">
+					<annotation>
+						<documentation>Number of cards</documentation>
+					</annotation>
+				</element>
+				<element name="market" type="tns:code">
+					<annotation>
+						<documentation>ISO 3166-1 numeric country code</documentation>
+					</annotation>
+				</element>
+				<element name="program" type="tns:code">
+					<annotation>
+						<documentation>3-digit program code</documentation>
+					</annotation>
+				</element>
+				<element name="prefix" type="tns:code">
+					<annotation>
+						<documentation>3-digit prefix code</documentation>
+					</annotation>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="getLoyaltyCardsResponse">
+		<complexType>
+			<sequence>
+				<element name="status" type="tns:loyaltyCardsResponseStatus" />
+				<element name="info" type="tns:loyaltyCardsResponseInfo" />
+				<sequence maxOccurs="unbounded" minOccurs="0">
+					<element name="cards" type="string" />
+				</sequence>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

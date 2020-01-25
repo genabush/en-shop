@@ -1,0 +1,320 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+#% impex.setLocale( Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsNLProductCatalog
+$productCatalogName=Netherlands Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$onlineDate=onlineDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-01-2019 06:30:00']
+
+$lang=nl
+
+# Insert Products
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];$supercategories;type(code)[default=SIZE];$catalogVersion;$approved;$onlineDate
+;p003257;c00143;
+;p000341;c00149;
+;p002002;c00143;
+;p002445;c00143;
+;p003101;c00143;
+;p001102;c00143;
+;p002457;c00143;
+;p000971;c00143;
+;p003255;c00143;
+;p003254;c00143;
+;p003173;c00143;
+;p000694;c00143;
+;p002003;c00143;
+;p000936;c00145;
+;p002013;c00144;
+;p000810;c00144;
+;p002833;c00147;
+;p003268;c00147;
+;p002835;c00141;
+;p000664;c00148;
+;p003259;c00148;
+;p000067;c00140;
+;p000056;c00140;
+;p002017;c00140;
+;p000499;c00013;
+;p000253;c00013;
+;p000019;c00014;
+;p002347;c00014;
+;p002812;c00284;
+;p002419;c00024;
+;p000480;c00018;
+;p002863;c00019;
+;p000466;c00019;
+;p000644;c00019;
+;p000787;c00020,c00021;
+;p000676;c00020,c00021;
+;p000461;c00054;
+;p000111;c00054;
+;p000106;c00054;
+;p000795;c00056;
+;p000797;c00056;
+;p003200;c00047;
+;p000789;c00047;
+;p000063;c00047;
+;p003090;c00048;
+;p002733;c00048;
+;p000142;c00051;
+;p000120;c00051;
+;p002449;c00051;
+;p003091;c00050;
+;p000767;c00050;
+;p002453;c00050;
+;p000767;c00049;
+;p002144;c00065;
+;p002448;c00059;
+;p002145;c00059;
+;p003111;c00060;
+;p000360;c00060;COLOUR
+;p001081;c00061;
+;p002819;c00061;
+;p000467;c00061;
+;p000851;c00062;
+;p000436;c00064;
+;p000435;c00064;
+;p002668;c00064;
+;p000362;c00064;
+;p000726;c00064;
+;p002817;c00064;
+;p003237;c00063;
+;p002001;c00063;
+;p000048;c00065;
+;p002867;c00065;
+;p000042;c00065;
+;p002171;c00066;
+;p000657;c00066;COLOUR
+;p000069;c00066;
+;p000621;c00066;
+;p003235;c00067;
+;p000184;c00067;
+;p002818;c00067;
+;p000222;c00069;
+;p002437;c00069;
+;p001050;c00069;
+;p000269;c00146;
+;p003087;c00051;
+;p000247;c00014;
+;0000000000;;
+
+UPDATE Product;code[unique=true];name[lang=$lang];description[lang=$lang];doNotSearch[default=false];$catalogVersion;$onlineDate
+;"1030196";"BB Cream 01 25ml";"Onze All-In-One BB cream is het essentiële beautyproduct voor supersnel resultaat wanneer je weinig tijd hebt. De hardwerkende, multifunctionele BB cream biedt 24 uur lang hydratatie en zorgt dat alles voor elkaar komt, voor een prachtig stralende en (bijna) perfecte huid. Verdelen over je gezicht voor een dauwachtig, gelijkmatig resultaat dat zich aanpast aan je kleur en perfect bij je teint past. Jouw huid, maar dan beter."
+;"1030226";"BB Cream 02 25ml";"Onze All-In-One BB cream is het essentiële beautyproduct voor supersnel resultaat wanneer je weinig tijd hebt. De hardwerkende, multifunctionele BB cream biedt 24 uur lang hydratatie en zorgt dat alles voor elkaar komt, voor een prachtig stralende en (bijna) perfecte huid. Verdelen over je gezicht voor een dauwachtig, gelijkmatig resultaat dat zich aanpast aan je kleur en perfect bij je teint past. Jouw huid, maar dan beter."
+;"1030227";"BB Cream 03 25ml";"Onze All-In-One BB cream is het essentiële beautyproduct voor supersnel resultaat wanneer je weinig tijd hebt. De hardwerkende, multifunctionele BB cream biedt 24 uur lang hydratatie en zorgt dat alles voor elkaar komt, voor een prachtig stralende en (bijna) perfecte huid. Verdelen over je gezicht voor een dauwachtig, gelijkmatig resultaat dat zich aanpast aan je kleur en perfect bij je teint past. Jouw huid, maar dan beter."
+;"1032512";"BB Cream 04 30ml";"Onze All-In-One BB cream is het essentiële beautyproduct voor supersnel resultaat wanneer je weinig tijd hebt. De hardwerkende, multifunctionele BB cream biedt 24 uur lang hydratatie en zorgt dat alles voor elkaar komt, voor een prachtig stralende en (bijna) perfecte huid. Verdelen over je gezicht voor een dauwachtig, gelijkmatig resultaat dat zich aanpast aan je kleur en perfect bij je teint past. Jouw huid, maar dan beter."
+;"1055790";"Shea Body Butter 200ml";"Onze heerlijke nootachtige sheaboter versmelt met je huid en biedt een rijkelijk hydraterende ervaring. Geniet na elk gebruik van zachtere, frissere en verzorgde huid en langdurige hydratatie. "
+;"1059021";"Shea Nourishing Body Butter 50ml";"Onze heerlijke nootachtige sheaboter versmelt met je huid en biedt een rijkelijk hydraterende ervaring. Geniet na elk gebruik van zachtere, frissere en verzorgde huid en langdurige hydratatie."
+;"p000019";"Shea Nourishing Body Butter 400ml";"Onze heerlijke nootachtige sheaboter versmelt met je huid en biedt een rijkelijk hydraterende ervaring. Geniet na elk gebruik van zachtere, frissere en verzorgde huid en langdurige hydratatie. "
+;"p000042";"Lightening Touch";"Vroeg uit de veren en laat naar bed? Ontdek onze lichtweerkaatsende concealer voor onder de ogen, die de zichtbaarheid van donkere kringen en fijne lijntjes minimaliseert. Deze verhelderende concealer is eenvoudig aan te brengen met de ingebouwde kwast en wordt ongetwijfeld de held van je make-uptasje."
+;"p000048";"All-In-One Face Base";"Dit compactpoeder is een foundation en poeder in één en is eenvoudig te mengen voor een glad, fluweelachtig resultaat. Dit veelzijdige product kan op verschillende manieren worden gebruikt voor een perfecte teint. Het bijgeleverde sponsje natmaken en aanbrengen voor goede dekking. Wil je dat je make-up langer goed blijft zitten? Breng onze All-In-One Face Base aan op je huid met onze Face & Body Brush om foundation goed te laten zitten of breng het op een schoon gezicht aan voor een licht, gelijkmatig resultaat. De beste manier van multitasken."
+;"p000056";"Facial Cleansing Sponge";"Reinig je huid en verwijder make-up met deze zachte reinigingsspons."
+;"p000063";"Styling Hairbrush";"Ontklit, lift, geef volume en breng in model terwijl je föhnt. De pinnen staan dicht bij elkaar voor een goede grip en controle over het haar. Ze masseren je hoofdhuid zachtjes. Regelmatig borstelen verspreidt de natuurlijke oliën van de huid van de wortels tot de punten."
+;"p000067";"Muslin Cloth";"Verwijder make-up en reinig je huid met ons superfijne katoenen reinigingsdoekje, voor huid die zachter en gladder aanvoelt. Gebruiken met je favoriete reinigingsproduct voor een optimaal resultaat."
+;"p000069";"Colour Crush™-Lipsticks";"Een vleugje van onze crèmeachtige, vochtregulerende lippenstift zorgt voor intense kleur. Met een subtiele rozengeur en Community Trade-maroela-olie voor extra hydratatie. Die wil je in iedere kleur."
+;"p000106";"Mango Hand Cream";"Deze handcrème voor iedere dag vormt de ultieme musthave voor iedere handtas en is perfect voor hydratatie voor onderweg. De lichte gelcrème is verrijkt met de geur van frisse, tropische mango en trekt snel in, om de handen te verzachten en beschermen."
+;"p000111";"Coconut Hand Cream";"Deze handcrème voor iedere dag vormt de ultieme musthave voor iedere handtas en is perfect voor hydratatie voor onderweg. De lichte gelcrème is verrijkt met de frisse geur van kokosolie en trekt snel in, om de handen te verzachten en beschermen."
+;"p000120";"Ginger Anti-Dandruff Shampoo";"Verfris je hoofdhuid en breng hem tot rust met deze verkwikkende shampoo. Verrijkt met gemberextract, extract van berkenbast en witte wilgenbast en Community Trade-honing uit Ethiopië."
+;"p000142";"Arber Shower gel";"Een verzorgende douchegel waarmee je ook je haar kunt wassen, subtiel geparfumeerd met de heldere, sensuele, houtachtige geur Arber."
+;"p000184";"Super Volume Mascara";"Geef je wimpers in een handomdraai een dosis intense kleur en volume met onze mascara die niet klontert."
+;"p000222";"All-In-One Instablur™ Universal";"Deze perfector houdt glimmen in toom, verbergt onzuiverheden, vermindert poriën en zorgt elke keer weer voor een gave, perfecte teint. Instablur™ biedt 5 beautyvoordelen voor de huid en bevat Community Trade-maroela-olie. Aanbrengen voor foundation als perfecte basis of afzonderlijk gebruiken om onzuiverheden te verdoezelen en de huid te matteren. Instablur™ vormt gegarandeerd je geheime (schoonheids)wapen."
+;"p000253";;"Stap in een bad vol heerlijk ruikende bubbels, verrijkt met intens voedende arganolie. Je huid zal rijk en zacht aanvoelen na dit bad. "
+;"p000269";"Wild Argan Solid Oil Lips";"Laat onze balsem versmelten met je lippen voor een prachtig natuurlijk uitziende glans, verrijkt met verzorgende arganolie uit Marokko. Deze intens vochtregulerende formule verzorgt en verzacht je lippen bij elk gebruik."
+;"p000341";"Drops Of Youth™ Bouncy Sleeping Mask";"Dit verfrissende masker is speciaal ontwikkeld om de eerste tekenen van veroudering aan te pakken. Voor een zachtere, gladdere en grondig gereinigde huid."
+;"p000360";"All-In-One Bb Cream";"Onze All-In-One BB cream is het essentiële beautyproduct voor supersnel resultaat wanneer je weinig tijd hebt. De hardwerkende, multifunctionele BB cream biedt 24 uur lang hydratatie en zorgt dat alles voor elkaar komt, voor een prachtig stralende en (bijna) perfecte huid. Verdelen over je gezicht voor een dauwachtig, gelijkmatig resultaat dat zich aanpast aan je kleur en perfect bij je teint past. Jouw huid, maar dan beter."
+;"p000362";"Brow & Lash Gel";"Deze heldere gel is voorzien van een handig borsteltje en pakt ongetemde wenkbrauwen aan. Gebruik op je wimpers voor een natuurlijke maar gedefinieerde, make-uploze look. Eenvoudig."
+;"p000435";"Skinny Felt Liner";"Onze precieze, gestroomlijnde eyeliner is ideaal voor vloeiende lijntjes om definitie en extra intensiteit te geven aan je look. Voor een geaccentueerde, gitzwarte wimperlijn."
+;"p000436";"Gel Pen Liner";"Deze crèmeachtige, gladde eyeliner veegt soepel over de huid voor langhoudende intensiteit en mooie, geaccentueerde ogen. Onze waterproof-formule is beschikbaar in 3 diepe kleuren en blijft urenlang zitten."
+;"p000461";"Hemp Hand Protector";"Zeg ruwe huid vaarwel en bescherm je handen tegen weersomstandigheden met onze verzachtende, verzorgende crème met hennepolie."
+;"p000466";"Activist Deodorant";"Een milde, snel drogende deodorant met een warme, kruidige geur. De deodorant verfrist direct en is lang werkzaam."
+;"p000467";"Honey Bronze™ Tinted Leg Mist";"Geniet in een paar seconden van een gladde, perfect gebruinde huid met onze innovatie bronzerspray. Onze lichte gelspray bevat geen olie en is makkelijk in gebruik, voor een natuurlijk ogende, zongebruinde look."
+;"p000480";"Honey Bronze™ Bronzing Powder";"Voor een natuurlijk ogende teint gebruik je ons zonnige, met honing verrijkte bronzerpoeder voor een schitterende gouden glans, het hele jaar door. Ons Honey Bronze™ bronzerpoeder is verkrijgbaar in tinten, die zelfs geschikt zijn voor de lichtste teint, en biedt een moeiteloze manier om die mooie vakantiegloed na te bootsen. Gebruik dit glansvrije, geperste poeder voor een egaal gebruinde, matte teint."
+;"p000644";"White Musk® Deodorant";"White Musk® Deodorant bevat de heldere, frisse, lichte mix van diervriendelijke muskus, vetiver en sandelhout. De geur kan in laagjes worden opgebouwd met andere White Musk® producten."
+;"p000657";"Lip & Cheek Stain";"Deze multifunctionele, vloeibare kleur biedt lippen en wangen een natuurlijk ogend vleugje kleur dat je in laagjes kunt opbouwen. Onder lipgloss gebruiken voor prachtige lippen of op de wangen deppen voor een natuurlijk uitziende, roze gloed."
+;"p000664";"Drops Of Youth™ Youth Essence-Lotion";"Drops of Youth™ Youth Essence Lotion is een frisse en verkwikkende gezichtslotion met een gel-formule de huid voorbereid op het dagelijkse verzorginsritueel."
+;"p000676";"Peppermint Cooling Foot Spray";"Verkwik en verfris vermoeide, pijnlijke voeten met onze verkoelende voetspray. De voetspray is verrijkt met essentiële olie van Engelse pepermunt en biedt frisheid wanneer jij dat nodig hebt."
+;"p000694";"Vitamin E Sink In Moisture Sleeping Mask";"Deze Vitamin E Sink In Moisture Mask is een gel-achtig masker dat de vochtbalans van de huid herstelt."
+;"p000726";"Brow & Liner Kit";"Ontdek onze Brow & Liner Kit met tweezijdige kwast voor perfecte wenkbrauwen. Zorg voor definitie en vorm, omlijning en kleur met zijdezachte tinten voor een perfect resultaat."
+;"p000767";"Grapeseed Hair Serum";"Maak je haar glad en glanzend met dit glanzende serum. Breng een kleine hoeveelheid aan in je haar voor het beste resultaat."
+;"p000787";"Hemp Hard Working Foot Protector";"Verzorg je voeten met onze Hemp Hard Working Foot Protector, die ruwe huid van top tot teen verzacht. Deze crème, die de vochtbalans herstelt en zeer droge huid hydrateert, is een echte musthave."
+;"p000789";"Detangling Comb";"Ontwar nat of droog haar moeiteloos met onze grove kam. De perfecte accessoire om producten eenvoudig over het haar te verdelen."
+;"p000795";"Satsuma Hand Cleanse Gel";"Houd je handen fris en schoon met onze fruitige reinigingsgel met satsuma. Perfect voor in je handtas om onderweg te reinigen."
+;"p000797";"Pink Grapefruit Hand Cleanse Gel";"Houd je handen de hele dag door fris en schoon met deze reinigingsgel met roze grapefruit. Perfect voor in je handtas om onderweg te reinigen."
+;"p000810";"Vitamin E Eye Cream";"De Vitamin E Eye Cream is een lichte vochtregulerende oog crème met vitamine E."
+;"p000851";"All-In-One Cheek Colour";"Ontdek ons superfijne blushpoeder voor een mooie kleur die eenvoudig te blenden is en in laagjes kan worden opgebouwd. Probeer een van de prachtige tinten voor direct stralende wangen. Het bevat vitamine E en Community Trade-maroela-olie en biedt make-up en huidverzorging in één."
+;"p000936";"Camomile Gentle Eye Make-Up Remover";"Laat make-up rondom de ogen eenvoudig wegsmelten. Onze oogmake-upremover met kamille reinigt mild en maakt de huid glad en schoon."
+;"p000971";"Seaweed Oil Balancing Clay Mask";"Reinig je huid grondig met ons zuiverende, balancerende kleimasker met zeewier. Voor een frisse, verkwikte en zuivere huid."
+;"p001050";"Instaglow";"Onze Instaglow CC Cream SPF 20 PA+++ gaat verder dan een reguliere CC cream. Het zal je huid doen herleven met een gezonde gloed. Deze multi-tasking formule verlicht, minimaliseert de zichtbaarheid van poriën, vermindert glans en hydrateert voor 24U - waa"
+;"p001081";"Honey Bronze™ Drops Of Sun";"Vervals een zomerse gloed alsof je net terug bent van vakantie met Drops of Sun. Voeg een druppel toe tot je dagcrème of foundation om een mooie getinte look te creëren. De matte, glittervrije finish zorgt ervoor dat je tint er naturel en niet oranje uitz"
+;"p001102";;"Eindig het gevecht met onzuiverheden met ons unieke drievoudige wapen. Het 3-in-1 wash scrub mask met Tea Tree is verrijkt met zuivere, biologische Tea Tree-olie en vormt een dagelijkse gezichtsscrub, gezichtswash en gezichtsmasker in 1 die perfect zijn voor onzuivere huid. Het huidoppervlak wordt gereinigd en zachtjes gescrubd door biologisch afbreekbare microparels, waarbij onzuiverheden en dode huidcellen worden verwijderd, voor een huid die glad aanvoelt, niet glimt en er gaver uitziet. "
+;"p002001";;"Ontdek een uitgebreide lijn met neutrale kleuren om de natuurlijke schoonheid van iedere huidskleur en oogkleur te benadrukken."
+;"p002002";"Himalayan Charcoal Purifying Glow Mask";"Gun je huid een intense reiniging met onze Himalaya Charcoal Purifying Glow Mask. Dit 100% veganistische kleimasker is geïnspireerd door oude Ayurvedische tradities en gemaakt van bamboehoutskool, groene theebladeren en biologische tea tree-olie."
+;"p002013";"Oils Of Life™ Intensely Revitalising Eye Cream Gel";"Je ziet de wereld door je ogen, maar naarmate de tijd verstrijkt zijn je ogen de eersten die je leeftijd verraden. De Intensely Revitalising Eye Cream-Gel bevat drie verschillende kostbare zaadoliën van over de hele wereld en geeft je ogen nieuw leven."
+;"p002144";"Fan Brush";"Wij worden wild enthousiast van deze fan brush, speciaal ontworpen voor het subtiel aanbrengen van highlighters en blush. De brushes zijn ontworpen met de nieuwste make-up trends in gedachten en tillen je look naar the next level. Onze brushes zijn bedekt met een dun laagje charcoal en ze voelen misschien zachter aan dan de staart van een eekhoorntje, maar ze zijn 100% cruelty-free met synthetische borstelharen en duurzaam FSC houten handvaten. Oh, en hadden we al verteld dat deze brushes van The Body Shop helemaal vegan zijn?"
+;"p002145";"Slanted Blusher Brush";"Wij worden wild enthousiast van deze angled blush brush, speciaal ontworpen voor het perfect aanbrengen van highlighter en blush. De brushes zijn ontworpen met de nieuwste make-up trends in gedachten en tillen je look naar the next level. Onze brushes zijn bedekt met een dun laagje charcoal en ze voelen misschien zachter aan dan de staart van een eekhoorntje, maar ze zijn 100% cruelty-free met synthetische borstelharen en duurzaam FSC houten handvaten. Oh, en hadden we al verteld dat deze brushes van The Body Shop helemaal vegan zijn?"
+;"p002171";"Matte Lip Liquid ";"Trakteer jezelf deze Kerst op onze nieuwe Matte Lip Liquid: dit seizoen de meest populaire make-up trend voor je lippen. Speciaal geformuleerd om moeiteloos over je lippen te glijden zoals een lipgloss en op te drogen tot een fluweelzachte matte lippenstift. Deze nieuwe liquid lipstick is langhoudend, lichtgewicht en beschikbaar in 12 kleuren. En ook nog eens vegetarisch net zoals al onze cruelty-free make-up."
+;"p002347";"Almond Milk & Honey Soothing & Restoring Body Butter";"Deze hemelse, rijke body butter is speciaal ontworpen om de gevoelige en droge huid te verzachten, herstellen en beschermen. Helpt om de trekkerige, jeukerige en droge huid te voeden voor 48 uur. Verrijkt met organische Spaanse amandelmelk en Community Trade honing uit Ethipië. Almond Milk & Honey is speciaal ontworpen voor gevoelige, droge huid."
+;"p002419";"Secrets of the World Thai Makrut Lime Firming Oil";"Onze nieuwe body olie zit vol met sprankelend frisse makrut limoen, geroemd door vrouwen in Thailand om zijn stimulerende en opwekkende geur – ideaal voor het doen opleven van je zintuigen. Ontdek een verstevigende, voedende olie die snel door je huid wordt opgenomen. Met Community Trade marula olie. Gebruik deze body olie als onderdeel van je Secrets of the World Firming Ritual."
+;"p002437";;"Maak kennis met je nieuwe obsessie Drops of Glow Lustre Finish Creator. Ideaal voor mensen die vaak onderweg zijn, omdat je deze slimme blend op zichzelf kunt gebruiken, maar ook kunt mixen met je andere favoriete beautyproducten, voor onmiddellijke shine, overal waar je komt. Je foundation een extra shine geven of all the way gaan en het mixen met je dagcrème: je bent slechts een druppeltje verwijderd van het oplichten van je hele look. Highlight je cupidoboog, accentueer je jukbeenderen of laat je ogen oplichten door het als finishing van je oogschaduw te gebruiken...de mogelijkheden zijn eindeloos. "
+;"p002445";;"Word wakker met een zuiverdere huid Ons Tea Tree Anti-Imperfection Night Mask is fris en ademend (* markten moeten de naam van de correcte variant gebruiken) en is speciaal ontwikkeld om 's nachts de vette huid te verzorgen en onzuiverheden te verwijderen. Dit langzaam intrekkende masker voor de vette huid is 100% veganistisch en bevat salicylzuur en Community Trade tea tree-olie. Verkleint en vermindert onzuiverheden* en zorgt dat de huid zuiverder, gladder en gezonder oogt. "
+;"p002449";"Fuji Green Tea™ Refreshingly Purifying Shampoo";"Deze verfrissende shampoo met stimulerende Japanse groene thee reinigt en verwijdert onzuiverheden. Je haar en je hoofdhuid voelen gerevitaliseerd en verkwikt aan."
+;"p002453";"Coconut Oil Brilliantly Nourishing Pre-Shampoo Hair Oil";"Een combinatie van biologische virgin Community Trade-kokosnootolie uit Samoa en sojaolie uit Brazilië. Dit 100% veganistische en heerlijk geurende product is verrijkt met Braziliaanse pracaxi-olie. Gebruik het voordat je je haar gaat verzorgen, laat het 's nachts inwerken of masseer het in je droge haarpunten. Je lokken worden sterker, gladder en zachter."
+;"p002457";;"Dit verrukkelijk romige en 100% veganistische masker is verrijkt met groene matcha-thee uit het Japanse Kakegawa en extract van paardenbloem en kalmerende Community Trade aloë vera uit Mexico. De formule zorgt dat de huid diep wordt gereinigd, mild wordt gescrubd en wordt ontdaan van alle vervuilende stoffen en onzuiverheden die zich dagelijks en wekelijks op de huid verzamelen."
+;"p002668";"Brow Sculpt";"Ga voor volle wenkbrauwen met onze nieuwe Brow Sculpt, een 3-in-1-tool voor textuur, met een poeder, een wax en een mascaraformule. Deze tool helpt je om gemakkelijk je droomwenkbrauwen te creëren, van een natuurlijke tot een gedurfde look. Verkrijgbaar in 3 tinten."
+;"p002733";"Strawberry Clearly Glossing Conditioner";"Verlevendig duf haar met onze Strawberry Clearly Glossing Conditioner voor gladdere en meer glanzende lokken die ruiken naar verse Italiaanse aardbeien. De 100% veganistische formule is gemaakt zonder siliconen en maakt het ontwarren van het haar gemakkelijker, voor een gehydrateerd resultaat met een heerlijke geur. "
+;"p000042v";"Lightening Touch 200ml";"Vroeg uit de veren en laat naar bed? Ontdek onze lichtweerkaatsende concealer voor onder de ogen, die de zichtbaarheid van donkere kringen en fijne lijntjes minimaliseert. Deze verhelderende concealer is eenvoudig aan te brengen met de ingebouwde kwast en wordt ongetwijfeld de held van je make-uptasje."
+;"p000048v";"All-In-One Face Base 200ml";"Dit compactpoeder is een foundation en poeder in één en is eenvoudig te mengen voor een glad, fluweelachtig resultaat. Dit veelzijdige product kan op verschillende manieren worden gebruikt voor een perfecte teint. Het bijgeleverde sponsje natmaken en aanbrengen voor goede dekking. Wil je dat je make-up langer goed blijft zitten? Breng onze All-In-One Face Base aan op je huid met onze Face & Body Brush om foundation goed te laten zitten of breng het op een schoon gezicht aan voor een licht, gelijkmatig resultaat. De beste manier van multitasken."
+;"p000056v";"Facial Cleansing Sponge 200ml";"Reinig je huid en verwijder make-up met deze zachte reinigingsspons."
+;"p000063v";"Styling Hairbrush 200ml";"Ontklit, lift, geef volume en breng in model terwijl je föhnt. De pinnen staan dicht bij elkaar voor een goede grip en controle over het haar. Ze masseren je hoofdhuid zachtjes. Regelmatig borstelen verspreidt de natuurlijke oliën van de huid van de wortels tot de punten."
+;"p000067v";"Muslin Cloth 200ml";"Verwijder make-up en reinig je huid met ons superfijne katoenen reinigingsdoekje, voor huid die zachter en gladder aanvoelt. Gebruiken met je favoriete reinigingsproduct voor een optimaal resultaat."
+;"p000069v";"Colour Crush™-Lipsticks 200ml";"Een vleugje van onze crèmeachtige, vochtregulerende lippenstift zorgt voor intense kleur. Met een subtiele rozengeur en Community Trade-maroela-olie voor extra hydratatie. Die wil je in iedere kleur."
+;"p000106v";"Mango Hand Cream 200ml";"Deze handcrème voor iedere dag vormt de ultieme musthave voor iedere handtas en is perfect voor hydratatie voor onderweg. De lichte gelcrème is verrijkt met de geur van frisse, tropische mango en trekt snel in, om de handen te verzachten en beschermen."
+;"p000111v";"Coconut Hand Cream 200ml";"Deze handcrème voor iedere dag vormt de ultieme musthave voor iedere handtas en is perfect voor hydratatie voor onderweg. De lichte gelcrème is verrijkt met de frisse geur van kokosolie en trekt snel in, om de handen te verzachten en beschermen."
+;"p000120v";"Ginger Anti-Dandruff Shampoo 200ml";"Verfris je hoofdhuid en breng hem tot rust met deze verkwikkende shampoo. Verrijkt met gemberextract, extract van berkenbast en witte wilgenbast en Community Trade-honing uit Ethiopië."
+;"p000142v";"Arber Shower gel 200ml";"Een verzorgende douchegel waarmee je ook je haar kunt wassen, subtiel geparfumeerd met de heldere, sensuele, houtachtige geur Arber."
+;"p000184v";"Super Volume Mascara 200ml";"Geef je wimpers in een handomdraai een dosis intense kleur en volume met onze mascara die niet klontert."
+;"p000222v";"All-In-One Instablur™ Universal 200ml";"Deze perfector houdt glimmen in toom, verbergt onzuiverheden, vermindert poriën en zorgt elke keer weer voor een gave, perfecte teint. Instablur™ biedt 5 beautyvoordelen voor de huid en bevat Community Trade-maroela-olie. Aanbrengen voor foundation als perfecte basis of afzonderlijk gebruiken om onzuiverheden te verdoezelen en de huid te matteren. Instablur™ vormt gegarandeerd je geheime (schoonheids)wapen."
+;"p000253v";"Wild Argan Oil Bubbling Bath 200ml";"Stap in een bad vol heerlijk ruikende bubbels, verrijkt met intens voedende arganolie. Je huid zal rijk en zacht aanvoelen na dit bad. "
+;"p000269v";"Wild Argan Solid Oil Lips 200ml";"Laat onze balsem versmelten met je lippen voor een prachtig natuurlijk uitziende glans, verrijkt met verzorgende arganolie uit Marokko. Deze intens vochtregulerende formule verzorgt en verzacht je lippen bij elk gebruik."
+;"p000341v";"Drops Of Youth™ Bouncy Sleeping Mask 200ml";"Dit verfrissende masker is speciaal ontwikkeld om de eerste tekenen van veroudering aan te pakken. Voor een zachtere, gladdere en grondig gereinigde huid."
+;"p000362v";"Brow & Lash Gel 200ml";"Deze heldere gel is voorzien van een handig borsteltje en pakt ongetemde wenkbrauwen aan. Gebruik op je wimpers voor een natuurlijke maar gedefinieerde, make-uploze look. Eenvoudig."
+;"p000435v";"Skinny Felt Liner 200ml";"Onze precieze, gestroomlijnde eyeliner is ideaal voor vloeiende lijntjes om definitie en extra intensiteit te geven aan je look. Voor een geaccentueerde, gitzwarte wimperlijn."
+;"p000436v";"Gel Pen Liner 200ml";"Deze crèmeachtige, gladde eyeliner veegt soepel over de huid voor langhoudende intensiteit en mooie, geaccentueerde ogen. Onze waterproof-formule is beschikbaar in 3 diepe kleuren en blijft urenlang zitten."
+;"p000461v";"Hemp Hand Protector 200ml";"Zeg ruwe huid vaarwel en bescherm je handen tegen weersomstandigheden met onze verzachtende, verzorgende crème met hennepolie."
+;"p000466v";"Activist Deodorant 200ml";"Een milde, snel drogende deodorant met een warme, kruidige geur. De deodorant verfrist direct en is lang werkzaam."
+;"p000467v";"Honey Bronze™ Tinted Leg Mist 200ml";"Geniet in een paar seconden van een gladde, perfect gebruinde huid met onze innovatie bronzerspray. Onze lichte gelspray bevat geen olie en is makkelijk in gebruik, voor een natuurlijk ogende, zongebruinde look."
+;"p000480v";"Honey Bronze™ Bronzing Powder 200ml";"Voor een natuurlijk ogende teint gebruik je ons zonnige, met honing verrijkte bronzerpoeder voor een schitterende gouden glans, het hele jaar door. Ons Honey Bronze™ bronzerpoeder is verkrijgbaar in tinten, die zelfs geschikt zijn voor de lichtste teint, en biedt een moeiteloze manier om die mooie vakantiegloed na te bootsen. Gebruik dit glansvrije, geperste poeder voor een egaal gebruinde, matte teint."
+;"p000644v";"White Musk® Deodorant 200ml";"White Musk® Deodorant bevat de heldere, frisse, lichte mix van diervriendelijke muskus, vetiver en sandelhout. De geur kan in laagjes worden opgebouwd met andere White Musk® producten."
+;"p000664v";"Drops Of Youth™ Youth Essence-Lotion 200ml";"Drops of Youth™ Youth Essence Lotion is een frisse en verkwikkende gezichtslotion met een gel-formule de huid voorbereid op het dagelijkse verzorginsritueel."
+;"p000676v";"Peppermint Cooling Foot Spray 200ml";"Verkwik en verfris vermoeide, pijnlijke voeten met onze verkoelende voetspray. De voetspray is verrijkt met essentiële olie van Engelse pepermunt en biedt frisheid wanneer jij dat nodig hebt."
+;"p000694v";"Vitamin E Sink In Moisture Sleeping Mask 200ml";"Deze Vitamin E Sink In Moisture Mask is een gel-achtig masker dat de vochtbalans van de huid herstelt."
+;"p000726v";"Brow & Liner Kit 200ml";"Ontdek onze Brow & Liner Kit met tweezijdige kwast voor perfecte wenkbrauwen. Zorg voor definitie en vorm, omlijning en kleur met zijdezachte tinten voor een perfect resultaat."
+;"p000767v";"Grapeseed Hair Serum 200ml";"Maak je haar glad en glanzend met dit glanzende serum. Breng een kleine hoeveelheid aan in je haar voor het beste resultaat."
+;"p000787v";"Hemp Hard Working Foot Protector 200ml";"Verzorg je voeten met onze Hemp Hard Working Foot Protector, die ruwe huid van top tot teen verzacht. Deze crème, die de vochtbalans herstelt en zeer droge huid hydrateert, is een echte musthave."
+;"p000789v";"Detangling Comb 200ml";"Ontwar nat of droog haar moeiteloos met onze grove kam. De perfecte accessoire om producten eenvoudig over het haar te verdelen."
+;"p000795v";"Satsuma Hand Cleanse Gel 200ml";"Houd je handen fris en schoon met onze fruitige reinigingsgel met satsuma. Perfect voor in je handtas om onderweg te reinigen."
+;"p000797v";"Pink Grapefruit Hand Cleanse Gel 200ml";"Houd je handen de hele dag door fris en schoon met deze reinigingsgel met roze grapefruit. Perfect voor in je handtas om onderweg te reinigen."
+;"p000810v";"Vitamin E Eye Cream 200ml";"De Vitamin E Eye Cream is een lichte vochtregulerende oog crème met vitamine E."
+;"p000851v";"All-In-One Cheek Colour 200ml";"Ontdek ons superfijne blushpoeder voor een mooie kleur die eenvoudig te blenden is en in laagjes kan worden opgebouwd. Probeer een van de prachtige tinten voor direct stralende wangen. Het bevat vitamine E en Community Trade-maroela-olie en biedt make-up en huidverzorging in één."
+;"p000936v";"Camomile Gentle Eye Make-Up Remover 200ml";"Laat make-up rondom de ogen eenvoudig wegsmelten. Onze oogmake-upremover met kamille reinigt mild en maakt de huid glad en schoon."
+;"p000971v";"Seaweed Oil Balancing Clay Mask 200ml";"Reinig je huid grondig met ons zuiverende, balancerende kleimasker met zeewier. Voor een frisse, verkwikte en zuivere huid."
+;"p001050v";"Instaglow 200ml";"Onze Instaglow CC Cream SPF 20 PA+++ gaat verder dan een reguliere CC cream. Het zal je huid doen herleven met een gezonde gloed. Deze multi-tasking formule verlicht, minimaliseert de zichtbaarheid van poriën, vermindert glans en hydrateert voor 24U - waa"
+;"p001081v";"Honey Bronze™ Drops Of Sun 200ml";"Vervals een zomerse gloed alsof je net terug bent van vakantie met Drops of Sun. Voeg een druppel toe tot je dagcrème of foundation om een mooie getinte look te creëren. De matte, glittervrije finish zorgt ervoor dat je tint er naturel en niet oranje uitz"
+;"p001102v";"Tea Tree 3-in-1 Wash Scrub Mask 200ml";"Eindig het gevecht met onzuiverheden met ons unieke drievoudige wapen. Het 3-in-1 wash scrub mask met Tea Tree is verrijkt met zuivere, biologische Tea Tree-olie en vormt een dagelijkse gezichtsscrub, gezichtswash en gezichtsmasker in 1 die perfect zijn voor onzuivere huid. Het huidoppervlak wordt gereinigd en zachtjes gescrubd door biologisch afbreekbare microparels, waarbij onzuiverheden en dode huidcellen worden verwijderd, voor een huid die glad aanvoelt, niet glimt en er gaver uitziet. "
+;"p002001v";"Down To Earth Quad Eye Shadow 200ml";"Ontdek een uitgebreide lijn met neutrale kleuren om de natuurlijke schoonheid van iedere huidskleur en oogkleur te benadrukken."
+;"p002002v";"Himalayan Charcoal Purifying Glow Mask 200ml";"Gun je huid een intense reiniging met onze Himalaya Charcoal Purifying Glow Mask. Dit 100% veganistische kleimasker is geïnspireerd door oude Ayurvedische tradities en gemaakt van bamboehoutskool, groene theebladeren en biologische tea tree-olie."
+;"p002013v";"Oils Of Life™ Intensely Revitalising Eye Cream Gel 200ml";"Je ziet de wereld door je ogen, maar naarmate de tijd verstrijkt zijn je ogen de eersten die je leeftijd verraden. De Intensely Revitalising Eye Cream-Gel bevat drie verschillende kostbare zaadoliën van over de hele wereld en geeft je ogen nieuw leven."
+;"p002144v";"Fan Brush 200ml";"Wij worden wild enthousiast van deze fan brush, speciaal ontworpen voor het subtiel aanbrengen van highlighters en blush. De brushes zijn ontworpen met de nieuwste make-up trends in gedachten en tillen je look naar the next level. Onze brushes zijn bedekt met een dun laagje charcoal en ze voelen misschien zachter aan dan de staart van een eekhoorntje, maar ze zijn 100% cruelty-free met synthetische borstelharen en duurzaam FSC houten handvaten. Oh, en hadden we al verteld dat deze brushes van The Body Shop helemaal vegan zijn?"
+;"p002145v";"Slanted Blusher Brush 200ml";"Wij worden wild enthousiast van deze angled blush brush, speciaal ontworpen voor het perfect aanbrengen van highlighter en blush. De brushes zijn ontworpen met de nieuwste make-up trends in gedachten en tillen je look naar the next level. Onze brushes zijn bedekt met een dun laagje charcoal en ze voelen misschien zachter aan dan de staart van een eekhoorntje, maar ze zijn 100% cruelty-free met synthetische borstelharen en duurzaam FSC houten handvaten. Oh, en hadden we al verteld dat deze brushes van The Body Shop helemaal vegan zijn?"
+;"p002171v";"Matte Lip Liquid 200ml";"Trakteer jezelf deze Kerst op onze nieuwe Matte Lip Liquid: dit seizoen de meest populaire make-up trend voor je lippen. Speciaal geformuleerd om moeiteloos over je lippen te glijden zoals een lipgloss en op te drogen tot een fluweelzachte matte lippenstift. Deze nieuwe liquid lipstick is langhoudend, lichtgewicht en beschikbaar in 12 kleuren. En ook nog eens vegetarisch net zoals al onze cruelty-free make-up."
+;"p002347v";"Almond Milk & Honey Soothing & Restoring Body Butter 200ml";"Deze hemelse, rijke body butter is speciaal ontworpen om de gevoelige en droge huid te verzachten, herstellen en beschermen. Helpt om de trekkerige, jeukerige en droge huid te voeden voor 48 uur. Verrijkt met organische Spaanse amandelmelk en Community Trade honing uit Ethipië. Almond Milk & Honey is speciaal ontworpen voor gevoelige, droge huid."
+;"p002419v";"Secrets of the World Thai Makrut Lime Firming Oil 200ml";"Onze nieuwe body olie zit vol met sprankelend frisse makrut limoen, geroemd door vrouwen in Thailand om zijn stimulerende en opwekkende geur – ideaal voor het doen opleven van je zintuigen. Ontdek een verstevigende, voedende olie die snel door je huid wordt opgenomen. Met Community Trade marula olie. Gebruik deze body olie als onderdeel van je Secrets of the World Firming Ritual."
+;"p002437v";"Drops of Glow Lustre Finish Creator 200ml";"Maak kennis met je nieuwe obsessie Drops of Glow Lustre Finish Creator. Ideaal voor mensen die vaak onderweg zijn, omdat je deze slimme blend op zichzelf kunt gebruiken, maar ook kunt mixen met je andere favoriete beautyproducten, voor onmiddellijke shine, overal waar je komt. Je foundation een extra shine geven of all the way gaan en het mixen met je dagcrème: je bent slechts een druppeltje verwijderd van het oplichten van je hele look. Highlight je cupidoboog, accentueer je jukbeenderen of laat je ogen oplichten door het als finishing van je oogschaduw te gebruiken...de mogelijkheden zijn eindeloos. "
+;"p002445v";"Tea Tree Anti-Imperfection Night Mask 200ml";"Word wakker met een zuiverdere huid Ons Tea Tree Anti-Imperfection Night Mask is fris en ademend (* markten moeten de naam van de correcte variant gebruiken) en is speciaal ontwikkeld om 's nachts de vette huid te verzorgen en onzuiverheden te verwijderen. Dit langzaam intrekkende masker voor de vette huid is 100% veganistisch en bevat salicylzuur en Community Trade tea tree-olie. Verkleint en vermindert onzuiverheden* en zorgt dat de huid zuiverder, gladder en gezonder oogt. "
+;"p002449v";"Fuji Green Tea™ Refreshingly Purifying Shampoo 200ml";"Deze verfrissende shampoo met stimulerende Japanse groene thee reinigt en verwijdert onzuiverheden. Je haar en je hoofdhuid voelen gerevitaliseerd en verkwikt aan."
+;"p002453v";"Coconut Oil Brilliantly Nourishing Pre-Shampoo Hair Oil 200ml";"Een combinatie van biologische virgin Community Trade-kokosnootolie uit Samoa en sojaolie uit Brazilië. Dit 100% veganistische en heerlijk geurende product is verrijkt met Braziliaanse pracaxi-olie. Gebruik het voordat je je haar gaat verzorgen, laat het 's nachts inwerken of masseer het in je droge haarpunten. Je lokken worden sterker, gladder en zachter."
+;"p002457v";"Japanese Matcha Tea Pollution Clearing Mask 200ml";"Dit verrukkelijk romige en 100% veganistische masker is verrijkt met groene matcha-thee uit het Japanse Kakegawa en extract van paardenbloem en kalmerende Community Trade aloë vera uit Mexico. De formule zorgt dat de huid diep wordt gereinigd, mild wordt gescrubd en wordt ontdaan van alle vervuilende stoffen en onzuiverheden die zich dagelijks en wekelijks op de huid verzamelen."
+;"p002668v";"Brow Sculpt 200ml";"Ga voor volle wenkbrauwen met onze nieuwe Brow Sculpt, een 3-in-1-tool voor textuur, met een poeder, een wax en een mascaraformule. Deze tool helpt je om gemakkelijk je droomwenkbrauwen te creëren, van een natuurlijke tot een gedurfde look. Verkrijgbaar in 3 tinten."
+;"p002733v";"Strawberry Clearly Glossing Conditioner 200ml";"Verlevendig duf haar met onze Strawberry Clearly Glossing Conditioner voor gladdere en meer glanzende lokken die ruiken naar verse Italiaanse aardbeien. De 100% veganistische formule is gemaakt zonder siliconen en maakt het ontwarren van het haar gemakkelijker, voor een gehydrateerd resultaat met een heerlijke geur. "
+
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+# Update review ratings
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];reviewRating;type(code)[default=SIZE];$catalogVersion;$approved
+;p003257;2.8
+;p000341;5.0
+;p002002;1.2
+;p002445;4.3
+;p003101;3.3
+;p001102;2.0
+;p002457;2.5
+;p000971;4.5
+;p003255;3.2
+;p003254;2.1
+;p003173;4.3
+;p000694;1.5
+;p002003;2.3
+;p000936;4.4
+;p002013;3.0
+;p000810;1.2
+;p002833;1.4
+;p003268;1.6
+;p002835;1.8
+;p000664;2.0
+;p003259;2.2
+;p000067;2.4
+;p000056;2.6
+;p002017;2.8
+;p000499;3.0
+;p000253;3.2
+;p000019;3.4
+;p002347;3.6
+;p002812;3.8
+;p002419;4.0
+;p000480;4.2
+;p002863;4.4
+;p000466;4.6
+;p000644;4.8
+;p000787;5.0
+;p000676;1.1
+;p000461;1.3
+;p000111;1.5
+;p000106;1.7
+;p000795;1.9
+;p000797;2.1
+;p003200;2.3
+;p000789;2.5
+;p000063;2.7
+;p003090;2.9
+;p002733;3.1
+;p000142;3.3
+;p000120;3.5
+;p002449;3.7
+;p003091;3.9
+;p000767;4.1
+;p002453;4.3
+;p002144;4.7
+;p002448;4.9
+;p002145;1.0
+;p003111;1.3
+;p000360;1.6;COLOUR
+;p001081;1.9
+;p002819;2.2
+;p000467;2.5
+;p000851;2.8
+;p000436;3.1
+;p000435;3.4
+;p002668;3.7
+;p000362;4.0
+;p000726;4.3
+;p002817;4.6
+;p003237;4.9
+;p002001;1.0
+;p000048;1.2
+;p002867;1.4
+;p000042;1.6
+;p002171;1.8
+;p000069;2.2
+;p000621;2.4
+;p003235;2.6
+;p000184;2.8
+;p002818;3.0
+;p000222;3.2
+;p002437;3.4
+;p001050;3.6
+;p000269;3.8
+;p003087;3.2
+;p000657;3.3;COLOUR
+;p000247;4.8

@@ -1,0 +1,94 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Categories
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsFRProductCatalog
+$productCatalogName=France Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+
+# Insert Categories
+INSERT_UPDATE Category;code[unique=true];allowedPrincipals(uid)[default='customergroup'];$catalogVersion;variantCategory[default=false]
+;c00010;;
+;c00143;;
+;c00145;;
+;c00144;;
+;c00149;;
+;c00146;;
+;c00147;;
+;c00141;;
+;c00148;;
+;c00140;;
+;c00275;;
+;c00001;;
+;c00013;;
+;c00014;;
+;c00284;;
+;c00024;;
+;c00018;;
+;c00019;;
+;c00020;;
+;c00006;;
+;c00054;;
+;c00056;;
+;c00055;;
+;c00005;;
+;c00047;;
+;c00048;;
+;c00051;;
+;c00050;;
+;c00049;;
+;c00007;;
+;c00059;;
+;c00060;;
+;c00061;;
+;c00062;;
+;c00064;;
+;c00063;;
+;c00065;;
+;c00066;;
+;c00067;;
+;c00069;;
+;c00021;;;true
+# Insert Category Structure
+INSERT_UPDATE CategoryCategoryRelation;$categories;$supercategories
+;c00143;c00010;
+;c00145;c00010;
+;c00144;c00010;
+;c00149;c00010;
+;c00146;c00010;
+;c00147;c00010;
+;c00141;c00010;
+;c00148;c00010;
+;c00140;c00010;
+;c00275;c00010;
+;c00013;c00001;
+;c00014;c00001;
+;c00284;c00001;
+;c00024;c00001;
+;c00018;c00001;
+;c00019;c00001;
+;c00020;c00001;
+;c00021;c00001;
+;c00054;c00006;
+;c00056;c00006;
+;c00055;c00006;
+;c00047;c00005;
+;c00048;c00005;
+;c00051;c00005;
+;c00050;c00005;
+;c00049;c00005;
+;c00065;c00007;
+;c00059;c00007;
+;c00060;c00007;
+;c00061;c00007;
+;c00062;c00007;
+;c00064;c00007;
+;c00065;c00007;
+;c00066;c00007;
+;c00067;c00007;
+;c00069;c00007;

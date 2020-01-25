@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/>
+
+	<bean id="gigyaoccaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="gigyaoccaddon"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="gigyaoccaddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="gigyaoccaddon" />
+	</bean>
+
+	<bean id="cmsGigyaTypeAttributePredicate" parent="abstractDefaultClassTypeAttributePredicate" p:typeClass="com.envoydigital.occ.gigya.gigyaoccaddon.model.GigyaRaasComponentModel"/>
+
+	<bean id="gigyaCmsComponnetModelToDataConverter" class="com.envoydigital.occ.gigya.cms.rendering.populators.GigyaCmsComponnetModelToDataConverter">
+		<constructor-arg name="userService" ref="userService"/>
+	</bean>
+
+	<alias name="defaultCmsRenderingGigyaContentConverter" alias="cmsRenderingGigyaContentConverter" />
+	<bean name="defaultCmsRenderingGigyaContentConverter" parent="cmsAbstractContentConverter"
+		  p:modelToDataConverter-ref="gigyaCmsComponnetModelToDataConverter"
+		  p:constrainedBy-ref="cmsGigyaTypeAttributePredicate">
+	</bean>
+
+	<bean depends-on="cmsAttributeContentConverterList" parent="listMergeDirective">
+		<property name="add" ref="cmsRenderingGigyaContentConverter"/>
+	</bean>
+
+	<alias name="defaultTokenGenerator" alias="tokenGenerator"/>
+	<bean id="defaultTokenGenerator" class="com.envoydigital.occ.gigya.token.DefaultTokenGenerator">
+		<constructor-arg name="clientDetailsService" ref="oauthClientDetails"/>
+		<constructor-arg name="gigyaLoginService" ref="gigyaLoginService"/>
+		<constructor-arg name="oAuth2RequestFactory" ref="oAuth2RequestFactory"/>
+		<constructor-arg name="tokenService" ref="defaultOauthTokenServices"/>
+		<constructor-arg name="userDetailsService" ref="wsUserDetailsService"/>
+	</bean>
+
+	<alias name="defaultGigyaOccLoginFacade" alias="gigyaLoginFacade"/>
+	<bean id="defaultGigyaOccLoginFacade" class="com.envoydigital.occ.gigya.facades.DefaultGigyaOccLoginFacade" parent="defaultGigyaLoginFacade">
+		<property name="cmsSiteService" ref="cmsSiteService"/>
+		<property name="customerEmailStrategy" ref="customerEmailStrategy"/>
+	</bean>
+
+</beans>

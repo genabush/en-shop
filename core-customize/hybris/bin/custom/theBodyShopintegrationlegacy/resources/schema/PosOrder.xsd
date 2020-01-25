@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/posOrderSchema" xmlns:tns="http://thebodyshop/posOrderSchema" elementFormDefault="qualified">
+
+	<xs:element name="OrderRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Order" type="tns:Order" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="OrderResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ResponseDetail" type="tns:ResponseDetail" minOccurs="1" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="ResponseStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SUCCESS" />
+			<xs:enumeration value="FAILURE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="OrderStatusEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CREATED" />
+			<xs:enumeration value="COMPLETED" />
+			<xs:enumeration value="CANCELLED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="PaymentOrderEntryStatusEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PAYMENT_AUTHORIZED" />
+			<xs:enumeration value="PAYMENT_CAPTURED" />
+			<xs:enumeration value="PAYMENT_REFUNDED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="OrderEntryStatusEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CREATED" />
+			<xs:enumeration value="RETURNED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="GenderEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MALE" />
+			<xs:enumeration value="FEMALE" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="AddressID" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AddressLine1" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="AddressLine2" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AddressLine3" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="City" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="PostCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Region" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Country" type="xs:string" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ShippingAddressType">
+		<xs:complexContent>
+			<xs:extension base="tns:AddressType">
+				<xs:sequence>
+					<xs:element name="FirstName" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="LastName" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="EmailAddress" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="SMSNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+					<xs:element name="PhoneNumber" type="xs:string" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="ResponseDetail">
+		<xs:sequence>
+			<xs:element name="status" type="tns:ResponseStatus"></xs:element>
+			<xs:element name="messageId" type="xs:string" minOccurs="0"></xs:element>
+			<xs:element name="messageDesc" type="xs:string" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element name="Code" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Market" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Status">
+				<xs:simpleType>
+					<xs:restriction base="tns:OrderStatusEnum" />
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Currency">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Z]{3}" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Channel" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Customer" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CustomerID" type="xs:string" minOccurs="0" maxOccurs="1" />                       
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LYBCCardNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AgentID" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="StoreID" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Date" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+
+			<xs:element name="TotalDiscount" type="xs:double" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Payments" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Payment" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ID" type="xs:string" minOccurs="1" maxOccurs="1" />
+									<xs:element name="Type" type="xs:string" minOccurs="1" maxOccurs="1" />
+									<xs:element name="Amount" type="xs:double" minOccurs="1" maxOccurs="1" />
+									<xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1" />
+									<xs:element name="TransactionDate" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TotalNet" type="xs:double" minOccurs="0" maxOccurs="1" />
+			<xs:element name="TotalGross" type="xs:double" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Taxes" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Tax" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:double">
+										<xs:attribute name="code" type="xs:string" use="optional" />
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+            
+			<xs:element name="BillingAddress" type="tns:AddressType" minOccurs="0" maxOccurs="1" />
+            <xs:element name="ShippingAddress" type="tns:ShippingAddressType" minOccurs="0" maxOccurs="1" />
+
+			<xs:element name="Entries" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Entry" minOccurs="1" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="EntryNumber" minOccurs="1" maxOccurs="1">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="Status" type="tns:OrderEntryStatusEnum" minOccurs="1" maxOccurs="1" />
+									<xs:element name="ArticleId" minOccurs="1" maxOccurs="1">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1" />
+												<xs:maxLength value="18" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="Quantity" type="xs:int" minOccurs="1" maxOccurs="1" />
+									<xs:element name="GiftWrapped" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+									<xs:element name="Unit" type="xs:string" minOccurs="1" maxOccurs="1" />
+									<xs:element name="UnitPrice" type="xs:double" minOccurs="1" maxOccurs="1" />
+									<xs:element name="LinePromotions" minOccurs="0" maxOccurs="1">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Code" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="LineDiscount" type="xs:double" minOccurs="0" maxOccurs="1" />
+									<xs:element name="LineTotal" type="xs:double" minOccurs="0" maxOccurs="1" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,92 @@
+@import './order-confirmation-items';
+@import './order-confirmation-overview';
+// @import './order-confirmation-thank-you-message';
+@import './order-confirmation-totals';
+
+.OrderConfirmationPageTemplate {
+  background-color: var(--cx-color-base-silver);
+  cx-breadcrumb {
+    position: relative;
+  }
+}
+
+.order-confirmation {
+  &__container {
+    background-color: var(--cx-color-base-white);
+    padding: 30px;
+    max-width: 872px;
+    margin: 0 auto;
+    &--has-top-img {
+      margin-top: 4rem;
+    }
+  }
+  &__header {
+    text-align: left;
+    background: transparent;
+    margin-bottom: 4rem;
+    margin-top: 6rem;
+  }
+  &__list-header {
+    padding: 1rem;
+    background-color: var(--cx-color-core-primary);
+    color: var(--cx-color-base-white);
+  }
+  &__item {
+    padding: 1rem;
+    border: 1px solid var(--cx-color-core-primary);
+    border-top: none;
+    color: var(--cx-color-core-primary);
+    &:first-of-type {
+      border: 1px solid var(--cx-color-core-primary);
+    }
+  }
+  &__heading {
+    font-family: 'WorkSansBold';
+  }
+  &__summary-container {
+    padding: 2rem;
+    background-color: #f8f3e8;
+    height: 100%;
+    .icon {
+      position: absolute;
+      font-size: 2rem;
+    }
+  }
+  &__item--promo {
+    font-family: 'WorkSansBold';
+    color: var(--cx-color-core-primary);
+    background-color: #ccdddb;
+  }
+  &__summary-card {
+    padding-left: 4rem;
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  &__order-total,
+  &__order-subtotal {
+    font-family: 'WorkSansBold';
+    font-size: 20px;
+  }
+  &__order-subtotal {
+    color: #3a857e;
+  }
+  &__contact-info {
+    text-align: left;
+    margin: 4rem auto;
+    .icon {
+      float: left;
+      font-size: 2rem;
+    }
+    p {
+      float: left;
+      margin-left: 1rem;
+      font-family: 'RecoletaSemiBold';
+      font-size: 20px;
+    }
+  }
+  &__order-review-summary {
+    overflow: hidden;
+  }
+}

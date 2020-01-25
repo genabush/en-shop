@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://paymentCapture.v1.ws.mercury.com" xmlns:ns1="http://thebodyshop/orderSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://paymentCapture.v1.ws.mercury.com">
+	<xs:import schemaLocation="Order.xsd" namespace="http://thebodyshop/orderSchema"></xs:import>
+	<xs:element name="paymentCapture" type="tns:paymentCapture" />
+	<xs:element name="paymentCaptureResponse" type="tns:paymentCaptureResponse" />
+	<xs:complexType name="paymentCapture">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="request" type="ns1:Order" />
+			<xs:element minOccurs="0" name="messageid" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="paymentCaptureResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:hybrisResponse" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="hybrisResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="messageId" type="xs:string" />
+			<xs:element minOccurs="0" name="requestId" type="xs:string" />
+			<xs:element minOccurs="0" name="status" type="xs:string" />
+			<xs:element minOccurs="0" name="statusMessage" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

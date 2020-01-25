@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="order-confirmation">
+    <div class="order-confirmation__container">
+      <div class="order-confirmation__order-review-summary" *ngIf="order$ | async as order">
+        <div class="row">
+          <div class="col-12 col-md-6 ">
+            <h4 class="order-confirmation__heading">{{ 'orderConfirmationPage.billingAddress' | cxTranslate }}</h4>
+            <div class="order-confirmation__summary-container">
+              <span class="icon icon--shop"></span>
+              <div class="order-confirmation__summary-card">
+                <div class="" *ngIf="order?.paymentInfo?.billingAddress as address">
+                  <p [attr.aria-label]="address.titleCode + ' ' + address.firstName + ' ' + address.lastName">
+                    <b>
+                      <span class="text-capitalize">{{ address.titleCode }}</span> {{ address.firstName }}
+                      {{ address.lastName }}
+                      <ng-container *ngIf="address.companyName"> ({{ address.companyName }})</ng-container>
+                    </b>
+                  </p>
+                  <p [attr.aria-label]="address.line1">{{ address.line1 }}</p>
+                  <p [attr.aria-label]="address.line2">{{ address.line2 }}</p>
+                  <p [attr.aria-label]="address.postalCode">{{ address.postalCode }}</p>
+                  <p [attr.aria-label]="address.town">{{ address.town }}</p>
+                  <p [attr.aria-label]="address?.country?.name">{{ address?.country?.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <h4 class="order-confirmation__heading">{{ 'orderConfirmationPage.shippingAddress' | cxTranslate }}</h4>
+            <div class="order-confirmation__summary-container">
+              <span class="icon icon--truck"></span>
+              <div class="order-confirmation__summary-card">
+                <div class="" *ngIf="order?.deliveryAddress as address">
+                  <p [attr.aria-label]="address.titleCode + ' ' + address.firstName + ' ' + address.lastName">
+                    <b>
+                      <span class="text-capitalize">{{ address.titleCode }}</span> {{ address.firstName }}
+                      {{ address.lastName }}
+                      <ng-container *ngIf="address.companyName"> ({{ address.companyName }})</ng-container>
+                    </b>
+                  </p>
+                  <p [attr.aria-label]="address.line1">{{ address.line1 }}</p>
+                  <p [attr.aria-label]="address.line2">{{ address.line2 }}</p>
+                  <p [attr.aria-label]="address.postalCode">{{ address.postalCode }}</p>
+                  <p [attr.aria-label]="address.town">{{ address.town }}</p>
+                  <p [attr.aria-label]="address?.country?.name">{{ address?.country?.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="order-confirmation__contact-info">
+          <span class="icon icon--call"></span>
+          <p>
+            {{ 'orderConfirmationPage.contactMsg' | cxTranslate }}<br />
+            {{ 'orderConfirmationPage.contactPhone' | cxTranslate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

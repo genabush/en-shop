@@ -1,0 +1,16 @@
+$productCatalog=tbsGlobalProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$supercategories=supercategories(code, $catalogVersion)
+$primarycategory=primarycategory(code, $catalogVersion)
+
+#
+# Assignment of all the categories the product is in
+#
+UPDATE TBSBaseProduct ; code[unique=true] ; $supercategories ; $catalogVersion ;  
+                      ; p000019           ; c00142           ;                 ;  
+#                     
+# Assignment of the product's primary category
+#                     
+UPDATE TBSBaseProduct ; code[unique=true] ; $primarycategory ; $catalogVersion ;  
+                      ; p000019           ; c00142           ;                 ;  

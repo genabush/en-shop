@@ -1,0 +1,516 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsSGContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:sg.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsSGProductCatalog
+$productCatalogName=SG Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-sg;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;sgroot;;sgroot;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;SGLoginLink;SG Login Link;/login;SGLoginLink;SGLoginLink;;;;
+;;SGBodyCategoryLink;SG Body Category Link;/Body/c/c00001;SGBodyCategoryLink;SGBodyCategoryLink;;c00001;;
+;;SGBodyTreatsCategoryLink;SG Body Treats Category Link;/Body/Bath-Treats/c/c00013;SGBodyTreatsCategoryLink;SGBodyTreatsCategoryLink;;c00013;;
+;;SGBodyButtersCategoryLink;SG Body Butters Category Link;/Body/Body-Butters/c/c00014;SGBodyButtersCategoryLink;SGBodyButtersCategoryLink;;c00014;;
+;;SGBodyYogurtsCategoryLink;SG Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;SGBodyYogurtsCategoryLink;SGBodyYogurtsCategoryLink;;c00284;;
+;;SGBodyMassageOilsCategoryLink;SG Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;SGBodyMassageOilsCategoryLink;SGBodyMassageOilsCategoryLink;;c00024;;
+;;SGBodyBronzingCategoryLink;SG Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;SGBodyBronzingCategoryLink;SGBodyBronzingCategoryLink;;c00018;;
+;;SGDeodorantCategoryLink;SG Deodorant Category Link;/Body/Deodorant/c/c00019;SGDeodorantCategoryLink;SGDeodorantCategoryLink;;c00019;;
+;;SGFootCareCategoryLink;SG Foot Care Category Link;/Body/Foot-Care/c/c00020;SGFootCareCategoryLink;SGFootCareCategoryLink;;c00020;;
+;;SGTravelSizesCategoryLink;SG Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;SGTravelSizesCategoryLink;SGTravelSizesCategoryLink;;c00021;;
+;;SGFaceCategoryLink;SG Face Category Link;/Face/c/c00010;SGFaceCategoryLink;SGFaceCategoryLink;;c00010;;
+;;SGFaceMasksCategoryLink;SG Face Masks Category Link;/Face/Face-Masks/c/c00143;SGFaceMasksCategoryLink;SGFaceMasksCategoryLink;;c00143;;
+;;SGMakeUpRemoversCategoryLink;SG Make-up Removers Link;/Face/Make-up-Removers/c/c00145;SGMakeUpRemoversCategoryLink;SGMakeUpRemoversCategoryLink;;c00145;;
+;;SGEyeCareCategoryLink;SG Eye Care CategoryLink;/Face/Eye-Care/c/c00144;SGEyeCareCategoryLink;SGEyeCareCategoryLink;;c00144;;
+;;SGNightTimeTreatmentsCategoryLink;SG Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;SGNightTimeTreatmentsCategoryLink;SGNightTimeTreatmentsCategoryLink;;c00149;;
+;;SGLipBalmCategoryLink;SG Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;SGLipBalmCategoryLink;SGLipBalmCategoryLink;;c00146;;
+;;SGMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;SGMenShavingCategoryLink;SGMenShavingCategoryLink;;c00147;;
+;;SGCleansersAndTonersCategoryLink;SG Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;SGCleansersAndTonersCategoryLink;SGCleansersAndTonersCategoryLink;;c00141;;
+;;SGMoisturisersCategoryLink;SG Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;SGMoisturisersCategoryLink;SGMoisturisersCategoryLink;;c00148;;
+;;SGAccessoriesCategoryLink;SG Accessories CategoryLink;/Face/Accessories/c/c00140;SGAccessoriesCategoryLink;SGAccessoriesCategoryLink;;c00140;;
+;;SGFaceScrubsCategoryLink;SG Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;SGFaceScrubsCategoryLink;SGFaceScrubsCategoryLink;;c00275;;
+;;SGHandsCategoryLink;SG Hands CategoryLink;/Hands/c/c00006;SGHandsCategoryLink;SGHandsCategoryLink;;c00006;;
+;;SGHandsMoisturisersCategoryLink;SG Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;SGHandsMoisturisersCategoryLink;SGHandsMoisturisersCategoryLink;;c00054;;
+;;SGHandWashCategoryLink;SG Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;SGHandWashCategoryLink;SGHandWashCategoryLink;;c00056;;
+;;SGTargetedTreatmentCategoryLink;SG Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;SGTargetedTreatmentCategoryLink;SGTargetedTreatmentCategoryLink;;c00055;;
+;;SGHairCategoryLink;SG Hair Category Link;/Hair/c/c00005;SGHairCategoryLink;SGHairCategoryLink;;c00005;;
+;;SGBrushesAndCombsCategoryLink;SG Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;SGBrushesAndCombsCategoryLink;SGBrushesAndCombsCategoryLink;;c00047;;
+;;SGConditionerCategoryLink;SG Conditioner Category Link;/Hair/Conditioner/c/c00048;SGConditionerCategoryLink;SGConditionerCategoryLink;;c00048;;
+;;SGShampooCategoryLink;SG Shampoo Category Link;/Hair/Shampoo/c/c00051;SGShampooCategoryLink;SGShampooCategoryLink;;c00051;;
+;;SGTreatmentCategoryLink;SG Treatment Category Link;/Hair/Treatment/c/c00050;SGTreatmentCategoryLink;SGTreatmentCategoryLink;;c00050;;
+;;SGStylingCategoryLink;SG Styling Category Link;/Hair/Styling/c/c00049;SGStylingCategoryLink;SGStylingCategoryLink;;c00049;;
+;;SGMakeUpCategoryLink;SG Make-up Category Link;/Make-up/c/c00007;SGMakeUpCategoryLink;SGMakeUpCategoryLink;;c00007;;
+;;SGFoundationsConcealersCategoryLink;SG Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;SGFoundationsConcealersCategoryLink;SGFoundationsConcealersCategoryLink;;c00065;;
+;;SGBrushesAndToolsCategoryLink;SG Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;SGBrushesAndToolsCategoryLink;SGBrushesAndToolsCategoryLink;;c00059;;
+;;SGBBCreamsCategoryLink;SG BB Creams Category Link;/Make-up/BB-Creams/c/c00060;SGBBCreamsCategoryLink;SGBBCreamsCategoryLink;;c00060;;
+;;SGBronzingCategoryLink;SG Bronzing Category Link;/Make-up/Bronzing/c/c00061;SGBronzingCategoryLink;SG BronzingCategoryLink;;c00061;;
+;;SGCheeksCategoryLink;SG Cheeks Category Link;/Make-up/Cheeks/c/c00062;SGCheeksCategoryLink;SGCheeksCategoryLink;;c00062;;SG
+;;SGEyeLinersCategoryLink;SG Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;SGEyeLinersCategoryLink;SGEyeLinersCategoryLink;;c00064;;
+;;SGEyeShadowCategoryLink;SG Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;SGEyeShadowCategoryLink;SGEyeShadowCategoryLink;;c00063;;
+;;SGLipsCategoryLink;SG Lips Category Link;/Make-up/Lips/c/c00066;SGLipsCategoryLink;SGLipsCategoryLink;;c00066;;
+;;SGMascaraCategoryLink;SG Mascara Category Link;/Make-up/Mascara/c/c00067;SGMascaraCategoryLink;SGMascaraCategoryLink;;c00067;;
+;;SGPrimersCategoryLink;SG Primers Category Link;/Make-up/Primers/c/c00069;SGPrimersCategoryLink;SGPrimersCategoryLink;;c00069;;
+;;SGDeliveryLink;SG Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";SGDeliveryLink;SGDeliveryLink;newWindow;;;
+;;SGReturnsLink;SG Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";SGReturnsLink;SGReturnsLink;newWindow;;;
+;;SGFAQLink;SG FAQ Link;/faq;SGFAQLink;SGFAQLink;;;;
+;;SGTermsAndConditionsLink;SG TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";SGTermsAndConditionsLink;SGTermsAndConditionsLink;newWindow;
+;;SGPrivacyPolicyLink;SG PrivacyPolicy Link;/privacy-policy;SGPrivacyPolicyLink;SGPrivacyPolicyLink;newWindow;
+;;SGSitemapLink;SG Sitemap Link;/sitemap;SGSitemapLink;SGSitemapLink;newWindow;
+;;SGStoresLink;SG Stores Link;"https://www.thebodyshop.com/store-finder";SGStoresLink;SGStoresLink;newWindow;
+;;SGLoveYourBodyClubLink;SG Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";SGLoveYourBodyClubLink;SGLoveYourBodyClubLink;newWindow;
+;;SGStudentDiscountLink;SG Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";SGStudentDiscountLink;SGStudentDiscountLink;newWindow;
+;;SGGiftCardsLink;SG Gift Cards Link;/gift-card-balance;SGGiftCardsLink;SGGiftCardsLink;newWindow;
+;;SGAboutUsLink;SG About us Link;"https://www.thebodyshop.com/about-us";SGAboutUsLink;SGAboutUsLink;newWindow;
+;;SGTheBodyShopAtHomeLink;SG The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";SGTheBodyShopAtHomeLink;SGTheBodyShopAtHomeLink;newWindow;
+;;SGAffiliatesLink;SG Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";SGAffiliatesLink;SGAffiliatesLink;newWindow;
+;;SGGenderPayGapLink;SG Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";SGGenderPayGapLink;SGGenderPayGapLink;newWindow;
+;;SGModernSlaveryStatementLink;SG Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";SGModernSlaveryStatementLink;SGModernSlaveryStatementLink;newWindow;
+;;SGAgainstAnimalTestingLink;SG Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";SGAgainstAnimalTestingLink;SGAgainstAnimalTestingLink;newWindow;
+;;SGTaxStrategyLink;SG Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";SGTaxStrategyLink;SGTaxStrategyLink;newWindow;
+;;SGCareersLink;SG Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";SGCareersLink;SGCareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsSGRootNode					 ;                         ; TBS SG Root Node                   ; sgroot                        ;                                                               																										; TbsSGRootNode
+                                ; TbsSGNavNode                   ;                         ; TBS SG Site Nav Node               ; TbsSGRootNode                 ;                                              																										; TbsSGNavNode
+                                ; TbsSGCategoryNavNode           ;                         ; TBS SG Category Navigation         ; TbsSGNavNode                  ;                                                               																										; TbsSGCategoryNavNode
+                                ; TbsSGDiscoverNavNode           ;                         ; TBS SG Discover Navigation         ; TbsSGNavNode                  ;                                                               																										; TbsUKDiscoverNavNode
+                                ; TbsSGFooterNavNode             ;                         ; TBS SG Footer Navigation           ; TbsSGNavNode                  ;                                                               																										; TbsSGFooterNavNode
+                                ; SGUsefullInformationNavNode    ;                         ; SG Useful Information   			; TbsSGFooterNavNode            ; SGDeliveryLink,SGReturnsLink,SGFAQLink,SGTermsAndConditionsLink,SGPrivacyPolicyLink,SGSitemapLink                                										; SGUsefullInformationNavNode
+                                ; SGWaysToShopNavNode 		     ;                         ; SG Ways To Shop 					; TbsSGFooterNavNode            ; SGStoresLink,SGLoveYourBodyClubLink,SGStudentDiscountLink,SGGiftCardsLink                                  															; SGWaysToShopNavNode
+                                ; SGAboutUsNavNode               ;                         ; SG About Us               			; TbsSGFooterNavNode            ; SGAboutUsLink,SGTheBodyShopAtHomeLink,SGAffiliatesLink,SGGenderPayGapLink,SGModernSlaveryStatementLink,SGAgainstAnimalTestingLink,SGTaxStrategyLink,SGCareersLink 	; SGAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsSGCategoryNavNode;;Tbs SG Categories;TbsSGNavNode;SGBodyCategoryNavNode,SGFaceCategoryNavNode,SGHandsCategoryNavNode,SGHairCategoryNavNode,SGMakeUpCategoryNavNode;TbsSGCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; SGBodyCategoryNavNode;;SG Body Nav Node;Body;SGBodyByProductTypeNavNode,SGBodyBySkinTypeNavNode ;;SEBodyCategoryNavNode
+                               ; SGFaceCategoryNavNode;;SG Face Nav Node;Face;SGFaceByProductTypeNavNode,SGFaceBySkinTypeNavNode ;;SEFaceCategoryNavNode
+                               ; SGHandsCategoryNavNode;;SG Hands Nav Node;Hands;SGHandsByProductTypeNavNode ,SGHandsBySkinTypeNavNode ;;SEHandsCategoryNavNode
+                               ; SGHairCategoryNavNode;;SG Hair Nav Node;Hair;SGHairByProductTypeNavNode,SGHairByHairConcernTypeNavNode;;SEHairCategoryNavNode
+                               ; SGMakeUpCategoryNavNode;;SG MakeUp Nav Node;MakeUp;SGMakeUpByProductTypeNavNode,SGMakeUpBySkinTypeNavNode;;SEMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;SGBodyByProductTypeNavNode;;SG Body By Product Type;SGBodyTreatsCategoryNavNode,SGBodyButtersCategoryNavNode,SGBodyYogurtsCategoryNavNode,SGBodyMassageOilsCategoryNavNode,SGFootCareCategoryNavNode;;SGBodyByProductTypeNavNode ;
+                               ;SGBodyBySkinTypeNavNode;;SG Body By Skin Type;SGDeodorantCategoryNavNode,SGBodyBronzingCategoryNavNode,SGTravelSizesCategoryNavNode,SGBodyAllCategoryNavNode;;SGBodyBySkinTypeNavNode ;
+
+#Face_Category_NavNodes
+                               ;SGFaceByProductTypeNavNode;;SG Face By Product Type;SGFaceMasksCategoryNavNode,SGMakeUpRemoversCategoryNavNode,SGEyeCareCategoryNavNode,SGNightTimeTreatmentsCategoryNavNode,SGMenShavingCategoryNavNode;;SGFaceByProductTypeNavNode ;
+                               ;SGFaceBySkinTypeNavNode;;SG Face By Skin Type;SGLipBalmCategoryNavNode,SGCleansersAndTonersNavNode,SGMoisturisersCategoryNavNode,SGAccessoriesCategoryNavNode,SGFaceScrubsCategoryNavNode,SGFaceAllCategoryNavNode;;SGFaceBySkinTypeNavNode ;
+
+#Hands_Category_NavNodes
+                               ;SGHandsByProductTypeNavNode;;SG Hands By Product Type;SGHandsMoisturisersCategoryNavNode,SGHandWashCategoryNavNode;;SGHandsByProductTypeNavNode ;
+                               ;SGHandsBySkinTypeNavNode;;SG Hands By Skin Type;SGTargetedTreatmentCategoryNavNode,SGHandsAllCategoryNavNode;;SGHandsBySkinTypeNavNode ;
+
+#Hair_Category_NavNodes
+                               ;SGHairByProductTypeNavNode;;SG Hair By Product Type;SGBrushesAndCombsCategoryNavNode,SGConditionerCategoryNavNode,SGShampooCategoryNavNode;;SGHairByProductTypeNavNode ;
+                               ;SGHairByHairConcernTypeNavNode;;SG Hair By Hair Concern Type;SGTreatmentCategoryNavNode,SGStylingCategoryNavNode,SGHairAllCategoryNavNode;;SGHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;SGMakeUpByProductTypeNavNode;;SG MakeUp By Product Type;SGFoundationsConcealersCategoryNavNode,SGBrushesAndToolsCategoryNavNode,SGBBCreamsCategoryNavNode,SGBronzingCategoryNavNode,SGCheeksCategoryNavNode;;SGMakeUpByProductTypeNavNode;
+                               ;SGMakeUpBySkinTypeNavNode;;SG MakeUp By Skin Type;SGEyeLinersCategoryNavNode,SGEyeShadowCategoryNavNode,SGLipsCategoryNavNode,SGMascaraCategoryNavNode,SGPrimersCategoryNavNode,SGMakeUpAllCategoryNavNode;;SGMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;SGBodyTreatsCategoryNavNode;;SG Body Treats;;SGBodyTreatsCategoryNavNode
+                               ;SGBodyButtersCategoryNavNode;;SG Body Butters;;SGBodyButtersCategoryNavNode
+                               ;SGBodyYogurtsCategoryNavNode;;SG Body Yogurts;;SGBodyYogurtsCategoryNavNode
+                               ;SGBodyMassageOilsCategoryNavNode;;SG Body Massage Oils;;SGBodyMassageOilsCategoryNavNode
+                               ;SGFootCareCategoryNavNode;;SG Foot Care;;SGFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;SGBodyAllCategoryNavNode;;SG Body All Categories;;SGBodyAllCategoryNavNode
+                               ;SGBodyBronzingCategoryNavNode;;SG Body Bronzing;;SGBodyBronzingCategoryNavNode
+                               ;SGTravelSizesCategoryNavNode;;SG Travel Sizes;;SGTravelSizesCategoryNavNode
+                               ;SGDeodorantCategoryNavNode;;SG Deodorant;;SGDeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;SGFaceMasksCategoryNavNode;;SG Face Masks;;SGFaceMasksCategoryNavNode
+                               ;SGMakeUpRemoversCategoryNavNode;;SG Make-up Removers;;SGMakeUpRemoversCategoryNavNode
+                               ;SGEyeCareCategoryNavNode;;SG Eye Care;;SGEyeCareCategoryNavNode
+                               ;SGNightTimeTreatmentsCategoryNavNode;;SG Night Time Treatments;;SGNightTimeTreatmentsCategoryNavNode
+                               ;SGMenShavingCategoryNavNode;;SG Men's Shaving ;;SGMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;SGLipBalmCategoryNavNode;;SG Lip Balm;;SGLipBalmCategoryNavNode
+                               ;SGCleansersAndTonersNavNode;;SG Cleansers and Toners;;SGCleansersAndTonersNavNode
+                               ;SGMoisturisersCategoryNavNode;;SG Moisturisers;;SGMoisturisersCategoryNavNode
+                               ;SGAccessoriesCategoryNavNode;;SG Accessories;;SGAccessoriesCategoryNavNode
+                               ;SGFaceScrubsCategoryNavNode;;SG Face Scrubs;;SGFaceScrubsCategoryNavNode
+                               ;SGFaceAllCategoryNavNode;;SG Face All Categories;;SGFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;SGHandsMoisturisersCategoryNavNode;;SG Hands Moisturisers;;SGHandsMoisturisersCategoryNavNode
+                               ;SGHandWashCategoryNavNode;;SG Hand Wash;;SGHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;SGTargetedTreatmentCategoryNavNode;;SG Targeted Treatment;;SGTargetedTreatmentCategoryNavNode
+                               ;SGHandsAllCategoryNavNode;;SG Hands All Categories;;SGHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;SGBrushesAndCombsCategoryNavNode;;SG Brushes And Combs;;SGBrushesAndCombsCategoryNavNode
+                               ;SGConditionerCategoryNavNode;;SG Conditioner;;SGConditionerCategoryNavNode
+                               ;SGShampooCategoryNavNode;;SG Shampoo;;SGShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;SGTreatmentCategoryNavNode;;SG Treatment;;SGTreatmentCategoryNavNode
+                               ;SGStylingCategoryNavNode;;SG Styling;;SGStylingCategoryNavNode
+                               ;SGHairAllCategoryNavNode;;SG Hair All Categories;;SGHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;SGFoundationsConcealersCategoryNavNode;;SG Foundations Concealers;;SGFoundationsConcealersCategoryNavNode
+                               ;SGBrushesAndToolsCategoryNavNode;;SG Brushes and Tools;;SGBrushesAndToolsCategoryNavNode
+                               ;SGBBCreamsCategoryNavNode;;SG BB Creams;;SGBBCreamsCategoryNavNode
+                               ;SGBronzingCategoryNavNode;;SG Bronzing;;SGBronzingCategoryNavNode
+                               ;SGCheeksCategoryNavNode;;SG Cheeks;;SGCheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;SGEyeLinersCategoryNavNode;;SG Eye Liners;;SGEyeLinersCategoryNavNode
+                               ;SGEyeShadowCategoryNavNode;;SG Eye Shadow;;SGEyeShadowCategoryNavNode
+                               ;SGLipsCategoryNavNode;;SG Lips;;SGLipsCategoryNavNode
+                               ;SGMascaraCategoryNavNode;;SG Mascara;;SGMascaraCategoryNavNode
+                               ;SGPrimersCategoryNavNode;;SG Primers;;SGPrimersCategoryNavNode
+                               ;SGMakeUpAllCategoryNavNode;;SG Make-up All Categories;;SGMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;SGBodyAllCategoryNavNodeEntry;;SGBodyAllCategoryNavNodeEntry;SGBodyAllCategoryNavNode;SGBodyCategoryLink
+;SGBodyTreatsCategoryNavNodeEntry;;SGBodyTreatsCategoryNavNodeEntry;SGBodyTreatsCategoryNavNode;SGBodyTreatsCategoryLink;SG
+;SGBodyButtersCategoryNavNodeEntry;;SGBodyButtersCategoryNavNodeEntry;SGBodyButtersCategoryNavNode;SGBodyButtersCategoryLink;SG
+;SGBodyYogurtsCategoryNavNodeEntry;;SGBodyYogurtsCategoryNavNodeEntry;SGBodyYogurtsCategoryNavNode;SGBodyYogurtsCategoryLink
+;SGBodyMassageOilsCategoryNavNodeEntry;;SGBodyMassageOilsCategoryNavNodeEntry;SGBodyMassageOilsCategoryNavNode;SGBodyMassageOilsCategoryLink
+;SGBodyBronzingCategoryNavNodeEntry;;SGBodyBronzingCategoryNavNodeEntry;SGBodyBronzingCategoryNavNode;SGBodyBronzingCategoryLink
+;SGDeodorantCategoryNavNodeEntry;;SGDeodorantCategoryNavNodeEntry;SGDeodorantCategoryNavNode;SGDeodorantCategoryLink
+;SGTravelSizesCategoryNavNodeEntry;;SGTravelSizesCategoryNavNodeEntry;SGTravelSizesCategoryNavNode;SGTravelSizesCategoryLink
+;SGFootCareCategoryNavNodeEntry;;SGFootCareCategoryNavNodeEntry;SGFootCareCategoryNavNode;SGFootCareCategoryLink
+;SGFaceAllCategoryNavNodeEntry;;SGFaceAllCategoryNavNodeEntry;SGFaceAllCategoryNavNode;SGFaceCategoryLink;SG
+;SGFaceMasksCategoryNavNodeEntry;;SGFaceMasksCategoryNavNodeEntry;SGFaceMasksCategoryNavNode;SGFaceMasksCategoryLink;SG
+;SGMakeUpRemoversCategoryNavNodeEntry;;SGMakeUpRemoversCategoryNavNodeEntry;SGMakeUpRemoversCategoryNavNode;SGMakeUpRemoversCategoryLink;SG
+;SGEyeCareCategoryNavNodeEntry;;SGEyeCareCategoryNavNodeEntry;SGEyeCareCategoryNavNode;SGEyeCareCategoryLink
+;SGNightTimeTreatmentsCategoryNavNodeEntry;;SGNightTimeTreatmentsCategoryNavNodeEntry;SGNightTimeTreatmentsCategoryNavNode;SGNightTimeTreatmentsCategoryLink
+;SGMenShavingCategoryNavNodeEntry;;SGMenShavingCategoryNavNodeEntry;SGMenShavingCategoryNavNode;SGMenShavingCategoryLink
+;SGLipBalmCategoryNavNodeEntry;;SGLipBalmCategoryNavNodeEntry;SGLipBalmCategoryNavNode;SGLipBalmCategoryLink
+;SGCleansersAndTonersNavNodeEntry;;SGCleansersAndTonersNavNodeEntry;SGCleansersAndTonersNavNode;SGCleansersAndTonersCategoryLink
+;SGMoisturisersCategoryNavNodeEntry;;SGMoisturisersCategoryNavNodeEntry;SGMoisturisersCategoryNavNode;SGMoisturisersCategoryLink
+;SGAccessoriesCategoryNavNodeEntry;;SGAccessoriesCategoryNavNodeEntry;SGAccessoriesCategoryNavNode;SGAccessoriesCategoryLink
+;SGFaceScrubsCategoryNavNodeEntry;;SGFaceScrubsCategoryNavNodeEntry;SGFaceScrubsCategoryNavNode;SGFaceScrubsCategoryLink
+;SGHandsAllCategoryNavNodeEntry;;SGHandsAllCategoryNavNodeEntry;SGHandsAllCategoryNavNode;SGHandsCategoryLink
+;SGHandsMoisturisersCategoryNavNodeEntry;;SGHandsMoisturisersCategoryNavNodeEntry;SGHandsMoisturisersCategoryNavNode;SGHandsMoisturisersCategoryLink
+;SGHandWashCategoryNavNodeEntry;;SGHandWashCategoryNavNodeEntry;SGHandWashCategoryNavNode;SGHandWashCategoryLink
+;SGTargetedTreatmentCategoryNavNodeEntry;;SGTargetedTreatmentCategoryNavNodeEntry;SGTargetedTreatmentCategoryNavNode;SGTargetedTreatmentCategoryLink
+;SGHairAllCategoryNavNodeEntry;;SGHairAllCategoryNavNodeEntry;SGHairAllCategoryNavNode;SGHairCategoryLink
+;SGBrushesAndCombsCategoryNavNodeEntry;;SGBrushesAndCombsCategoryNavNodeEntry;SGBrushesAndCombsCategoryNavNode;SGBrushesAndCombsCategoryLink
+;SGConditionerCategoryNavNodeEntry;;SGConditionerCategoryNavNodeEntry;SGConditionerCategoryNavNode;SGConditionerCategoryLink
+;SGShampooCategoryNavNodeEntry;;SGShampooCategoryNavNodeEntry;SGShampooCategoryNavNode;SGShampooCategoryLink
+;SGTreatmentCategoryNavNodeEntry;;SGTreatmentCategoryNavNodeEntry;SGTreatmentCategoryNavNode;SGTreatmentCategoryLink
+;SGStylingCategoryNavNodeEntry;;SGStylingCategoryNavNodeEntry;SGStylingCategoryNavNode;SGStylingCategoryLink
+;SGMakeUpAllCategoryNavNodeEntry;;SGMakeUpAllCategoryNavNodeEntry;SGMakeUpAllCategoryNavNode;SGMakeUpCategoryLink
+;SGFoundationsConcealersCategoryNavNodeEntry;;SGFoundationsConcealersCategoryNavNodeEntry;SGFoundationsConcealersCategoryNavNode;SGFoundationsConcealersCategoryLink
+;SGBrushesAndToolsCategoryNavNodeEntry;;SGBrushesAndToolsCategoryNavNodeEntry;SGBrushesAndToolsCategoryNavNode;SGBrushesAndToolsCategoryLink
+;SGBBCreamsCategoryNavNodeEntry;;SGBBCreamsCategoryNavNodeEntry;SGBBCreamsCategoryNavNode;SGBBCreamsCategoryLink
+;SGBronzingCategoryNavNodeEntry;;SGBronzingCategoryNavNodeEntry;SGBronzingCategoryNavNode;SGBronzingCategoryLink
+;SGCheeksCategoryNavNodeEntry;;SGCheeksCategoryNavNodeEntry;SGCheeksCategoryNavNode;SGCheeksCategoryLink
+;SGEyeLinersCategoryNavNodeEntry;;SGEyeLinersCategoryNavNodeEntry;SGEyeLinersCategoryNavNode;SGEyeLinersCategoryLink
+;SGEyeShadowCategoryNavNodeEntry;;SGEyeShadowCategoryNavNodeEntry;SGEyeShadowCategoryNavNode;SGEyeShadowCategoryLink
+;SGLipsCategoryNavNodeEntry;;SGLipsCategoryNavNodeEntry;SGLipsCategoryNavNode;SGLipsCategoryLink
+;SGMascaraCategoryNavNodeEntry;;SGMascaraCategoryNavNodeEntry;SGMascaraCategoryNavNode;SGMascaraCategoryLink
+;SGPrimersCategoryNavNodeEntry;;SGPrimersCategoryNavNodeEntry;SGPrimersCategoryNavNode;SGPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsSGDiscoverNavNode;;Tbs SG Discover;TbsSGNavNode;SGDiscoverPartyNavNode,SGDiscoverTipsAndAdviceNavNode,SGDiscoverAboutUsNavNode;TbsSGDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; SGDiscoverPartyNavNode;;SG Party Nav Node;Party;SG_Discover_TheBodyShopAtHomeNavNode;;SGDiscoverPartyNavNode
+                               ; SGDiscoverTipsAndAdviceNavNode;;SG Tips & Advice Nav Node;Tips & Advice;SGSkincareArticlesNavNode,SGBodyCareArticlesNavNode,SGMake-UpAeticlesNavNode,SGLifeStyleArticlesNavNode,SGIngredientBenefitsNavNode;;SGDiscoverTipsAndAdviceNavNode
+                               ; SGDiscoverAboutUsNavNode;;SG About us Nav Node;About Us;SGWhoWeAreNavNode,SGLoyaltyProgramNavNode,SGSustainabilityNavNode,SGPlasticsNavNode;;SGDiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#SG_Discover_Party_NavNodes
+                               ;SG_Discover_TheBodyShopAtHomeNavNode;;SG BodyShop AtHome;SGBeYourOwnBossNavNode,SGHostAPartyNavNode;;SG_Discover_TheBodyShopAtHomeNavNode ;
+
+#SG_Discover_Tips_And_Advice_NavNode
+
+                               ;SGSkincareArticlesNavNode;;SG Skin Care Articles;SGHowToReduceBlackheadsNavNode,SGSummerSkincareNavNode,SGHowToGetRidOfDarkCirclesNavNode,SGBestFaceMoisturisersNavNode,SGHowToKeepSkinLookingYouthfulNavNode,SGGymSkincareTipsNavNode;;SGSkincareArticlesNavNode ;
+                               ;SGBodyCareArticlesNavNode;;SG Body Care Articles;SGBenefitsOfDryBrushingNavNode,SGUnderstandingDrySkinNavNode,SGBestBodyExfoliatorsNavNode;;SGBodyCareArticlesNavNode ;
+                               ;SGMake-UpAeticlesNavNode;;SG Make-Up Articles;SGHowToFindTheRightFoundationNavNode,SGHowToApplyFoundationNavNode,SGHowToShapeEyebrowsNavNode,SGHowToGetASunKissedGlowNavNode;;SGMake-UpAeticlesNavNode ;
+                               ;SGLifeStyleArticlesNavNode;;SG LifeStyle Articles;SGBestVeganCitiesInTheSGNavNode,SGLongHaulFlightTipsNavNode,SGGymSkincareRoutineNavNode,SGChildhoodDreamsNavNode,SGPixieGeldof’sTravelEssentialsNavNode;;SGLifeStyleArticlesNavNode ;
+                               ;SGIngredientBenefitsNavNode;;SG Ingedients Benefits;SGBenefitsOfCharcoalNavNode,SGHyaluronicAcidBenefitsNavNode,SGDiscoverAllIngredientsNavNode,SGSourcingOurIngredientsNavNode;;SGIngredientBenefitsNavNode ;
+
+#SG_Discover_AboutUs_NavNode
+
+                               ;SGWhoWeAreNavNode;;SG Who We Are;SGOurHeritageNavNode,SGForeverAgainstAnimalTestingNavNode,SGLatestNewsNavNode,SGNatura_CoNavNode,SGB_CorpNavNode,SGEducationalProgrammeNavNode,SGDonateMenstrualProductsNavNode,SGVegetarianBeautyNavNode;;SGWhoWeAreNavNode ;
+                               ;SGLoyaltyProgramNavNode;;SG Loyalty Program;SG_Loyalty_JoinNowNavNode;;SGLoyaltyProgramNavNode;
+                               ;SGSustainabilityNavNode;;SG Sustainability;SGOurCommitmentNavNode,SGCommunityTradeNavNode,SGBio-BridgesNavNode,SGReducingEnvironmentalFootprintNavNode,SGEmpoweringWomenNavNode,SGModernSlaveryNavNode;;SGSustainabilityNavNode;
+                               ;SGPlasticsNavNode;;SG Plastics;SGPlasticRecyclingInTheSGNavNode,SGTerraCycleInterviewNavNode,SGReturnRecycleRepeatNavNode,SGCommunityTradePlasticsNavNode,SGPackagingAtTheBodyShopNavNode;;SGPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;SGBeYourOwnBossNavNode;;SG Be your own boss;;SGBeYourOwnBossNavNode
+                               ;SGHostAPartyNavNode;;SG Host a party;;SGHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;SGHowToReduceBlackheadsNavNode;;SG How to reduce Blackheads;;SGHowToReduceBlackheadsNavNode
+                               ;SGSummerSkincareNavNode;;SG Summer Skincare;;SGSummerSkincareNavNode
+                               ;SGHowToGetRidOfDarkCirclesNavNode;;SG How To Get Rid Of Dark Circles;;SGHowToGetRidOfDarkCirclesNavNode
+                               ;SGBestFaceMoisturisersNavNode;;SG Best Face Moisturisers;;SGBestFaceMoisturisersNavNode
+                               ;SGHowToKeepSkinLookingYouthfulNavNode;;SG How To Keep Skin Looking Youthful;;SGHowToKeepSkinLookingYouthfulNavNode
+                               ;SGGymSkincareTipsNavNode;;SG Gym Skincare Tips;;SGGymSkincareTipsNavNode
+
+#Child_Nodes_SGBodyCareArticles_NavNode
+
+                               ;SGBenefitsOfDryBrushingNavNode;;SG Benefits Of Dry Brushing;;SGBenefitsOfDryBrushingNavNode
+                               ;SGUnderstandingDrySkinNavNode;;SG Understanding Dry Skin;;SGUnderstandingDrySkinNavNode
+                               ;SGBestBodyExfoliatorsNavNode;;SG Best Body Exfoliators;;SGBestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;SGHowToFindTheRightFoundationNavNode;;SG How to find the right foundation;;SGHowToFindTheRightFoundationNavNode
+                               ;SGHowToApplyFoundationNavNode;;SG How to apply foundation;;SGHowToApplyFoundationNavNode
+                               ;SGHowToShapeEyebrowsNavNode;;SG How to shape eyebrows;;SGHowToShapeEyebrowsNavNode
+                               ;SGHowToGetASunKissedGlowNavNode;;SG How to get a sun kissed glow;;SGHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;SGBestVeganCitiesInTheSGNavNode;;Best Vegan Cities in the SG;;SGBestVeganCitiesInTheSGNavNode
+                               ;SGLongHaulFlightTipsNavNode;;SG Long haul flight tips;;SGLongHaulFlightTipsNavNode
+                               ;SGGymSkincareRoutineNavNode;;SG Gym skincare routine;;SGGymSkincareRoutineNavNode
+                               ;SGChildhoodDreamsNavNode;;SG Childhood Dreams;;SGChildhoodDreamsNavNode
+                               ;SGPixieGeldof’sTravelEssentialsNavNode;;SG Pixie Geldof’s Travel Essentials;;SGPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;SGBenefitsOfCharcoalNavNode;;SG Benefits of charcoal;;SGBenefitsOfCharcoalNavNode
+                               ;SGHyaluronicAcidBenefitsNavNode;;SG Hyaluronic Acid Benefits;;SGHyaluronicAcidBenefitsNavNode
+                               ;SGDiscoverAllIngredientsNavNode;;SG Discover all ingredients;;SGDiscoverAllIngredientsNavNode
+                               ;SGSourcingOurIngredientsNavNode;;SG Sourcing our ingredients;;SGSourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_SGWhoWeAreNavNode
+                               ;SGOurHeritageNavNode;;SG Our Heritage;;SGOurHeritageNavNode
+                               ;SGForeverAgainstAnimalTestingNavNode;;SG Forever Against Animal Testing;;SGForeverAgainstAnimalTestingNavNode
+                               ;SGB_CorpNavNode;;SG B Corp;;SGB_CorpNavNode
+                               ;SGLatestNewsNavNode;;SG Latest News;;SGLatestNewsNavNode
+                               ;SGNatura_CoNavNode;;SG Natura & co;;SGNatura_CoNavNode
+                               ;SGEducationalProgrammeNavNode;;SG Educational Programme;;SGEducationalProgrammeNavNode
+                               ;SGDonateMenstrualProductsNavNode;;SG Donate Menstrual Products;;SGDonateMenstrualProductsNavNode
+                               ;SGVegetarianBeautyNavNode;;SG Vegetarian Beauty;;SGVegetarianBeautyNavNode
+
+#Child_Nodes_SGLoyaltyProgramNavNode
+                               ;SG_Loyalty_JoinNowNavNode;;SG Join Now;;SG_Loyalty_JoinNowNavNode
+
+#Child_Nodes_SGSustainabilityNavNode
+                               ;SGOurCommitmentNavNode;;SG Our Commitment;;SGOurCommitmentNavNode
+                               ;SGCommunityTradeNavNode;;SG Community Trade;;SGCommunityTradeNavNode
+                               ;SGBio-BridgesNavNode;;SG Bio-Bridges;;SGBio-BridgesNavNode
+                               ;SGReducingEnvironmentalFootprintNavNode;;SG Reducing Environmental Footprint;;SGReducingEnvironmentalFootprintNavNode
+                               ;SGEmpoweringWomenNavNode;;SG EmpoweringWomen;;SGEmpoweringWomenNavNode
+                               ;SGModernSlaveryNavNode;;SG ModernSlavery;;SGModernSlaveryNavNode
+
+#Child_Nodes_SGPlasticsNavNode
+                               ;SGPlasticRecyclingInTheSGNavNode;;SG Plastic Recycling In The SG;;SGPlasticRecyclingInTheSGNavNode
+                               ;SGTerraCycleInterviewNavNode;;SG Terra Cycle Interview;;SGTerraCycleInterviewNavNode
+                               ;SGReturnRecycleRepeatNavNode;;SG Return Recycle Repeat;;SGReturnRecycleRepeatNavNode
+                               ;SGCommunityTradePlasticsNavNode;;SG Community Trade Plastics;;SGCommunityTradePlasticsNavNode
+                               ;SGPackagingAtTheBodyShopNavNode;;SG Packaging At The Body Shop;;SGPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;SGBeYourOwnBossLink;SG Be your own boss Link;/;SGBeYourOwnBossLink;SGBeYourOwnBossLink;;;;
+                              ;;SGHostAPartyNavNodeLink;SG Host a party Link;/;SGHostAPartyNavNodeLink;SGHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;SGSummerSkincareLink;SG Summer Skincare Link;/;SGSummerSkincareLink;SGSummerSkincareLink;;;;
+                              ;;SGHowToReduceBlackheadsLink;SG How to reduce blackheads Link;/;SGHowToReduceBlackheadsLink;SGHowToReduceBlackheadsLink;;;;
+                              ;;SGHowToGetRidOfDarkCirclesLink;SG How to get rid of dark circles Link;/;SGHowToGetRidOfDarkCirclesLink;SGHowToGetRidOfDarkCirclesLink;;;;
+                              ;;SGBestFaceMoisturisersLink;SG Best Face Moisturisers Link;/;SGBestFaceMoisturisersLink;SGBestFaceMoisturisersLink;;;;
+                              ;;SGHowToKeepSkinLookingYouthfulLink;SG How to keep skin looking youthful Link;/;SGHowToKeepSkinLookingYouthfulLink;SGHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;SGGymSkincareTipsLink;SG Gym Skincare Tips Link;/;SGGymSkincareTipsLink;SGGymSkincareTipsLink;;;;
+
+                              ;;SGBenefitsOfDryBrushingLink;SG Benefits of dry brushing Link;/;SGBenefitsOfDryBrushingLink;SGBenefitsOfDryBrushingLink;;;;
+                              ;;SGUnderstandingDrySkinLink;SG Understanding dry skin Link;/;SGUnderstandingDrySkinLink;SGUnderstandingDrySkinLink;;;;
+                              ;;SGBestBodyExfoliatorsLink;SG Best body exfoliators Link;/;SGBestBodyExfoliatorsLink;SGBestBodyExfoliatorsLink;;;;
+
+                              ;;SGHowToFindTheRightFoundationLink;SG How to find the right foundation Link;/;SGHowToFindTheRightFoundationLink;SGHowToFindTheRightFoundationLink;;;;
+                              ;;SGHowToApplyFoundationLink;SG How to apply foundation Link;/;SGHowToApplyFoundationLink;SGHowToApplyFoundationLink;;;;
+                              ;;SGHowToShapeEyebrowsLink;SG How to shape eyebrows youthful Link;/;SGHowToShapeEyebrowsLink;SGHowToShapeEyebrowsLink;;;;
+                              ;;SGHowToGetASunKissedGlowLink;SG How to get a sun kissed glow Link;/;SGHowToGetASunKissedGlowLink;SGHowToGetASunKissedGlowLink;;;;
+
+                              ;;SGBestVeganCitiesInTheSGLink;Best Vegan Cities in the SG Link;/;SGBestVeganCitiesInTheSGLink;SGBestVeganCitiesInTheSGLink;;;;
+                              ;;SGLongHaulFlightTipsLink;SG Long haul flight tips Link;/;SGLongHaulFlightTipsLink;SGLongHaulFlightTipsLink;;;;
+                              ;;SGGymSkincareRoutineLink;SG Gym skincare routine Link;/;SGGymSkincareRoutineLink;SGGymSkincareRoutineLink;;;;
+                              ;;SGChildhoodDreamsLink;SG Childhood Dreams Link;/;SGChildhoodDreamsLink;SGChildhoodDreamsLink;;;;
+                              ;;SGPixieGeldof’sTravelEssentialsLink;SG Pixie Geldof’s Travel Essentials Link;/;SGPixieGeldof’sTravelEssentialsLink;SGPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;SGBenefitsOfCharcoalLink;SG Benefits of charcoal Link;/;SGBenefitsOfCharcoalLink;SGBenefitsOfCharcoalLink;;;;
+                              ;;SGHyaluronicAcidBenefitsLink;SG Hyaluronic Acid Benefits Link;/;SGHyaluronicAcidBenefitsLink;SGHyaluronicAcidBenefitsLink;;;;
+                              ;;SGDiscoverAllIngredientsLink;SG Discover all ingredients Link;/;SGDiscoverAllIngredientsLink;SGDiscoverAllIngredientsLink;;;;
+                              ;;SGSourcingOurIngredientsLink;SG Sourcing our ingredients Link;/;SGSourcingOurIngredientsLink;SGSourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;SGOurHeritageLink;SG Our Heritage Link;/;SGOurHeritageLink;SGOurHeritageLink;;;;
+                              ;;SGForeverAgainstAnimalTestingLink;SG How to reduce blackheads Link;/;SGForeverAgainstAnimalTestingLink;SGForeverAgainstAnimalTestingLink;;;;
+                              ;;SGB_CorpLink;SG B Corp Link;/;SGB_CorpLink;SGB_CorpLink;;;;
+                              ;;SGLatestNewsLink;SG Latest News Link;/;SGLatestNewsLink;SGLatestNewsLink;;;;
+                              ;;SGNatura_CoLink;SG Natura & co Link;/;SGNatura_CoLink;SGNatura_CoLink;;;;
+                              ;;SGEducationalProgrammeLink;SG Educational PRogramme Link;/;SGEducationalProgrammeLink;SGEducationalProgrammeLink;;;;
+                              ;;SGDonateMenstrualProductsLink;SG Donate Menstrual Products Link;/;SGDonateMenstrualProductsLink;SGDonateMenstrualProductsLink;;;;
+                              ;;SGVegetarianBeautyLink;SG Vegetarian Beauty Link;/;SGVegetarianBeautyLink;SGVegetarianBeautyLink;;;;
+
+                              ;;SG_Loyalty_JoinNowLink;SG Join Now Link;/;SG_Loyalty_JoinNowLink;SG_Loyalty_JoinNowLink;;;;
+
+                              ;;SGOurCommitmentLink;SG Our Commitment Link;/;SGOurCommitmentLink;SGOurCommitmentLink;;;;
+                              ;;SGCommunityTradeLink;SG Community Trade Link;/;SGCommunityTradeLink;SGCommunityTradeLink;;;;
+                              ;;SGBio-BridgesLink;SG Bio-Bridges Link;/;SGBio-BridgesLink;SGBio-BridgesLink;;;;
+                              ;;SGReducingEnvironmentalFootprintLink;SG Reducing Environmental Footprint Link;/;SGReducingEnvironmentalFootprintLink;SGReducingEnvironmentalFootprintLink;;;;
+                              ;;SGEmpoweringWomenLink;SG Empowering Women Link;/;SGEmpoweringWomenLink;SGEmpoweringWomenLink;;;;
+                              ;;SGModernSlaveryLink;SG Modern Slavery Link;/;SGModernSlaveryLink;SGModernSlaveryLink;;;;
+
+                              ;;SGPlasticRecyclingInTheSGLink;Plastic recycling in the SG Link;/;SGPlasticRecyclingInTheSGLink;SGPlasticRecyclingInTheSGLink;;;;
+                              ;;SGTerraCycleInterviewLink;SG TerraCycle Interview Link;/;SGTerraCycleInterviewLink;SGTerraCycleInterviewLink;;;;
+                              ;;SGReturnRecycleRepeatNavNodeLink;SG Return. Recycle. Repeat Link;/;SGReturnRecycleRepeatNavNodeLink;SGReturnRecycleRepeatNavNodeLink;;;;
+                              ;;SGCommunityTradePlasticsLink;SG Community Trade Plastics Link;/;SGCommunityTradePlasticsLink;SGCommunityTradePlasticsLink;;;;
+                              ;;SGPackagingAtTheBodyShopLink;SG Packaging at The Body Shop Link;/;SGPackagingAtTheBodyShopLink;SGPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;SGBeYourOwnBossNavNodeEntry;;SGBeYourOwnBossNavNodeEntry;SGBeYourOwnBossNavNode;SGBeYourOwnBossLink
+                                ;SGHostAPartyNavNodeEntry;;SGHostAPartyNavNodeEntry;SGHostAPartyNavNode;SGHostAPartyNavNodeLink
+
+#Entry_SGSkincareArticlesNavNode
+                                ;SGHowToReduceBlackheadsNavNodeEntry;;SGHowToReduceBlackheadsNavNodeEntry;SGHowToReduceBlackheadsNavNode;SGHowToReduceBlackheadsLink
+                                ;SGSummerSkincareNavNodeEntry;;SGSummerSkincareNavNodeEntry;SGSummerSkincareNavNode;SGSummerSkincareLink
+                                ;SGHowToGetRidOfDarkCirclesNavNodeEntry;;SGHowToGetRidOfDarkCirclesNavNodeEntry;SGHowToGetRidOfDarkCirclesNavNode;SGHowToGetRidOfDarkCirclesLink
+                                ;SGBestFaceMoisturisersNavNodeEntry;;SGBestFaceMoisturisersNavNodeEntry;SGBestFaceMoisturisersNavNode;SGBestFaceMoisturisersLink
+                                ;SGHowToKeepSkinLookingYouthfulNavNodeEntry;;SGHowToKeepSkinLookingYouthfulNavNodeEntry;SGHowToKeepSkinLookingYouthfulNavNode;SGHowToKeepSkinLookingYouthfulLink
+                                ;SGGymSkincareTipsNavNodeEntry;;SGGymSkincareTipsNavNodeEntry;SGGymSkincareTipsNavNode;SGGymSkincareTipsLink
+
+#Entry_SGBodyCareArticlesNavNode
+                                ;SGBenefitsOfDryBrushingNavNodeEntry;;SGBenefitsOfDryBrushingNavNodeEntry;SGBenefitsOfDryBrushingNavNode;SGBenefitsOfDryBrushingLink
+                                ;SGUnderstandingDrySkinNavNodeEntry;;SGUnderstandingDrySkinNavNodeEntry;SGUnderstandingDrySkinNavNode;SGUnderstandingDrySkinLink
+                                ;SGBestBodyExfoliatorsNavNodeEntry;;SGBestBodyExfoliatorsNavNodeEntry;SGBestBodyExfoliatorsNavNode;SGBestBodyExfoliatorsLink
+
+#Entry_SGMake-UpAeticlesNavNode
+                                ;SGHowToFindTheRightFoundationNavNodeEntry;;SGHowToFindTheRightFoundationNavNodeEntry;SGHowToFindTheRightFoundationNavNode;SGHowToFindTheRightFoundationLink
+                                ;SGHowToApplyFoundationNavNodeEntry;;SGHowToApplyFoundationNavNodeEntry;SGHowToApplyFoundationNavNode;SGHowToApplyFoundationLink
+                                ;SGHowToShapeEyebrowsNavNodeEntry;;SGHowToShapeEyebrowsNavNodeEntry;SGHowToShapeEyebrowsNavNode;SGHowToShapeEyebrowsLink
+                                ;SGHowToGetASunKissedGlowNavNodeEntry;;SGHowToGetASunKissedGlowNavNodeEntry;SGHowToGetASunKissedGlowNavNode;SGHowToGetASunKissedGlowLink
+
+#Entry_SGLifeStyleArticlesNavNode
+                                ;SGBestVeganCitiesInTheSGNavNodeEntry;;SGBestVeganCitiesInTheSGNavNodeEntry;SGBestVeganCitiesInTheSGNavNode;SGBestVeganCitiesInTheSGLink
+                                ;SGLongHaulFlightTipsNavNodeEntry;;SGLongHaulFlightTipsNavNodeEntry;SGLongHaulFlightTipsNavNode;SGLongHaulFlightTipsLink
+                                ;SGGymSkincareRoutineNavNodeEntry;;SGGymSkincareRoutineNavNodeEntry;SGGymSkincareRoutineNavNode;SGGymSkincareRoutineLink
+                                ;SGChildhoodDreamsNavNodeEntry;;SGChildhoodDreamsNavNodeEntry;SGChildhoodDreamsNavNode;SGChildhoodDreamsLink
+                                ;SGPixieGeldof’sTravelEssentialsNavNodeEntry;;SGPixieGeldof’sTravelEssentialsNavNodeEntry;SGPixieGeldof’sTravelEssentialsNavNode;SGPixieGeldof’sTravelEssentialsLink
+
+#Entry_SGIngredientBenefitsNavNode
+
+                                ;SGBenefitsOfCharcoalNavNodeEntry;;SGBenefitsOfCharcoalNavNodeEntry;SGBenefitsOfCharcoalNavNode;SGBenefitsOfCharcoalLink
+                                ;SGHyaluronicAcidBenefitsNavNodeEntry;;SGHyaluronicAcidBenefitsNavNodeEntry;SGHyaluronicAcidBenefitsNavNode;SGHyaluronicAcidBenefitsLink
+                                ;SGDiscoverAllIngredientsNavNodeEntry;;SGDiscoverAllIngredientsNavNodeEntry;SGDiscoverAllIngredientsNavNode;SGDiscoverAllIngredientsLink
+                                ;SGSourcingOurIngredientsNavNodeEntry;;SGSourcingOurIngredientsNavNodeEntry;SGSourcingOurIngredientsNavNode;SGSourcingOurIngredientsLink
+
+#Entry_SGWhoWeAre_NavNode
+                                ;SGOurHeritageNavNodeEntry;;SGOurHeritageNavNodeEntry;SGOurHeritageNavNode;SGOurHeritageLink
+                                ;SGForeverAgainstAnimalTestingNavNodeEntry;;SGForeverAgainstAnimalTestingNavNodeEntry;SGForeverAgainstAnimalTestingNavNode;SGForeverAgainstAnimalTestingLink
+                                ;SGB_CorpNavNodeEntry;;SGB_CorpNavNodeEntry;SGB_CorpNavNode;SGB_CorpLink
+                                ;SGLatestNewsNavNodeEntry;;SGLatestNewsNavNodeEntry;SGLatestNewsNavNode;SGLatestNewsLink
+                                ;SGNatura_CoNavNodeEntry;;SGNatura_CoNavNodeEntry;SGNatura_CoNavNode;SGNatura_CoLink
+                                ;SGEducationalProgrammeNavNodeEntry;;SGEducationalProgrammeNavNodeEntry;SGEducationalProgrammeNavNode;SGEducationalProgrammeLink
+                                ;SGDonateMenstrualProductsNavNodeEntry;;SGDonateMenstrualProductsNavNodeEntry;SGDonateMenstrualProductsNavNode;SGDonateMenstrualProductsLink
+                                ;SGVegetarianBeautyNavNodeEntry;;SGVegetarianBeautyNavNodeEntry;SGVegetarianBeautyNavNode;SGVegetarianBeautyLink
+
+#Entry_SGLoyaltyProgramNavNode
+                                ;SG_Loyalty_JoinNowNavNodeEntry;;SG_Loyalty_JoinNowNavNodeEntry;SG_Loyalty_JoinNowNavNode;SG_Loyalty_JoinNowLink
+
+#Entry_SGSustainabilityNavNode
+                                ;SGOurCommitmentNavNodeEntry;;SGOurCommitmentNavNodeEntry;SGOurCommitmentNavNode;SGOurCommitmentLink
+                                ;SGCommunityTradeNavNodeEntry;;SGCommunityTradeNavNodeEntry;SGCommunityTradeNavNode;SGCommunityTradeLink
+                                ;SGBio-BridgesNavNodeEntry;;SGBio-BridgesNavNodeEntry;SGBio-BridgesNavNode;SGBio-BridgesLink
+                                ;SGReducingEnvironmentalFootprintNavNodeEntry;;SGReducingEnvironmentalFootprintNavNodeEntry;SGReducingEnvironmentalFootprintNavNode;SGReducingEnvironmentalFootprintLink
+                                ;SGEmpoweringWomenNavNodeEntry;;SGEmpoweringWomenNavNodeEntry;SGEmpoweringWomenNavNode;SGEmpoweringWomenLink
+                                ;SGModernSlaveryNavNodeEntry;;SGModernSlaveryNavNodeEntry;SGModernSlaveryNavNode;SGModernSlaveryLink
+
+#Child_Nodes_SGPlasticsNavNode
+                                ;SGPlasticRecyclingInTheSGNavNodeEntry;;SGPlasticRecyclingInTheSGNavNodeEntry;SGPlasticRecyclingInTheSGNavNode;SGPlasticRecyclingInTheSGLink
+                                ;SGTerraCycleInterviewNavNodeEntry;;SGTerraCycleInterviewNavNodeEntry;SGTerraCycleInterviewNavNode;SGTerraCycleInterviewLink
+                                ;SGReturnRecycleRepeatNavNodeEntry;;SGReturnRecycleRepeatNavNodeEntry;SGReturnRecycleRepeatNavNode;SGReturnRecycleRepeatNavNodeLink
+                                ;SGCommunityTradePlasticsNavNodeEntry;;SGCommunityTradePlasticsNavNodeEntry;SGCommunityTradePlasticsNavNode;SGCommunityTradePlasticsLink
+                                ;SGPackagingAtTheBodyShopNavNodeEntry;;SGPackagingAtTheBodyShopNavNodeEntry;SGPackagingAtTheBodyShopNavNode;SGPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;SGUsefullInformationNavNode;;SG Useful Information;SGUsefullInformationNavNode;SGDeliveryNavNode,SGReturnsNavNode,SGFAQNavNode,SGTermsAndConditionsNavNode,SGPrivacyPolicyNavNode,SGSitemapNavNode
+;SGWaysToShopNavNode;;SG Ways to Shop;SGWaysToShopNavNode;SGStoresNavNode,SGLoveYourBodyClubNavNode,SGStudentDiscountNavNode,SGGiftCardsNavNode
+;SGAboutUsNavNode;;SG About Us;SGAboutUsNavNode;SGAboutUsInternalNavNode,SGTheBodyShopAtHomeNavNode,SGAffiliatesNavNode,SGGenderPayGapNavNode,SGModernSlaveryStatementNavNode,SGAgainstAnimalTestingNavNode,SGTaxStrategyNavNode,SGCareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;SGDeliveryNavNode;;SGDeliveryNavNode;SGDeliveryNavNode;
+;SGReturnsNavNode;;SGReturnsNavNode;SGReturnsNavNode;
+;SGFAQNavNode;;SGFAQ Page;SGFAQNavNode
+;SGTermsAndConditionsNavNode;;SGTermsAndConditionsNavNode;SGTermsAndConditionsNavNode;
+;SGPrivacyPolicyNavNode;;SGPrivacyPolicyNavNode;SGPrivacyPolicyNavNode;
+;SGSitemapNavNode;;SGSitemapNavNode;SGSitemapNavNode;
+;SGStoresNavNode;;SGStoresNavNode;SGStoresNavNode;
+;SGLoveYourBodyClubNavNode;;SGLoveYourBodyClubNavNode;SGLoveYourBodyClubNavNode;
+;SGStudentDiscountNavNode;;SGStudentDiscountNavNode;SGStudentDiscountNavNode;
+;SGGiftCardsNavNode;;SGGiftCardsNavNode;SGGiftCardsNavNode;
+;SGAboutUsInternalNavNode;;SGAboutUsInternalNavNode;SGAboutUsInternalNavNode
+;SGTheBodyShopAtHomeNavNode;;SGTheBodyShopAtHomeNavNode;SGTheBodyShopAtHomeNavNode
+;SGAffiliatesNavNode;;SGAffiliatesNavNode;SGAffiliatesNavNode
+;SGGenderPayGapNavNode;;SGGenderPayGapNavNode;SGGenderPayGapNavNode
+;SGModernSlaveryStatementNavNode;;SGModernSlaveryStatementNavNode;SGModernSlaveryStatementNavNode
+;SGAgainstAnimalTestingNavNode;;SGAgainstAnimalTestingNavNode;SGAgainstAnimalTestingNavNode
+;SGTaxStrategyNavNode;;SGTaxStrategyNavNode;SGTaxStrategyNavNode
+;SGCareersNavNode;;SGCareersNavNode;SGCareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;SGDeliveryNavNodeEntry;;SGDeliveryNavNodeEntry;SGDeliveryNavNode;SGDeliveryLink;
+;SGReturnsNavNodeEntry;;SGReturnsNavNodeEntry;SGReturnsNavNode;SGReturnsLink;
+;SGFAQNavNodeEntry;;SG FAQ Navigation Node Entry;SGFAQNavNode;SGFAQLink;
+;SGTermsAndConditionsNavNodeEntry;;SGTermsAndConditionsNavNodeEntry;SGTermsAndConditionsNavNode;SGTermsAndConditionsLink;
+;SGPrivacyPolicyNavNodeEntry;;SGPrivacyPolicyNavNodeEntry;SGPrivacyPolicyNavNode;SGPrivacyPolicyLink;
+;SGSitemapNavNodeEntry;;SGSitemapNavNodeEntry;SGSitemapNavNode;SGSitemapLink;
+;SGStoresNavNodeEntry;;SGStoresNavNodeEntry;SGStoresNavNode;SGStoresLink;
+;SGLoveYourBodyClubNavNodeEntry;;SGLoveYourBodyClubNavNodeEntry;SGLoveYourBodyClubNavNode;SGLoveYourBodyClubLink;
+;SGStudentDiscountNavNodeEntry;;SGStudentDiscountNavNodeEntry;SGStudentDiscountNavNode;SGStudentDiscountLink;
+;SGGiftCardsNavNodeEntry;;SGGiftCardsNavNodeEntry;SGGiftCardsNavNode;SGGiftCardsLink;
+;SGAboutUsInternalNavNodeEntry;;SGAboutUsInternalNavNodeEntry;SGAboutUsInternalNavNode;SGAboutUsLink;
+;SGTheBodyShopAtHomeNavNodeEntry;;SGTheBodyShopAtHomeNavNodeEntry;SGTheBodyShopAtHomeNavNode;SGTheBodyShopAtHomeLink;
+;SGAffiliatesNavNodeEntry;;SGAffiliatesNavNodeEntry;SGAffiliatesNavNode;SGAffiliatesLink;
+;SGGenderPayGapNavNodeEntry;;SGGenderPayGapNavNodeEntry;SGGenderPayGapNavNode;SGGenderPayGapLink;
+;SGModernSlaveryStatementNavNodeEntry;;SGModernSlaveryStatementNavNodeEntry;SGModernSlaveryStatementNavNode;SGModernSlaveryStatementLink;
+;SGAgainstAnimalTestingNavNodeEntry;;SGAgainstAnimalTestingNavNodeEntry;SGAgainstAnimalTestingNavNode;SGAgainstAnimalTestingLink;
+;SGTaxStrategyNavNodeEntry;;SGTaxStrategyNavNodeEntry;SGTaxStrategyNavNode;SGTaxStrategyLink;
+;SGCareersNavNodeEntry;;SGCareersNavNodeEntry;SGCareersNavNode;SGCareersLink;
+
+##CategoryBannerCMSComponent Start ##
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;SGCategoryBannerCMSComponent;SG CategoryBanner CMSComponent;SGCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-SGCategorybannerSlot;SGCategory Banner Slot;true;SGCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-SGCategoryPage;Section1;;Section1Slot-SGCategorybannerSlot;;;
+##CategorybannerCMSComponent End ##

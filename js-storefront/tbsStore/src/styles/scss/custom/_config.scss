@@ -1,0 +1,43 @@
+// Usage:
+// @extend %defaultLinks;
+%defaultLinks {
+  cursor: pointer;
+  font-family: $links-font-family;
+  font-size: $links-font-size;
+  color: $links-default-color;
+  text-decoration: $links-text-decoration;
+  text-decoration-color: $links-default-color;
+
+  &:hover {
+    color: $links-default-hover-color;
+    text-decoration: $links-hover-text-decoration;
+  }
+
+  &:active {
+    color: $links-default-active-color;
+    text-decoration: $links-text-decoration;
+    text-decoration-color: $links-default-active-color;
+  }
+}
+
+// Usage:
+// @extend %defaultLinksInverse;
+%defaultLinksInverse {
+  cursor: pointer;
+  font-family: $links-font-family;
+  font-size: $links-font-size;
+  color: $links-inverse-color;
+  text-decoration: $links-text-decoration;
+  text-decoration-color: $links-inverse-color;
+
+  &:hover {
+    color: $links-inverse-hover-color;
+    text-decoration: $links-hover-text-decoration;
+  }
+
+  &:active {
+    color: $links-inverse-active-color;
+    text-decoration: $links-text-decoration;
+    text-decoration-color: $links-inverse-active-color;
+  }
+}

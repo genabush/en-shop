@@ -1,0 +1,519 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsAUContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:au.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsAUProductCatalog
+$productCatalogName=AU Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-au;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;auroot;;auroot;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;AUStoreFinderLink;AU Store Finder Link;/store-finder;AUStoreFinderLink;AUStoreFinderLink;;;;
+;;AULoginLink;AU Login Link;/login;AULoginLink;AULoginLink;;;;
+;;AUBodyCategoryLink;AU Body Category Link;/Body/c/c00001;AUBodyCategoryLink;AUBodyCategoryLink;;c00001;;
+;;AUBodyTreatsCategoryLink;AU Body Treats Category Link;/Body/Bath-Treats/c/c00013;AUBodyTreatsCategoryLink;AUBodyTreatsCategoryLink;;c00013;;
+;;AUBodyButtersCategoryLink;AU Body Butters Category Link;/Body/Body-Butters/c/c00014;AUBodyButtersCategoryLink;AUBodyButtersCategoryLink;;c00014;;
+;;AUBodyYogurtsCategoryLink;AU Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;AUBodyYogurtsCategoryLink;AUBodyYogurtsCategoryLink;;c00284;;
+;;AUBodyMassageOilsCategoryLink;AU Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;AUBodyMassageOilsCategoryLink;AUBodyMassageOilsCategoryLink;;c00024;;
+;;AUBodyBronzingCategoryLink;AU Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;AUBodyBronzingCategoryLink;AUBodyBronzingCategoryLink;;c00018;;
+;;AUDeodorantCategoryLink;AU Deodorant Category Link;/Body/Deodorant/c/c00019;AUDeodorantCategoryLink;AUDeodorantCategoryLink;;c00019;;
+;;AUFootCareCategoryLink;AU Foot Care Category Link;/Body/Foot-Care/c/c00020;AUFootCareCategoryLink;AUFootCareCategoryLink;;c00020;;
+;;AUTravelSizesCategoryLink;AU Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;AUTravelSizesCategoryLink;AUTravelSizesCategoryLink;;c00021;;
+;;AUFaceCategoryLink;AU Face Category Link;/Face/c/c00010;AUFaceCategoryLink;AUFaceCategoryLink;;c00010;;
+;;AUFaceMasksCategoryLink;AU Face Masks Category Link;/Face/Face-Masks/c/c00143;AUFaceMasksCategoryLink;AUFaceMasksCategoryLink;;c00143;;
+;;AUMakeUpRemoversCategoryLink;AU Make-up Removers Link;/Face/Make-up-Removers/c/c00145;AUMakeUpRemoversCategoryLink;AUMakeUpRemoversCategoryLink;;c00145;;
+;;AUEyeCareCategoryLink;AU Eye Care CategoryLink;/Face/Eye-Care/c/c00144;AUEyeCareCategoryLink;AUEyeCareCategoryLink;;c00144;;
+;;AUNightTimeTreatmentsCategoryLink;AU Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;AUNightTimeTreatmentsCategoryLink;AUNightTimeTreatmentsCategoryLink;;c00149;;
+;;AULipBalmCategoryLink;AU Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;AULipBalmCategoryLink;AULipBalmCategoryLink;;c00146;;
+;;AUMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;AUMenShavingCategoryLink;AUMenShavingCategoryLink;;c00147;;
+;;AUCleansersAndTonersCategoryLink;AU Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;AUCleansersAndTonersCategoryLink;AUCleansersAndTonersCategoryLink;;c00141;;
+;;AUMoisturisersCategoryLink;AU Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;AUMoisturisersCategoryLink;AUMoisturisersCategoryLink;;c00148;;
+;;AUAccessoriesCategoryLink;AU Accessories CategoryLink;/Face/Accessories/c/c00140;AUAccessoriesCategoryLink;AUAccessoriesCategoryLink;;c00140;;
+;;AUFaceScrubsCategoryLink;AU Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;AUFaceScrubsCategoryLink;AUFaceScrubsCategoryLink;;c00275;;
+;;AUHandsCategoryLink;AU Hands CategoryLink;/Hands/c/c00006;AUHandsCategoryLink;AUHandsCategoryLink;;c00006;;
+;;AUHandsMoisturisersCategoryLink;AU Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;AUHandsMoisturisersCategoryLink;AUHandsMoisturisersCategoryLink;;c00054;;
+;;AUHandWashCategoryLink;AU Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;AUHandWashCategoryLink;AUHandWashCategoryLink;;c00056;;
+;;AUTargetedTreatmentCategoryLink;AU Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;AUTargetedTreatmentCategoryLink;AUTargetedTreatmentCategoryLink;;c00055;;
+;;AUHairCategoryLink;AU Hair Category Link;/Hair/c/c00005;AUHairCategoryLink;AUHairCategoryLink;;c00005;;
+;;AUBrushesAndCombsCategoryLink;AU Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;AUBrushesAndCombsCategoryLink;AUBrushesAndCombsCategoryLink;;c00047;;
+;;AUConditionerCategoryLink;AU Conditioner Category Link;/Hair/Conditioner/c/c00048;AUConditionerCategoryLink;AUConditionerCategoryLink;;c00048;;
+;;AUShampooCategoryLink;AU Shampoo Category Link;/Hair/Shampoo/c/c00051;AUShampooCategoryLink;AUShampooCategoryLink;;c00051;;
+;;AUTreatmentCategoryLink;AU Treatment Category Link;/Hair/Treatment/c/c00050;AUTreatmentCategoryLink;AUTreatmentCategoryLink;;c00050;;
+;;AUStylingCategoryLink;AU Styling Category Link;/Hair/Styling/c/c00049;AUStylingCategoryLink;AUStylingCategoryLink;;c00049;;
+;;AUMakeUpCategoryLink;AU Make-up Category Link;/Make-up/c/c00007;AUMakeUpCategoryLink;AUMakeUpCategoryLink;;c00007;;
+;;AUFoundationsConcealersCategoryLink;AU Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;AUFoundationsConcealersCategoryLink;AUFoundationsConcealersCategoryLink;;c00065;;
+;;AUBrushesAndToolsCategoryLink;AU Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;AUBrushesAndToolsCategoryLink;AUBrushesAndToolsCategoryLink;;c00059;;
+;;AUBBCreamsCategoryLink;AU BB Creams Category Link;/Make-up/BB-Creams/c/c00060;AUBBCreamsCategoryLink;AUBBCreamsCategoryLink;;c00060;;
+;;AUBronzingCategoryLink;AU Bronzing Category Link;/Make-up/Bronzing/c/c00061;AUBronzingCategoryLink;AU BronzingCategoryLink;;c00061;;
+;;AUCheeksCategoryLink;AU Cheeks Category Link;/Make-up/Cheeks/c/c00062;AUCheeksCategoryLink;AUCheeksCategoryLink;;c00062;;AU
+;;AUEyeLinersCategoryLink;AU Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;AUEyeLinersCategoryLink;AUEyeLinersCategoryLink;;c00064;;
+;;AUEyeShadowCategoryLink;AU Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;AUEyeShadowCategoryLink;AUEyeShadowCategoryLink;;c00063;;
+;;AULipsCategoryLink;AU Lips Category Link;/Make-up/Lips/c/c00066;AULipsCategoryLink;AULipsCategoryLink;;c00066;;
+;;AUMascaraCategoryLink;AU Mascara Category Link;/Make-up/Mascara/c/c00067;AUMascaraCategoryLink;AUMascaraCategoryLink;;c00067;;
+;;AUPrimersCategoryLink;AU Primers Category Link;/Make-up/Primers/c/c00069;AUPrimersCategoryLink;AUPrimersCategoryLink;;c00069;;
+;;AUDeliveryLink;AU Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";AUDeliveryLink;AUDeliveryLink;newWindow;;;
+;;AUReturnsLink;AU Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";AUReturnsLink;AUReturnsLink;newWindow;;;
+;;AUFAQLink;AU FAQ Link;/faq;AUFAQLink;AUFAQLink;;;;
+;;AUTermsAndConditionsLink;AU TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";AUTermsAndConditionsLink;AUTermsAndConditionsLink;newWindow;
+;;AUPrivacyPolicyLink;AU PrivacyPolicy Link;/privacy-policy;AUPrivacyPolicyLink;AUPrivacyPolicyLink;newWindow;
+;;AUSitemapLink;AU Sitemap Link;/sitemap;AUSitemapLink;AUSitemapLink;newWindow;
+;;AUStoresLink;AU Stores Link;"https://www.thebodyshop.com/store-finder";AUStoresLink;AUStoresLink;newWindow;
+;;AULoveYourBodyClubLink;AU Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";AULoveYourBodyClubLink;AULoveYourBodyClubLink;newWindow;
+;;AUStudentDiscountLink;AU Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";AUStudentDiscountLink;AUStudentDiscountLink;newWindow;
+;;AUGiftCardsLink;AU Gift Cards Link;/gift-card-balance;AUGiftCardsLink;AUGiftCardsLink;newWindow;
+;;AUAboutUsLink;AU About us Link;"https://www.thebodyshop.com/about-us";AUAboutUsLink;AUAboutUsLink;newWindow;
+;;AUTheBodyShopAtHomeLink;AU The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";AUTheBodyShopAtHomeLink;AUTheBodyShopAtHomeLink;newWindow;
+;;AUAffiliatesLink;AU Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";AUAffiliatesLink;AUAffiliatesLink;newWindow;
+;;AUGenderPayGapLink;AU Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";AUGenderPayGapLink;AUGenderPayGapLink;newWindow;
+;;AUModernSlaveryStatementLink;AU Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";AUModernSlaveryStatementLink;AUModernSlaveryStatementLink;newWindow;
+;;AUAgainstAnimalTestingLink;AU Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";AUAgainstAnimalTestingLink;AUAgainstAnimalTestingLink;newWindow;
+;;AUTaxStrategyLink;AU Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";AUTaxStrategyLink;AUTaxStrategyLink;newWindow;
+;;AUCareersLink;AU Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";AUCareersLink;AUCareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsAURootNode					 ;                         ; TBS AU Root Node                   ; auroot                        ;                                                               																										; TbsAURootNode
+                                ; TbsAUNavNode                   ;                         ; TBS AU Site Nav Node               ; TbsAURootNode                 ;                                              																										; TbsAUNavNode
+                                ; TbsAUCategoryNavNode           ;                         ; TBS AU Category Navigation         ; TbsAUNavNode                  ;                                                               																										; TbsAUCategoryNavNode
+                                ; TbsAUDiscoverNavNode           ;                         ; TBS AU Discover Navigation         ; TbsAUNavNode                  ;                                                               																										; TbsAUDiscoverNavNode
+                                ; TbsAUFooterNavNode             ;                         ; TBS AU Footer Navigation           ; TbsAUNavNode                  ;                                                               																										; TbsAUFooterNavNode
+                                ; AUUsefullInformationNavNode    ;                         ; AU Useful Information   			; TbsAUFooterNavNode            ; AUDeliveryLink,AUReturnsLink,AUFAQLink,AUTermsAndConditionsLink,AUPrivacyPolicyLink,AUSitemapLink                                										; AUUsefullInformationNavNode
+                                ; AUWaysToShopNavNode 		     ;                         ; AU Ways To Shop 					; TbsAUFooterNavNode            ; AUStoresLink,AULoveYourBodyClubLink,AUStudentDiscountLink,AUGiftCardsLink                                  															; AUWaysToShopNavNode
+                                ; AUAboutUsNavNode               ;                         ; AU About Us               			; TbsAUFooterNavNode            ; AUAboutUsLink,AUTheBodyShopAtHomeLink,AUAffiliatesLink,AUGenderPayGapLink,AUModernSlaveryStatementLink,AUAgainstAnimalTestingLink,AUTaxStrategyLink,AUCareersLink 	; AUAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsAUCategoryNavNode;;Tbs AU Categories;TbsAUNavNode;AUBodyCategoryNavNode,AUFaceCategoryNavNode,AUHandsCategoryNavNode,AUHairCategoryNavNode,AUMakeUpCategoryNavNode;TbsAUCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ;AUBodyCategoryNavNode;;AU Body Nav Node;Body;AUBodyByProductTypeNavNode,AUBodyBySkinTypeNavNode;;AUBodyCategoryNavNode
+                               ;AUFaceCategoryNavNode;;AU Face Nav Node;Face;AUFaceByProductTypeNavNode,AUFaceBySkinTypeNavNode;;AUFaceCategoryNavNode
+                               ;AUHandsCategoryNavNode;;AU Hands Nav Node;Hands;AUHandsByProductTypeNavNode,AUHandsBySkinTypeNavNode;;AUHandsCategoryNavNode
+                               ;AUHairCategoryNavNode;;AU Hair Nav Node;Hair;AUHairByProductTypeNavNode,AUHairByHairConcernTypeNavNode;;AUHairCategoryNavNode
+                               ;AUMakeUpCategoryNavNode;;AU MakeUp Nav Node;MakeUp;AUMakeUpByProductTypeNavNode,AUMakeUpBySkinTypeNavNode;;AUMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;AUBodyByProductTypeNavNode;;AU Body By Product Type;AUBodyTreatsCategoryNavNode,AUBodyButtersCategoryNavNode,AUBodyYogurtsCategoryNavNode,AUBodyMassageOilsCategoryNavNode,AUFootCareCategoryNavNode;;AUBodyByProductTypeNavNode;
+                               ;AUBodyBySkinTypeNavNode;;AU Body By Skin Type;AUDeodorantCategoryNavNode,AUBodyBronzingCategoryNavNode,AUTravelSizesCategoryNavNode,AUBodyAllCategoryNavNode;;AUBodyBySkinTypeNavNode;
+
+#Face_Category_NavNodes
+                               ;AUFaceByProductTypeNavNode;;AU Face By Product Type;AUFaceMasksCategoryNavNode,AUMakeUpRemoversCategoryNavNode,AUEyeCareCategoryNavNode,AUNightTimeTreatmentsCategoryNavNode,AUMenShavingCategoryNavNode;;AUFaceByProductTypeNavNode;
+                               ;AUFaceBySkinTypeNavNode;;AU Face By Skin Type;AULipBalmCategoryNavNode,AUCleansersAndTonersNavNode,AUMoisturisersCategoryNavNode,AUAccessoriesCategoryNavNode,AUFaceScrubsCategoryNavNode,AUFaceAllCategoryNavNode;;AUFaceBySkinTypeNavNode;
+
+#Hands_Category_NavNodes
+                               ;AUHandsByProductTypeNavNode;;AU Hands By Product Type;AUHandsMoisturisersCategoryNavNode,AUHandWashCategoryNavNode;;AUHandsByProductTypeNavNode;
+                               ;AUHandsBySkinTypeNavNode;;AU Hands By Skin Type;AUTargetedTreatmentCategoryNavNode,AUHandsAllCategoryNavNode;;AUHandsBySkinTypeNavNode;
+
+#Hair_Category_NavNodes
+                               ;AUHairByProductTypeNavNode;;AU Hair By Product Type;AUBrushesAndCombsCategoryNavNode,AUConditionerCategoryNavNode,AUShampooCategoryNavNode;;AUHairByProductTypeNavNode;
+                               ;AUHairByHairConcernTypeNavNode;;AU Hair By Hair Concern Type;AUTreatmentCategoryNavNode,AUStylingCategoryNavNode,AUHairAllCategoryNavNode;;AUHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;AUMakeUpByProductTypeNavNode;;AU MakeUp By Product Type;AUFoundationsConcealersCategoryNavNode,AUBrushesAndToolsCategoryNavNode,AUBBCreamsCategoryNavNode,AUBronzingCategoryNavNode,AUCheeksCategoryNavNode;;AUMakeUpByProductTypeNavNode;
+                               ;AUMakeUpBySkinTypeNavNode;;AU MakeUp By Skin Type;AUEyeLinersCategoryNavNode,AUEyeShadowCategoryNavNode,AULipsCategoryNavNode,AUMascaraCategoryNavNode,AUPrimersCategoryNavNode,AUMakeUpAllCategoryNavNode;;AUMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;AUBodyTreatsCategoryNavNode;;AU Body Treats;;AUBodyTreatsCategoryNavNode
+                               ;AUBodyButtersCategoryNavNode;;AU Body Butters;;AUBodyButtersCategoryNavNode
+                               ;AUBodyYogurtsCategoryNavNode;;AU Body Yogurts;;AUBodyYogurtsCategoryNavNode
+                               ;AUBodyMassageOilsCategoryNavNode;;AU Body Massage Oils;;AUBodyMassageOilsCategoryNavNode
+                               ;AUFootCareCategoryNavNode;;AU Foot Care;;AUFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;AUBodyAllCategoryNavNode;;AU Body All Categories;;AUBodyAllCategoryNavNode
+                               ;AUBodyBronzingCategoryNavNode;;AU Body Bronzing;;AUBodyBronzingCategoryNavNode
+                               ;AUTravelSizesCategoryNavNode;;AU Travel Sizes;;AUTravelSizesCategoryNavNode
+                               ;AUDeodorantCategoryNavNode;;AU Deodorant;;AUDeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;AUFaceMasksCategoryNavNode;;AU Face Masks;;AUFaceMasksCategoryNavNode
+                               ;AUMakeUpRemoversCategoryNavNode;;AU Make-up Removers;;AUMakeUpRemoversCategoryNavNode
+                               ;AUEyeCareCategoryNavNode;;AU Eye Care;;AUEyeCareCategoryNavNode
+                               ;AUNightTimeTreatmentsCategoryNavNode;;AU Night Time Treatments;;AUNightTimeTreatmentsCategoryNavNode
+                               ;AUMenShavingCategoryNavNode;;AU Men's Shaving ;;AUMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;AULipBalmCategoryNavNode;;AU Lip Balm;;AULipBalmCategoryNavNode
+                               ;AUCleansersAndTonersNavNode;;AU Cleansers and Toners;;AUCleansersAndTonersNavNode
+                               ;AUMoisturisersCategoryNavNode;;AU Moisturisers;;AUMoisturisersCategoryNavNode
+                               ;AUAccessoriesCategoryNavNode;;AU Accessories;;AUAccessoriesCategoryNavNode
+                               ;AUFaceScrubsCategoryNavNode;;AU Face Scrubs;;AUFaceScrubsCategoryNavNode
+                               ;AUFaceAllCategoryNavNode;;AU Face All Categories;;AUFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;AUHandsMoisturisersCategoryNavNode;;AU Hands Moisturisers;;AUHandsMoisturisersCategoryNavNode
+                               ;AUHandWashCategoryNavNode;;AU Hand Wash;;AUHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;AUTargetedTreatmentCategoryNavNode;;AU Targeted Treatment;;AUTargetedTreatmentCategoryNavNode
+                               ;AUHandsAllCategoryNavNode;;AU Hands All Categories;;AUHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;AUBrushesAndCombsCategoryNavNode;;AU Brushes And Combs;;AUBrushesAndCombsCategoryNavNode
+                               ;AUConditionerCategoryNavNode;;AU Conditioner;;AUConditionerCategoryNavNode
+                               ;AUShampooCategoryNavNode;;AU Shampoo;;AUShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;AUTreatmentCategoryNavNode;;AU Treatment;;AUTreatmentCategoryNavNode
+                               ;AUStylingCategoryNavNode;;AU Styling;;AUStylingCategoryNavNode
+                               ;AUHairAllCategoryNavNode;;AU Hair All Categories;;AUHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;AUFoundationsConcealersCategoryNavNode;;AU Foundations Concealers;;AUFoundationsConcealersCategoryNavNode
+                               ;AUBrushesAndToolsCategoryNavNode;;AU Brushes and Tools;;AUBrushesAndToolsCategoryNavNode
+                               ;AUBBCreamsCategoryNavNode;;AU BB Creams;;AUBBCreamsCategoryNavNode
+                               ;AUBronzingCategoryNavNode;;AU Bronzing;;AUBronzingCategoryNavNode
+                               ;AUCheeksCategoryNavNode;;AU Cheeks;;AUCheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;AUEyeLinersCategoryNavNode;;AU Eye Liners;;AUEyeLinersCategoryNavNode
+                               ;AUEyeShadowCategoryNavNode;;AU Eye Shadow;;AUEyeShadowCategoryNavNode
+                               ;AULipsCategoryNavNode;;AU Lips;;AULipsCategoryNavNode
+                               ;AUMascaraCategoryNavNode;;AU Mascara;;AUMascaraCategoryNavNode
+                               ;AUPrimersCategoryNavNode;;AU Primers;;AUPrimersCategoryNavNode
+                               ;AUMakeUpAllCategoryNavNode;;AU Make-up All Categories;;AUMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;AUBodyAllCategoryNavNodeEntry;;AUBodyAllCategoryNavNodeEntry;AUBodyAllCategoryNavNode;AUBodyCategoryLink
+;AUBodyTreatsCategoryNavNodeEntry;;AUBodyTreatsCategoryNavNodeEntry;AUBodyTreatsCategoryNavNode;AUBodyTreatsCategoryLink;AU
+;AUBodyButtersCategoryNavNodeEntry;;AUBodyButtersCategoryNavNodeEntry;AUBodyButtersCategoryNavNode;AUBodyButtersCategoryLink;AU
+;AUBodyYogurtsCategoryNavNodeEntry;;AUBodyYogurtsCategoryNavNodeEntry;AUBodyYogurtsCategoryNavNode;AUBodyYogurtsCategoryLink
+;AUBodyMassageOilsCategoryNavNodeEntry;;AUBodyMassageOilsCategoryNavNodeEntry;AUBodyMassageOilsCategoryNavNode;AUBodyMassageOilsCategoryLink
+;AUBodyBronzingCategoryNavNodeEntry;;AUBodyBronzingCategoryNavNodeEntry;AUBodyBronzingCategoryNavNode;AUBodyBronzingCategoryLink
+;AUDeodorantCategoryNavNodeEntry;;AUDeodorantCategoryNavNodeEntry;AUDeodorantCategoryNavNode;AUDeodorantCategoryLink
+;AUTravelSizesCategoryNavNodeEntry;;AUTravelSizesCategoryNavNodeEntry;AUTravelSizesCategoryNavNode;AUTravelSizesCategoryLink
+;AUFootCareCategoryNavNodeEntry;;AUFootCareCategoryNavNodeEntry;AUFootCareCategoryNavNode;AUFootCareCategoryLink
+;AUFaceAllCategoryNavNodeEntry;;AUFaceAllCategoryNavNodeEntry;AUFaceAllCategoryNavNode;AUFaceCategoryLink;AU
+;AUFaceMasksCategoryNavNodeEntry;;AUFaceMasksCategoryNavNodeEntry;AUFaceMasksCategoryNavNode;AUFaceMasksCategoryLink;AU
+;AUMakeUpRemoversCategoryNavNodeEntry;;AUMakeUpRemoversCategoryNavNodeEntry;AUMakeUpRemoversCategoryNavNode;AUMakeUpRemoversCategoryLink;AU
+;AUEyeCareCategoryNavNodeEntry;;AUEyeCareCategoryNavNodeEntry;AUEyeCareCategoryNavNode;AUEyeCareCategoryLink
+;AUNightTimeTreatmentsCategoryNavNodeEntry;;AUNightTimeTreatmentsCategoryNavNodeEntry;AUNightTimeTreatmentsCategoryNavNode;AUNightTimeTreatmentsCategoryLink
+;AUMenShavingCategoryNavNodeEntry;;AUMenShavingCategoryNavNodeEntry;AUMenShavingCategoryNavNode;AUMenShavingCategoryLink
+;AULipBalmCategoryNavNodeEntry;;AULipBalmCategoryNavNodeEntry;AULipBalmCategoryNavNode;AULipBalmCategoryLink
+;AUCleansersAndTonersNavNodeEntry;;AUCleansersAndTonersNavNodeEntry;AUCleansersAndTonersNavNode;AUCleansersAndTonersCategoryLink
+;AUMoisturisersCategoryNavNodeEntry;;AUMoisturisersCategoryNavNodeEntry;AUMoisturisersCategoryNavNode;AUMoisturisersCategoryLink
+;AUAccessoriesCategoryNavNodeEntry;;AUAccessoriesCategoryNavNodeEntry;AUAccessoriesCategoryNavNode;AUAccessoriesCategoryLink
+;AUFaceScrubsCategoryNavNodeEntry;;AUFaceScrubsCategoryNavNodeEntry;AUFaceScrubsCategoryNavNode;AUFaceScrubsCategoryLink
+;AUHandsAllCategoryNavNodeEntry;;AUHandsAllCategoryNavNodeEntry;AUHandsAllCategoryNavNode;AUHandsCategoryLink
+;AUHandsMoisturisersCategoryNavNodeEntry;;AUHandsMoisturisersCategoryNavNodeEntry;AUHandsMoisturisersCategoryNavNode;AUHandsMoisturisersCategoryLink
+;AUHandWashCategoryNavNodeEntry;;AUHandWashCategoryNavNodeEntry;AUHandWashCategoryNavNode;AUHandWashCategoryLink
+;AUTargetedTreatmentCategoryNavNodeEntry;;AUTargetedTreatmentCategoryNavNodeEntry;AUTargetedTreatmentCategoryNavNode;AUTargetedTreatmentCategoryLink
+;AUHairAllCategoryNavNodeEntry;;AUHairAllCategoryNavNodeEntry;AUHairAllCategoryNavNode;AUHairCategoryLink
+;AUBrushesAndCombsCategoryNavNodeEntry;;AUBrushesAndCombsCategoryNavNodeEntry;AUBrushesAndCombsCategoryNavNode;AUBrushesAndCombsCategoryLink
+;AUConditionerCategoryNavNodeEntry;;AUConditionerCategoryNavNodeEntry;AUConditionerCategoryNavNode;AUConditionerCategoryLink
+;AUShampooCategoryNavNodeEntry;;AUShampooCategoryNavNodeEntry;AUShampooCategoryNavNode;AUShampooCategoryLink
+;AUTreatmentCategoryNavNodeEntry;;AUTreatmentCategoryNavNodeEntry;AUTreatmentCategoryNavNode;AUTreatmentCategoryLink
+;AUStylingCategoryNavNodeEntry;;AUStylingCategoryNavNodeEntry;AUStylingCategoryNavNode;AUStylingCategoryLink
+;AUMakeUpAllCategoryNavNodeEntry;;AUMakeUpAllCategoryNavNodeEntry;AUMakeUpAllCategoryNavNode;AUMakeUpCategoryLink
+;AUFoundationsConcealersCategoryNavNodeEntry;;AUFoundationsConcealersCategoryNavNodeEntry;AUFoundationsConcealersCategoryNavNode;AUFoundationsConcealersCategoryLink
+;AUBrushesAndToolsCategoryNavNodeEntry;;AUBrushesAndToolsCategoryNavNodeEntry;AUBrushesAndToolsCategoryNavNode;AUBrushesAndToolsCategoryLink
+;AUBBCreamsCategoryNavNodeEntry;;AUBBCreamsCategoryNavNodeEntry;AUBBCreamsCategoryNavNode;AUBBCreamsCategoryLink
+;AUBronzingCategoryNavNodeEntry;;AUBronzingCategoryNavNodeEntry;AUBronzingCategoryNavNode;AUBronzingCategoryLink
+;AUCheeksCategoryNavNodeEntry;;AUCheeksCategoryNavNodeEntry;AUCheeksCategoryNavNode;AUCheeksCategoryLink
+;AUEyeLinersCategoryNavNodeEntry;;AUEyeLinersCategoryNavNodeEntry;AUEyeLinersCategoryNavNode;AUEyeLinersCategoryLink
+;AUEyeShadowCategoryNavNodeEntry;;AUEyeShadowCategoryNavNodeEntry;AUEyeShadowCategoryNavNode;AUEyeShadowCategoryLink
+;AULipsCategoryNavNodeEntry;;AULipsCategoryNavNodeEntry;AULipsCategoryNavNode;AULipsCategoryLink
+;AUMascaraCategoryNavNodeEntry;;AUMascaraCategoryNavNodeEntry;AUMascaraCategoryNavNode;AUMascaraCategoryLink
+;AUPrimersCategoryNavNodeEntry;;AUPrimersCategoryNavNodeEntry;AUPrimersCategoryNavNode;AUPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsAUDiscoverNavNode;;Tbs AU Discover;TbsAUNavNode;AUDiscoverPartyNavNode,AUDiscoverTipsAndAdviceNavNode,AUDiscoverAboutUsNavNode;TbsAUDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; AUDiscoverPartyNavNode;;AU Party Nav Node;Party;AU_Discover_TheBodyShopAtHomeNavNode;;AUDiscoverPartyNavNode
+                               ; AUDiscoverTipsAndAdviceNavNode;;AU Tips & Advice Nav Node;Tips & Advice;AUSkincareArticlesNavNode,AUBodyCareArticlesNavNode,AUMake-UpAeticlesNavNode,AULifeStyleArticlesNavNode,AUIngredientBenefitsNavNode;;AUDiscoverTipsAndAdviceNavNode
+                               ; AUDiscoverAboutUsNavNode;;AU About us Nav Node;About Us;AUWhoWeAreNavNode,AULoyaltyProgramNavNode,AUSustainabilityNavNode,AUPlasticsNavNode;;AUDiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#AU_Discover_Party_NavNodes
+                               ;AU_Discover_TheBodyShopAtHomeNavNode;;AU BodyShop AtHome;AUBeYourOwnBossNavNode,AUHostAPartyNavNode;;AU_Discover_TheBodyShopAtHomeNavNode ;
+
+#AU_Discover_Tips_And_Advice_NavNode
+
+                               ;AUSkincareArticlesNavNode;;AU Skin Care Articles;AUHowToReduceBlackheadsNavNode,AUSummerSkincareNavNode,AUHowToGetRidOfDarkCirclesNavNode,AUBestFaceMoisturisersNavNode,AUHowToKeepSkinLookingYouthfulNavNode,AUGymSkincareTipsNavNode;;AUSkincareArticlesNavNode ;
+                               ;AUBodyCareArticlesNavNode;;AU Body Care Articles;AUBenefitsOfDryBrushingNavNode,AUUnderstandingDrySkinNavNode,AUBestBodyExfoliatorsNavNode;;AUBodyCareArticlesNavNode ;
+                               ;AUMake-UpAeticlesNavNode;;AU Make-Up Articles;AUHowToFindTheRightFoundationNavNode,AUHowToApplyFoundationNavNode,AUHowToShapeEyebrowsNavNode,AUHowToGetASunKissedGlowNavNode;;AUMake-UpAeticlesNavNode ;
+                               ;AULifeStyleArticlesNavNode;;AU LifeStyle Articles;AUBestVeganCitiesInTheAUNavNode,AULongHaulFlightTipsNavNode,AUGymSkincareRoutineNavNode,AUChildhoodDreamsNavNode,AUPixieGeldof’sTravelEssentialsNavNode;;AULifeStyleArticlesNavNode ;
+                               ;AUIngredientBenefitsNavNode;;AU Ingedients Benefits;AUBenefitsOfCharcoalNavNode,AUHyaluronicAcidBenefitsNavNode,AUDiscoverAllIngredientsNavNode,AUSourcingOurIngredientsNavNode;;AUIngredientBenefitsNavNode ;
+
+#AU_Discover_AboutUs_NavNode
+
+                               ;AUWhoWeAreNavNode;;AU Who We Are;AUOurHeritageNavNode,AUForeverAgainstAnimalTestingNavNode,AULatestNewsNavNode,AUNatura_CoNavNode,AUB_CorpNavNode,AUEducationalProgrammeNavNode,AUDonateMenstrualProductsNavNode,AUVegetarianBeautyNavNode;;AUWhoWeAreNavNode ;
+                               ;AULoyaltyProgramNavNode;;AU Loyalty Program;AU_Loyalty_JoinNowNavNode;;AULoyaltyProgramNavNode;
+                               ;AUSustainabilityNavNode;;AU Sustainability;AUOurCommitmentNavNode,AUCommunityTradeNavNode,AUBio-BridgesNavNode,AUReducingEnvironmentalFootprintNavNode,AUEmpoweringWomenNavNode,AUModernSlaveryNavNode;;AUSustainabilityNavNode;
+                               ;AUPlasticsNavNode;;AU Plastics;AUPlasticRecyclingInTheAUNavNode,AUTerraCycleInterviewNavNode,AUReturnRecycleRepeatNavNode,AUCommunityTradePlasticsNavNode,AUPackagingAtTheBodyShopNavNode;;AUPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;AUBeYourOwnBossNavNode;;AU Be your own boss;;AUBeYourOwnBossNavNode
+                               ;AUHostAPartyNavNode;;AU Host a party;;AUHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;AUHowToReduceBlackheadsNavNode;;AU How to reduce Blackheads;;AUHowToReduceBlackheadsNavNode
+                               ;AUSummerSkincareNavNode;;AU Summer Skincare;;AUSummerSkincareNavNode
+                               ;AUHowToGetRidOfDarkCirclesNavNode;;AU How To Get Rid Of Dark Circles;;AUHowToGetRidOfDarkCirclesNavNode
+                               ;AUBestFaceMoisturisersNavNode;;AU Best Face Moisturisers;;AUBestFaceMoisturisersNavNode
+                               ;AUHowToKeepSkinLookingYouthfulNavNode;;AU How To Keep Skin Looking Youthful;;AUHowToKeepSkinLookingYouthfulNavNode
+                               ;AUGymSkincareTipsNavNode;;AU Gym Skincare Tips;;AUGymSkincareTipsNavNode
+
+#Child_Nodes_AUBodyCareArticles_NavNode
+
+                               ;AUBenefitsOfDryBrushingNavNode;;AU Benefits Of Dry Brushing;;AUBenefitsOfDryBrushingNavNode
+                               ;AUUnderstandingDrySkinNavNode;;AU Understanding Dry Skin;;AUUnderstandingDrySkinNavNode
+                               ;AUBestBodyExfoliatorsNavNode;;AU Best Body Exfoliators;;AUBestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;AUHowToFindTheRightFoundationNavNode;;AU How to find the right foundation;;AUHowToFindTheRightFoundationNavNode
+                               ;AUHowToApplyFoundationNavNode;;AU How to apply foundation;;AUHowToApplyFoundationNavNode
+                               ;AUHowToShapeEyebrowsNavNode;;AU How to shape eyebrows;;AUHowToShapeEyebrowsNavNode
+                               ;AUHowToGetASunKissedGlowNavNode;;AU How to get a sun kissed glow;;AUHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;AUBestVeganCitiesInTheAUNavNode;;Best Vegan Cities in the AU;;AUBestVeganCitiesInTheAUNavNode
+                               ;AULongHaulFlightTipsNavNode;;AU Long haul flight tips;;AULongHaulFlightTipsNavNode
+                               ;AUGymSkincareRoutineNavNode;;AU Gym skincare routine;;AUGymSkincareRoutineNavNode
+                               ;AUChildhoodDreamsNavNode;;AU Childhood Dreams;;AUChildhoodDreamsNavNode
+                               ;AUPixieGeldof’sTravelEssentialsNavNode;;AU Pixie Geldof’s Travel Essentials;;AUPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;AUBenefitsOfCharcoalNavNode;;AU Benefits of charcoal;;AUBenefitsOfCharcoalNavNode
+                               ;AUHyaluronicAcidBenefitsNavNode;;AU Hyaluronic Acid Benefits;;AUHyaluronicAcidBenefitsNavNode
+                               ;AUDiscoverAllIngredientsNavNode;;AU Discover all ingredients;;AUDiscoverAllIngredientsNavNode
+                               ;AUSourcingOurIngredientsNavNode;;AU Sourcing our ingredients;;AUSourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_AUWhoWeAreNavNode
+                               ;AUOurHeritageNavNode;;AU Our Heritage;;AUOurHeritageNavNode
+                               ;AUForeverAgainstAnimalTestingNavNode;;AU Forever Against Animal Testing;;AUForeverAgainstAnimalTestingNavNode
+                               ;AUB_CorpNavNode;;AU B Corp;;AUB_CorpNavNode
+                               ;AULatestNewsNavNode;;AU Latest News;;AULatestNewsNavNode
+                               ;AUNatura_CoNavNode;;AU Natura & co;;AUNatura_CoNavNode
+                               ;AUEducationalProgrammeNavNode;;AU Educational Programme;;AUEducationalProgrammeNavNode
+                               ;AUDonateMenstrualProductsNavNode;;AU Donate Menstrual Products;;AUDonateMenstrualProductsNavNode
+                               ;AUVegetarianBeautyNavNode;;AU Vegetarian Beauty;;AUVegetarianBeautyNavNode
+
+#Child_Nodes_AULoyaltyProgramNavNode
+                               ;AU_Loyalty_JoinNowNavNode;;AU Join Now;;AU_Loyalty_JoinNowNavNode
+
+#Child_Nodes_AUSustainabilityNavNode
+                               ;AUOurCommitmentNavNode;;AU Our Commitment;;AUOurCommitmentNavNode
+                               ;AUCommunityTradeNavNode;;AU Community Trade;;AUCommunityTradeNavNode
+                               ;AUBio-BridgesNavNode;;AU Bio-Bridges;;AUBio-BridgesNavNode
+                               ;AUReducingEnvironmentalFootprintNavNode;;AU Reducing Environmental Footprint;;AUReducingEnvironmentalFootprintNavNode
+                               ;AUEmpoweringWomenNavNode;;AU EmpoweringWomen;;AUEmpoweringWomenNavNode
+                               ;AUModernSlaveryNavNode;;AU ModernSlavery;;AUModernSlaveryNavNode
+
+#Child_Nodes_AUPlasticsNavNode
+                               ;AUPlasticRecyclingInTheAUNavNode;;AU Plastic Recycling In The AU;;AUPlasticRecyclingInTheAUNavNode
+                               ;AUTerraCycleInterviewNavNode;;AU Terra Cycle Interview;;AUTerraCycleInterviewNavNode
+                               ;AUReturnRecycleRepeatNavNode;;AU Return Recycle Repeat;;AUReturnRecycleRepeatNavNode
+                               ;AUCommunityTradePlasticsNavNode;;AU Community Trade Plastics;;AUCommunityTradePlasticsNavNode
+                               ;AUPackagingAtTheBodyShopNavNode;;AU Packaging At The Body Shop;;AUPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;AUBeYourOwnBossLink;AU Be your own boss Link;/;AUBeYourOwnBossLink;AUBeYourOwnBossLink;;;;
+                              ;;AUHostAPartyNavNodeLink;AU Host a party Link;/;AUHostAPartyNavNodeLink;AUHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;AUSummerSkincareLink;AU Summer Skincare Link;/;AUSummerSkincareLink;AUSummerSkincareLink;;;;
+                              ;;AUHowToReduceBlackheadsLink;AU How to reduce blackheads Link;/;AUHowToReduceBlackheadsLink;AUHowToReduceBlackheadsLink;;;;
+                              ;;AUHowToGetRidOfDarkCirclesLink;AU How to get rid of dark circles Link;/;AUHowToGetRidOfDarkCirclesLink;AUHowToGetRidOfDarkCirclesLink;;;;
+                              ;;AUBestFaceMoisturisersLink;AU Best Face Moisturisers Link;/;AUBestFaceMoisturisersLink;AUBestFaceMoisturisersLink;;;;
+                              ;;AUHowToKeepSkinLookingYouthfulLink;AU How to keep skin looking youthful Link;/;AUHowToKeepSkinLookingYouthfulLink;AUHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;AUGymSkincareTipsLink;AU Gym Skincare Tips Link;/;AUGymSkincareTipsLink;AUGymSkincareTipsLink;;;;
+
+                              ;;AUBenefitsOfDryBrushingLink;AU Benefits of dry brushing Link;/;AUBenefitsOfDryBrushingLink;AUBenefitsOfDryBrushingLink;;;;
+                              ;;AUUnderstandingDrySkinLink;AU Understanding dry skin Link;/;AUUnderstandingDrySkinLink;AUUnderstandingDrySkinLink;;;;
+                              ;;AUBestBodyExfoliatorsLink;AU Best body exfoliators Link;/;AUBestBodyExfoliatorsLink;AUBestBodyExfoliatorsLink;;;;
+
+                              ;;AUHowToFindTheRightFoundationLink;AU How to find the right foundation Link;/;AUHowToFindTheRightFoundationLink;AUHowToFindTheRightFoundationLink;;;;
+                              ;;AUHowToApplyFoundationLink;AU How to apply foundation Link;/;AUHowToApplyFoundationLink;AUHowToApplyFoundationLink;;;;
+                              ;;AUHowToShapeEyebrowsLink;AU How to shape eyebrows youthful Link;/;AUHowToShapeEyebrowsLink;AUHowToShapeEyebrowsLink;;;;
+                              ;;AUHowToGetASunKissedGlowLink;AU How to get a sun kissed glow Link;/;AUHowToGetASunKissedGlowLink;AUHowToGetASunKissedGlowLink;;;;
+
+                              ;;AUBestVeganCitiesInTheAULink;Best Vegan Cities in the AU Link;/;AUBestVeganCitiesInTheAULink;AUBestVeganCitiesInTheAULink;;;;
+                              ;;AULongHaulFlightTipsLink;AU Long haul flight tips Link;/;AULongHaulFlightTipsLink;AULongHaulFlightTipsLink;;;;
+                              ;;AUGymSkincareRoutineLink;AU Gym skincare routine Link;/;AUGymSkincareRoutineLink;AUGymSkincareRoutineLink;;;;
+                              ;;AUChildhoodDreamsLink;AU Childhood Dreams Link;/;AUChildhoodDreamsLink;AUChildhoodDreamsLink;;;;
+                              ;;AUPixieGeldof’sTravelEssentialsLink;AU Pixie Geldof’s Travel Essentials Link;/;AUPixieGeldof’sTravelEssentialsLink;AUPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;AUBenefitsOfCharcoalLink;AU Benefits of charcoal Link;/;AUBenefitsOfCharcoalLink;AUBenefitsOfCharcoalLink;;;;
+                              ;;AUHyaluronicAcidBenefitsLink;AU Hyaluronic Acid Benefits Link;/;AUHyaluronicAcidBenefitsLink;AUHyaluronicAcidBenefitsLink;;;;
+                              ;;AUDiscoverAllIngredientsLink;AU Discover all ingredients Link;/;AUDiscoverAllIngredientsLink;AUDiscoverAllIngredientsLink;;;;
+                              ;;AUSourcingOurIngredientsLink;AU Sourcing our ingredients Link;/;AUSourcingOurIngredientsLink;AUSourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;AUOurHeritageLink;AU Our Heritage Link;/;AUOurHeritageLink;AUOurHeritageLink;;;;
+                              ;;AUForeverAgainstAnimalTestingLink;AU How to reduce blackheads Link;/;AUForeverAgainstAnimalTestingLink;AUForeverAgainstAnimalTestingLink;;;;
+                              ;;AUB_CorpLink;AU B Corp Link;/;AUB_CorpLink;AUB_CorpLink;;;;
+                              ;;AULatestNewsLink;AU Latest News Link;/;AULatestNewsLink;AULatestNewsLink;;;;
+                              ;;AUNatura_CoLink;AU Natura & co Link;/;AUNatura_CoLink;AUNatura_CoLink;;;;
+                              ;;AUEducationalProgrammeLink;AU Educational PRogramme Link;/;AUEducationalProgrammeLink;AUEducationalProgrammeLink;;;;
+                              ;;AUDonateMenstrualProductsLink;AU Donate Menstrual Products Link;/;AUDonateMenstrualProductsLink;AUDonateMenstrualProductsLink;;;;
+                              ;;AUVegetarianBeautyLink;AU Vegetarian Beauty Link;/;AUVegetarianBeautyLink;AUVegetarianBeautyLink;;;;
+
+                              ;;AU_Loyalty_JoinNowLink;AU Join Now Link;/;AU_Loyalty_JoinNowLink;AU_Loyalty_JoinNowLink;;;;
+
+                              ;;AUOurCommitmentLink;AU Our Commitment Link;/;AUOurCommitmentLink;AUOurCommitmentLink;;;;
+                              ;;AUCommunityTradeLink;AU Community Trade Link;/;AUCommunityTradeLink;AUCommunityTradeLink;;;;
+                              ;;AUBio-BridgesLink;AU Bio-Bridges Link;/;AUBio-BridgesLink;AUBio-BridgesLink;;;;
+                              ;;AUReducingEnvironmentalFootprintLink;AU Reducing Environmental Footprint Link;/;AUReducingEnvironmentalFootprintLink;AUReducingEnvironmentalFootprintLink;;;;
+                              ;;AUEmpoweringWomenLink;AU Empowering Women Link;/;AUEmpoweringWomenLink;AUEmpoweringWomenLink;;;;
+                              ;;AUModernSlaveryLink;AU Modern Slavery Link;/;AUModernSlaveryLink;AUModernSlaveryLink;;;;
+
+                              ;;AUPlasticRecyclingInTheAULink;Plastic recycling in the AU Link;/;AUPlasticRecyclingInTheAULink;AUPlasticRecyclingInTheAULink;;;;
+                              ;;AUTerraCycleInterviewLink;AU TerraCycle Interview Link;/;AUTerraCycleInterviewLink;AUTerraCycleInterviewLink;;;;
+                              ;;AUReturnRecycleRepeatNavNodeLink;AU Return. Recycle. Repeat Link;/;AUReturnRecycleRepeatNavNodeLink;AUReturnRecycleRepeatNavNodeLink;;;;
+                              ;;AUCommunityTradePlasticsLink;AU Community Trade Plastics Link;/;AUCommunityTradePlasticsLink;AUCommunityTradePlasticsLink;;;;
+                              ;;AUPackagingAtTheBodyShopLink;AU Packaging at The Body Shop Link;/;AUPackagingAtTheBodyShopLink;AUPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;AUBeYourOwnBossNavNodeEntry;;AUBeYourOwnBossNavNodeEntry;AUBeYourOwnBossNavNode;AUBeYourOwnBossLink
+                                ;AUHostAPartyNavNodeEntry;;AUHostAPartyNavNodeEntry;AUHostAPartyNavNode;AUHostAPartyNavNodeLink
+
+#Entry_AUSkincareArticlesNavNode
+                                ;AUHowToReduceBlackheadsNavNodeEntry;;AUHowToReduceBlackheadsNavNodeEntry;AUHowToReduceBlackheadsNavNode;AUHowToReduceBlackheadsLink
+                                ;AUSummerSkincareNavNodeEntry;;AUSummerSkincareNavNodeEntry;AUSummerSkincareNavNode;AUSummerSkincareLink
+                                ;AUHowToGetRidOfDarkCirclesNavNodeEntry;;AUHowToGetRidOfDarkCirclesNavNodeEntry;AUHowToGetRidOfDarkCirclesNavNode;AUHowToGetRidOfDarkCirclesLink
+                                ;AUBestFaceMoisturisersNavNodeEntry;;AUBestFaceMoisturisersNavNodeEntry;AUBestFaceMoisturisersNavNode;AUBestFaceMoisturisersLink
+                                ;AUHowToKeepSkinLookingYouthfulNavNodeEntry;;AUHowToKeepSkinLookingYouthfulNavNodeEntry;AUHowToKeepSkinLookingYouthfulNavNode;AUHowToKeepSkinLookingYouthfulLink
+                                ;AUGymSkincareTipsNavNodeEntry;;AUGymSkincareTipsNavNodeEntry;AUGymSkincareTipsNavNode;AUGymSkincareTipsLink
+
+#Entry_AUBodyCareArticlesNavNode
+                                ;AUBenefitsOfDryBrushingNavNodeEntry;;AUBenefitsOfDryBrushingNavNodeEntry;AUBenefitsOfDryBrushingNavNode;AUBenefitsOfDryBrushingLink
+                                ;AUUnderstandingDrySkinNavNodeEntry;;AUUnderstandingDrySkinNavNodeEntry;AUUnderstandingDrySkinNavNode;AUUnderstandingDrySkinLink
+                                ;AUBestBodyExfoliatorsNavNodeEntry;;AUBestBodyExfoliatorsNavNodeEntry;AUBestBodyExfoliatorsNavNode;AUBestBodyExfoliatorsLink
+
+#Entry_AUMake-UpAeticlesNavNode
+                                ;AUHowToFindTheRightFoundationNavNodeEntry;;AUHowToFindTheRightFoundationNavNodeEntry;AUHowToFindTheRightFoundationNavNode;AUHowToFindTheRightFoundationLink
+                                ;AUHowToApplyFoundationNavNodeEntry;;AUHowToApplyFoundationNavNodeEntry;AUHowToApplyFoundationNavNode;AUHowToApplyFoundationLink
+                                ;AUHowToShapeEyebrowsNavNodeEntry;;AUHowToShapeEyebrowsNavNodeEntry;AUHowToShapeEyebrowsNavNode;AUHowToShapeEyebrowsLink
+                                ;AUHowToGetASunKissedGlowNavNodeEntry;;AUHowToGetASunKissedGlowNavNodeEntry;AUHowToGetASunKissedGlowNavNode;AUHowToGetASunKissedGlowLink
+
+#Entry_AULifeStyleArticlesNavNode
+                                ;AUBestVeganCitiesInTheAUNavNodeEntry;;AUBestVeganCitiesInTheAUNavNodeEntry;AUBestVeganCitiesInTheAUNavNode;AUBestVeganCitiesInTheAULink
+                                ;AULongHaulFlightTipsNavNodeEntry;;AULongHaulFlightTipsNavNodeEntry;AULongHaulFlightTipsNavNode;AULongHaulFlightTipsLink
+                                ;AUGymSkincareRoutineNavNodeEntry;;AUGymSkincareRoutineNavNodeEntry;AUGymSkincareRoutineNavNode;AUGymSkincareRoutineLink
+                                ;AUChildhoodDreamsNavNodeEntry;;AUChildhoodDreamsNavNodeEntry;AUChildhoodDreamsNavNode;AUChildhoodDreamsLink
+                                ;AUPixieGeldof’sTravelEssentialsNavNodeEntry;;AUPixieGeldof’sTravelEssentialsNavNodeEntry;AUPixieGeldof’sTravelEssentialsNavNode;AUPixieGeldof’sTravelEssentialsLink
+
+#Entry_AUIngredientBenefitsNavNode
+
+                                ;AUBenefitsOfCharcoalNavNodeEntry;;AUBenefitsOfCharcoalNavNodeEntry;AUBenefitsOfCharcoalNavNode;AUBenefitsOfCharcoalLink
+                                ;AUHyaluronicAcidBenefitsNavNodeEntry;;AUHyaluronicAcidBenefitsNavNodeEntry;AUHyaluronicAcidBenefitsNavNode;AUHyaluronicAcidBenefitsLink
+                                ;AUDiscoverAllIngredientsNavNodeEntry;;AUDiscoverAllIngredientsNavNodeEntry;AUDiscoverAllIngredientsNavNode;AUDiscoverAllIngredientsLink
+                                ;AUSourcingOurIngredientsNavNodeEntry;;AUSourcingOurIngredientsNavNodeEntry;AUSourcingOurIngredientsNavNode;AUSourcingOurIngredientsLink
+
+#Entry_AUWhoWeAre_NavNode
+                                ;AUOurHeritageNavNodeEntry;;AUOurHeritageNavNodeEntry;AUOurHeritageNavNode;AUOurHeritageLink
+                                ;AUForeverAgainstAnimalTestingNavNodeEntry;;AUForeverAgainstAnimalTestingNavNodeEntry;AUForeverAgainstAnimalTestingNavNode;AUForeverAgainstAnimalTestingLink
+                                ;AUB_CorpNavNodeEntry;;AUB_CorpNavNodeEntry;AUB_CorpNavNode;AUB_CorpLink
+                                ;AULatestNewsNavNodeEntry;;AULatestNewsNavNodeEntry;AULatestNewsNavNode;AULatestNewsLink
+                                ;AUNatura_CoNavNodeEntry;;AUNatura_CoNavNodeEntry;AUNatura_CoNavNode;AUNatura_CoLink
+                                ;AUEducationalProgrammeNavNodeEntry;;AUEducationalProgrammeNavNodeEntry;AUEducationalProgrammeNavNode;AUEducationalProgrammeLink
+                                ;AUDonateMenstrualProductsNavNodeEntry;;AUDonateMenstrualProductsNavNodeEntry;AUDonateMenstrualProductsNavNode;AUDonateMenstrualProductsLink
+                                ;AUVegetarianBeautyNavNodeEntry;;AUVegetarianBeautyNavNodeEntry;AUVegetarianBeautyNavNode;AUVegetarianBeautyLink
+
+#Entry_AULoyaltyProgramNavNode
+                                ;AU_Loyalty_JoinNowNavNodeEntry;;AU_Loyalty_JoinNowNavNodeEntry;AU_Loyalty_JoinNowNavNode;AU_Loyalty_JoinNowLink
+
+#Entry_AUSustainabilityNavNode
+                                ;AUOurCommitmentNavNodeEntry;;AUOurCommitmentNavNodeEntry;AUOurCommitmentNavNode;AUOurCommitmentLink
+                                ;AUCommunityTradeNavNodeEntry;;AUCommunityTradeNavNodeEntry;AUCommunityTradeNavNode;AUCommunityTradeLink
+                                ;AUBio-BridgesNavNodeEntry;;AUBio-BridgesNavNodeEntry;AUBio-BridgesNavNode;AUBio-BridgesLink
+                                ;AUReducingEnvironmentalFootprintNavNodeEntry;;AUReducingEnvironmentalFootprintNavNodeEntry;AUReducingEnvironmentalFootprintNavNode;AUReducingEnvironmentalFootprintLink
+                                ;AUEmpoweringWomenNavNodeEntry;;AUEmpoweringWomenNavNodeEntry;AUEmpoweringWomenNavNode;AUEmpoweringWomenLink
+                                ;AUModernSlaveryNavNodeEntry;;AUModernSlaveryNavNodeEntry;AUModernSlaveryNavNode;AUModernSlaveryLink
+
+#Child_Nodes_AUPlasticsNavNode
+                                ;AUPlasticRecyclingInTheAUNavNodeEntry;;AUPlasticRecyclingInTheAUNavNodeEntry;AUPlasticRecyclingInTheAUNavNode;AUPlasticRecyclingInTheAULink
+                                ;AUTerraCycleInterviewNavNodeEntry;;AUTerraCycleInterviewNavNodeEntry;AUTerraCycleInterviewNavNode;AUTerraCycleInterviewLink
+                                ;AUReturnRecycleRepeatNavNodeEntry;;AUReturnRecycleRepeatNavNodeEntry;AUReturnRecycleRepeatNavNode;AUReturnRecycleRepeatNavNodeLink
+                                ;AUCommunityTradePlasticsNavNodeEntry;;AUCommunityTradePlasticsNavNodeEntry;AUCommunityTradePlasticsNavNode;AUCommunityTradePlasticsLink
+                                ;AUPackagingAtTheBodyShopNavNodeEntry;;AUPackagingAtTheBodyShopNavNodeEntry;AUPackagingAtTheBodyShopNavNode;AUPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;AUUsefullInformationNavNode;;AU Useful Information;AUUsefullInformationNavNode;AUDeliveryNavNode,AUReturnsNavNode,AUFAQNavNode,AUTermsAndConditionsNavNode,AUPrivacyPolicyNavNode,AUSitemapNavNode
+;AUWaysToShopNavNode;;AU Ways to Shop;AUWaysToShopNavNode;AUStoresNavNode,AULoveYourBodyClubNavNode,AUStudentDiscountNavNode,AUGiftCardsNavNode
+;AUAboutUsNavNode;;AU About Us;AUAboutUsNavNode;AUAboutUsInternalNavNode,AUTheBodyShopAtHomeNavNode,AUAffiliatesNavNode,AUGenderPayGapNavNode,AUModernSlaveryStatementNavNode,AUAgainstAnimalTestingNavNode,AUTaxStrategyNavNode,AUCareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;AUDeliveryNavNode;;AUDeliveryNavNode;AUDeliveryNavNode;
+;AUReturnsNavNode;;AUReturnsNavNode;AUReturnsNavNode;
+;AUFAQNavNode;;AUFAQ Page;AUFAQNavNode
+;AUTermsAndConditionsNavNode;;AUTermsAndConditionsNavNode;AUTermsAndConditionsNavNode;
+;AUPrivacyPolicyNavNode;;AUPrivacyPolicyNavNode;AUPrivacyPolicyNavNode;
+;AUSitemapNavNode;;AUSitemapNavNode;AUSitemapNavNode;
+;AUStoresNavNode;;AUStoresNavNode;AUStoresNavNode;
+;AULoveYourBodyClubNavNode;;AULoveYourBodyClubNavNode;AULoveYourBodyClubNavNode;
+;AUStudentDiscountNavNode;;AUStudentDiscountNavNode;AUStudentDiscountNavNode;
+;AUGiftCardsNavNode;;AUGiftCardsNavNode;AUGiftCardsNavNode;
+;AUAboutUsInternalNavNode;;AUAboutUsInternalNavNode;AUAboutUsInternalNavNode
+;AUTheBodyShopAtHomeNavNode;;AUTheBodyShopAtHomeNavNode;AUTheBodyShopAtHomeNavNode
+;AUAffiliatesNavNode;;AUAffiliatesNavNode;AUAffiliatesNavNode
+;AUGenderPayGapNavNode;;AUGenderPayGapNavNode;AUGenderPayGapNavNode
+;AUModernSlaveryStatementNavNode;;AUModernSlaveryStatementNavNode;AUModernSlaveryStatementNavNode
+;AUAgainstAnimalTestingNavNode;;AUAgainstAnimalTestingNavNode;AUAgainstAnimalTestingNavNode
+;AUTaxStrategyNavNode;;AUTaxStrategyNavNode;AUTaxStrategyNavNode
+;AUCareersNavNode;;AUCareersNavNode;AUCareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;AUDeliveryNavNodeEntry;;AUDeliveryNavNodeEntry;AUDeliveryNavNode;AUDeliveryLink;
+;AUReturnsNavNodeEntry;;AUReturnsNavNodeEntry;AUReturnsNavNode;AUReturnsLink;
+;AUFAQNavNodeEntry;;AU FAQ Navigation Node Entry;AUFAQNavNode;AUFAQLink;
+;AUTermsAndConditionsNavNodeEntry;;AUTermsAndConditionsNavNodeEntry;AUTermsAndConditionsNavNode;AUTermsAndConditionsLink;
+;AUPrivacyPolicyNavNodeEntry;;AUPrivacyPolicyNavNodeEntry;AUPrivacyPolicyNavNode;AUPrivacyPolicyLink;
+;AUSitemapNavNodeEntry;;AUSitemapNavNodeEntry;AUSitemapNavNode;AUSitemapLink;
+;AUStoresNavNodeEntry;;AUStoresNavNodeEntry;AUStoresNavNode;AUStoresLink;
+;AULoveYourBodyClubNavNodeEntry;;AULoveYourBodyClubNavNodeEntry;AULoveYourBodyClubNavNode;AULoveYourBodyClubLink;
+;AUStudentDiscountNavNodeEntry;;AUStudentDiscountNavNodeEntry;AUStudentDiscountNavNode;AUStudentDiscountLink;
+;AUGiftCardsNavNodeEntry;;AUGiftCardsNavNodeEntry;AUGiftCardsNavNode;AUGiftCardsLink;
+;AUAboutUsInternalNavNodeEntry;;AUAboutUsInternalNavNodeEntry;AUAboutUsInternalNavNode;AUAboutUsLink;
+;AUTheBodyShopAtHomeNavNodeEntry;;AUTheBodyShopAtHomeNavNodeEntry;AUTheBodyShopAtHomeNavNode;AUTheBodyShopAtHomeLink;
+;AUAffiliatesNavNodeEntry;;AUAffiliatesNavNodeEntry;AUAffiliatesNavNode;AUAffiliatesLink;
+;AUGenderPayGapNavNodeEntry;;AUGenderPayGapNavNodeEntry;AUGenderPayGapNavNode;AUGenderPayGapLink;
+;AUModernSlaveryStatementNavNodeEntry;;AUModernSlaveryStatementNavNodeEntry;AUModernSlaveryStatementNavNode;AUModernSlaveryStatementLink;
+;AUAgainstAnimalTestingNavNodeEntry;;AUAgainstAnimalTestingNavNodeEntry;AUAgainstAnimalTestingNavNode;AUAgainstAnimalTestingLink;
+;AUTaxStrategyNavNodeEntry;;AUTaxStrategyNavNodeEntry;AUTaxStrategyNavNode;AUTaxStrategyLink;
+;AUCareersNavNodeEntry;;AUCareersNavNodeEntry;AUCareersNavNode;AUCareersLink;
+
+##CategoryBannerCMSComponent Start ##
+
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;AUCategoryBannerCMSComponent;AU CategoryBanner CMSComponent;AUCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-AUCategorybannerSlot;AUCategory Banner Slot;true;AUCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-AUCategoryPage;Section1;;Section1Slot-AUCategorybannerSlot;;;
+
+##CategorybannerComponent End ##

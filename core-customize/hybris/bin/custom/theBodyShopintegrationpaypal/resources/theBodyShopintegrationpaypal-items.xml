@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+	<itemtypes>
+		<itemtype code="AbstractOrder" generate="false" autocreate="false">
+			<attributes>
+				<attribute qualifier="paypalOrderCode" type="java.lang.String">
+					<modifiers optional="true" read="true" write="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PaypalPaymentInfo" extends="PaymentInfo">
+			<attributes>
+				<attribute qualifier="token" type="java.lang.String">
+					<modifiers optional="true" read="true" write="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PaypalClientConfiguration">
+			<description>Paypal Client Configuration</description>
+			<deployment table="paypal_client_config" typecode="10320"/>
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<modifiers unique="true" read="true" write="true" optional="false"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="clientId" type="java.lang.String">
+					<modifiers optional="false" read="true" write="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="clientSecret" type="java.lang.String">
+					<modifiers optional="false" read="true" write="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="sandBox" type="java.lang.Boolean">
+					<modifiers optional="false" write="true" read="true"/>
+					<persistence type="property"/>
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="BaseStore" autocreate="false" generate="false">
+			<description>Extending BaseStore type with Paypal configuration.</description>
+			<attributes>
+				<attribute qualifier="paypalClientConfiguration" type="PaypalClientConfiguration">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

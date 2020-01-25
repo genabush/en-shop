@@ -1,0 +1,136 @@
+<div [ngClass]="compact ? 'cx-compact row m-0' : 'row m-0'" *ngIf="item">
+  <!-- Item Information -->
+  <div [ngClass]="compact ? 'd-flex cx-info flex-grow-1' : 'd-flex cx-info flex-grow-1 pl-3 pl-lg-0'">
+    <div class="cx-info-container">
+      <div *ngIf="item?.product?.name" class="cx-name">
+        <a
+          tabIndex="0"
+          role="link"
+          class="cx-link"
+          [attr.aria-label]="item.product.name"
+          title="{{ item.product.name }}"
+          [routerLink]="{ cxRoute: 'product', params: item.product } | cxUrl"
+          (click)="viewItem()"
+          >{{ item.product.name }}</a
+        >
+      </div>
+      <!-- Actions -->
+      <div *ngIf="!isReadOnly && item.updateable" class="cx-actions">
+        <button
+          role="button"
+          tabIndex="0"
+          [attr.aria-label]="'common.removeBtn' | cxTranslate"
+          class="link"
+          [class.disabled]="cartIsLoading"
+          [disabled]="cartIsLoading"
+          (click)="removeItem()"
+          [title]="'common.remove' | cxTranslate"
+        >
+          <span aria-hidden="true"><cx-icon [type]="iconTypes.CLOSE"></cx-icon></span>
+        </button>
+      </div>
+      <div class="cx-info-container">
+        <!-- Item Description -->
+        <div [ngClass]="compact ? '' : ''">
+          <div class="cx-value" *ngIf="item?.product?.size">{{ item.product.size }}</div>
+
+          <!-- Variants -->
+          <div *ngFor="let variant of item.product.variantOptionQualifiers" class="cx-property">
+            <div class="cx-label">{{ variant.name }}</div>
+            <div class="cx-value">{{ variant.value }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-row flex-wrap align-container">
+      <!-- Item Image -->
+      <a
+        role="link"
+        class="d-flex flex-grow-0 cx-image-container-wrapper"
+        tabIndex="0"
+        title="{{ item.product.name }}"
+        [attr.aria-label]="item.product.name"
+        [routerLink]="{ cxRoute: 'product', params: item.product } | cxUrl"
+        (click)="viewItem()"
+      >
+        <div class="cx-image-container" *ngIf="item?.product?.images; else noImage">
+          <cx-media [container]="item.product.images.PRIMARY" format="thumbnail" role="image"></cx-media>
+        </div>
+        <ng-template #noImage>
+          <cx-media [container]="{}" format="thumbnail"></cx-media>
+        </ng-template>
+      </a>
+
+      <div
+        class="cx-info-container cart-item-counter d-flex flex-column flex-nowrap flex-grow-1 justify-content-start align-items-end"
+      >
+        <!-- Total -->
+        <div *ngIf="item.totalPrice" [ngClass]="compact ? '' : ''">
+          <div class="cart-item-counter__price">{{ item.totalPrice.formattedValue }}</div>
+        </div>
+        <!-- Base Price -->
+        <div *ngIf="item?.basePrice" [ngClass]="compact ? '' : ''">
+          <div class="cart-item-counter__base-price">
+            {{ item.basePrice.formattedValue }}/<span class="cx-value" *ngIf="item?.product?.size">{{
+              item.product.size
+            }}</span>
+            <!-- Variants -->
+            <div *ngFor="let variant of item.product.variantOptionQualifiers" class="cx-property">
+              <div class="cx-label">{{ variant.name }}</div>
+              <div class="cx-value">{{ variant.value }}</div>
+            </div>
+          </div>
+        </div>
+        <!--  Colours -->
+        <div *ngIf="item?.product?.colour" [ngClass]="compact ? 'w-100' : 'w-100'">
+          <cx-cart-item-variants [product]="item.product"></cx-cart-item-variants>
+        </div>
+        <!-- Item Quantity -->
+        <div
+          *ngIf="item.quantity"
+          class="cart-item-counter__inner mt-auto d-flex flex-row justify-content-between w-100"
+          [ngClass]="compact ? '' : ' '"
+        >
+          <div *ngIf="isReadOnly && quantity" class="cx-value">
+            {{ 'product.quantity' | cxTranslate }}: {{ quantity }}
+          </div>
+          <div *ngIf="!isReadOnly && parent" class="cx-value" [formGroup]="parent">
+            <cx-cart-quantity-selector
+              [isValueChangeable]="item.updateable"
+              [step]="1"
+              [min]="1"
+              [max]="maxQuantity <= item.product.stock.stockLevel ? maxQuantity : item.product.stock.stockLevel"
+              [value]="item.quantity"
+              [productCode]="item.product.code"
+              (update)="updateItem($event)"
+              [cartIsLoading]="cartIsLoading"
+              formControlName="quantity"
+            >
+            </cx-cart-quantity-selector>
+          </div>
+          <div
+            *ngIf="item.quantity && !isReadOnly"
+            class="cx-value d-flex align-items-end cart-item-counter__items-quantity"
+          >
+            <!-- SPARTACUS BUG  {{count}} does not work-->
+            <!-- {{ 'cart.item' | cxTranslate: { count: item.quantity } }} -->
+            <span *ngIf="item.quantity == 1">{{ 'cart.item' | cxTranslate: { count: item.quantity } }}</span>
+            <span *ngIf="item.quantity != 1">{{ 'cart.item_plural' | cxTranslate: { count: item.quantity } }}</span>
+          </div>
+          <div
+            *ngIf="item.quantity && isReadOnly"
+            class="cx-value d-flex align-items-end cart-item-counter__items-quantity"
+          >
+            {{ 'cart.quantity' | cxTranslate }}: {{ item.quantity }}
+          </div>
+        </div>
+      </div>
+      <!-- Availability -->
+      <div *ngIf="isProductOutOfStock(item)" class="cx-availability col-12">
+        {{ 'productSummary.outOfStock' | cxTranslate }}
+      </div>
+    </div>
+    <!-- Promotion -->
+    <cx-promotions [promotions]="potentialProductPromotions"></cx-promotions>
+  </div>
+</div>

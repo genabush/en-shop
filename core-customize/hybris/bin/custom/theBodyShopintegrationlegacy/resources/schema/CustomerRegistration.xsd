@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/customerRegistrationSchema" xmlns:tns="http://thebodyshop/customerRegistrationSchema" elementFormDefault="qualified">
+
+	<xs:element name="CustomerRegistrationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerID" type="tns:NullableStringMaxLength36" minOccurs="0" maxOccurs="1" />
+				<xs:element name="EmployeeID" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="StoreID" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+				<xs:element name="Channel" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+				<xs:element name="Market" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+				<xs:element name="PosLogIdentifier" type="tns:NotNullStringMaxLength255" minOccurs="0" maxOccurs="1" />
+				<xs:element name="Customer" type="tns:Customer" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CustomerRegistrationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StatusCode" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+				<xs:element name="MessageId" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+				<xs:element name="CustomerID" type="tns:NullableStringMaxLength36" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:simpleType name="NotNullStringMaxLength255">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*\S.*" />
+			<xs:minLength value="1" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="NullableStringMaxLength255">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="NullableStringMaxLength36">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0" />
+			<xs:maxLength value="36" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Customer">
+		<xs:sequence>
+			<xs:element name="Title" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Firstname" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Lastname" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Gender" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DateOfBirth" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="PhoneNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="MobileNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EmailAddress" type="tns:NotNullStringMaxLength255" minOccurs="1" maxOccurs="1" />
+			<xs:element name="NationalID" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="LoyaltyMembership" type="tns:LoyaltyMembership" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Address" type="tns:Address" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DirectMailOptIn" type="xs:boolean" minOccurs="0" default="false" />
+			<xs:element name="EmailOptIn" type="xs:boolean" minOccurs="0" default="false" />
+			<xs:element name="MobileOptIn" type="xs:boolean" minOccurs="0" default="false" />
+			<xs:element name="PhoneOptIn" type="xs:boolean" minOccurs="0" default="false" />
+			<xs:element name="PreferredLanguage" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="AddressLine1" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AddressLine2" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+			<xs:element name="City" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Postcode" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Region" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Country" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LoyaltyMembership">
+		<xs:sequence>
+			<xs:element name="ProgrammeID" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+			<xs:element name="LoyaltyCardNumber" type="tns:NullableStringMaxLength255" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DateTermsAccepted" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
+
+
+
+
+

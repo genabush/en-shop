@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/posBenefitSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/posBenefitSchema" targetNamespace="http://thebodyshop/posBenefitSchema" xmlns:p="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/posBenefitSchema" xmlns:tns="http://thebodyshop/posBenefitSchema">
+			<xs:element name="BenefitUpdateRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BenefitCode" type="xs:string" minOccurs="1" maxOccurs="1" />
+						<xs:element name="BenefitType" type="tns:BenefitTypeEnum" minOccurs="1" maxOccurs="1" />
+						<xs:element name="AgentID" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="StoreID" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="DonateTo" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="TransactionID" type="xs:string" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:simpleType name="BenefitTypeEnum">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Monetary" />
+					<xs:enumeration value="Promotion" />
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:simpleType name="BenefitStatusEnum">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Available" />
+					<xs:enumeration value="Expired" />
+					<xs:enumeration value="Used" />
+					<xs:enumeration value="Donated" />
+					<xs:enumeration value="Authorised" />
+					<xs:enumeration value="Cancelled" />
+				</xs:restriction>
+			</xs:simpleType>
+
+			<xs:element name="BenefitUpdateResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AuthRef" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="Status" type="tns:BenefitStatusEnum" minOccurs="1" maxOccurs="1" />
+						<xs:element name="Amount" type="xs:string" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="AuthRequest">
+		<wsdl:part name="BenefitUpdateRequest" element="tns:BenefitUpdateRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="AuthResponse">
+		<wsdl:part name="BenefitUpdateResponse" element="tns:BenefitUpdateResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="CaptureRequest">
+		<wsdl:part name="BenefitUpdateRequest" element="tns:BenefitUpdateRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="CaptureResponse">
+		<wsdl:part name="BenefitUpdateResponse" element="tns:BenefitUpdateResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ReverseAuthRequest">
+		<wsdl:part name="BenefitUpdateRequest" element="tns:BenefitUpdateRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ReverseAuthResponse">
+		<wsdl:part name="BenefitUpdateResponse" element="tns:BenefitUpdateResponse"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="BenefitUpdate">
+		<wsdl:operation name="Auth">
+			<wsdl:input message="sch:AuthRequest"></wsdl:input>
+			<wsdl:output message="sch:AuthResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Capture">
+			<wsdl:input message="sch:CaptureRequest"></wsdl:input>
+			<wsdl:output message="sch:CaptureResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReverseAuth">
+			<wsdl:input message="sch:ReverseAuthRequest"></wsdl:input>
+			<wsdl:output message="sch:ReverseAuthResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="BenefitUpdateServiceSoap11" type="sch:BenefitUpdate">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Auth">
+			<soap:operation soapAction="http://thebodyshop/posBenefitSchema/Auth" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Capture">
+			<soap:operation soapAction="http://thebodyshop/posBenefitSchema/Capture" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReverseAuth">
+			<soap:operation soapAction="http://thebodyshop/posBenefitSchema/ReverseAuth" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BenefitUpdateService">
+		<wsdl:port binding="tns:BenefitUpdateServiceSoap11" name="BenefitUpdateServiceSoap11">
+			<soap:address location="https://thebodyshop.local:9002/tbsdataprocessing/endpoints" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,145 @@
+<div class="searchbox">
+  <cx-icon
+    [type]="iconTypes.RESET"
+    [attr.aria-label]="'common.resetBtn' | cxTranslate"
+    (mousedown)="clear(searchInput)"
+    class="reset"
+  ></cx-icon>
+  <cx-icon
+    tabindex="0"
+    [type]="iconTypes.SEARCH"
+    role="search"
+    aria-haspopup="true"
+    [attr.aria-label]="'common.searchBtn' | cxTranslate"
+    class="search"
+    (click)="openSearchModal(searchModal)"
+    (keyup.enter)="openSearchModal(searchModal)"
+  ></cx-icon>
+
+  <ng-template #searchModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <button type="button" class="close" [attr.aria-label]="'common.closeBtn' | cxTranslate" (click)="closeModal()">
+        <span aria-hidden="true">
+          <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+        </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="modal-title sr-only">
+            {{ 'search.modalHeader' | cxTranslate }}
+          </h4>
+          <div class="search">
+            <div class="row">
+              <div class="col-12">
+                <input
+                  id="searchBtn"
+                  #searchInput
+                  class="search__input"
+                  [attr.aria-label]="'common.searchBtn' | cxTranslate"
+                  (focus)="open()"
+                  (input)="search(searchInput.value)"
+                  (blur)="close($event)"
+                  (keydown.escape)="close($event)"
+                  (keydown.enter)="launchSearchResult($event, searchInput.value)"
+                />
+              </div>
+              <div *ngIf="results$ | async as result" class="col-12 results" (click)="close($event)">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="search__msg" *ngIf="result.message" [innerHTML]="result.message"></div>
+                  </div>
+                  <div
+                    class="col-12 col-sm-6 order-2 order-sm-1 search__col search__col--products"
+                    *ngIf="result.products && result.products.length > 0"
+                  >
+                    <div class="search__col-header">
+                      {{ 'search.heading.products' | cxTranslate }}
+                    </div>
+                    <div class="" (mousedown)="disableClose()">
+                      <div class="product-tile product-tile--search" *ngFor="let product of result.products">
+                        <div class="product-tile__image-wrapper">
+                          <a
+                            [routerLink]="
+                              {
+                                cxRoute: 'product',
+                                params: product
+                              } | cxUrl
+                            "
+                            (click)="closeModal($event)"
+                            [class.has-media]="config.displayProductImages"
+                          >
+                            <cx-media
+                              class="product-tile__image"
+                              *ngIf="config.displayProductImages"
+                              [container]="product.images?.PRIMARY"
+                              format="thumbnail"
+                              [alt]="product.summary"
+                            ></cx-media>
+                          </a>
+                        </div>
+                        <div class="product-tile__details">
+                          <a
+                            class="product__name"
+                            [routerLink]="
+                              {
+                                cxRoute: 'product',
+                                params: product
+                              } | cxUrl
+                            "
+                            (click)="closeModal($event)"
+                            [class.has-media]="config.displayProductImages"
+                          >
+                            <span [innerHTML]="product.nameHtml"></span>
+                            <div class="product-tile__code">Item {{ product.code }}</div>
+                          </a>
+                          <div class="product-tile__product-variant app-product-variant"></div>
+                        </div>
+                        <div class="product-tile__price-container">
+                          <div class="product-tile__price" [attr.aria-label]="'product.productPrice' | cxTranslate">
+                            {{ product.price?.formattedValue }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="search__col-link-wrapper">
+                      <cx-generic-link (click)="launchSearchResult($event, searchInput.value)" class="search__col-link">
+                        {{ 'search.viewAll' | cxTranslate }}
+                      </cx-generic-link>
+                    </div>
+                  </div>
+                  <div
+                    class="col-12 col-sm-6 order-1 order-sm-2 search__col search__col--suggestions"
+                    *ngIf="result.suggestions && result.suggestions.length > 0"
+                  >
+                    <div class="search__col-header">
+                      {{ 'search.heading.suggestions' | cxTranslate }}
+                    </div>
+                    <div class="" (mousedown)="disableClose()">
+                      <div class="search-suggestion">
+                        <a
+                          class="search-suggestion__link"
+                          (click)="closeModal($event)"
+                          *ngFor="let suggestion of result.suggestions"
+                          [innerHTML]="suggestion | customHighlight: searchInput.value"
+                          [routerLink]="
+                            {
+                              cxRoute: 'search',
+                              params: { query: suggestion }
+                            } | cxUrl
+                          "
+                        >
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

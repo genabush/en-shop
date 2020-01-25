@@ -1,0 +1,2318 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.hybris.com/cockpit/config" xmlns:na="http://www.hybris.com/cockpitng/config/notifications" xmlns:base="http://www.hybris.com/cockpit/config/hybris" xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch" xmlns:list-view="http://www.hybris.com/cockpitng/component/listView"
+	xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea" xmlns:explorer-tree="http://www.hybris.com/cockpitng/config/explorertree" xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch" xmlns:y="http://www.hybris.com/cockpit/config/hybris" xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config">
+
+	<context merge-by="module" component="editorareaactions" type="Consignment">
+		<y:actions>
+			<y:group qualifier="common">
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.confirmpickupaction" property="currentObject" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<context merge-by="module" parent="auto" component="explorer-tree">
+		<explorer-tree:explorer-tree>
+			<explorer-tree:navigation-node id="hmc_treenode_medias" merge-mode="append">
+				<explorer-tree:type-node code="ProductBadge" id="hmc_typenode_productbadge"/>
+				<explorer-tree:type-node code="BadgePosition" id="hmc_typenode_badgeposition"/>
+			</explorer-tree:navigation-node>
+			<explorer-tree:navigation-node id="hmc.cms2">
+				<explorer-tree:type-node code="MarketSelectorSite" id="MarketSelectorSite" position="17" />
+				<explorer-tree:type-node code="ContentCatalogCode" id="ContentCatalogCode" position="18" />
+				<explorer-tree:type-node code="SearchKeyword" id="SearchKeyword" position="19"/>
+			</explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+	</context>
+
+	<!-- Notification Area -->
+	<context component="notification-area">
+		<na:notification-area>
+			<na:notifications eventType="theBodyShopbackoffice.confirmpickup.event" level="SUCCESS">
+				<na:message>hmc.action.confirmpickup.success</na:message>
+			</na:notifications>
+		</na:notification-area>
+	</context>
+
+	<context type="AmplienceCMSComponent" component="editorareaactions" module="platformbackoffice">
+		<y:actions>
+			<y:group qualifier="common">
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="com.hybris.cockpitng.action.delete" property="currentObject" />
+				<y:action action-id="com.hybris.backoffice.widgets.actions.sync" property="currentObject" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<context type="AmplienceCMSComponent" component="base" merge-by="type" parent="SimpleCMSComponent">
+		<y:base>
+			<y:labels>
+				<y:label>uid + ' - ' + @labelService.getObjectLabel(catalogVersion.catalog) + ' : ' + catalogVersion.version</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" parent="SimpleCMSComponent" type="AmplienceCMSComponent" component="amplienceCMSComponentListView">
+		<list-view:list-view>
+			<list-view:column qualifier="uid" />
+			<list-view:column qualifier="catalogVersion" />
+			<list-view:column qualifier="setName" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" parent="SimpleCMSComponent" type="AmplienceCMSComponent" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="syncStatus" spring-bean="syncStatusCellRenderer" label="syncstatus.column.label" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" parent="SimpleCMSComponent" type="AmplienceCMSComponent" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="setName" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context type="AmplienceCMSComponent" component="advanced-search" merge-by="type" parent="SimpleCMSComponent">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="setName" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+
+	<!-- TBS Product Facet -->
+	<context merge-by="type" type="TbsProductFacet" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>name</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<!-- Swatch Colour -->
+	<context merge-by="type" type="SwatchColour" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>name</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="SwatchColour" parent="GenericItem" component="swatchColourReferenceComponentListView">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="hexCode" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="SwatchColour" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="hexCode" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="SwatchColour" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="code" />
+					<editorArea:attribute qualifier="hexCode" />
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="swatchImage" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="SwatchColour" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="hexCode" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="SwatchColour" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="replace">
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="hexCode" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="SwatchColour" merge-by="module">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="SwatchColourWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="swatchColourPrepare">
+				<wz:initialize property="newObject" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.swatchColour.step1.label" sublabel="create.swatchColour.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newObject" merge-mode="add">
+						<wz:property qualifier="name"/>
+						<wz:property qualifier="hexCode"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newObject"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<!-- TBS Product -->
+	<context merge-by="type" type="TbsBaseProduct" parent="Product" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="tbs.properties" position="3">
+				<editorArea:section name="tbs.properties">
+					<editorArea:attribute qualifier="metaTitle" />
+					<editorArea:attribute qualifier="metaDescription" />
+					<editorArea:attribute qualifier="howToInstructions" />
+					<editorArea:attribute qualifier="howToVideo" />
+					<editorArea:attribute qualifier="doNotSearch" />
+          			<editorArea:attribute qualifier="restrictedFor" />
+          			<editorArea:attribute qualifier="reviewRating" readonly="true"/>
+          			<editorArea:attribute qualifier="straplines" />
+          			<editorArea:attribute qualifier="keyIngredients" />
+				</editorArea:section>
+			</editorArea:tab>
+			<editorArea:tab name="facet.properties" position="4">
+				<editorArea:section name="facet.properties">
+					<editorArea:attribute qualifier="finish" />
+					<editorArea:attribute qualifier="targetArea" />
+					<editorArea:attribute qualifier="concern" />
+					<editorArea:attribute qualifier="scent" />
+					<editorArea:attribute qualifier="coverage" />
+					<editorArea:attribute qualifier="range" />
+					<editorArea:attribute qualifier="productType" />
+					<editorArea:attribute qualifier="categoryType" />
+					<editorArea:attribute qualifier="vegan" />
+					<editorArea:attribute qualifier="freeFrom" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="TbsBaseProduct" parent="Product" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="metaTitle" selected="false" />
+				<advanced-search:field name="doNotSearch" selected="false" />
+				<advanced-search:field name="primaryCategory" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context merge-by="module" type="VariantProduct" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.properties">
+				<editorArea:section name="hmc.product.variant.attributes" position="4">
+					<editorArea:attribute qualifier="baseProduct" />
+					<editorArea:attribute qualifier="unit" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<!-- Amplience media sync begin -->
+
+	<context type="Product" component="pcmbackoffice-listviewactions" principal="amplienceImageUpdateRole" parent="auto" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.ampliencesync" property="selectedObjects" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<context type="Product" component="pcmbackoffice-assortment-listviewactions" principal="amplienceImageUpdateRole" parent="auto" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.ampliencesync" property="selectedObjects" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<context type="Product" component="pcmbackoffice-editorareaactions" parent="auto" merge-by="module" principal="amplienceImageUpdateRole">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.ampliencesync" property="currentObject" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<!-- Amplience media sync end -->
+
+
+
+	<context merge-by="type" type="VariantProduct" parent="Product" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.properties">
+				<editorArea:customSection name="hmc.section.variantattributes" merge-mode="REMOVE" />
+			</editorArea:tab>
+			<editorArea:tab name="tbs.properties" position="3">
+				<editorArea:section name="tbs.properties">
+					<editorArea:attribute qualifier="technicalIngredients" />
+					<editorArea:attribute qualifier="giftWrap" />
+					<editorArea:attribute qualifier="collectInStore" />
+					<editorArea:attribute qualifier="eans" readonly="true" />
+					<editorArea:attribute qualifier="mainEan" readonly="true" />
+					<editorArea:attribute qualifier="sample" />
+					<editorArea:attribute qualifier="restrictedFor" />
+					<editorArea:attribute qualifier="bioBridge" />
+					<editorArea:attribute qualifier="loyalty" />
+					<editorArea:attribute qualifier="reviewRating" readonly="true"/>
+				</editorArea:section>
+			</editorArea:tab>
+			<editorArea:tab name="sap.properties" position="4">
+				<editorArea:section name="sap.properties">
+					<editorArea:attribute qualifier="erpInternalName" readonly="true" />
+					<editorArea:attribute qualifier="erpType" readonly="true" />
+					<editorArea:attribute qualifier="erpHazardous" readonly="true" />
+					<editorArea:attribute qualifier="erpUnitOfMeasure" readonly="true" />
+					<editorArea:attribute qualifier="erpMeasurement" readonly="true" />
+					<editorArea:attribute qualifier="erpColour" readonly="true" />
+					<editorArea:attribute qualifier="erpFlavour" readonly="true" />
+					<editorArea:attribute qualifier="erpMllVariant" readonly="true" />
+					<editorArea:attribute qualifier="erpSeasonYear" readonly="true" />
+					<editorArea:attribute qualifier="erpSeason" readonly="true" />
+					<editorArea:attribute qualifier="erpCollection" readonly="true" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="BadgePosition" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>code</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="BadgePosition" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="top" />
+			<list-view:column qualifier="right" />
+			<list-view:column qualifier="bottom" />
+			<list-view:column qualifier="left" />
+			<list-view:column qualifier="width" />
+			<list-view:column qualifier="height" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="BadgePosition" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="code" selected="false" />
+				<advanced-search:field name="top" selected="false" />
+				<advanced-search:field name="right" selected="false" />
+				<advanced-search:field name="bottom" selected="false" />
+				<advanced-search:field name="left" selected="false" />
+				<advanced-search:field name="anchor" selected="false" />
+				<advanced-search:field name="opacity" selected="false" />
+				<advanced-search:field name="width" selected="false" />
+				<advanced-search:field name="height" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="BadgePosition">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="BadgePositionWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="badgePositionPrepare">
+				<wz:initialize property="newBadgePosition" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.badgePosition.step1.label" sublabel="create.badgePosition.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newBadgePosition">
+						<wz:property qualifier="code"/>
+						<wz:property qualifier="top"/>
+						<wz:property qualifier="right"/>
+						<wz:property qualifier="bottom"/>
+						<wz:property qualifier="left"/>
+						<wz:property qualifier="anchor"/>
+						<wz:property qualifier="opacity"/>
+						<wz:property qualifier="width"/>
+						<wz:property qualifier="height"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done visible="!#empty(newBadgePosition.code)">
+						<wz:save property="newBadgePosition"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+
+	<context merge-by="type" type="ProductBadge" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>name</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="ProductBadge" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="ProductBadge" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="ProductBadge" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="code" selected="false" />
+				<advanced-search:field name="name" selected="false" />
+				<advanced-search:field name="url" selected="false" />
+				<advanced-search:field name="position" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="ProductBadge">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="ProductBadgeWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="productBadgePrepare">
+				<wz:initialize property="newProductBadge" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.productBadge.step1.label" sublabel="create.productBadge.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newProductBadge">
+						<wz:property qualifier="code"/>
+						<wz:property qualifier="name"/>
+						<wz:property qualifier="url"/>
+						<wz:property qualifier="position"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done visible="!#empty(newProductBadge.code) AND !#empty(newProductBadge.url)">
+						<wz:save property="newProductBadge"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<!-- Product Badges only editable for global Product Manager Login -->
+	<context merge-by="type" type="Product" component="editor-area" principal="backofficeadministratorrole,globalProductManagerRole">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.multimedia">
+				<editorArea:section name="hmc.section.product.additionalmedias">
+					<editorArea:attribute qualifier="productBadges"/>
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="Product" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.multimedia">
+				<editorArea:section name="hmc.section.product.additionalmedias">
+					<editorArea:attribute qualifier="productBadges" readonly="true"/>
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="VariantProduct" parent="Product" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="giftWrap" selected="false" />
+				<advanced-search:field name="collectInStore" selected="false" />
+				<advanced-search:field name="mainEan" selected="false" />
+				<advanced-search:field name="sample" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context merge-by="type" type="TbsVariantProduct" parent="VariantProduct" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.properties">
+				<editorArea:section name="hmc.product.variant.attributes">
+					<editorArea:attribute qualifier="size" />
+					<editorArea:attribute qualifier="colour" />
+					<editorArea:attribute qualifier="colourPosition" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="TbsVariantProduct" parent="VariantProduct" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="size" selected="false" />
+				<advanced-search:field name="colour" selected="false" />
+				<advanced-search:field name="colourPosition" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context merge-by="type" type="TbsVariantProduct" parent="VariantProduct" component="create-wizard">
+		<wz:flow id="ProductWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="productPrepare">
+				<wz:assign property="newProduct.mainEan" value="ctx.parentObject" merge-mode="APPEND" />
+				<wz:assign property="newProduct.technicalIngredients" value="ctx.parentObject" merge-mode="APPEND" />
+				<wz:assign property="newProduct.colourPosition" value="ctx.parentObject" merge-mode="APPEND" />
+			</wz:prepare>
+			<wz:step id="step1" label="create.product.essential.label" sublabel="create.product.essential.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newProduct">
+						<wz:property qualifier="mainEan" merge-mode="APPEND" />
+						<wz:property qualifier="technicalIngredients" merge-mode="APPEND" />
+						<wz:property qualifier="size" merge-mode="APPEND" />
+						<wz:property qualifier="unit" merge-mode="APPEND" />
+						<wz:property qualifier="onlineDate" merge-mode="APPEND" />
+						<wz:property qualifier="colourPosition" merge-mode="APPEND" />
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation" merge-mode="REPLACE">
+					<wz:cancel />
+					<wz:next visible="!#empty(newProduct.code) and newProduct.catalogVersion != null and newProduct.baseProduct != null and newProduct.mainEan != null and newProduct.technicalIngredients != null and newProduct.colourPosition != null" />
+					<wz:done visible="!#empty(newProduct.code) and newProduct.catalogVersion != null and newProduct.baseProduct != null and newProduct.mainEan != null and newProduct.technicalIngredients != null and newProduct.colourPosition != null">
+						<wz:save property="newProduct" />
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="Product" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="restrictedFor" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context merge-by="type" type="MarketSelectorSite" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>code</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="MarketSelectorSite" parent="GenericItem" component="MarketSelectorSiteReferenceComponentListView">
+		<list-view:list-view>
+			<list-view:column qualifier="uid" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="MarketSelectorSite" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="uid" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="MarketSelectorSite" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="uid" />
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="url" />
+					<editorArea:attribute qualifier="enabled" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="MarketSelectorSite" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="uid" />
+			<simple-search:field name="name" />
+			<simple-search:field name="url" />
+			<simple-search:field name="enabled" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="MarketSelectorSite" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="replace">
+				<advanced-search:field name="uid" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+				<advanced-search:field name="url" selected="true" />
+				<advanced-search:field name="enabled" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context merge-by="type" parent="GenericItem" type="Product" component="editor-area" merge-mode="append">
+		<editorArea:editorArea name="">
+			<editorArea:tab name="hmc.tab.product.extendedattributes" position="26" merge-mode="append">
+				<editorArea:section name="hmc.section.product.ids">
+					<editorArea:attribute qualifier="barcodelist" />
+				</editorArea:section>
+			</editorArea:tab>
+			<editorArea:tab name="hmc.tab.product.prices" position="14" merge-mode="append">
+			<editorArea:section name="hmc.section.product.markdownprices">
+				<editorArea:panel colspan="2" name="panel.markdownprices" rowspan="2">
+					<editorArea:attribute description="hmc.text.product.pg"
+										  editor="com.hybris.cockpitng.editor.extendedmultireferenceeditor"
+										  qualifier="markDownPrices">
+						<editorArea:editor-parameter>
+							<editorArea:name>listConfigContext</editorArea:name>
+							<editorArea:value>markDownPricesListView</editorArea:value>
+						</editorArea:editor-parameter>
+						<editorArea:editor-parameter>
+							<editorArea:name>configurableFlowConfigCtx</editorArea:name>
+							<editorArea:value>create-wizard</editorArea:value>
+						</editorArea:editor-parameter>
+					</editorArea:attribute>
+				</editorArea:panel>
+			</editorArea:section>
+		</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="module" parent="auto" type="Product" component="editor-area">
+		<editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+			<editorArea:tab name="hmc.tab.community" merge-mode="REMOVE" />
+		</editorArea:editorArea>
+	</context>
+
+  <context merge-by="module" parent="auto" type="TbsBaseProduct" component="editor-area">
+    <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+      <editorArea:tab name="hmc.tab.product.prices" merge-mode="REMOVE" />
+    </editorArea:editorArea>
+  </context>
+  
+  <context merge-by="module" parent="auto" type="ServiceProduct" component="editor-area">
+    <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+      <editorArea:tab name="hmc.tab.product.prices" merge-mode="add" />
+    </editorArea:editorArea>
+  </context>
+
+  <context merge-by="module" parent="auto" type="TbsVariantProduct" component="editor-area">
+    <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+      <editorArea:tab name="hmc.tab.product.variants" merge-mode="REMOVE" />
+    </editorArea:editorArea>
+  </context>
+
+	<context type="Product" merge-by="type" component="bulk-edit-wizard">
+		<wz:flow id="bulkEditWizard" title="bulkedit.wizard.title" size="large">
+			<wz:step id="step1" label="bulkedit.wizard.step.select.attributes" sublabel="bulkedit.wizard.step.select.sublabel">
+				<wz:content id="step1.content">
+					<wz:custom-view id="attributesSelector" lang="zul" merge-mode="replace">
+						<wz:renderer spring-bean="bulkEditAttributesSelectorRenderer">
+							<wz:parameter>
+								<wz:name>bulkEditFormModelKey</wz:name>
+								<wz:value>bulkEditForm</wz:value>
+							</wz:parameter>
+							<wz:parameter>
+								<wz:name>excludedQualifiers</wz:name>
+								<wz:value>code,modifiedtime,reviewRating,erpHazardous,erpUnitOfMeasure,erpMeasurement,erpMllVariant,erpFlavour,erpInternalName,erpSeasonYear,erpSeason,erpCollection,erpColour,erpType</wz:value>
+							</wz:parameter>
+						</wz:renderer>
+					</wz:custom-view>
+				</wz:content>
+				<wz:navigation>
+					<wz:cancel />
+					<wz:next visible="bulkEditForm.attributesForm.chosenAttributes?.size()>0" />
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<!-- Facet configuration start -->
+
+	<context merge-by="module" parent="auto" component="explorer-tree">
+		<explorer-tree:explorer-tree>
+			<explorer-tree:navigation-node id="hmc_treenode_catalog">
+			<explorer-tree:type-node code="KeyIngredient" id="KeyIngredient"/>
+			<explorer-tree:navigation-node id="hmc_type_tree_productFacet">
+					<explorer-tree:type-node code="FinishFacet" id="FinishFacet"/>
+					<explorer-tree:type-node code="TargetAreaFacet" id="TargetAreaFacet"/>
+					<explorer-tree:type-node code="ConcernFacet" id="ConcernFacet" />
+					<explorer-tree:type-node code="ScentFacet" id="ScentFacet" />
+					<explorer-tree:type-node code="CoverageFacet" id="CoverageFacet" />
+					<explorer-tree:type-node code="RangeFacet" id="RangeFacet" />
+					<explorer-tree:type-node code="ProductTypeFacet" id="ProductTypeFacet" />
+					<explorer-tree:type-node code="CategoryTypeFacet" id="CategoryTypeFacet" />
+					<explorer-tree:type-node code="VeganFacet" id="VeganFacet" />
+					<explorer-tree:type-node code="FreeFromFacet" id="FreeFromFacet" />
+				</explorer-tree:navigation-node>
+			</explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+	</context>
+
+	<context merge-by="type" type="FinishFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="FinishFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="FinishFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="FinishFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="FinishFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="finishFacetPrepare">
+				<wz:initialize property="newFinishFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newFinishFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newFinishFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="TargetAreaFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="TargetAreaFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="TargetAreaFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="TargetAreaFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="TargetAreaFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="targetAreaFacetPrepare">
+				<wz:initialize property="newTargetAreaFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newTargetAreaFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newTargetAreaFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="ConcernFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="ConcernFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="ConcernFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="ConcernFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="ConcernFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="concernFacetPrepare">
+				<wz:initialize property="newConcernFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newConcernFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newConcernFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="ScentFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="ScentFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="ScentFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="ScentFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="ScentFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="scentFacetPrepare">
+				<wz:initialize property="newScentFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newScentFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newScentFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="CoverageFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="CoverageFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="CoverageFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="CoverageFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="CoverageFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="coverageFacetPrepare">
+				<wz:initialize property="newCoverageFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newCoverageFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newCoverageFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="RangeFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="RangeFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="RangeFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="RangeFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="RangeFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="rangeFacetPrepare">
+				<wz:initialize property="newRangeFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newRangeFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newRangeFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="ProductTypeFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="ProductTypeFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="ProductTypeFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="ProductTypeFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="ProductTypeFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="productTypeFacetPrepare">
+				<wz:initialize property="newProductTypeFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newProductTypeFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newProductTypeFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="CategoryTypeFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="CategoryTypeFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="CategoryTypeFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="CategoryTypeFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="CategoryTypeFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="categoryTypeFacetPrepare">
+				<wz:initialize property="newCategoryTypeFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newCategoryTypeFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newCategoryTypeFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="VeganFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="VeganFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="VeganFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="VeganFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="VeganFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="veganFacetPrepare">
+				<wz:initialize property="newVeganFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newVeganFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newVeganFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="FreeFromFacet" parent="GenericItem" component="listview">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="FreeFromFacet" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="FreeFromFacet" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context type="FreeFromFacet" merge-by="type" component="create-wizard">
+		<wz:flow id="FreeFromFacetWizard" title="create.title(ctx.TYPE_CODE)" >
+			<wz:prepare id="freeFromFacetPrepare">
+				<wz:initialize property="newFreeFromFacet" type="ctx.TYPE_CODE"/>
+				<wz:assign property="code" value="ctx.code"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory" merge-mode="REPLACE">
+				<wz:content id="step1.content">
+					<wz:property-list root="newFreeFromFacet">
+						<wz:property id="code" qualifier="code" readonly="false"/>
+						<wz:property id="name" qualifier="name" readonly="false"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newFreeFromFacet"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<!-- Facet configuration end-->
+
+	<!--  TbsBaseProduct Create Wizard start -->
+
+	<context merge-by="type" type="TbsBaseProduct" parent="Product" component="create-wizard" >
+        <wz:flow id="ProductWizard" title="create.title(ctx.TYPE_CODE)">
+            <wz:step id="step1" label="create.product.essential.label" sublabel="create.product.essential.sublabel">
+                <wz:content id="step1.content">
+                    <wz:property-list root="newProduct">
+                    	<wz:property qualifier="code" type="java.lang.String" merge-mode="REMOVE"/>
+                        <wz:property qualifier="name" type="java.lang.String"/>
+                        <wz:property qualifier="approvalStatus"/>
+                        <wz:property qualifier="catalogVersion"/>
+                        <wz:property qualifier="type"/>
+                        <wz:property qualifier="keyIngredients"/>
+                        <wz:property qualifier="onlineDate" merge-mode="REMOVE"/>
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation id="step1.navigation" merge-mode="REPLACE">
+                    <wz:cancel>
+                        <wz:revert property="newProduct.picture" />
+                        <wz:revert property="newProduct.thumbnail" />
+                        <wz:revert property="newProduct.logo" />
+                        <wz:revert property="newProduct" />
+                    </wz:cancel>
+                    <wz:next visible="newProduct.catalogVersion !=null and newProduct.type!=null and newProduct.keyIngredients!=null"/>
+                    <wz:custom visible="newProduct.catalogVersion !=null and newProduct.type!=null and newProduct.keyIngredients!=null" label="com.hybris.cockpitng.widgets.configurableflow.flow.done"
+                               composedHandler="customDoneHandler">
+                        <wz:save property="newProduct"/>
+                    </wz:custom>
+                </wz:navigation>
+            </wz:step>
+            <wz:step id="step2" label="create.product.descriptions.label" sublabel="create.product.description.sublabel">
+                <wz:content id="step2.content">
+                    <wz:property-list root="newProduct">
+                    	<wz:property qualifier="name" type="java.lang.String" merge-mode="REMOVE"/>
+                        <wz:property editor="com.hybris.cockpitng.editor.localized(com.hybris.cockpitng.editor.wysiwyg)"
+                                     qualifier="description" type="java.lang.String"/>
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation id="step2.navigation" merge-mode="replace">
+                    <wz:cancel>
+                        <wz:revert property="newProduct" />
+                    </wz:cancel>
+                    <wz:back/>
+                    <wz:custom label="com.hybris.cockpitng.widgets.configurableflow.flow.done" composedHandler="customDoneHandler">
+                        <wz:save property="newProduct"/>
+                    </wz:custom>
+                </wz:navigation>
+            </wz:step>
+			<wz:step id="step3" label="create.product.categories.label" sublabel="create.product.categories.sublabel" merge-mode="remove">
+			</wz:step>
+			<wz:step id="step4" label="create.product.media.label" sublabel="create.product.media.sublabel" merge-mode="remove">
+			</wz:step>
+        </wz:flow>
+    </context>
+
+    <!--  TbsBaseProduct Create Wizard end -->
+
+    <!--  Key Ingredient -->
+	<context merge-by="type" type="KeyIngredient" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>code</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="KeyIngredient" parent="GenericItem" component="KeyIngredientReferenceComponentListView">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="KeyIngredient" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="KeyIngredient" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="code" />
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="description" />
+					<editorArea:attribute qualifier="pageLink" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="KeyIngredient" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+			<simple-search:field name="description" />
+			<simple-search:field name="pageLink" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="KeyIngredient" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="replace">
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+				<advanced-search:field name="description" selected="true" />
+				<advanced-search:field name="pageLink" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+    <!-- Key Ingredient end -->
+
+	<context component="create-wizard" merge-by="module" type="Category">
+		<wz:flow  id="CategoryWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:step id="step1" label="flow.allmanadatory">
+				<wz:content id="step1.content">
+					<wz:property-list root="newCategory" merge-mode="add">
+						<wz:property qualifier="variantCategory"/>
+					</wz:property-list>
+				</wz:content>
+			</wz:step>
+		</wz:flow>
+	</context>
+	<context parent="AbstractPage" type="ContentPage" component="editorareaactions">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+            <y:group qualifier="common" show-group-header="false">
+                <y:action action-id="uk.co.thebodyshop.backoffice.actions.contentpage.delete" property="currentObject" />
+            </y:group>
+        </y:actions>
+	</context>
+
+	<context merge-by="type" type="SearchKeyword" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>code</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="SearchKeyword" parent="GenericItem" component="SearchKeywordReferenceComponentListView">
+		<list-view:list-view>
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="SearchKeyword" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="SearchKeyword" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="code" />
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="pages" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="SearchKeyword" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="SearchKeyword" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="replace">
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="name" selected="true" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context merge-by="type" type="SearchKeyword" component="create-wizard">
+		<wz:flow id="defaultSearchKeywordWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="searchKeyWordPrepare">
+				<wz:initialize property="newKeyword" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="flow.allmanadatory">
+				<wz:content>
+					<wz:property-list root="newKeyword">
+						<wz:property id="code" qualifier="code"/>
+						<wz:property id="name" qualifier="name"
+									 editor="com.hybris.cockpitng.editor.localized(com.hybris.cockpitng.editor.defaulttext)"
+									 type="Localized(java.lang.String)"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:next visible="!#empty(newKeyword.code)"/>
+					<wz:done visible="!#empty(newKeyword.code)">
+						<wz:save property="newKeyword"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+			<wz:step id="step2" label="create.keyword.pages.label">
+				<wz:content>
+					<wz:property-list root="newKeyword">
+						<wz:property id="pages" qualifier="pages"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step2.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newKeyword"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context type="AbstractPage" component="listviewactions">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+            <y:group qualifier="common" show-group-header="false">
+                <y:action action-id="uk.co.thebodyshop.backoffice.actions.contentpage.delete" property="selectedObjects" />
+            </y:group>
+        </y:actions>
+	</context>
+
+	<context merge-by="type" parent="GenericItem" type="Product" component="editor-area">
+	<editorArea:editorArea>
+	<editorArea:tab name="hmc.tab.product.categorysystem" position="10">
+		<editorArea:section name="hmc.section.product.productincategory">
+			<editorArea:attribute qualifier="supercategories" merge-mode="replace">
+					<editorArea:editor-parameter>
+						<editorArea:name>referenceSearchCondition_catalogVersion</editorArea:name>
+						<editorArea:value>{parentObject.catalogVersion}</editorArea:value>
+					</editorArea:editor-parameter>
+			</editorArea:attribute>
+		</editorArea:section>
+	</editorArea:tab>
+	</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" parent="GenericItem" type="TbsBaseProduct" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.categorysystem" position="10">
+				<editorArea:section name="hmc.section.product.productincategory">
+					<editorArea:attribute qualifier="primaryCategory">
+						<editorArea:editor-parameter>
+							<editorArea:name>referenceSearchCondition_catalogVersion</editorArea:name>
+							<editorArea:value>{parentObject.catalogVersion}</editorArea:value>
+						</editorArea:editor-parameter>
+					</editorArea:attribute>
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="module" parent="auto" component="explorer-tree">
+		<explorer-tree:explorer-tree>
+			<explorer-tree:navigation-node id="hmc.group.basecommerce">
+				<explorer-tree:type-node code="EmailWhenInStock" id="EmailWhenInStock"/>
+			</explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+	</context>
+
+	<!-- Loyalty Charity Configuration start  -->
+
+	<context merge-by="type" type="LoyaltyCharity" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>code</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="VariantProduct" parent="Product" component="editorAreaDynamicForms" principal="productmarketgroup,productmanagergroup">
+        <df:dynamicForms xmlns:df="http://www.hybris.com/cockpitng/component/dynamicForms">
+        	<df:attribute id="productCodeDf" triggeredOn="*" qualifier="code" disabledIf="pk!=null" />
+        </df:dynamicForms>
+	</context>
+
+	<context merge-by="type" type="LoyaltyCharity" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code" />
+			<list-view:column qualifier="name" />
+			<list-view:column qualifier="url" />
+			<list-view:column qualifier="description" />
+			<list-view:column qualifier="websites" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="LoyaltyCharity" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="name" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="LoyaltyCharity" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="code" selected="false" />
+				<advanced-search:field name="name" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="LoyaltyCharity">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="LoyaltyCharityWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="loyaltyCharityPrepare">
+				<wz:initialize property="newLoyaltyCharity" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.loyaltyCharity.step1.label" sublabel="create.loyaltyCharity.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newLoyaltyCharity">
+						<wz:property qualifier="code"/>
+						<wz:property qualifier="name"/>
+						<wz:property qualifier="url"/>
+						<wz:property qualifier="description"/>
+						<wz:property qualifier="websites"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done visible="!#empty(newLoyaltyCharity.code)">
+						<wz:save property="newLoyaltyCharity"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="LoyaltyCharity" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="code" />
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="url" />
+					<editorArea:attribute qualifier="description" />
+					<editorArea:attribute qualifier="websites" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<!-- Loyalty Charity Configuration end  -->
+
+	<context component="cseditorareaactions" type="Order" merge-by="type" >
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris" >
+            <y:group qualifier="common" >
+                <y:label >actiongroup.common</y:label>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.cancelorderaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.returns.createreturnrequestaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.manualpaymentvoidaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.manualpaymentcaptureaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.manualtaxvoidaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.manualtaxcommitaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.manualtaxrequoteaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.manualpaymentreauthaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.manualdeliverycostcommitaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.putonholdaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="de.hybris.ordermanagementbackoffice.actions.order.triggersourcingaction" property="currentObject" merge-mode="remove"/>
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.tbscancelorder" property="currentObject" merge-mode="add"/>
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.reattemptcaptureaction" property="currentObject" merge-mode="add"/>
+            </y:group>
+        </y:actions>
+    </context>
+
+	<!-- Keyword Redirects Create Wizard start -->
+    <context type="SolrFacetSearchKeywordRedirect" component="create-wizard" merge-by="module">
+        <wz:flow id="SolrFacetSearchKeywordRedirectWizard" title="create.title(ctx.TYPE_CODE)">
+            <wz:prepare id="solrFacetSearchKeywordRedirectPrepare">
+                <wz:initialize property="newItem" type="ctx.TYPE_CODE" />
+                <wz:assign property="newItem.facetSearchConfig" value="ctx.parentObject" />
+            </wz:prepare>
+            <wz:step id="step1" label="create.solrFacetSearchKeywordRedirect.essential.label" sublabel="create.solrFacetSearchKeywordRedirect.essential.sublabel">
+                <wz:content id="step1.content">
+                    <wz:property-list root="newItem">
+                        <wz:property qualifier="facetSearchConfig" merge-mode="add"/>
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation id="step1.navigation">
+                    <wz:cancel />
+                    <wz:done visible="newItem.facetSearchConfig != null AND newItem.matchType != null AND !#empty(newItem.keyword) AND newItem.ignoreCase != null AND newItem.redirect != null AND newItem.language != null">
+                        <wz:save property="newItem" />
+                    </wz:done>
+                </wz:navigation>
+            </wz:step>
+        </wz:flow>
+    </context>
+	<!-- Keyword Redirects Create Wizard End -->
+
+  <!-- Catalog Visibility For CS Customer Support Agent/ Manager Start-->
+	<context component="cs-explorer-tree" module="customersupportbackoffice" principal="customersupportmanagerrole,customersupportagentrole">
+	<n:explorer-tree xmlns:n="http://www.hybris.com/cockpitng/config/explorertree" title="customer_support">
+			<explorer-tree:type-node code="Catalog" id="hmc_typenode_catalog" />
+	</n:explorer-tree>
+	</context>
+	<context merge-by="type" parent="GenericItem" type="Catalog" module="customersupportbackoffice" component="cs-listview" principal="customersupportmanagerrole,customersupportagentrole">
+		<list-view:list-view>
+			<list-view:column qualifier="id"/>
+			<list-view:column qualifier="name"/>
+		</list-view:list-view>
+	</context>
+	<!-- Catalog Visibility For CS Customer Support Agent/ Manager End-->
+
+	<!-- MarkDown Prices start  -->
+
+	<context merge-by="module" parent="auto" component="explorer-tree">
+		<explorer-tree:explorer-tree>
+			<explorer-tree:navigation-node id="hmc_treenode_pricesettings">
+		                <explorer-tree:navigation-node id="hmc_treenode_prices">
+		                	<explorer-tree:type-node code="MarkDownPriceRow" id="MarkDownPriceRow"/>
+		                </explorer-tree:navigation-node>
+		    </explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+	</context>
+
+	<context merge-by="type" parent="GenericItem" type="MarkDownPriceRow" component="markDownPricesListView">
+        <list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+            <list-view:column qualifier="product"/>
+            <list-view:column qualifier="startTime"/>
+            <list-view:column qualifier="endTime"/>
+            <list-view:column qualifier="price"/>
+            <list-view:column qualifier="markDownMessage"/>
+        </list-view:list-view>
+    </context>
+
+    <context merge-by="type" type="MarkDownPriceRow" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="product" readonly="true"/>
+					<editorArea:attribute qualifier="startTime" />
+					<editorArea:attribute qualifier="endTime" />
+					<editorArea:attribute qualifier="price" />
+					<editorArea:attribute qualifier="markDownMessage" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="MarkDownPriceRow" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="product" />
+            <simple-search:field name="markDownMessage"/>
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="MarkDownPriceRow" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="product" selected="true" />
+				<advanced-search:field name="startTime" selected="false" />
+				<advanced-search:field name="endTime" selected="false" />
+				<advanced-search:field name="markDownMessage" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="MarkDownPriceRow">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="MarkDownPriceRowWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="markDownPriceRowPrepare">
+				<wz:initialize property="newMarkDownPriceRow" type="ctx.TYPE_CODE"/>
+				<wz:assign property="newMarkDownPriceRow.product" value="ctx.parentObject"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.MarkDownPriceRow.step1.label" sublabel="create.MarkDownPriceRow.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newMarkDownPriceRow">
+						<wz:property qualifier="product"/>
+						<wz:property qualifier="startTime"/>
+						<wz:property qualifier="endTime"/>
+						<wz:property qualifier="price"/>
+						<wz:property qualifier="markDownMessage"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done visible="newMarkDownPriceRow.product != null and newMarkDownPriceRow.endTime != null and newMarkDownPriceRow.startTime != null and newMarkDownPriceRow.price > 0 ">
+						<wz:save property="newMarkDownPriceRow"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+	<!-- MarkDown Prices end  -->
+
+	<!-- MarkDown Price Message start  -->
+
+	<context merge-by="module" parent="auto" component="explorer-tree">
+		<explorer-tree:explorer-tree>
+			<explorer-tree:navigation-node id="hmc_treenode_pricesettings">
+		                <explorer-tree:navigation-node id="hmc_treenode_prices">
+		                	<explorer-tree:type-node code="MarkDownPriceMessage" id="MarkDownPriceMessage"/>
+		                </explorer-tree:navigation-node>
+		    </explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+	</context>
+
+	<context merge-by="type" type="MarkDownPriceMessage" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>code</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+    <context merge-by="type" type="MarkDownPriceMessage" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code"/>
+            <list-view:column qualifier="message"/>
+		</list-view:list-view>
+	</context>
+
+    <context merge-by="type" type="MarkDownPriceMessage" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="code" />
+					<editorArea:attribute qualifier="message" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="MarkDownPriceMessage" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="code" />
+			<simple-search:field name="message"/>
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="DeliveryModeDeliveryRestriction" parent="DeliveryRestriction" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="city" />
+					<editorArea:attribute qualifier="region" />
+					<editorArea:attribute qualifier="country" />
+					<editorArea:attribute qualifier="postcode" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context type="DeliveryModeDeliveryRestriction" component="base" merge-by="type" parent="DeliveryRestriction">
+		<y:base>
+			<y:labels>
+				<y:label>name</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="ProductDeliveryRestriction" parent="DeliveryRestriction" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="city" />
+					<editorArea:attribute qualifier="region" />
+					<editorArea:attribute qualifier="country" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context type="ProductDeliveryRestriction" component="base" merge-by="type" parent="DeliveryRestriction">
+		<y:base>
+			<y:labels>
+				<y:label>name</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="MarkDownPriceMessage" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list>
+				<advanced-search:field name="code" selected="true" />
+				<advanced-search:field name="message" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="MarkDownPriceMessage">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="MarkDownPriceMessageWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="markDownPriceMessagePrepare">
+				<wz:initialize property="newMarkDownPriceMessage" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.MarkDownPriceMessage.step1.label" sublabel="create.MarkDownPriceMessage.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newMarkDownPriceMessage">
+						<wz:property qualifier="code"/>
+						<wz:property qualifier="message"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done visible="newMarkDownPriceMessage.code != null">
+						<wz:save property="newMarkDownPriceMessage"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<!-- MarkDown Price Message end  -->
+	<context merge-by="module" parent="auto" component="explorer-tree">
+		<explorer-tree:explorer-tree>
+			<explorer-tree:navigation-node id="hmc.group.basecommerce">
+				<explorer-tree:type-node code="AdyenPaymentRefusalMessage" id="AdyenPaymentRefusalMessage"/>
+			</explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+	</context>
+	
+	<context merge-by="type" type="AdyenPaymentRefusalMessage" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="code" />
+					<editorArea:attribute qualifier="message" />
+					<editorArea:attribute qualifier="default" />
+					<editorArea:attribute qualifier="refusalReasonCodes" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	
+	<context merge-by="type" type="AdyenPaymentRefusalMessage" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="code"/>
+            <list-view:column qualifier="message"/>
+            <list-view:column qualifier="default"/>
+            <list-view:column qualifier="refusalReasonCodes"/>
+		</list-view:list-view>
+	</context>
+
+	<!-- Perspective configuration for market specific user start-->
+	<context component="perspective-chooser" principal="marketSpecificManagerRole">
+		<y:perspective-chooser xmlns:y="http://www.hybris.com/cockpitng/config/perspectiveChooser">
+			<y:defaultPerspective name="pcmbackoffice"/>
+			<y:authority name="marketSpecificManagerRole">
+				<y:perspective id="hmc2"/>
+				<y:perspective id="pcmbackoffice"/>
+				<y:perspective id="adaptiveSearch"/>
+			</y:authority>
+		</y:perspective-chooser>
+	</context>
+	<!-- Phase In and Phase Out Product Hard Launch begin -->
+	<context type="Product" component="pcmbackoffice-listviewactions"  parent="auto" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.phaseinouthardproductlaunchaction" property="selectedObjects" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<context type="Product" component="pcmbackoffice-assortment-listviewactions" parent="auto" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.phaseinouthardproductlaunchaction" property="selectedObjects" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<context type="Product" component="pcmbackoffice-editorareaactions" parent="auto" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="uk.co.thebodyshop.backoffice.actions.phaseinouthardproductlaunchaction" property="currentObject" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<!-- Phase In and Phase Out Product Hard Launch end -->
+
+	<!--PaymentRedirectInfo start -->
+	<context merge-by="type" type="PaymentRedirectInfo" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>cartId</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="PaymentRedirectInfo" parent="GenericItem" component="paymentRedirectInfoReferenceComponentListView">
+		<list-view:list-view>
+			<list-view:column qualifier="userId" />
+			<list-view:column qualifier="cartId" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="PaymentRedirectInfo" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="userId" />
+			<list-view:column qualifier="cartId" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="PaymentRedirectInfo" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="userId" />
+					<editorArea:attribute qualifier="cartId" />
+					<editorArea:attribute qualifier="adyenPaReq" />
+					<editorArea:attribute qualifier="adyenPaymentMD" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="PaymentRedirectInfo" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="userId" />
+			<simple-search:field name="cartId" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="PaymentRedirectInfo" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="replace">
+				<advanced-search:field name="userId" selected="true" />
+				<advanced-search:field name="cartId" selected="true" />
+				<advanced-search:field name="adyenPaReq" selected="false" />
+				<advanced-search:field name="adyenPaymentMD" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+	<!--PaymentRedirectInfo end -->
+	
+	<context merge-by="type" type="BaseStore" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:tab name="hmc.lybcScheme">
+                <editorArea:section name="hmc.lybcScheme">
+                    <editorArea:attribute qualifier="lybcEnabled"/>
+                    <editorArea:attribute qualifier="loyaltyPointsRate"/>
+                    <editorArea:attribute qualifier="loyaltyCurrencyUnit"/>
+                    <editorArea:attribute qualifier="loyaltyPointsMultiplier"/>
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+	<!-- Loyalty start  --> 
+    <context component="explorer-tree" merge-by="module">
+        <explorer-tree:explorer-tree>
+			<explorer-tree:navigation-node id="hmc_treenode_loyalty">
+                <explorer-tree:type-node code="LoyaltyMembership" id="hmc_loyalty_membership"/>
+                <explorer-tree:type-node code="LoyaltyCard" id="hmc_loyalty_card"/>
+                <explorer-tree:type-node code="LYBLoyaltyCard" id="hmc_lyb_loyalty_card"/>
+                <explorer-tree:type-node code="LYBMembershipArchive" id="hmc_lyb_membership_archive"/>
+                <explorer-tree:type-node code="LoyaltyTransaction" id="hmc_loyalty_transaction"/>
+				<explorer-tree:type-node code="LoyaltyCharity" id="hmc_loyalty_charity"/>
+				<explorer-tree:type-node code="LoyaltyVoucher" id="hmc_loyalty_voucher"/>
+            </explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+    </context>
+    
+    <context merge-by="type" type="LoyaltyMembership" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>name</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+	<context merge-by="type" type="LoyaltyCard" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>cardNumber</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+	<context merge-by="type" type="LoyaltyTransaction" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>type</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+	<context merge-by="type" type="LoyaltyVoucher" parent="GenericItem" component="base">
+		<y:base>
+			<y:labels>
+				<y:label>voucherCode</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+	<!-- LoyaltyMembership -->
+	<context merge-by="type" type="LoyaltyMembership" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="name" />
+			<list-view:column qualifier="programmeId" />
+			<list-view:column qualifier="status" />
+			<list-view:column qualifier="type" />
+			<list-view:column qualifier="startDate" />
+			<list-view:column qualifier="endDate" />
+			<list-view:column qualifier="loyaltyCardsThreshold" />
+			<list-view:column qualifier="loyaltyCardsPrefix" />
+			<list-view:column qualifier="loyaltyCardsFetchQuantity" />
+			<list-view:column qualifier="loyaltyProgramCode" />
+			<list-view:column qualifier="loyaltyProgramMarketCode" />
+			<list-view:column qualifier="cardsFetchInitiated" />
+			<list-view:column qualifier="loyaltyCards" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="LoyaltyMembership" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="name" />
+			<simple-search:field name="programmeId" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="LoyaltyMembership" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="name" selected="false" />
+				<advanced-search:field name="status" selected="false" />
+				<advanced-search:field name="type" selected="false" />
+				<advanced-search:field name="programmeId" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="LoyaltyMembership">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="LoyaltyMembershipWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="loyaltyMembershipPrepare">
+				<wz:initialize property="newLoyaltyMembership" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.loyaltyMembership.step1.label" sublabel="create.loyaltyMembership.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newLoyaltyMembership">
+						<wz:property qualifier="name"/>
+						<wz:property qualifier="programmeId"/>
+						<wz:property qualifier="status"/>
+						<wz:property qualifier="type"/>
+						<wz:property qualifier="startDate"/>
+						<wz:property qualifier="endDate"/>
+						<wz:property qualifier="loyaltyCardsThreshold"/>
+						<wz:property qualifier="loyaltyCardsPrefix"/>
+						<wz:property qualifier="loyaltyCardsFetchQuantity"/>
+						<wz:property qualifier="loyaltyProgramCode"/>
+						<wz:property qualifier="loyaltyProgramMarketCode"/>
+						<wz:property qualifier="cardsFetchInitiated"/>
+						<wz:property qualifier="loyaltyCards"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done>
+						<wz:save property="newLoyaltyMembership"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="LoyaltyMembership" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="name"/>
+					<editorArea:attribute qualifier="programmeId"/>
+					<editorArea:attribute qualifier="status"/>
+					<editorArea:attribute qualifier="type"/>
+					<editorArea:attribute qualifier="startDate"/>
+					<editorArea:attribute qualifier="endDate"/>
+					<editorArea:attribute qualifier="loyaltyCardsThreshold"/>
+					<editorArea:attribute qualifier="loyaltyCardsPrefix"/>
+					<editorArea:attribute qualifier="loyaltyCardsFetchQuantity"/>
+					<editorArea:attribute qualifier="loyaltyProgramCode"/>
+					<editorArea:attribute qualifier="loyaltyProgramMarketCode"/>
+					<editorArea:attribute qualifier="cardsFetchInitiated"/>
+					<editorArea:attribute qualifier="loyaltyCards"/>
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	
+	<!-- LoyaltyCard -->
+	<context merge-by="type" type="LoyaltyCard" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="cardNumber" />
+			<list-view:column qualifier="cardStatus" />
+			<list-view:column qualifier="cardType" />
+			<list-view:column qualifier="cardIssueStore" />
+			<list-view:column qualifier="issueDate" />
+			<list-view:column qualifier="expiryDate" />
+			<list-view:column qualifier="loyaltyMembership" />
+			<list-view:column qualifier="customer" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="LoyaltyCard" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="cardNumber" />
+			<simple-search:field name="cardIssueStore" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="LoyaltyCard" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="cardNumber" selected="false" />
+				<advanced-search:field name="cardStatus" selected="false" />
+				<advanced-search:field name="cardType" selected="false" />
+				<advanced-search:field name="cardIssueStore" selected="false" />
+				<advanced-search:field name="issueDate" selected="false" />
+				<advanced-search:field name="expiryDate" selected="false" />
+				<advanced-search:field name="loyaltyMembership" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="LoyaltyCard">
+		<wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="LoyaltyCardWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="loyaltyCardPrepare">
+				<wz:initialize property="newLoyaltyCard" type="ctx.TYPE_CODE"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.loyaltyCard.step1.label" sublabel="create.loyaltyCard.step1.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newLoyaltyCard">
+						<wz:property qualifier="cardNumber"/>
+						<wz:property qualifier="cardStatus"/>
+						<wz:property qualifier="cardType"/>
+						<wz:property qualifier="cardIssueStore"/>
+						<wz:property qualifier="issueDate"/>
+						<wz:property qualifier="expiryDate"/>
+						<wz:property qualifier="loyaltyMembership"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done visible="!#empty(newLoyaltyCard.cardNumber) and newLoyaltyCard.loyaltyMembership != null">
+						<wz:save property="newLoyaltyCard"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="LoyaltyCard" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="cardNumber" />
+					<editorArea:attribute qualifier="cardStatus" />
+					<editorArea:attribute qualifier="cardType" />
+					<editorArea:attribute qualifier="cardIssueStore" />
+					<editorArea:attribute qualifier="issueDate" />
+					<editorArea:attribute qualifier="expiryDate" />
+					<editorArea:attribute qualifier="loyaltyMembership" />
+					<editorArea:attribute qualifier="customer" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+    
+    <!-- LYBMembershipArchive  -->
+    <context merge-by="type" type="LYBMembershipArchive" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="migrationDate" />
+			<list-view:column qualifier="points" />
+			<list-view:column qualifier="customerID" />
+			<list-view:column qualifier="lybCardNumber" />
+			<list-view:column qualifier="loyaltyMemberGroup" />
+			<list-view:column qualifier="membershipStatus" />
+			<list-view:column qualifier="tAndCAcceptedDate" />
+			<list-view:column qualifier="source" />
+			<list-view:column qualifier="expiryDate" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="LYBMembershipArchive" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="points" />
+			<simple-search:field name="customerID" />
+			<simple-search:field name="lybCardNumber" />
+			<simple-search:field name="expiryDate" />
+			
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="LYBMembershipArchive" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="migrationDate" selected="false" />
+				<advanced-search:field name="points" selected="false" />
+				<advanced-search:field name="customerID" selected="false" />
+				<advanced-search:field name="loyaltyMemberGroup" selected="false" />
+				<advanced-search:field name="membershipStatus" selected="false" />
+				<advanced-search:field name="tAndCAcceptedDate" selected="false" />
+				<advanced-search:field name="source" selected="false" />
+				<advanced-search:field name="expiryDate" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+	
+	<!-- LoyaltyTransaction  -->
+	<context merge-by="type" type="LoyaltyTransaction" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="date" />
+			<list-view:column qualifier="points" />
+			<list-view:column qualifier="type" />
+			<list-view:column qualifier="subType" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="LoyaltyTransaction" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="date" />
+			<simple-search:field name="points" />
+			<simple-search:field name="type" />
+			<simple-search:field name="subType" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="LoyaltyTransaction" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="date" selected="false" />
+				<advanced-search:field name="points" selected="false" />
+				<advanced-search:field name="type" selected="false" />
+				<advanced-search:field name="subType" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+    <!-- Loyalty end  -->
+
+	<!--Hide Create product configuration for market specific users start -->
+	<context type="Product" component="listviewactions" merge-by="module" principal="marketSpecificManagerRole">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:action action-id="com.hybris.cockpitng.action.create" merge-mode="REMOVE" />
+			</y:group>
+		</y:actions>
+	</context>
+
+	<context type="Product" component="pcmbackoffice-listviewactions" merge-by="module" principal="marketSpecificManagerRole">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:action action-id="com.hybris.cockpitng.action.create" merge-mode="REMOVE" />
+			</y:group>
+		</y:actions>
+	</context>
+	<!--Hide Create product configuration for market specific users end -->
+	
+	<context merge-by="type" parent="GenericItem" type="StockLevel" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:tab name="hmc.properties">
+                <editorArea:section name="hmc.section.stocklevel.stock">
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="fulfilled" position="4" />
+                    <editorArea:attribute xmlns="http://www.hybris.com/cockpitng/component/editorArea" qualifier="extendedStock" position="5" />
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+	<context merge-by="type" type="BaseStore" component="editor-area">
+		<editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+			<editorArea:tab name="hmc.pricing">
+				<editorArea:section name="hmc.pricing">
+					<editorArea:attribute qualifier="baseStoreUserPriceGroup"/>
+					<editorArea:attribute qualifier="currencySymbolPositionMap"/>
+					<editorArea:attribute qualifier="pricePerMetricToggle"/>
+					<editorArea:attribute qualifier="supportedPaymentModes"/>
+					<editorArea:attribute qualifier="paypalClientConfiguration"/>
+					<editorArea:attribute qualifier="maximumSvsGiftCardPerOrder"/>
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="BaseStore" component="editor-area">
+		<editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+			<editorArea:tab name="hmc.delivery">
+				<editorArea:section name="hmc.delivery">
+					<editorArea:attribute qualifier="collectionPoint"/>
+					<editorArea:attribute qualifier="cisDeliveryMode"/>
+					<editorArea:attribute qualifier="eligibleForCollectInStore"/>
+					<editorArea:attribute qualifier="poBoxToggle"/>
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="BaseStore" component="editor-area">
+		<editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+			<editorArea:tab name="tbs.properties">
+				<editorArea:section name="tbs.properties">
+					<editorArea:attribute qualifier="findInStoreEnabled"/>
+					<editorArea:attribute qualifier="maxRadiusForPoSSearch"/>
+					<editorArea:attribute qualifier="maxProductOrderQuantity"/>
+					<editorArea:attribute qualifier="newInThreshold"/>
+					<editorArea:attribute qualifier="measurementUnitTypeMap"/>
+					<editorArea:attribute qualifier="productcreatenotifyemaillist"/>
+					<editorArea:attribute qualifier="orderHoldDuration"/>
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	
+	<!-- Loyalty Voucher -->
+	<context merge-by="type" type="LoyaltyVoucher" parent="GenericItem" component="listview">
+		<list-view:list-view merge-mode="append">
+			<list-view:column qualifier="voucherCode" />
+			<list-view:column qualifier="status" />
+			<list-view:column qualifier="expiryDate" />
+			<list-view:column qualifier="value" />
+			<list-view:column qualifier="description" />
+			<list-view:column qualifier="customer" />
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="LoyaltyVoucher" parent="GenericItem" component="simple-search">
+		<simple-search:simple-search>
+			<simple-search:field name="voucherCode" />
+		</simple-search:simple-search>
+	</context>
+
+	<context merge-by="type" type="LoyaltyVoucher" parent="GenericItem" component="advanced-search">
+		<advanced-search:advanced-search>
+			<advanced-search:field-list merge-mode="append">
+				<advanced-search:field name="voucherCode" selected="false" />
+				<advanced-search:field name="value" selected="false" />
+				<advanced-search:field name="description" selected="false" />
+			</advanced-search:field-list>
+		</advanced-search:advanced-search>
+	</context>
+
+	<context merge-by="type" type="LoyaltyVoucher" parent="GenericItem" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.properties">
+				<editorArea:section name="hmc.properties">
+					<editorArea:attribute qualifier="voucherCode" />
+					<editorArea:attribute qualifier="value" />
+					<editorArea:attribute qualifier="status" />
+					<editorArea:attribute qualifier="name" />
+					<editorArea:attribute qualifier="description" />
+					<editorArea:attribute qualifier="code" />
+					<editorArea:attribute qualifier="currency" />
+					<editorArea:attribute qualifier="customer" />
+					<editorArea:attribute qualifier="archived" />
+					<editorArea:attribute qualifier="lybVoucher" />
+					<editorArea:attribute qualifier="sentEmptyStatusToResponsys" />
+					<editorArea:attribute qualifier="refundAmount" />
+					<editorArea:attribute qualifier="donatedDate" />
+					<editorArea:attribute qualifier="expiryDate" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	
+	<context parent="GenericItem" type="Order" component="cs-editor-area" principal="customersupportagentrole,customersupportmanagerrole" merge-by="principal">
+	<editorArea:editorArea name="Order editor area">
+		<editorArea:tab name="customersupportbackoffice.order.tab.consignments" merge-mode="append">
+			<editorArea:section name="customersupportbackoffice.section.order.consignments.entries">
+					<editorArea:customPanel name="custom_consignemt_renderer"
+											spring-bean="tbsOrderConsignmentEntriesRenderer">
+						<editorArea:attribute qualifier="consignments" readonly="true"
+											  label="customersupportbackoffice.order.consignments.entries"
+											  editor="com.hybris.cockpitng.editor.extendedmultireferenceeditor">
+							<editorArea:editor-parameter>
+								<editorArea:name>listConfigContext</editorArea:name>
+								<editorArea:value>referenceListViewConsignmentEntriescs</editorArea:value>
+							</editorArea:editor-parameter>
+							<editorArea:editor-parameter>
+								<editorArea:name>disableDisplayingDetails</editorArea:name>
+								<editorArea:value>true</editorArea:value>
+							</editorArea:editor-parameter>
+							<editorArea:editor-parameter>
+								<editorArea:name>disableRemoveReference</editorArea:name>
+								<editorArea:value>true</editorArea:value>
+							</editorArea:editor-parameter>
+						</editorArea:attribute>
+					</editorArea:customPanel>
+			</editorArea:section>
+		</editorArea:tab>
+	</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" parent="GenericItem" type="ConsignmentEntry" component="referenceListViewConsignmentEntriescs" principal="customersupportagentrole,customersupportmanagerrole">
+		<list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+			<list-view:column qualifier="orderEntry.product.code" spring-bean="nullSafeListCellRenderer"/>
+			<list-view:column qualifier="orderEntry.product.name" spring-bean="nullSafeListCellRenderer"/>
+			<list-view:column qualifier="status"/>
+			<list-view:column qualifier="quantity" />
+			<list-view:column qualifier="shippedQuantity"/>
+		</list-view:list-view>
+	</context>
+</config>

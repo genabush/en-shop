@@ -1,0 +1,41 @@
+<ng-container
+  *ngIf="{
+    cart: activeCart$ | async,
+    cmsData: cmsData$ | async
+  } as componentData"
+>
+  <div class="col-12 py-3 pl-0 pr-3">
+    <div class="row flex-wrap flex-lg-nowrap">
+      <!-- GIFT WRAP IMAGE -->
+      <cx-cart-gift-wrap-image
+        [giftWrapImageUrl]="componentData.cmsData.giftImage"
+        [altText]="componentData.cmsData.name"
+        class="cart-gift-wrap__image d-flex flex-grow-1 align-items-center justify-content-center order-0 order-lg-1"
+      ></cx-cart-gift-wrap-image>
+      <!-- END GIFT WRAP IMAGE -->
+      <div
+        class="cart-gift-wrap__body d-flex flex-column col-12 col-lg-6 order-0 py-3 pl-3 pl-lg-0 pr-3 pr-lg-0 order-1 order-lg-0"
+      >
+        <h2 class="cart-gift-wrap__title text-uppercase text-center text-lg-left pl-lg-4 pb-3 mb-0">
+          {{ 'cart.giftWrap.title' | cxTranslate }}
+        </h2>
+        <!-- PERSONAL MESSAGE ROW -->
+        <cx-cart-gift-wrap-message
+          *ngIf="componentData.cart.eligibleForGiftMessage"
+          class="cart-gift-wrap__row row-underline position-relative d-flex flex-column flex-lg-row justify-content-center justify-content-lg-left py-3 pr-lg-3"
+          [cart]="activeCart$"
+          (personalMessageEmit)="triggerCartReload()"
+        ></cx-cart-gift-wrap-message>
+        <!-- GIFT WRAP ROW -->
+        <cx-cart-gift-wrap-service
+          *ngIf="componentData.cart.eligibleForGiftWrap"
+          class="cart-gift-wrap__row position-relative d-flex flex-column flex-lg-row flex-wrap justify-content-center justify-content-lg-left py-3 pr-lg-3"
+          [cmsData]="componentData.cmsData"
+          [cart]="componentData.cart"
+          (giftWrapAppliedEmit)="setSessionGiftWrapApplied()"
+          (giftWrapRemovedEmit)="unSetSessionGiftWrapApplied()"
+        ></cx-cart-gift-wrap-service>
+      </div>
+    </div>
+  </div>
+</ng-container>

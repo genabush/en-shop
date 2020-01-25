@@ -1,0 +1,168 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+
+# Languages
+INSERT_UPDATE Language;isocode[unique=true];fallbackLanguages(isocode);active[default=true]
+;en;;;
+;de;en;;
+;fr;en;;
+;en_AU;en;;
+;en_GB;en;;
+;en_CA;en;;
+;fr_CA;en;;
+;da;en;;
+;es;en;;
+;nl;en
+;sv;en;
+;en_US;en;
+;de_AT;en;
+;en_HK;en
+;en_SG;en
+
+# Currencies
+INSERT_UPDATE Currency;isocode[unique=true];conversion;digits;symbol
+;GBP;1;2;£
+;EUR;1;2;€
+;USD;1.40;2;$
+;AUD;1;2;$
+;CAD;1;2;$
+;SEK;1;2;kr
+;DKK;1;2;kr.
+;HKD;1;2;$
+;SGD;1;2;$
+
+# Vendor
+INSERT_UPDATE Vendor;code[unique=true];name
+;default;Default Vendor
+
+# Disable preview for email pages
+UPDATE CMSPageType;code[unique=true];previewDisabled
+;EmailPage;true
+
+# Titles
+INSERT_UPDATE Title;code[unique=true]
+;mr
+;mrs
+;miss
+;ms
+;dr
+;rev
+
+# Media Folders
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
+;images;images
+;email-body;email-body
+;email-attachments;email-attachments
+
+# Media formats
+INSERT_UPDATE MediaFormat;qualifier[unique=true];amplienceTemplate
+;1200Wx1200H;"w=1200&h=1200"
+;515Wx515H;"w=515&h=515"
+;365Wx246H;"w=365&h=246"
+;300Wx300H;"w=300&h=300"
+;150Wx150H;"w=150&h=150"
+;96Wx96H;"w=96&h=96"
+;65Wx65H;"w=65&h=65"
+;30Wx30H;"w=30&h=30"
+;mobile
+;tablet
+;desktop
+;widescreen
+
+# Tax & Tax Groups
+INSERT_UPDATE UserTaxGroup;code[unique=true]
+;de-taxes
+;uk-taxes
+;fr-taxes
+;au-taxes
+;dk-taxes;
+;es-taxes;
+;nl-taxes;
+;se-taxes;
+;at-taxes;
+;hk-taxes;
+;sg-taxes;
+
+INSERT_UPDATE ProductTaxGroup;code[unique=true]
+;uk-vat-full;
+;uk-vat-half;
+;de-vat-full;
+;de-vat-half;
+;au-vat-half;
+;au-vat-full;
+;dk-vat-zero;
+;dk-vat-standard;
+;es-vat-reduced;
+;es-vat-standard;
+;es-vat-medium;
+;fr-vat-reduced;
+;fr-vat-standard;
+;fr-vat-medium;
+;nl-vat-zero;
+;nl-vat-standard;
+;nl-vat-medium;
+;se-vat-reduced;
+;se-vat-standard;
+;se-vat-medium;
+;at-vat-full;
+;at-vat-half;
+;hk-sales-tax;
+;sg-sales-tax;
+
+INSERT_UPDATE Tax;code[unique=true];value;currency(isocode)
+;uk-vat-full;20;
+;uk-vat-half;10;
+;de-vat-full;19;
+;de-vat-half;7;
+;au-vat-half;5.5;
+;au-vat-full;10;
+;dk-vat-zero;0;
+;dk-vat-standard;25;
+;es-vat-reduced;4;
+;es-vat-standard;21;
+;es-vat-medium;10;
+;fr-vat-reduced;5.5;
+;fr-vat-standard;20;
+;fr-vat-medium;10;
+;nl-vat-zero;0;
+;nl-vat-standard;21;
+;nl-vat-medium;9;
+;se-vat-reduced;6;
+;se-vat-standard;25;
+;se-vat-medium;12;
+;at-vat-full;20;
+;at-vat-half;10;
+;hk-sales-tax;20; 
+;sg-sales-tax;20;
+
+INSERT_UPDATE ServicelayerJob;code[unique=true];springId[unique=true]
+;cartRemovalJob;cartRemovalJob
+;siteMapMediaJob;siteMapMediaJob
+
+# Deactivate Frontend Restriction on category by default for performance purposes
+UPDATE SearchRestriction;code[unique=true];active[default=false]
+;Frontend_RestrictedCategory
+
+INSERT_UPDATE SearchRestriction; code[unique = true]    ; name[lang = en]                    	 ; query                                                                                                                                               ; principal(UID)    ; restrictedType(code); active; generate
+                               ; Frontend_POS  			; Frontend Point Of Service Restriction  ; {type} IN ({{ SELECT {pk} FROM {PointOfServiceTypeEnum} WHERE {code} != 'STORE'}}) OR {permanentlyClosed} != 1 OR {permanentlyClosed} is null }})   ; customergroup	   ; PointOfService   	 ; true  ; true
+
+
+INSERT_UPDATE Unit;code[unique=true];unitType;conversion[default=1.0]
+;each;quantity;
+;pieces;quantity;
+;MG;weight;
+;G;weight;
+;KG;weight;
+;TON;weight;
+;TO;weight;
+;LT;weight;
+;ML;volume;
+;L;volume;
+;CL;volume;
+;OC;weight;
+;LB;weight;
+;PT;volume;
+;GAL;volume;
+;FOZ;volume;
+

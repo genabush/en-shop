@@ -1,0 +1,170 @@
+$contentCatalog=tbsHKContentCatalog
+
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$picture=media(code, $contentCV);
+$wideContent=CMSImageComponent,BannerComponent,SimpleBannerComponent,CMSLinkComponent,CMSParagraphComponent
+$jarResource=jar:uk.co.thebodyshop.initialdata.setup.InitialDataSystemSetup&/theBodyShopinitialdata/import
+$siteResource=jar:uk.co.thebodyshop.initialdata.setup.InitialDataSystemSetup&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+
+# Language
+$lang=en
+
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;HKFAQLink;"FAQ";
+;;HKBodyCategoryLink;"View all Body";
+;;HKBodyTreatsCategoryLink;"Body Treats";
+;;HKBodyButtersCategoryLink;"Body Butters";
+;;HKBodyYogurtsCategoryLink;"Body Yogurts";
+;;HKBodyMassageOilsCategoryLink;"Body Massage";
+;;HKBodyBronzingCategoryLink;"Body Bronzing";
+;;HKDeodorantCategoryLink;"Deodorant";
+;;HKFootCareCategoryLink;"Foot Care";
+;;HKTravelSizesCategoryLink;"Travel Sizes";
+;;HKFaceCategoryLink;"View all Face";
+;;HKFaceMasksCategoryLink;"Face Masks";
+;;HKMakeUpRemoversCategoryLink;"Make-up Removers";
+;;HKEyeCareCategoryLink;"Eye Care";
+;;HKNightTimeTreatmentsCategoryLink;"Night Time Treatments";
+;;HKLipBalmCategoryLink;"Lip Balm";
+;;HKMenShavingCategoryLink;"Men's Shaving";
+;;HKCleansersAndTonersCategoryLink;"Cleansers and Toners";
+;;HKMoisturisersCategoryLink;"Moisturisers";
+;;HKAccessoriesCategoryLink;"Accessories";
+;;HKFaceScrubsCategoryLink;"Face Scrubs";
+;;HKHandsCategoryLink;"View all Hands";
+;;HKHandsMoisturisersCategoryLink;"Moisturisers";
+;;HKHandWashCategoryLink;"Hand Wash";
+;;HKTargetedTreatmentCategoryLink;"Targeted Treatment";
+;;HKHairCategoryLink;"View all Hair";
+;;HKBrushesAndCombsCategoryLink;"Brushes and Combs";
+;;HKConditionerCategoryLink;"Conditioner";
+;;HKShampooCategoryLink;"Shampoo";
+;;HKTreatmentCategoryLink;"Treatment";
+;;HKStylingCategoryLink;"Styling";
+;;HKMakeUpCategoryLink;"View all Make-up";
+;;HKFoundationsConcealersCategoryLink;"Foundations Concealers";
+;;HKBrushesAndToolsCategoryLink;"Brushes and Tools";
+;;HKBBCreamsCategoryLink;"BB Cream";
+;;HKBronzingCategoryLink;"Bronzing";
+;;HKCheeksCategoryLink;"Cheeks";
+;;HKEyeLinersCategoryLink;"Eye Liners";
+;;HKEyeShadowCategoryLink;"Eye Shadow";
+;;HKLipsCategoryLink;"Lips";
+;;HKMascaraCategoryLink;"Mascara";
+;;HKPrimersCategoryLink;"Primers";
+;;HKDeliveryLink;"Delivery";
+;;HKReturnsLink;"Returns";
+;;HKTermsAndConditionsLink;"Terms and Conditions";
+;;HKPrivacyPolicyLink;"Privacy Policy";
+;;HKSitemapLink;"Sitemap";
+;;HKStoresLink;"Stores";
+;;HKLoveYourBodyClubLink;"Love your body Club";
+;;HKStudentDiscountLink;"Student Discount";
+;;HKGiftCardsLink;"Gift Cards";
+;;HKAboutUsLink;"About us";
+;;HKTheBodyShopAtHomeLink;"The Body shop at home";
+;;HKAffiliatesLink;"Affiliates";
+;;HKGenderPayGapLink;"Gender pay gap";
+;;HKModernSlaveryStatementLink;"Modern slavery statement";
+;;HKAgainstAnimalTestingLink;"Against Animal testing";
+;;HKTaxStrategyLink;"Tax strategy";
+;;HKCareersLink;"Careers";
+
+#Party
+;;HKBeYourOwnBossLink;"Be your own boss"
+;;HKHostAPartyNavNodeLink;"Host a party"
+
+#Tips & Advice
+;;HKHowToReduceBlackheadsLink;"How to reduce blackheads"
+;;HKSummerSkincareLink;"Summer skincare"
+;;HKHowToGetRidOfDarkCirclesLink;"How to get rid of dark circles"
+;;HKBestFaceMoisturisersLink;"Best Face Moisturisers"
+;;HKHowToKeepSkinLookingYouthfulLink;"How to keep skin looking youthful"
+;;HKGymSkincareTipsLink; "gym skincare tips"
+
+;;HKBenefitsOfDryBrushingLink;"Benefits of dry brushing"
+;;HKUnderstandingDrySkinLink;"Understanding dry skin"
+;;HKBestBodyExfoliatorsLink;"Best body exfoliators"
+
+;;HKHowToFindTheRightFoundationLink;"How to find the right foundation"
+;;HKHowToApplyFoundationLink;"How to apply foundation"
+;;HKHowToShapeEyebrowsLink;"How to shape eyebrows"
+;;HKHowToGetASunKissedGlowLink;"How to get a sun kissed glow"
+
+;;HKBestVeganCitiesInTheHKLink;"Best Vegan Cities in the HK"
+;;HKLongHaulFlightTipsLink;"Long haul flight tips"
+;;HKGymSkincareRoutineLink;"Gym skincare routine"
+;;HKChildhoodDreamsLink;"Childhood Dreams"
+;;HKPixieGeldof’sTravelEssentialsLink;"Pixie Geldof’s Travel Essentials"
+
+;;HKBenefitsOfCharcoalLink;"Benefits of charcoal"
+;;HKHyaluronicAcidBenefitsLink;"Hyaluronic Acid Benefits"
+;;HKDiscoverAllIngredientsLink;"Discover all ingredients"
+;;HKSourcingOurIngredientsLink;"Sourcing our ingredients"
+
+#About_US
+;;HKOurHeritageLink;"Our Heritage"
+;;HKForeverAgainstAnimalTestingLink;"Forever Against Animal Testing"
+;;HKB_CorpLink;"B Corp"
+;;HKLatestNewsLink;"Latest News"
+;;HKNatura_CoLink;"Natura &co"
+;;HKEducationalProgrammeLink;"Educational Programme"
+;;HKDonateMenstrualProductsLink;"Donate Menstrual Products"
+;;HKVegetarianBeautyLink;"Vegetarian Beauty"
+
+;;HK_Loyalty_JoinNowLink;"Join Now"
+
+;;HKOurCommitmentLink;"Our Commitment"
+;;HKCommunityTradeLink;"Community Trade"
+;;HKBio-BridgesLink;"Bio-Bridges"
+;;HKReducingEnvironmentalFootprintLink;"Reducing Environmental Footprint"
+;;HKEmpoweringWomenLink;"Empowering Women"
+;;HKModernSlaveryLink;"Modern Slavery"
+
+;;HKPlasticRecyclingInTheHKLink;"Plastic recycling in the HK"
+;;HKTerraCycleInterviewLink;"TerraCycle Interview "
+;;HKReturnRecycleRepeatNavNodeLink;"Return. Recycle. Repeat"
+;;HKCommunityTradePlasticsLink;"Community Trade Plastics"
+;;HKPackagingAtTheBodyShopLink;"Packaging at The Body Shop"
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];title
+;HKBodyCategoryNavNode;;"Body";
+;HKFaceCategoryNavNode;;"Face";
+;HKHandsCategoryNavNode;;"Hands";
+;HKHairCategoryNavNode;;"Hair"
+;HKMakeUpCategoryNavNode;;"Make-up"
+;HKFAQNavNode;;"FAQ"
+;HKUsefullInformationNavNode;;"Useful Information";
+;HKWaysToShopNavNode;;"Ways To Shop";
+;HKAboutUsNavNode;;"About Us";
+;HKBodyByProductTypeNavNode;;"By Product Type";
+;HKBodyBySkinTypeNavNode;;"By Skin Type";
+;HKFaceByProductTypeNavNode;;"By Product Type";
+;HKFaceBySkinTypeNavNode;;"By Skin Type";
+;HKHandsByProductTypeNavNode;;"By Product Type";
+;HKHandsBySkinTypeNavNode;;"By Skin Type";
+;HKHairByProductTypeNavNode;;"By Product Type";
+;HKHairByHairConcernTypeNavNode;;"By Hair Concern Type";
+;HKMakeUpByProductTypeNavNode;;"By Product Type";
+;HKMakeUpBySkinTypeNavNode;;"By Skin Type";
+
+;HKDiscoverPartyNavNode;;"Party"
+;HKDiscoverTipsAndAdviceNavNode;;"Tips & Advice"
+;HKDiscoverAboutUsNavNode;;"About Us"
+
+;HK_Discover_TheBodyShopAtHomeNavNode;;"THE BODY SHOP AT HOME"
+
+;HKSkincareArticlesNavNode;;"SKINCARE ARTICLES"
+;HKBodyCareArticlesNavNode;;"BODYCARE ARTICLES"
+;HKMake-UpAeticlesNavNode;;"MAKE-UP ARTICLES"
+;HKLifeStyleArticlesNavNode;;"LIFESTYLE ARTICLES"
+;HKIngredientBenefitsNavNode;;"INGREDIENT BENEFITS"
+
+;HKWhoWeAreNavNode;;"WHO WE ARE"
+;HKLoyaltyProgramNavNode;;"LOYALTY PROGRAM"
+;HKSustainabilityNavNode;;"SUSTAINABILITY"
+;HKPlasticsNavNode;;"PLASTICS"

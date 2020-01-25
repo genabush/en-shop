@@ -1,0 +1,81 @@
+$allSiteUids=thebodyshop-at,thebodyshop-au,thebodyshop-ca,thebodyshop-de,thebodyshop-dk,thebodyshop-es,thebodyshop-fr,thebodyshop-global,thebodyshop-hk,thebodyshop-nl,thebodyshop-se,thebodyshop-sg,thebodyshop-us,thebodyshop-uk
+$lang=en
+
+########################
+# PRODUCT NOTIFICATION #
+########################
+INSERT_UPDATE ServicelayerJob ; code[unique=true]            ; springId[unique=true]       
+                              ; productCreateNotificationJob ; productCreateNotificationJob
+
+INSERT_UPDATE ProductCreateNotificationCronjob ; code[unique=true]            ; job(code)[default=productCreateNotificationJob] ; sessionLanguage(isoCode)[default=en] ; sites(uid)  
+                                               ; productCreateNotificationJob ;                                                 ;                                      ; $allSiteUids
+
+INSERT_UPDATE Trigger ; cronjob(code)[unique=true]   ; cronExpression ; active
+                      ; productCreateNotificationJob ; 0 0 * ? * * *  ; false 
+
+############################
+# AMPLIENCE PRODUCT IMAGES #
+############################
+INSERT_UPDATE AmplienceSyncCronJob ; code[unique=true]    ; job(code)                   ; sessionLanguage(isoCode)[default=en] ; catalogVersion(catalog(id),version)
+                                   ; amplienceSyncCronJob ; amplienceSyncJobPerformable ;                                      ; tbsGlobalProductCatalog:Staged     
+
+#######################
+# SOLR UPDATE INDEXER #
+
+# Disable the auto created geoencoding job/trigger as the lat/long coordinates are imported from TBS store DB
+UPDATE Cronjob ; job(code)[unique=true] ; active ;  
+               ; geocodeAddressesJob    ; false  ;  
+
+UPDATE Trigger ; cronjob(job(code)[])[unique=true]  ; active ;  
+               ; geocodeAddressesJob ; false  ;  
+
+
+#######################
+INSERT_UPDATE CompositeEntry ; code[unique=true]                        ; executableCronJob(code)[unique=true]
+                             ; update-tbsATStoreIndex-cronJob-entry     ; update-tbsATStoreIndex-cronJob      
+                             ; update-tbsAUStoreIndex-cronJob-entry     ; update-tbsAUStoreIndex-cronJob      
+                             ; update-tbsCAStoreIndex-cronJob-entry     ; update-tbsCAStoreIndex-cronJob      
+                             ; update-tbsDEStoreIndex-cronJob-entry     ; update-tbsDEStoreIndex-cronJob      
+                             ; update-tbsDKStoreIndex-cronJob-entry     ; update-tbsDKStoreIndex-cronJob      
+                             ; update-tbsESStoreIndex-cronJob-entry     ; update-tbsESStoreIndex-cronJob      
+                             ; update-tbsFRStoreIndex-cronJob-entry     ; update-tbsFRStoreIndex-cronJob      
+                             ; update-tbsGlobalStoreIndex-cronJob-entry ; update-tbsGlobalStoreIndex-cronJob  
+                             ; update-tbsHKStoreIndex-cronJob-entry     ; update-tbsHKStoreIndex-cronJob      
+                             ; update-tbsNLStoreIndex-cronJob-entry     ; update-tbsNLStoreIndex-cronJob      
+                             ; update-tbsSEStoreIndex-cronJob-entry     ; update-tbsSEStoreIndex-cronJob      
+                             ; update-tbsSGStoreIndex-cronJob-entry     ; update-tbsSGStoreIndex-cronJob      
+                             ; update-tbsUKStoreIndex-cronJob-entry     ; update-tbsUKStoreIndex-cronJob      
+                             ; update-tbsUSStoreIndex-cronJob-entry     ; update-tbsUSStoreIndex-cronJob      
+
+INSERT_UPDATE CompositeCronJob ; code[unique=true]             ; job(code)[unique=true]  ; sessionLanguage(isocode)[unique=true] ; compositeEntries(code)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                               ; update-all-solr-index-cronjob ; compositeJobPerformable ; en                                    ; update-tbsATStoreIndex-cronJob-entry,update-tbsAUStoreIndex-cronJob-entry,update-tbsCAStoreIndex-cronJob-entry,update-tbsDEStoreIndex-cronJob-entry,update-tbsDKStoreIndex-cronJob-entry,update-tbsESStoreIndex-cronJob-entry,update-tbsFRStoreIndex-cronJob-entry,update-tbsGlobalStoreIndex-cronJob-entry,update-tbsHKStoreIndex-cronJob-entry,update-tbsNLStoreIndex-cronJob-entry,update-tbsSEStoreIndex-cronJob-entry,update-tbsSGStoreIndex-cronJob-entry,update-tbsUKStoreIndex-cronJob-entry,update-tbsUSStoreIndex-cronJob-entry
+
+INSERT_UPDATE Trigger ; cronJob(code)[unique=true]    ; second ; minute ; hour ; day ; month ; year ; relative ; active ; maxAcceptableDelay
+                      ; update-all-solr-index-cronjob ; 0      ; 5      ; -1   ; -1  ; -1    ; -1   ; true     ; true   ; -1
+
+
+
+#######################
+# SOLR DELETE INDEXER #
+#######################
+INSERT_UPDATE CompositeEntry ; code[unique=true]                        ; executableCronJob(code)[unique=true]
+                             ; delete-tbsATStoreIndex-cronJob-entry     ; delete-tbsATStoreIndex-cronJob
+                             ; delete-tbsAUStoreIndex-cronJob-entry     ; delete-tbsAUStoreIndex-cronJob
+                             ; delete-tbsCAStoreIndex-cronJob-entry     ; delete-tbsCAStoreIndex-cronJob
+                             ; delete-tbsDEStoreIndex-cronJob-entry     ; delete-tbsDEStoreIndex-cronJob
+                             ; delete-tbsDKStoreIndex-cronJob-entry     ; delete-tbsDKStoreIndex-cronJob
+                             ; delete-tbsESStoreIndex-cronJob-entry     ; delete-tbsESStoreIndex-cronJob
+                             ; delete-tbsFRStoreIndex-cronJob-entry     ; delete-tbsFRStoreIndex-cronJob
+                             ; delete-tbsGlobalStoreIndex-cronJob-entry ; delete-tbsGlobalStoreIndex-cronJob
+                             ; delete-tbsHKStoreIndex-cronJob-entry     ; delete-tbsHKStoreIndex-cronJob
+                             ; delete-tbsNLStoreIndex-cronJob-entry     ; delete-tbsNLStoreIndex-cronJob
+                             ; delete-tbsSEStoreIndex-cronJob-entry     ; delete-tbsSEStoreIndex-cronJob
+                             ; delete-tbsSGStoreIndex-cronJob-entry     ; delete-tbsSGStoreIndex-cronJob
+                             ; delete-tbsUKStoreIndex-cronJob-entry     ; delete-tbsUKStoreIndex-cronJob
+                             ; delete-tbsUSStoreIndex-cronJob-entry     ; delete-tbsUSStoreIndex-cronJob
+
+INSERT_UPDATE CompositeCronJob ; code[unique=true]             ; job(code)[unique=true]  ; sessionLanguage(isocode)[unique=true] ; compositeEntries(code)
+                               ; delete-all-solr-index-cronjob ; compositeJobPerformable ; en                                    ; delete-tbsATStoreIndex-cronJob-entry,delete-tbsAUStoreIndex-cronJob-entry,delete-tbsCAStoreIndex-cronJob-entry,delete-tbsDEStoreIndex-cronJob-entry,delete-tbsDKStoreIndex-cronJob-entry,delete-tbsESStoreIndex-cronJob-entry,delete-tbsFRStoreIndex-cronJob-entry,delete-tbsGlobalStoreIndex-cronJob-entry,delete-tbsHKStoreIndex-cronJob-entry,delete-tbsNLStoreIndex-cronJob-entry,delete-tbsSEStoreIndex-cronJob-entry,delete-tbsSGStoreIndex-cronJob-entry,delete-tbsUKStoreIndex-cronJob-entry,delete-tbsUSStoreIndex-cronJob-entry
+
+INSERT_UPDATE Trigger ; cronJob(code)[unique=true]    ; second ; minute ; hour ; day ; month ; year ; relative ; active ; maxAcceptableDelay
+                      ; delete-all-solr-index-cronjob ; 0      ; 5      ; -1   ; -1  ; -1    ; -1   ; true     ; false   ; -1

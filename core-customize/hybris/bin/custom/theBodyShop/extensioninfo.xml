@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. --><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+                              
+    
+    
+    
+    
+    
+    
+    <extension abstractclassprefix="Generated" classprefix="Ycommercewebservices" jaloLogicFree="true" name="theBodyShop" usemaven="false">
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="gigyaoccaddon"/>
+        <requires-extension name="cmsoccaddon"/>
+                
+        <requires-extension name="acceleratorwebservicesaddon"/>
+                        
+                
+                
+                
+                
+            
+
+    
+        
+        
+        
+        
+        
+        
+        <requires-extension name="commercefacades"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="couponfacades"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="commercewebservicescommons"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="theBodyShopcore"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="theBodyShoppayment"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="theBodyShopintegrationsvs"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="theBodyShopintegrationcollectionpoints"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="theBodyShopintegrationpaypal"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <requires-extension name="theBodyShopintegrationadyen"/>
+                                                            
+        
+        
+        
+        
+        <requires-extension name="theBodyShoployalty"/>
+                                
+        
+        
+        
+        <coremodule generated="true" manager="de.hybris.platform.jalo.extension.GenericManager" packageroot="uk.co.thebodyshop.core"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <webmodule jspcompile="false" webroot="/rest"/>
+                                                            
+        
+        
+        
+        
+        
+        
+        <meta key="extgen-template-extension" value="true"/>
+                                                          
+    
+    
+    
+    
+    
+    
+    </extension>
+                            
+
+
+
+
+
+
+</extensioninfo>

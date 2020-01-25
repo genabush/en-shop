@@ -1,0 +1,45 @@
+<div class="collection-point-info">
+  <div class="collection-point-info__left-col">
+    <img
+      *ngIf="storeInfo?.serviceType"
+      src="/assets/images/collection-point-logos/{{ storeInfo.serviceType | lowercase }}.svg"
+      alt="{{ storeInfo.address.companyName }}"
+      class="collection-point-info__logo"
+    />
+    <img
+      *ngIf="!storeInfo?.serviceType"
+      src="/assets/images/collection-point-logos/tbs.svg"
+      alt="{{ storeInfo?.displayName }}"
+      class="collection-point__logo"
+    />
+    <div class="collection-point-info__distance">
+      <div *ngIf="storeInfo?.distance" class="collection-point-info__distance-value">{{ storeInfo.distance }}</div>
+      <div *ngIf="storeInfo?.distanceUnit" class="collection-point-info__distance-units">
+        {{ storeInfo.distanceUnit }}
+      </div>
+    </div>
+  </div>
+  <div class="collection-point-info__right-col">
+    <div *ngIf="storeInfo?.address" class="collection-point-info__address">
+      <h3 class="collection-point-info__name">{{ storeInfo.address.companyName }}</h3>
+      <div class="collection-point-info__address">
+        {{ storeInfo.address.line1 }} {{ storeInfo.address.line2 }} {{ storeInfo.address.town }}
+        {{ storeInfo.address.postalCode }}
+      </div>
+    </div>
+    <div class="collection-point-info__opening-hrs opening-hrs">
+      <h4 class="opening-hrs__title">{{ 'collectionPoint.openingHrs.title' | cxTranslate }}</h4>
+      <ul *ngIf="storeInfo.openingHours.weekDayOpeningList" class="opening-hrs__list list-unstyled">
+        <li *ngFor="let weekday of storeInfo.openingHours.weekDayOpeningList" class="opening-hrs__item">
+          <span class="opening-hrs__day">{{ weekday.weekDay }}:</span>
+          <span class="opening-hrs__times" *ngIf="!weekday.closed"
+            >{{ weekday.openingTime.formattedHour }} - {{ weekday.closingTime.formattedHour }}</span
+          >
+          <span class="opening-hrs__times" *ngIf="weekday.closed">{{
+            'collectionPoint.openingHrs.closed' | cxTranslate
+          }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

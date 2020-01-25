@@ -1,0 +1,8 @@
+.modal {
+  &-backdrop {
+    &-transparent {
+      background-color: transparent !important;
+      pointer-events: none;
+    }
+  }
+}

@@ -1,0 +1,517 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsSEContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:se.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsSEProductCatalog
+$productCatalogName=Sweden Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-se;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;seroot;;seroot;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;SEStoreFinderLink;SE Store Finder Link;/store-finder;SEStoreFinderLink;SEStoreFinderLink;;;;
+;;SELoginLink;SE Login Link;/login;SELoginLink;SELoginLink;;;;
+;;SEBodyCategoryLink;SE Body Category Link;/Body/c/c00001;SEBodyCategoryLink;SEBodyCategoryLink;;c00001;;
+;;SEBodyTreatsCategoryLink;SE Body Treats Category Link;/Body/Bath-Treats/c/c00013;SEBodyTreatsCategoryLink;SEBodyTreatsCategoryLink;;c00013;;
+;;SEBodyButtersCategoryLink;SE Body Butters Category Link;/Body/Body-Butters/c/c00014;SEBodyButtersCategoryLink;SEBodyButtersCategoryLink;;c00014;;
+;;SEBodyYogurtsCategoryLink;SE Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;SEBodyYogurtsCategoryLink;SEBodyYogurtsCategoryLink;;c00284;;
+;;SEBodyMassageOilsCategoryLink;SE Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;SEBodyMassageOilsCategoryLink;SEBodyMassageOilsCategoryLink;;c00024;;
+;;SEBodyBronzingCategoryLink;SE Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;SEBodyBronzingCategoryLink;SEBodyBronzingCategoryLink;;c00018;;
+;;SEDeodorantCategoryLink;SE Deodorant Category Link;/Body/Deodorant/c/c00019;SEDeodorantCategoryLink;SEDeodorantCategoryLink;;c00019;;
+;;SEFootCareCategoryLink;SE Foot Care Category Link;/Body/Foot-Care/c/c00020;SEFootCareCategoryLink;SEFootCareCategoryLink;;c00020;;
+;;SETravelSizesCategoryLink;SE Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;SETravelSizesCategoryLink;SETravelSizesCategoryLink;;c00021;;
+;;SEFaceCategoryLink;SE Face Category Link;/Face/c/c00010;SEFaceCategoryLink;SEFaceCategoryLink;;c00010;;
+;;SEFaceMasksCategoryLink;SE Face Masks Category Link;/Face/Face-Masks/c/c00143;SEFaceMasksCategoryLink;SEFaceMasksCategoryLink;;c00143;;
+;;SEMakeUpRemoversCategoryLink;SE Make-up Removers Link;/Face/Make-up-Removers/c/c00145;SEMakeUpRemoversCategoryLink;SEMakeUpRemoversCategoryLink;;c00145;;
+;;SEEyeCareCategoryLink;SE Eye Care CategoryLink;/Face/Eye-Care/c/c00144;SEEyeCareCategoryLink;SEEyeCareCategoryLink;;c00144;;
+;;SENightTimeTreatmentsCategoryLink;SE Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;SENightTimeTreatmentsCategoryLink;SENightTimeTreatmentsCategoryLink;;c00149;;
+;;SELipBalmCategoryLink;SE Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;SELipBalmCategoryLink;SELipBalmCategoryLink;;c00146;;
+;;SEMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;SEMenShavingCategoryLink;SEMenShavingCategoryLink;;c00147;;
+;;SECleansersAndTonersCategoryLink;SE Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;SECleansersAndTonersCategoryLink;SECleansersAndTonersCategoryLink;;c00141;;
+;;SEMoisturisersCategoryLink;SE Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;SEMoisturisersCategoryLink;SEMoisturisersCategoryLink;;c00148;;
+;;SEAccessoriesCategoryLink;SE Accessories CategoryLink;/Face/Accessories/c/c00140;SEAccessoriesCategoryLink;SEAccessoriesCategoryLink;;c00140;;
+;;SEFaceScrubsCategoryLink;SE Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;SEFaceScrubsCategoryLink;SEFaceScrubsCategoryLink;;c00275;;
+;;SEHandsCategoryLink;SE Hands CategoryLink;/Hands/c/c00006;SEHandsCategoryLink;SEHandsCategoryLink;;c00006;;
+;;SEHandsMoisturisersCategoryLink;SE Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;SEHandsMoisturisersCategoryLink;SEHandsMoisturisersCategoryLink;;c00054;;
+;;SEHandWashCategoryLink;SE Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;SEHandWashCategoryLink;SEHandWashCategoryLink;;c00056;;
+;;SETargetedTreatmentCategoryLink;SE Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;SETargetedTreatmentCategoryLink;SETargetedTreatmentCategoryLink;;c00055;;
+;;SEHairCategoryLink;SE Hair Category Link;/Hair/c/c00005;SEHairCategoryLink;SEHairCategoryLink;;c00005;;
+;;SEBrushesAndCombsCategoryLink;SE Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;SEBrushesAndCombsCategoryLink;SEBrushesAndCombsCategoryLink;;c00047;;
+;;SEConditionerCategoryLink;SE Conditioner Category Link;/Hair/Conditioner/c/c00048;SEConditionerCategoryLink;SEConditionerCategoryLink;;c00048;;
+;;SEShampooCategoryLink;SE Shampoo Category Link;/Hair/Shampoo/c/c00051;SEShampooCategoryLink;SEShampooCategoryLink;;c00051;;
+;;SETreatmentCategoryLink;SE Treatment Category Link;/Hair/Treatment/c/c00050;SETreatmentCategoryLink;SETreatmentCategoryLink;;c00050;;
+;;SEStylingCategoryLink;SE Styling Category Link;/Hair/Styling/c/c00049;SEStylingCategoryLink;SEStylingCategoryLink;;c00049;;
+;;SEMakeUpCategoryLink;SE Make-up Category Link;/Make-up/c/c00007;SEMakeUpCategoryLink;SEMakeUpCategoryLink;;c00007;;
+;;SEFoundationsConcealersCategoryLink;SE Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;SEFoundationsConcealersCategoryLink;SEFoundationsConcealersCategoryLink;;c00065;;
+;;SEBrushesAndToolsCategoryLink;SE Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;SEBrushesAndToolsCategoryLink;SEBrushesAndToolsCategoryLink;;c00059;;
+;;SEBBCreamsCategoryLink;SE BB Creams Category Link;/Make-up/BB-Creams/c/c00060;SEBBCreamsCategoryLink;SEBBCreamsCategoryLink;;c00060;;
+;;SEBronzingCategoryLink;SE Bronzing Category Link;/Make-up/Bronzing/c/c00061;SEBronzingCategoryLink;SE BronzingCategoryLink;;c00061;;
+;;SECheeksCategoryLink;SE Cheeks Category Link;/Make-up/Cheeks/c/c00062;SECheeksCategoryLink;SECheeksCategoryLink;;c00062;;SE
+;;SEEyeLinersCategoryLink;SE Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;SEEyeLinersCategoryLink;SEEyeLinersCategoryLink;;c00064;;
+;;SEEyeShadowCategoryLink;SE Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;SEEyeShadowCategoryLink;SEEyeShadowCategoryLink;;c00063;;
+;;SELipsCategoryLink;SE Lips Category Link;/Make-up/Lips/c/c00066;SELipsCategoryLink;SELipsCategoryLink;;c00066;;
+;;SEMascaraCategoryLink;SE Mascara Category Link;/Make-up/Mascara/c/c00067;SEMascaraCategoryLink;SEMascaraCategoryLink;;c00067;;
+;;SEPrimersCategoryLink;SE Primers Category Link;/Make-up/Primers/c/c00069;SEPrimersCategoryLink;SEPrimersCategoryLink;;c00069;;
+;;SEDeliveryLink;SE Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";SEDeliveryLink;SEDeliveryLink;newWindow;;;
+;;SEReturnsLink;SE Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";SEReturnsLink;SEReturnsLink;newWindow;;;
+;;SEFAQLink;SE FAQ Link;/faq;SEFAQLink;SEFAQLink;;;;
+;;SETermsAndConditionsLink;SE TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";SETermsAndConditionsLink;SETermsAndConditionsLink;newWindow;
+;;SEPrivacyPolicyLink;SE PrivacyPolicy Link;/privacy-policy;SEPrivacyPolicyLink;SEPrivacyPolicyLink;newWindow;
+;;SESitemapLink;SE Sitemap Link;/sitemap;SESitemapLink;SESitemapLink;newWindow;
+;;SEStoresLink;SE Stores Link;"https://www.thebodyshop.com/store-finder";SEStoresLink;SEStoresLink;newWindow;
+;;SELoveYourBodyClubLink;SE Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";SELoveYourBodyClubLink;SELoveYourBodyClubLink;newWindow;
+;;SEStudentDiscountLink;SE Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";SEStudentDiscountLink;SEStudentDiscountLink;newWindow;
+;;SEGiftCardsLink;SE Gift Cards Link;/gift-card-balance;SEGiftCardsLink;SEGiftCardsLink;newWindow;
+;;SEAboutUsLink;SE About us Link;"https://www.thebodyshop.com/about-us";SEAboutUsLink;SEAboutUsLink;newWindow;
+;;SETheBodyShopAtHomeLink;SE The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";SETheBodyShopAtHomeLink;SETheBodyShopAtHomeLink;newWindow;
+;;SEAffiliatesLink;SE Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";SEAffiliatesLink;SEAffiliatesLink;newWindow;
+;;SEGenderPayGapLink;SE Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";SEGenderPayGapLink;SEGenderPayGapLink;newWindow;
+;;SEModernSlaveryStatementLink;SE Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";SEModernSlaveryStatementLink;SEModernSlaveryStatementLink;newWindow;
+;;SEAgainstAnimalTestingLink;SE Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";SEAgainstAnimalTestingLink;SEAgainstAnimalTestingLink;newWindow;
+;;SETaxStrategyLink;SE Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";SETaxStrategyLink;SETaxStrategyLink;newWindow;
+;;SECareersLink;SE Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";SECareersLink;SECareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsSERootNode					 ;                         ; TBS SE Root Node                   ; seroot                        ;                                                               																										; TbsSERootNode
+                                ; TbsSENavNode                   ;                         ; TBS SE Site Nav Node               ; TbsSERootNode                 ;                                              																										; TbsSENavNode
+                                ; TbsSECategoryNavNode           ;                         ; TBS SE Category Navigation         ; TbsSENavNode                  ;                                                               																										; TbsSECategoryNavNode
+                                ; TbsSEDiscoverNavNode           ;                         ; TBS SE Discover Navigation         ; TbsSENavNode                  ;                                                               																										; TbsUKDiscoverNavNode
+                                ; TbsSEFooterNavNode             ;                         ; TBS SE Footer Navigation           ; TbsSENavNode                  ;                                                               																										; TbsSEFooterNavNode
+                                ; SEUsefullInformationNavNode    ;                         ; SE Useful Information   			; TbsSEFooterNavNode            ; SEDeliveryLink,SEReturnsLink,SEFAQLink,SETermsAndConditionsLink,SEPrivacyPolicyLink,SESitemapLink                                										; SEUsefullInformationNavNode
+                                ; SEWaysToShopNavNode 		     ;                         ; SE Ways To Shop 					; TbsSEFooterNavNode            ; SEStoresLink,SELoveYourBodyClubLink,SEStudentDiscountLink,SEGiftCardsLink                                  															; SEWaysToShopNavNode
+                                ; SEAboutUsNavNode               ;                         ; SE About Us               			; TbsSEFooterNavNode            ; SEAboutUsLink,SETheBodyShopAtHomeLink,SEAffiliatesLink,SEGenderPayGapLink,SEModernSlaveryStatementLink,SEAgainstAnimalTestingLink,SETaxStrategyLink,SECareersLink 	; SEAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsSECategoryNavNode;;Tbs SE Categories;TbsSENavNode;SEBodyCategoryNavNode,SEFaceCategoryNavNode,SEHandsCategoryNavNode,SEHairCategoryNavNode,SEMakeUpCategoryNavNode;TbsSECategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; SEBodyCategoryNavNode;;SE Body Nav Node;Body;SEBodyByProductTypeNavNode,SEBodyBySkinTypeNavNode;;SEBodyCategoryNavNode
+                               ; SEFaceCategoryNavNode;;SE Face Nav Node;Face;SEFaceByProductTypeNavNode,SEFaceBySkinTypeNavNode;;SEFaceCategoryNavNode
+                               ; SEHandsCategoryNavNode;;SE Hands Nav Node;Hands;SEHandsByProductTypeNavNode ,SEHandsBySkinTypeNavNode;;SEHandsCategoryNavNode
+                               ; SEHairCategoryNavNode;;SE Hair Nav Node;Hair;SEHairByProductTypeNavNode,SEHairByHairConcernTypeNavNode;;SEHairCategoryNavNode
+                               ; SEMakeUpCategoryNavNode;;SE MakeUp Nav Node;MakeUp;SEMakeUpByProductTypeNavNode,SEMakeUpBySkinTypeNavNode;;SEMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;SEBodyByProductTypeNavNode;;SE Body By Product Type;SEBodyTreatsCategoryNavNode,SEBodyButtersCategoryNavNode,SEBodyYogurtsCategoryNavNode,SEBodyMassageOilsCategoryNavNode,SEFootCareCategoryNavNode;;SEBodyByProductTypeNavNode ;
+                               ;SEBodyBySkinTypeNavNode;;SE Body By Skin Type;SEDeodorantCategoryNavNode,SEBodyBronzingCategoryNavNode,SETravelSizesCategoryNavNode,SEBodyAllCategoryNavNode;;SEBodyBySkinTypeNavNode;
+
+#Face_Category_NavNodes
+                               ;SEFaceByProductTypeNavNode;;SE Face By Product Type;SEFaceMasksCategoryNavNode,SEMakeUpRemoversCategoryNavNode,SEEyeCareCategoryNavNode,SENightTimeTreatmentsCategoryNavNode,SEMenShavingCategoryNavNode;;SEFaceByProductTypeNavNode ;
+                               ;SEFaceBySkinTypeNavNode;;SE Face By Skin Type;SELipBalmCategoryNavNode,SECleansersAndTonersNavNode,SEMoisturisersCategoryNavNode,SEAccessoriesCategoryNavNode,SEFaceScrubsCategoryNavNode,SEFaceAllCategoryNavNode;;SEFaceBySkinTypeNavNode;
+
+#Hands_Category_NavNodes
+                               ;SEHandsByProductTypeNavNode;;SE Hands By Product Type;SEHandsMoisturisersCategoryNavNode,SEHandWashCategoryNavNode;;SEHandsByProductTypeNavNode ;
+                               ;SEHandsBySkinTypeNavNode;;SE Hands By Skin Type;SETargetedTreatmentCategoryNavNode,SEHandsAllCategoryNavNode;;SEHandsBySkinTypeNavNode;
+
+#Hair_Category_NavNodes
+                               ;SEHairByProductTypeNavNode;;SE Hair By Product Type;SEBrushesAndCombsCategoryNavNode,SEConditionerCategoryNavNode,SEShampooCategoryNavNode;;SEHairByProductTypeNavNode ;
+                               ;SEHairByHairConcernTypeNavNode;;SE Hair By Hair Concern Type;SETreatmentCategoryNavNode,SEStylingCategoryNavNode,SEHairAllCategoryNavNode;;SEHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;SEMakeUpByProductTypeNavNode;;SE MakeUp By Product Type;SEFoundationsConcealersCategoryNavNode,SEBrushesAndToolsCategoryNavNode,SEBBCreamsCategoryNavNode,SEBronzingCategoryNavNode,SECheeksCategoryNavNode;;SEMakeUpByProductTypeNavNode;
+                               ;SEMakeUpBySkinTypeNavNode;;SE MakeUp By Skin Type;SEEyeLinersCategoryNavNode,SEEyeShadowCategoryNavNode,SELipsCategoryNavNode,SEMascaraCategoryNavNode,SEPrimersCategoryNavNode,SEMakeUpAllCategoryNavNode;;SEMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;SEBodyTreatsCategoryNavNode;;SE Body Treats;;SEBodyTreatsCategoryNavNode
+                               ;SEBodyButtersCategoryNavNode;;SE Body Butters;;SEBodyButtersCategoryNavNode
+                               ;SEBodyYogurtsCategoryNavNode;;SE Body Yogurts;;SEBodyYogurtsCategoryNavNode
+                               ;SEBodyMassageOilsCategoryNavNode;;SE Body Massage Oils;;SEBodyMassageOilsCategoryNavNode
+                               ;SEFootCareCategoryNavNode;;SE Foot Care;;SEFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;SEBodyAllCategoryNavNode;;SE Body All Categories;;SEBodyAllCategoryNavNode
+                               ;SEBodyBronzingCategoryNavNode;;SE Body Bronzing;;SEBodyBronzingCategoryNavNode
+                               ;SETravelSizesCategoryNavNode;;SE Travel Sizes;;SETravelSizesCategoryNavNode
+                               ;SEDeodorantCategoryNavNode;;SE Deodorant;;SEDeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;SEFaceMasksCategoryNavNode;;SE Face Masks;;SEFaceMasksCategoryNavNode
+                               ;SEMakeUpRemoversCategoryNavNode;;SE Make-up Removers;;SEMakeUpRemoversCategoryNavNode
+                               ;SEEyeCareCategoryNavNode;;SE Eye Care;;SEEyeCareCategoryNavNode
+                               ;SENightTimeTreatmentsCategoryNavNode;;SE Night Time Treatments;;SENightTimeTreatmentsCategoryNavNode
+                               ;SEMenShavingCategoryNavNode;;SE Men's Shaving ;;SEMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;SELipBalmCategoryNavNode;;SE Lip Balm;;SELipBalmCategoryNavNode
+                               ;SECleansersAndTonersNavNode;;SE Cleansers and Toners;;SECleansersAndTonersNavNode
+                               ;SEMoisturisersCategoryNavNode;;SE Moisturisers;;SEMoisturisersCategoryNavNode
+                               ;SEAccessoriesCategoryNavNode;;SE Accessories;;SEAccessoriesCategoryNavNode
+                               ;SEFaceScrubsCategoryNavNode;;SE Face Scrubs;;SEFaceScrubsCategoryNavNode
+                               ;SEFaceAllCategoryNavNode;;SE Face All Categories;;SEFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;SEHandsMoisturisersCategoryNavNode;;SE Hands Moisturisers;;SEHandsMoisturisersCategoryNavNode
+                               ;SEHandWashCategoryNavNode;;SE Hand Wash;;SEHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;SETargetedTreatmentCategoryNavNode;;SE Targeted Treatment;;SETargetedTreatmentCategoryNavNode
+                               ;SEHandsAllCategoryNavNode;;SE Hands All Categories;;SEHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;SEBrushesAndCombsCategoryNavNode;;SE Brushes And Combs;;SEBrushesAndCombsCategoryNavNode
+                               ;SEConditionerCategoryNavNode;;SE Conditioner;;SEConditionerCategoryNavNode
+                               ;SEShampooCategoryNavNode;;SE Shampoo;;SEShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;SETreatmentCategoryNavNode;;SE Treatment;;SETreatmentCategoryNavNode
+                               ;SEStylingCategoryNavNode;;SE Styling;;SEStylingCategoryNavNode
+                               ;SEHairAllCategoryNavNode;;SE Hair All Categories;;SEHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;SEFoundationsConcealersCategoryNavNode;;SE Foundations Concealers;;SEFoundationsConcealersCategoryNavNode
+                               ;SEBrushesAndToolsCategoryNavNode;;SE Brushes and Tools;;SEBrushesAndToolsCategoryNavNode
+                               ;SEBBCreamsCategoryNavNode;;SE BB Creams;;SEBBCreamsCategoryNavNode
+                               ;SEBronzingCategoryNavNode;;SE Bronzing;;SEBronzingCategoryNavNode
+                               ;SECheeksCategoryNavNode;;SE Cheeks;;SECheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;SEEyeLinersCategoryNavNode;;SE Eye Liners;;SEEyeLinersCategoryNavNode
+                               ;SEEyeShadowCategoryNavNode;;SE Eye Shadow;;SEEyeShadowCategoryNavNode
+                               ;SELipsCategoryNavNode;;SE Lips;;SELipsCategoryNavNode
+                               ;SEMascaraCategoryNavNode;;SE Mascara;;SEMascaraCategoryNavNode
+                               ;SEPrimersCategoryNavNode;;SE Primers;;SEPrimersCategoryNavNode
+                               ;SEMakeUpAllCategoryNavNode;;SE Make-up All Categories;;SEMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;SEBodyAllCategoryNavNodeEntry;;SEBodyAllCategoryNavNodeEntry;SEBodyAllCategoryNavNode;SEBodyCategoryLink
+;SEBodyTreatsCategoryNavNodeEntry;;SEBodyTreatsCategoryNavNodeEntry;SEBodyTreatsCategoryNavNode;SEBodyTreatsCategoryLink;SE
+;SEBodyButtersCategoryNavNodeEntry;;SEBodyButtersCategoryNavNodeEntry;SEBodyButtersCategoryNavNode;SEBodyButtersCategoryLink;SE
+;SEBodyYogurtsCategoryNavNodeEntry;;SEBodyYogurtsCategoryNavNodeEntry;SEBodyYogurtsCategoryNavNode;SEBodyYogurtsCategoryLink
+;SEBodyMassageOilsCategoryNavNodeEntry;;SEBodyMassageOilsCategoryNavNodeEntry;SEBodyMassageOilsCategoryNavNode;SEBodyMassageOilsCategoryLink
+;SEBodyBronzingCategoryNavNodeEntry;;SEBodyBronzingCategoryNavNodeEntry;SEBodyBronzingCategoryNavNode;SEBodyBronzingCategoryLink
+;SEDeodorantCategoryNavNodeEntry;;SEDeodorantCategoryNavNodeEntry;SEDeodorantCategoryNavNode;SEDeodorantCategoryLink
+;SETravelSizesCategoryNavNodeEntry;;SETravelSizesCategoryNavNodeEntry;SETravelSizesCategoryNavNode;SETravelSizesCategoryLink
+;SEFootCareCategoryNavNodeEntry;;SEFootCareCategoryNavNodeEntry;SEFootCareCategoryNavNode;SEFootCareCategoryLink
+;SEFaceAllCategoryNavNodeEntry;;SEFaceAllCategoryNavNodeEntry;SEFaceAllCategoryNavNode;SEFaceCategoryLink;SE
+;SEFaceMasksCategoryNavNodeEntry;;SEFaceMasksCategoryNavNodeEntry;SEFaceMasksCategoryNavNode;SEFaceMasksCategoryLink;SE
+;SEMakeUpRemoversCategoryNavNodeEntry;;SEMakeUpRemoversCategoryNavNodeEntry;SEMakeUpRemoversCategoryNavNode;SEMakeUpRemoversCategoryLink;SE
+;SEEyeCareCategoryNavNodeEntry;;SEEyeCareCategoryNavNodeEntry;SEEyeCareCategoryNavNode;SEEyeCareCategoryLink
+;SENightTimeTreatmentsCategoryNavNodeEntry;;SENightTimeTreatmentsCategoryNavNodeEntry;SENightTimeTreatmentsCategoryNavNode;SENightTimeTreatmentsCategoryLink
+;SEMenShavingCategoryNavNodeEntry;;SEMenShavingCategoryNavNodeEntry;SEMenShavingCategoryNavNode;SEMenShavingCategoryLink
+;SELipBalmCategoryNavNodeEntry;;SELipBalmCategoryNavNodeEntry;SELipBalmCategoryNavNode;SELipBalmCategoryLink
+;SECleansersAndTonersNavNodeEntry;;SECleansersAndTonersNavNodeEntry;SECleansersAndTonersNavNode;SECleansersAndTonersCategoryLink
+;SEMoisturisersCategoryNavNodeEntry;;SEMoisturisersCategoryNavNodeEntry;SEMoisturisersCategoryNavNode;SEMoisturisersCategoryLink
+;SEAccessoriesCategoryNavNodeEntry;;SEAccessoriesCategoryNavNodeEntry;SEAccessoriesCategoryNavNode;SEAccessoriesCategoryLink
+;SEFaceScrubsCategoryNavNodeEntry;;SEFaceScrubsCategoryNavNodeEntry;SEFaceScrubsCategoryNavNode;SEFaceScrubsCategoryLink
+;SEHandsAllCategoryNavNodeEntry;;SEHandsAllCategoryNavNodeEntry;SEHandsAllCategoryNavNode;SEHandsCategoryLink
+;SEHandsMoisturisersCategoryNavNodeEntry;;SEHandsMoisturisersCategoryNavNodeEntry;SEHandsMoisturisersCategoryNavNode;SEHandsMoisturisersCategoryLink
+;SEHandWashCategoryNavNodeEntry;;SEHandWashCategoryNavNodeEntry;SEHandWashCategoryNavNode;SEHandWashCategoryLink
+;SETargetedTreatmentCategoryNavNodeEntry;;SETargetedTreatmentCategoryNavNodeEntry;SETargetedTreatmentCategoryNavNode;SETargetedTreatmentCategoryLink
+;SEHairAllCategoryNavNodeEntry;;SEHairAllCategoryNavNodeEntry;SEHairAllCategoryNavNode;SEHairCategoryLink
+;SEBrushesAndCombsCategoryNavNodeEntry;;SEBrushesAndCombsCategoryNavNodeEntry;SEBrushesAndCombsCategoryNavNode;SEBrushesAndCombsCategoryLink
+;SEConditionerCategoryNavNodeEntry;;SEConditionerCategoryNavNodeEntry;SEConditionerCategoryNavNode;SEConditionerCategoryLink
+;SEShampooCategoryNavNodeEntry;;SEShampooCategoryNavNodeEntry;SEShampooCategoryNavNode;SEShampooCategoryLink
+;SETreatmentCategoryNavNodeEntry;;SETreatmentCategoryNavNodeEntry;SETreatmentCategoryNavNode;SETreatmentCategoryLink
+;SEStylingCategoryNavNodeEntry;;SEStylingCategoryNavNodeEntry;SEStylingCategoryNavNode;SEStylingCategoryLink
+;SEMakeUpAllCategoryNavNodeEntry;;SEMakeUpAllCategoryNavNodeEntry;SEMakeUpAllCategoryNavNode;SEMakeUpCategoryLink
+;SEFoundationsConcealersCategoryNavNodeEntry;;SEFoundationsConcealersCategoryNavNodeEntry;SEFoundationsConcealersCategoryNavNode;SEFoundationsConcealersCategoryLink
+;SEBrushesAndToolsCategoryNavNodeEntry;;SEBrushesAndToolsCategoryNavNodeEntry;SEBrushesAndToolsCategoryNavNode;SEBrushesAndToolsCategoryLink
+;SEBBCreamsCategoryNavNodeEntry;;SEBBCreamsCategoryNavNodeEntry;SEBBCreamsCategoryNavNode;SEBBCreamsCategoryLink
+;SEBronzingCategoryNavNodeEntry;;SEBronzingCategoryNavNodeEntry;SEBronzingCategoryNavNode;SEBronzingCategoryLink
+;SECheeksCategoryNavNodeEntry;;SECheeksCategoryNavNodeEntry;SECheeksCategoryNavNode;SECheeksCategoryLink
+;SEEyeLinersCategoryNavNodeEntry;;SEEyeLinersCategoryNavNodeEntry;SEEyeLinersCategoryNavNode;SEEyeLinersCategoryLink
+;SEEyeShadowCategoryNavNodeEntry;;SEEyeShadowCategoryNavNodeEntry;SEEyeShadowCategoryNavNode;SEEyeShadowCategoryLink
+;SELipsCategoryNavNodeEntry;;SELipsCategoryNavNodeEntry;SELipsCategoryNavNode;SELipsCategoryLink
+;SEMascaraCategoryNavNodeEntry;;SEMascaraCategoryNavNodeEntry;SEMascaraCategoryNavNode;SEMascaraCategoryLink
+;SEPrimersCategoryNavNodeEntry;;SEPrimersCategoryNavNodeEntry;SEPrimersCategoryNavNode;SEPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsSEDiscoverNavNode;;Tbs SE Discover;TbsSENavNode;SEDiscoverPartyNavNode,SEDiscoverTipsAndAdviceNavNode,SEDiscoverAboutUsNavNode;TbsSEDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; SEDiscoverPartyNavNode;;SE Party Nav Node;Party;SE_Discover_TheBodyShopAtHomeNavNode;;SEDiscoverPartyNavNode
+                               ; SEDiscoverTipsAndAdviceNavNode;;SE Tips & Advice Nav Node;Tips & Advice;SESkincareArticlesNavNode,SEBodyCareArticlesNavNode,SEMake-UpAeticlesNavNode,SELifeStyleArticlesNavNode,SEIngredientBenefitsNavNode;;SEDiscoverTipsAndAdviceNavNode
+                               ; SEDiscoverAboutUsNavNode;;SE About us Nav Node;About Us;SEWhoWeAreNavNode,SELoyaltyProgramNavNode,SESustainabilityNavNode,SEPlasticsNavNode;;SEDiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#SE_Discover_Party_NavNodes
+                               ;SE_Discover_TheBodyShopAtHomeNavNode;;SE BodyShop AtHome;SEBeYourOwnBossNavNode,SEHostAPartyNavNode;;SE_Discover_TheBodyShopAtHomeNavNode ;
+
+#SE_Discover_Tips_And_Advice_NavNode
+
+                               ;SESkincareArticlesNavNode;;SE Skin Care Articles;SEHowToReduceBlackheadsNavNode,SESummerSkincareNavNode,SEHowToGetRidOfDarkCirclesNavNode,SEBestFaceMoisturisersNavNode,SEHowToKeepSkinLookingYouthfulNavNode,SEGymSkincareTipsNavNode;;SESkincareArticlesNavNode ;
+                               ;SEBodyCareArticlesNavNode;;SE Body Care Articles;SEBenefitsOfDryBrushingNavNode,SEUnderstandingDrySkinNavNode,SEBestBodyExfoliatorsNavNode;;SEBodyCareArticlesNavNode ;
+                               ;SEMake-UpAeticlesNavNode;;SE Make-Up Articles;SEHowToFindTheRightFoundationNavNode,SEHowToApplyFoundationNavNode,SEHowToShapeEyebrowsNavNode,SEHowToGetASunKissedGlowNavNode;;SEMake-UpAeticlesNavNode ;
+                               ;SELifeStyleArticlesNavNode;;SE LifeStyle Articles;SEBestVeganCitiesInTheSENavNode,SELongHaulFlightTipsNavNode,SEGymSkincareRoutineNavNode,SEChildhoodDreamsNavNode,SEPixieGeldof’sTravelEssentialsNavNode;;SELifeStyleArticlesNavNode ;
+                               ;SEIngredientBenefitsNavNode;;SE Ingedients Benefits;SEBenefitsOfCharcoalNavNode,SEHyaluronicAcidBenefitsNavNode,SEDiscoverAllIngredientsNavNode,SESourcingOurIngredientsNavNode;;SEIngredientBenefitsNavNode ;
+
+#SE_Discover_AboutUs_NavNode
+
+                               ;SEWhoWeAreNavNode;;SE Who We Are;SEOurHeritageNavNode,SEForeverAgainstAnimalTestingNavNode,SELatestNewsNavNode,SENatura_CoNavNode,SEB_CorpNavNode,SEEducationalProgrammeNavNode,SEDonateMenstrualProductsNavNode,SEVegetarianBeautyNavNode;;SEWhoWeAreNavNode ;
+                               ;SELoyaltyProgramNavNode;;SE Loyalty Program;SE_Loyalty_JoinNowNavNode;;SELoyaltyProgramNavNode;
+                               ;SESustainabilityNavNode;;SE Sustainability;SEOurCommitmentNavNode,SECommunityTradeNavNode,SEBio-BridgesNavNode,SEReducingEnvironmentalFootprintNavNode,SEEmpoweringWomenNavNode,SEModernSlaveryNavNode;;SESustainabilityNavNode;
+                               ;SEPlasticsNavNode;;SE Plastics;SEPlasticRecyclingInTheSENavNode,SETerraCycleInterviewNavNode,SEReturnRecycleRepeatNavNode,SECommunityTradePlasticsNavNode,SEPackagingAtTheBodyShopNavNode;;SEPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;SEBeYourOwnBossNavNode;;SE Be your own boss;;SEBeYourOwnBossNavNode
+                               ;SEHostAPartyNavNode;;SE Host a party;;SEHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;SEHowToReduceBlackheadsNavNode;;SE How to reduce Blackheads;;SEHowToReduceBlackheadsNavNode
+                               ;SESummerSkincareNavNode;;SE Summer Skincare;;SESummerSkincareNavNode
+                               ;SEHowToGetRidOfDarkCirclesNavNode;;SE How To Get Rid Of Dark Circles;;SEHowToGetRidOfDarkCirclesNavNode
+                               ;SEBestFaceMoisturisersNavNode;;SE Best Face Moisturisers;;SEBestFaceMoisturisersNavNode
+                               ;SEHowToKeepSkinLookingYouthfulNavNode;;SE How To Keep Skin Looking Youthful;;SEHowToKeepSkinLookingYouthfulNavNode
+                               ;SEGymSkincareTipsNavNode;;SE Gym Skincare Tips;;SEGymSkincareTipsNavNode
+
+#Child_Nodes_SEBodyCareArticles_NavNode
+
+                               ;SEBenefitsOfDryBrushingNavNode;;SE Benefits Of Dry Brushing;;SEBenefitsOfDryBrushingNavNode
+                               ;SEUnderstandingDrySkinNavNode;;SE Understanding Dry Skin;;SEUnderstandingDrySkinNavNode
+                               ;SEBestBodyExfoliatorsNavNode;;SE Best Body Exfoliators;;SEBestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;SEHowToFindTheRightFoundationNavNode;;SE How to find the right foundation;;SEHowToFindTheRightFoundationNavNode
+                               ;SEHowToApplyFoundationNavNode;;SE How to apply foundation;;SEHowToApplyFoundationNavNode
+                               ;SEHowToShapeEyebrowsNavNode;;SE How to shape eyebrows;;SEHowToShapeEyebrowsNavNode
+                               ;SEHowToGetASunKissedGlowNavNode;;SE How to get a sun kissed glow;;SEHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;SEBestVeganCitiesInTheSENavNode;;Best Vegan Cities in the SE;;SEBestVeganCitiesInTheSENavNode
+                               ;SELongHaulFlightTipsNavNode;;SE Long haul flight tips;;SELongHaulFlightTipsNavNode
+                               ;SEGymSkincareRoutineNavNode;;SE Gym skincare routine;;SEGymSkincareRoutineNavNode
+                               ;SEChildhoodDreamsNavNode;;SE Childhood Dreams;;SEChildhoodDreamsNavNode
+                               ;SEPixieGeldof’sTravelEssentialsNavNode;;SE Pixie Geldof’s Travel Essentials;;SEPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;SEBenefitsOfCharcoalNavNode;;SE Benefits of charcoal;;SEBenefitsOfCharcoalNavNode
+                               ;SEHyaluronicAcidBenefitsNavNode;;SE Hyaluronic Acid Benefits;;SEHyaluronicAcidBenefitsNavNode
+                               ;SEDiscoverAllIngredientsNavNode;;SE Discover all ingredients;;SEDiscoverAllIngredientsNavNode
+                               ;SESourcingOurIngredientsNavNode;;SE Sourcing our ingredients;;SESourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_SEWhoWeAreNavNode
+                               ;SEOurHeritageNavNode;;SE Our Heritage;;SEOurHeritageNavNode
+                               ;SEForeverAgainstAnimalTestingNavNode;;SE Forever Against Animal Testing;;SEForeverAgainstAnimalTestingNavNode
+                               ;SEB_CorpNavNode;;SE B Corp;;SEB_CorpNavNode
+                               ;SELatestNewsNavNode;;SE Latest News;;SELatestNewsNavNode
+                               ;SENatura_CoNavNode;;SE Natura & co;;SENatura_CoNavNode
+                               ;SEEducationalProgrammeNavNode;;SE Educational Programme;;SEEducationalProgrammeNavNode
+                               ;SEDonateMenstrualProductsNavNode;;SE Donate Menstrual Products;;SEDonateMenstrualProductsNavNode
+                               ;SEVegetarianBeautyNavNode;;SE Vegetarian Beauty;;SEVegetarianBeautyNavNode
+
+#Child_Nodes_SELoyaltyProgramNavNode
+                               ;SE_Loyalty_JoinNowNavNode;;SE Join Now;;SE_Loyalty_JoinNowNavNode
+
+#Child_Nodes_SESustainabilityNavNode
+                               ;SEOurCommitmentNavNode;;SE Our Commitment;;SEOurCommitmentNavNode
+                               ;SECommunityTradeNavNode;;SE Community Trade;;SECommunityTradeNavNode
+                               ;SEBio-BridgesNavNode;;SE Bio-Bridges;;SEBio-BridgesNavNode
+                               ;SEReducingEnvironmentalFootprintNavNode;;SE Reducing Environmental Footprint;;SEReducingEnvironmentalFootprintNavNode
+                               ;SEEmpoweringWomenNavNode;;SE EmpoweringWomen;;SEEmpoweringWomenNavNode
+                               ;SEModernSlaveryNavNode;;SE ModernSlavery;;SEModernSlaveryNavNode
+
+#Child_Nodes_SEPlasticsNavNode
+                               ;SEPlasticRecyclingInTheSENavNode;;SE Plastic Recycling In The SE;;SEPlasticRecyclingInTheSENavNode
+                               ;SETerraCycleInterviewNavNode;;SE Terra Cycle Interview;;SETerraCycleInterviewNavNode
+                               ;SEReturnRecycleRepeatNavNode;;SE Return Recycle Repeat;;SEReturnRecycleRepeatNavNode
+                               ;SECommunityTradePlasticsNavNode;;SE Community Trade Plastics;;SECommunityTradePlasticsNavNode
+                               ;SEPackagingAtTheBodyShopNavNode;;SE Packaging At The Body Shop;;SEPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;SEBeYourOwnBossLink;SE Be your own boss Link;/;SEBeYourOwnBossLink;SEBeYourOwnBossLink;;;;
+                              ;;SEHostAPartyNavNodeLink;SE Host a party Link;/;SEHostAPartyNavNodeLink;SEHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;SESummerSkincareLink;SE Summer Skincare Link;/;SESummerSkincareLink;SESummerSkincareLink;;;;
+                              ;;SEHowToReduceBlackheadsLink;SE How to reduce blackheads Link;/;SEHowToReduceBlackheadsLink;SEHowToReduceBlackheadsLink;;;;
+                              ;;SEHowToGetRidOfDarkCirclesLink;SE How to get rid of dark circles Link;/;SEHowToGetRidOfDarkCirclesLink;SEHowToGetRidOfDarkCirclesLink;;;;
+                              ;;SEBestFaceMoisturisersLink;SE Best Face Moisturisers Link;/;SEBestFaceMoisturisersLink;SEBestFaceMoisturisersLink;;;;
+                              ;;SEHowToKeepSkinLookingYouthfulLink;SE How to keep skin looking youthful Link;/;SEHowToKeepSkinLookingYouthfulLink;SEHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;SEGymSkincareTipsLink;SE Gym Skincare Tips Link;/;SEGymSkincareTipsLink;SEGymSkincareTipsLink;;;;
+
+                              ;;SEBenefitsOfDryBrushingLink;SE Benefits of dry brushing Link;/;SEBenefitsOfDryBrushingLink;SEBenefitsOfDryBrushingLink;;;;
+                              ;;SEUnderstandingDrySkinLink;SE Understanding dry skin Link;/;SEUnderstandingDrySkinLink;SEUnderstandingDrySkinLink;;;;
+                              ;;SEBestBodyExfoliatorsLink;SE Best body exfoliators Link;/;SEBestBodyExfoliatorsLink;SEBestBodyExfoliatorsLink;;;;
+
+                              ;;SEHowToFindTheRightFoundationLink;SE How to find the right foundation Link;/;SEHowToFindTheRightFoundationLink;SEHowToFindTheRightFoundationLink;;;;
+                              ;;SEHowToApplyFoundationLink;SE How to apply foundation Link;/;SEHowToApplyFoundationLink;SEHowToApplyFoundationLink;;;;
+                              ;;SEHowToShapeEyebrowsLink;SE How to shape eyebrows youthful Link;/;SEHowToShapeEyebrowsLink;SEHowToShapeEyebrowsLink;;;;
+                              ;;SEHowToGetASunKissedGlowLink;SE How to get a sun kissed glow Link;/;SEHowToGetASunKissedGlowLink;SEHowToGetASunKissedGlowLink;;;;
+
+                              ;;SEBestVeganCitiesInTheSELink;Best Vegan Cities in the SE Link;/;SEBestVeganCitiesInTheSELink;SEBestVeganCitiesInTheSELink;;;;
+                              ;;SELongHaulFlightTipsLink;SE Long haul flight tips Link;/;SELongHaulFlightTipsLink;SELongHaulFlightTipsLink;;;;
+                              ;;SEGymSkincareRoutineLink;SE Gym skincare routine Link;/;SEGymSkincareRoutineLink;SEGymSkincareRoutineLink;;;;
+                              ;;SEChildhoodDreamsLink;SE Childhood Dreams Link;/;SEChildhoodDreamsLink;SEChildhoodDreamsLink;;;;
+                              ;;SEPixieGeldof’sTravelEssentialsLink;SE Pixie Geldof’s Travel Essentials Link;/;SEPixieGeldof’sTravelEssentialsLink;SEPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;SEBenefitsOfCharcoalLink;SE Benefits of charcoal Link;/;SEBenefitsOfCharcoalLink;SEBenefitsOfCharcoalLink;;;;
+                              ;;SEHyaluronicAcidBenefitsLink;SE Hyaluronic Acid Benefits Link;/;SEHyaluronicAcidBenefitsLink;SEHyaluronicAcidBenefitsLink;;;;
+                              ;;SEDiscoverAllIngredientsLink;SE Discover all ingredients Link;/;SEDiscoverAllIngredientsLink;SEDiscoverAllIngredientsLink;;;;
+                              ;;SESourcingOurIngredientsLink;SE Sourcing our ingredients Link;/;SESourcingOurIngredientsLink;SESourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;SEOurHeritageLink;SE Our Heritage Link;/;SEOurHeritageLink;SEOurHeritageLink;;;;
+                              ;;SEForeverAgainstAnimalTestingLink;SE How to reduce blackheads Link;/;SEForeverAgainstAnimalTestingLink;SEForeverAgainstAnimalTestingLink;;;;
+                              ;;SEB_CorpLink;SE B Corp Link;/;SEB_CorpLink;SEB_CorpLink;;;;
+                              ;;SELatestNewsLink;SE Latest News Link;/;SELatestNewsLink;SELatestNewsLink;;;;
+                              ;;SENatura_CoLink;SE Natura & co Link;/;SENatura_CoLink;SENatura_CoLink;;;;
+                              ;;SEEducationalProgrammeLink;SE Educational PRogramme Link;/;SEEducationalProgrammeLink;SEEducationalProgrammeLink;;;;
+                              ;;SEDonateMenstrualProductsLink;SE Donate Menstrual Products Link;/;SEDonateMenstrualProductsLink;SEDonateMenstrualProductsLink;;;;
+                              ;;SEVegetarianBeautyLink;SE Vegetarian Beauty Link;/;SEVegetarianBeautyLink;SEVegetarianBeautyLink;;;;
+
+                              ;;SE_Loyalty_JoinNowLink;SE Join Now Link;/;SE_Loyalty_JoinNowLink;SE_Loyalty_JoinNowLink;;;;
+
+                              ;;SEOurCommitmentLink;SE Our Commitment Link;/;SEOurCommitmentLink;SEOurCommitmentLink;;;;
+                              ;;SECommunityTradeLink;SE Community Trade Link;/;SECommunityTradeLink;SECommunityTradeLink;;;;
+                              ;;SEBio-BridgesLink;SE Bio-Bridges Link;/;SEBio-BridgesLink;SEBio-BridgesLink;;;;
+                              ;;SEReducingEnvironmentalFootprintLink;SE Reducing Environmental Footprint Link;/;SEReducingEnvironmentalFootprintLink;SEReducingEnvironmentalFootprintLink;;;;
+                              ;;SEEmpoweringWomenLink;SE Empowering Women Link;/;SEEmpoweringWomenLink;SEEmpoweringWomenLink;;;;
+                              ;;SEModernSlaveryLink;SE Modern Slavery Link;/;SEModernSlaveryLink;SEModernSlaveryLink;;;;
+
+                              ;;SEPlasticRecyclingInTheSELink;Plastic recycling in the SE Link;/;SEPlasticRecyclingInTheSELink;SEPlasticRecyclingInTheSELink;;;;
+                              ;;SETerraCycleInterviewLink;SE TerraCycle Interview Link;/;SETerraCycleInterviewLink;SETerraCycleInterviewLink;;;;
+                              ;;SEReturnRecycleRepeatNavNodeLink;SE Return. Recycle. Repeat Link;/;SEReturnRecycleRepeatNavNodeLink;SEReturnRecycleRepeatNavNodeLink;;;;
+                              ;;SECommunityTradePlasticsLink;SE Community Trade Plastics Link;/;SECommunityTradePlasticsLink;SECommunityTradePlasticsLink;;;;
+                              ;;SEPackagingAtTheBodyShopLink;SE Packaging at The Body Shop Link;/;SEPackagingAtTheBodyShopLink;SEPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;SEBeYourOwnBossNavNodeEntry;;SEBeYourOwnBossNavNodeEntry;SEBeYourOwnBossNavNode;SEBeYourOwnBossLink
+                                ;SEHostAPartyNavNodeEntry;;SEHostAPartyNavNodeEntry;SEHostAPartyNavNode;SEHostAPartyNavNodeLink
+
+#Entry_SESkincareArticlesNavNode
+                                ;SEHowToReduceBlackheadsNavNodeEntry;;SEHowToReduceBlackheadsNavNodeEntry;SEHowToReduceBlackheadsNavNode;SEHowToReduceBlackheadsLink
+                                ;SESummerSkincareNavNodeEntry;;SESummerSkincareNavNodeEntry;SESummerSkincareNavNode;SESummerSkincareLink
+                                ;SEHowToGetRidOfDarkCirclesNavNodeEntry;;SEHowToGetRidOfDarkCirclesNavNodeEntry;SEHowToGetRidOfDarkCirclesNavNode;SEHowToGetRidOfDarkCirclesLink
+                                ;SEBestFaceMoisturisersNavNodeEntry;;SEBestFaceMoisturisersNavNodeEntry;SEBestFaceMoisturisersNavNode;SEBestFaceMoisturisersLink
+                                ;SEHowToKeepSkinLookingYouthfulNavNodeEntry;;SEHowToKeepSkinLookingYouthfulNavNodeEntry;SEHowToKeepSkinLookingYouthfulNavNode;SEHowToKeepSkinLookingYouthfulLink
+                                ;SEGymSkincareTipsNavNodeEntry;;SEGymSkincareTipsNavNodeEntry;SEGymSkincareTipsNavNode;SEGymSkincareTipsLink
+
+#Entry_SEBodyCareArticlesNavNode
+                                ;SEBenefitsOfDryBrushingNavNodeEntry;;SEBenefitsOfDryBrushingNavNodeEntry;SEBenefitsOfDryBrushingNavNode;SEBenefitsOfDryBrushingLink
+                                ;SEUnderstandingDrySkinNavNodeEntry;;SEUnderstandingDrySkinNavNodeEntry;SEUnderstandingDrySkinNavNode;SEUnderstandingDrySkinLink
+                                ;SEBestBodyExfoliatorsNavNodeEntry;;SEBestBodyExfoliatorsNavNodeEntry;SEBestBodyExfoliatorsNavNode;SEBestBodyExfoliatorsLink
+
+#Entry_SEMake-UpAeticlesNavNode
+                                ;SEHowToFindTheRightFoundationNavNodeEntry;;SEHowToFindTheRightFoundationNavNodeEntry;SEHowToFindTheRightFoundationNavNode;SEHowToFindTheRightFoundationLink
+                                ;SEHowToApplyFoundationNavNodeEntry;;SEHowToApplyFoundationNavNodeEntry;SEHowToApplyFoundationNavNode;SEHowToApplyFoundationLink
+                                ;SEHowToShapeEyebrowsNavNodeEntry;;SEHowToShapeEyebrowsNavNodeEntry;SEHowToShapeEyebrowsNavNode;SEHowToShapeEyebrowsLink
+                                ;SEHowToGetASunKissedGlowNavNodeEntry;;SEHowToGetASunKissedGlowNavNodeEntry;SEHowToGetASunKissedGlowNavNode;SEHowToGetASunKissedGlowLink
+
+#Entry_SELifeStyleArticlesNavNode
+                                ;SEBestVeganCitiesInTheSENavNodeEntry;;SEBestVeganCitiesInTheSENavNodeEntry;SEBestVeganCitiesInTheSENavNode;SEBestVeganCitiesInTheSELink
+                                ;SELongHaulFlightTipsNavNodeEntry;;SELongHaulFlightTipsNavNodeEntry;SELongHaulFlightTipsNavNode;SELongHaulFlightTipsLink
+                                ;SEGymSkincareRoutineNavNodeEntry;;SEGymSkincareRoutineNavNodeEntry;SEGymSkincareRoutineNavNode;SEGymSkincareRoutineLink
+                                ;SEChildhoodDreamsNavNodeEntry;;SEChildhoodDreamsNavNodeEntry;SEChildhoodDreamsNavNode;SEChildhoodDreamsLink
+                                ;SEPixieGeldof’sTravelEssentialsNavNodeEntry;;SEPixieGeldof’sTravelEssentialsNavNodeEntry;SEPixieGeldof’sTravelEssentialsNavNode;SEPixieGeldof’sTravelEssentialsLink
+
+#Entry_SEIngredientBenefitsNavNode
+
+                                ;SEBenefitsOfCharcoalNavNodeEntry;;SEBenefitsOfCharcoalNavNodeEntry;SEBenefitsOfCharcoalNavNode;SEBenefitsOfCharcoalLink
+                                ;SEHyaluronicAcidBenefitsNavNodeEntry;;SEHyaluronicAcidBenefitsNavNodeEntry;SEHyaluronicAcidBenefitsNavNode;SEHyaluronicAcidBenefitsLink
+                                ;SEDiscoverAllIngredientsNavNodeEntry;;SEDiscoverAllIngredientsNavNodeEntry;SEDiscoverAllIngredientsNavNode;SEDiscoverAllIngredientsLink
+                                ;SESourcingOurIngredientsNavNodeEntry;;SESourcingOurIngredientsNavNodeEntry;SESourcingOurIngredientsNavNode;SESourcingOurIngredientsLink
+
+#Entry_SEWhoWeAre_NavNode
+                                ;SEOurHeritageNavNodeEntry;;SEOurHeritageNavNodeEntry;SEOurHeritageNavNode;SEOurHeritageLink
+                                ;SEForeverAgainstAnimalTestingNavNodeEntry;;SEForeverAgainstAnimalTestingNavNodeEntry;SEForeverAgainstAnimalTestingNavNode;SEForeverAgainstAnimalTestingLink
+                                ;SEB_CorpNavNodeEntry;;SEB_CorpNavNodeEntry;SEB_CorpNavNode;SEB_CorpLink
+                                ;SELatestNewsNavNodeEntry;;SELatestNewsNavNodeEntry;SELatestNewsNavNode;SELatestNewsLink
+                                ;SENatura_CoNavNodeEntry;;SENatura_CoNavNodeEntry;SENatura_CoNavNode;SENatura_CoLink
+                                ;SEEducationalProgrammeNavNodeEntry;;SEEducationalProgrammeNavNodeEntry;SEEducationalProgrammeNavNode;SEEducationalProgrammeLink
+                                ;SEDonateMenstrualProductsNavNodeEntry;;SEDonateMenstrualProductsNavNodeEntry;SEDonateMenstrualProductsNavNode;SEDonateMenstrualProductsLink
+                                ;SEVegetarianBeautyNavNodeEntry;;SEVegetarianBeautyNavNodeEntry;SEVegetarianBeautyNavNode;SEVegetarianBeautyLink
+
+#Entry_SELoyaltyProgramNavNode
+                                ;SE_Loyalty_JoinNowNavNodeEntry;;SE_Loyalty_JoinNowNavNodeEntry;SE_Loyalty_JoinNowNavNode;SE_Loyalty_JoinNowLink
+
+#Entry_SESustainabilityNavNode
+                                ;SEOurCommitmentNavNodeEntry;;SEOurCommitmentNavNodeEntry;SEOurCommitmentNavNode;SEOurCommitmentLink
+                                ;SECommunityTradeNavNodeEntry;;SECommunityTradeNavNodeEntry;SECommunityTradeNavNode;SECommunityTradeLink
+                                ;SEBio-BridgesNavNodeEntry;;SEBio-BridgesNavNodeEntry;SEBio-BridgesNavNode;SEBio-BridgesLink
+                                ;SEReducingEnvironmentalFootprintNavNodeEntry;;SEReducingEnvironmentalFootprintNavNodeEntry;SEReducingEnvironmentalFootprintNavNode;SEReducingEnvironmentalFootprintLink
+                                ;SEEmpoweringWomenNavNodeEntry;;SEEmpoweringWomenNavNodeEntry;SEEmpoweringWomenNavNode;SEEmpoweringWomenLink
+                                ;SEModernSlaveryNavNodeEntry;;SEModernSlaveryNavNodeEntry;SEModernSlaveryNavNode;SEModernSlaveryLink
+
+#Child_Nodes_SEPlasticsNavNode
+                                ;SEPlasticRecyclingInTheSENavNodeEntry;;SEPlasticRecyclingInTheSENavNodeEntry;SEPlasticRecyclingInTheSENavNode;SEPlasticRecyclingInTheSELink
+                                ;SETerraCycleInterviewNavNodeEntry;;SETerraCycleInterviewNavNodeEntry;SETerraCycleInterviewNavNode;SETerraCycleInterviewLink
+                                ;SEReturnRecycleRepeatNavNodeEntry;;SEReturnRecycleRepeatNavNodeEntry;SEReturnRecycleRepeatNavNode;SEReturnRecycleRepeatNavNodeLink
+                                ;SECommunityTradePlasticsNavNodeEntry;;SECommunityTradePlasticsNavNodeEntry;SECommunityTradePlasticsNavNode;SECommunityTradePlasticsLink
+                                ;SEPackagingAtTheBodyShopNavNodeEntry;;SEPackagingAtTheBodyShopNavNodeEntry;SEPackagingAtTheBodyShopNavNode;SEPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;SEUsefullInformationNavNode;;SE Useful Information;SEUsefullInformationNavNode;SEDeliveryNavNode,SEReturnsNavNode,SEFAQNavNode,SETermsAndConditionsNavNode,SEPrivacyPolicyNavNode,SESitemapNavNode
+;SEWaysToShopNavNode;;SE Ways to Shop;SEWaysToShopNavNode;SEStoresNavNode,SELoveYourBodyClubNavNode,SEStudentDiscountNavNode,SEGiftCardsNavNode
+;SEAboutUsNavNode;;SE About Us;SEAboutUsNavNode;SEAboutUsInternalNavNode,SETheBodyShopAtHomeNavNode,SEAffiliatesNavNode,SEGenderPayGapNavNode,SEModernSlaveryStatementNavNode,SEAgainstAnimalTestingNavNode,SETaxStrategyNavNode,SECareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;SEDeliveryNavNode;;SEDeliveryNavNode;SEDeliveryNavNode;
+;SEReturnsNavNode;;SEReturnsNavNode;SEReturnsNavNode;
+;SEFAQNavNode;;SEFAQ Page;SEFAQNavNode
+;SETermsAndConditionsNavNode;;SETermsAndConditionsNavNode;SETermsAndConditionsNavNode;
+;SEPrivacyPolicyNavNode;;SEPrivacyPolicyNavNode;SEPrivacyPolicyNavNode;
+;SESitemapNavNode;;SESitemapNavNode;SESitemapNavNode;
+;SEStoresNavNode;;SEStoresNavNode;SEStoresNavNode;
+;SELoveYourBodyClubNavNode;;SELoveYourBodyClubNavNode;SELoveYourBodyClubNavNode;
+;SEStudentDiscountNavNode;;SEStudentDiscountNavNode;SEStudentDiscountNavNode;
+;SEGiftCardsNavNode;;SEGiftCardsNavNode;SEGiftCardsNavNode;
+;SEAboutUsInternalNavNode;;SEAboutUsInternalNavNode;SEAboutUsInternalNavNode
+;SETheBodyShopAtHomeNavNode;;SETheBodyShopAtHomeNavNode;SETheBodyShopAtHomeNavNode
+;SEAffiliatesNavNode;;SEAffiliatesNavNode;SEAffiliatesNavNode
+;SEGenderPayGapNavNode;;SEGenderPayGapNavNode;SEGenderPayGapNavNode
+;SEModernSlaveryStatementNavNode;;SEModernSlaveryStatementNavNode;SEModernSlaveryStatementNavNode
+;SEAgainstAnimalTestingNavNode;;SEAgainstAnimalTestingNavNode;SEAgainstAnimalTestingNavNode
+;SETaxStrategyNavNode;;SETaxStrategyNavNode;SETaxStrategyNavNode
+;SECareersNavNode;;SECareersNavNode;SECareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;SEDeliveryNavNodeEntry;;SEDeliveryNavNodeEntry;SEDeliveryNavNode;SEDeliveryLink;
+;SEReturnsNavNodeEntry;;SEReturnsNavNodeEntry;SEReturnsNavNode;SEReturnsLink;
+;SEFAQNavNodeEntry;;SE FAQ Navigation Node Entry;SEFAQNavNode;SEFAQLink;
+;SETermsAndConditionsNavNodeEntry;;SETermsAndConditionsNavNodeEntry;SETermsAndConditionsNavNode;SETermsAndConditionsLink;
+;SEPrivacyPolicyNavNodeEntry;;SEPrivacyPolicyNavNodeEntry;SEPrivacyPolicyNavNode;SEPrivacyPolicyLink;
+;SESitemapNavNodeEntry;;SESitemapNavNodeEntry;SESitemapNavNode;SESitemapLink;
+;SEStoresNavNodeEntry;;SEStoresNavNodeEntry;SEStoresNavNode;SEStoresLink;
+;SELoveYourBodyClubNavNodeEntry;;SELoveYourBodyClubNavNodeEntry;SELoveYourBodyClubNavNode;SELoveYourBodyClubLink;
+;SEStudentDiscountNavNodeEntry;;SEStudentDiscountNavNodeEntry;SEStudentDiscountNavNode;SEStudentDiscountLink;
+;SEGiftCardsNavNodeEntry;;SEGiftCardsNavNodeEntry;SEGiftCardsNavNode;SEGiftCardsLink;
+;SEAboutUsInternalNavNodeEntry;;SEAboutUsInternalNavNodeEntry;SEAboutUsInternalNavNode;SEAboutUsLink;
+;SETheBodyShopAtHomeNavNodeEntry;;SETheBodyShopAtHomeNavNodeEntry;SETheBodyShopAtHomeNavNode;SETheBodyShopAtHomeLink;
+;SEAffiliatesNavNodeEntry;;SEAffiliatesNavNodeEntry;SEAffiliatesNavNode;SEAffiliatesLink;
+;SEGenderPayGapNavNodeEntry;;SEGenderPayGapNavNodeEntry;SEGenderPayGapNavNode;SEGenderPayGapLink;
+;SEModernSlaveryStatementNavNodeEntry;;SEModernSlaveryStatementNavNodeEntry;SEModernSlaveryStatementNavNode;SEModernSlaveryStatementLink;
+;SEAgainstAnimalTestingNavNodeEntry;;SEAgainstAnimalTestingNavNodeEntry;SEAgainstAnimalTestingNavNode;SEAgainstAnimalTestingLink;
+;SETaxStrategyNavNodeEntry;;SETaxStrategyNavNodeEntry;SETaxStrategyNavNode;SETaxStrategyLink;
+;SECareersNavNodeEntry;;SECareersNavNodeEntry;SECareersNavNode;SECareersLink;
+
+##CategoryBannerCMSComponent Start ##
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;SECategoryBannerCMSComponent;SE CategoryBanner CMSComponent;SECategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-SECategorybannerSlot;SECategory Banner Slot;true;SECategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-SECategoryPage;Section1;;Section1Slot-SECategorybannerSlot;;;
+##CategorybannerCMSComponent End ##

@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns:int="http://www.springframework.org/schema/integration"
+		 xmlns:util="http://www.springframework.org/schema/util"
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<alias name="defaultCwsProductFacade" alias="cwsProductFacade"/>
+	<bean id="defaultCwsProductFacade" parent="defaultProductFacade">
+		<property name="productConfiguredPopulator" ref="cwsProductConfiguredPopulator"/>
+		<property name="productConverter" ref="cwsProductConverter"/>
+	</bean>
+
+	<alias name="defaultCwsProductConfiguredPopulator" alias="cwsProductConfiguredPopulator"/>
+	<bean id="defaultCwsProductConfiguredPopulator" parent="defaultProductConfiguredPopulator">
+		<property name="populators">
+			<map key-type="de.hybris.platform.commercefacades.product.ProductOption" merge="true">
+				<entry key="GALLERY" value-ref="cwsProductGalleryPopulatorList"/>
+				<entry key="PRODUCT_INGREDIENTS" value-ref="productIngredientsPopulatorList"/>
+			</map>
+		</property>
+	</bean>
+
+    <alias name="defaultProductIngredientsPopulatorList" alias="productIngredientsPopulatorList"/>
+    <bean id="defaultProductIngredientsPopulatorList" parent="abstractPopulatorList">
+        <property name="populators">
+            <list>
+                <ref bean="productIngredientsPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultProductIngredientsPopulatorPopulator" alias="productIngredientsPopulator"/>
+    <bean id="defaultProductIngredientsPopulatorPopulator" parent="baseProductPopulator" class="uk.co.thebodyshop.core.product.populators.ProductIngredientsPopulator">
+    	<property name="commonI18nService" ref="commonI18NService" />
+    </bean>
+
+	<alias name="defaultCwsProductGalleryPopulatorList" alias="cwsProductGalleryPopulatorList"/>
+	<bean id="defaultCwsProductGalleryPopulatorList" parent="abstractPopulatorList">
+		<property name="populators">
+			<list>
+				<ref bean="cwsProductGalleryImagesPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+ 	<alias name="cwsImageFormatMapping" alias="imageFormatMapping"/>
+	<bean id="cwsImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="superZoom" value="1200Wx1200H"/>
+				<entry key="zoom" value="515Wx515H"/>
+				<entry key="store" value="365Wx246H"/>
+				<entry key="product" value="300Wx300H"/>
+				<entry key="thumbnail" value="96Wx96H"/>
+				<entry key="cartIcon" value="65Wx65H"/>
+				<entry key="styleSwatch" value="30Wx30H"/>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="cwsProductPrimaryImagePopulator" alias="productPrimaryImagePopulator"/>
+	<bean id="cwsProductPrimaryImagePopulator" parent="defaultProductPrimaryImagePopulator" class="uk.co.thebodyshop.core.product.populators.TbsProductPrimaryImagePopulator" >
+		<property name="imageFormatMapping" ref="cwsImageFormatMapping"/>
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+				<value>cartIcon</value>
+			</list>
+		</property>
+		<property name="productBadgesDataHelper" ref="productBadgesDataHelper"/>
+	</bean>
+
+	<alias name="cwsProductGalleryImagesPopulator" alias="productGalleryImagesPopulator"/>
+	<bean id="cwsProductGalleryImagesPopulator" parent="defaultProductGalleryImagesPopulator" class="uk.co.thebodyshop.core.product.populators.TbsProductGalleryImagesPopulator">
+		<property name="imageFormatMapping" ref="cwsImageFormatMapping"/>
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+		<property name="productBadgesDataHelper" ref="productBadgesDataHelper"/>
+	</bean>
+
+	<alias name="defaultCwsProductPopulator" alias="cwsProductPopulator"/>
+	<bean id="defaultCwsProductPopulator" parent="defaultProductPopulator">
+		<property name="productPrimaryImagePopulator" ref="cwsProductPrimaryImagePopulator"/>
+		<property name="productModelUrlResolver" ref="productModelUrlResolver"/>
+	</bean>
+
+	<alias name="defaultCwsProductConverter" alias="cwsProductConverter"/>
+	<bean id="defaultCwsProductConverter" parent="defaultProductConverter">
+		<property name="populators">
+			<list>
+				<ref bean="cwsProductPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+  <alias name="tbsProductPricePopulator" alias="productPricePopulator" />
+  <bean id="tbsProductPricePopulator" class="uk.co.thebodyshop.core.product.populators.TbsProductPricePopulator" parent="defaultProductPricePopulator">
+    <constructor-arg name="baseStoreService" ref="baseStoreService" />
+    <constructor-arg name="pricePerMetricCalculationStrategy" ref="pricePerMetricCalculationStrategy" />
+    <constructor-arg name="loyaltyPointsCalculationStrategy" ref="loyaltyPointsCalculationStrategy"/>
+  </bean>
+
+	<alias name="defaultCwsCatalogFacade" alias="cwsCatalogFacade"/>
+	<bean id="defaultCwsCatalogFacade" parent="defaultCatalogFacade">
+		<property name="catalogVersionPopulator" ref="cwsCatalogVersionPopulator"/>
+		<property name="categoryHierarchyPopulator" ref="cwsCategoryHierarchyPopulator"/>
+	</bean>
+
+	<alias name="defaultCwsCatalogVersionPopulator" alias="cwsCatalogVersionPopulator"/>
+	<bean id="defaultCwsCatalogVersionPopulator" parent="defaultCatalogVersionPopulator">
+		<property name="categoryHierarchyPopulator" ref="cwsCategoryHierarchyPopulator"/>
+		<property name="categoriesUrl" value="/categories"/>
+	</bean>
+
+	<alias name="defaultCwsCategoryHierarchyPopulator" alias="cwsCategoryHierarchyPopulator"/>
+	<bean id="defaultCwsCategoryHierarchyPopulator" parent="defaultCategoryHierarchyPopulator">
+		<property name="productConverter" ref="cwsProductConverter"/>
+		<property name="categoryUrlResolver" ref="categoryModelUrlResolver"></property>
+	</bean>
+
+	<alias name="defaultCwsProductExportFacade" alias="cwsProductExportFacade"/>
+	<bean id="defaultCwsProductExportFacade" parent="defaultProductExportFacade">
+		<property name="productConverter" ref="cwsProductConverter"/>
+		<property name="productCategoriesPopulator" ref="cwsProductCategoriesPopulator"/>
+	</bean>
+
+	<alias name="cwsProductCategoriesPopulator" alias="productCategoriesPopulator"/>
+	<bean id="cwsProductCategoriesPopulator" parent="defaultProductCategoriesPopulator" class="uk.co.thebodyshop.core.product.populators.TbsProductCategoriesPopulator">
+		<property name="categoryConverter" ref="cwsCategoryConverter"/>
+		<property name="tbsCategoryService" ref="tbsCategoryService"/>
+	</bean>
+
+	<alias name="defaultCwsCategoryConverter" alias="cwsCategoryConverter"/>
+	<bean id="defaultCwsCategoryConverter" parent="defaultCategoryConverter">
+		<lookup-method name="createTarget" bean="categoryData"/>
+		<property name="populators">
+			<list>
+				<ref bean="cwsCategoryPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultCwsCategoryPopulator" alias="cwsCategoryPopulator"/>
+	<bean id="defaultCwsCategoryPopulator" parent="defaultCategoryPopulator">
+		<property name="categoryModelUrlResolver" ref="categoryModelUrlResolver"/>
+	</bean>
+
+	<alias name="defaultCommerceStockFacade" alias="commerceStockFacade"/>
+	<bean id="defaultCommerceStockFacade" class="uk.co.thebodyshop.core.stock.impl.DefaultCommerceStockFacade">
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="commerceStockService" ref="commerceStockService"/>
+		<property name="pointOfServiceService" ref="pointOfServiceService"/>
+		<property name="productService" ref="productService"/>
+		<property name="baseStoreForSiteSelectorStrategy" ref="baseStoreForSiteSelectorStrategy"/>
+	</bean>
+
+	<alias name="defaultBaseStoreForSiteSelectorStrategy" alias="baseStoreForSiteSelectorStrategy"/>
+	<bean id="defaultBaseStoreForSiteSelectorStrategy"
+			class="uk.co.thebodyshop.core.strategies.impl.DefaultBaseStoreForSiteSelectorStrategy"/>
+
+	<alias name="defaultCommerceWebServicesCartFacade2" alias="commerceWebServicesCartFacade2"/>
+	<bean id="defaultCommerceWebServicesCartFacade2" class="uk.co.thebodyshop.core.cart.impl.CommerceWebServicesCartFacade"
+	      parent="defaultCartFacade">
+		<property name="cartConverter" ref="extendedCartConverter"/>
+		<property name="commerceCartService" ref="commerceWebServicesCartService"/>
+	</bean>
+
+	<!-- Populator for title name -->
+	<alias name="defaultExtendedCustomerPopulator" alias="extendedCustomerPopulator"/>
+	<bean id="defaultExtendedCustomerPopulator"
+			class="uk.co.thebodyshop.core.customer.populator.ExtendedCustomerPopulator">
+		<property name="addressConverter" ref="addressConverter"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="customerConverter"/>
+		<property name="add" ref="extendedCustomerPopulator"/>
+	</bean>
+
+	<!-- Update Queues -->
+
+	<bean id="abstractUpdateQueue"
+			class="uk.co.thebodyshop.core.queues.impl.AbstractUpdateQueue" abstract="true">
+		<property name="maxCapacity" value="100000"/>
+	</bean>
+
+	<!--Express Update Queue functionality-->
+	<alias name="defaultProductExpressUpdateQueue" alias="productExpressUpdateQueue"/>
+	<bean id="defaultProductExpressUpdateQueue"
+			class="uk.co.thebodyshop.core.queues.impl.ProductExpressUpdateQueue"
+			parent="abstractUpdateQueue"/>
+
+	<alias name="defaultProductExpressUpdateChannelListener" alias="productExpressUpdateChannelListener"/>
+	<bean id="defaultProductExpressUpdateChannelListener"
+			class="uk.co.thebodyshop.core.queues.channel.ProductExpressUpdateChannelListener">
+		<property name="productExpressUpdateElementConverter" ref="productExpressUpdateElementConverter"/>
+		<property name="productExpressUpdateQueue" ref="productExpressUpdateQueue"/>
+	</bean>
+
+	<int:service-activator input-channel="productExpressUpdateChannel"
+								  ref="productExpressUpdateChannelListener"
+								  method="onMessage"/>
+
+	<alias name="defaultProductExpressUpdateElementData" alias="productExpressUpdateElementData"/>
+	<bean id="defaultProductExpressUpdateElementData"
+			class="uk.co.thebodyshop.core.queues.data.ProductExpressUpdateElementData" scope="prototype"/>
+
+	<alias name="defaultProductExpressUpdateElementPopulator" alias="productExpressUpdateElementPopulator"/>
+	<bean id="defaultProductExpressUpdateElementPopulator"
+			class="uk.co.thebodyshop.core.queues.populators.ProductExpressUpdateElementPopulator"/>
+
+	<alias name="defaultProductExpressUpdateElementConverter" alias="productExpressUpdateElementConverter"/>
+	<bean id="defaultProductExpressUpdateElementConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="productExpressUpdateElementData"/>
+		<property name="populators">
+			<list>
+				<ref bean="productExpressUpdateElementPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="productExpressUpdateCleanerJob"
+			class="uk.co.thebodyshop.core.queues.cronjob.ProductExpressUpdateCleanerJob"
+			parent="abstractJobPerformable">
+		<property name="productExpressUpdateQueue" ref="productExpressUpdateQueue"/>
+	</bean>
+
+	<!-- Order Status Update Queue -->
+
+	<alias name="defaultOrderStatusUpdateQueue" alias="orderStatusUpdateQueue"/>
+	<bean id="defaultOrderStatusUpdateQueue"
+			class="uk.co.thebodyshop.core.queues.impl.OrderStatusUpdateQueue"
+			parent="abstractUpdateQueue"/>
+
+	<alias name="defaultOrderStatusUpdateChannelListener" alias="orderStatusUpdateChannelListener"/>
+	<bean id="defaultOrderStatusUpdateChannelListener"
+			class="uk.co.thebodyshop.core.queues.channel.OrderStatusUpdateChannelListener">
+		<property name="orderStatusUpdateElementConverter" ref="orderStatusUpdateElementConverter"/>
+		<property name="orderStatusUpdateQueue" ref="orderStatusUpdateQueue"/>
+	</bean>
+
+	<int:service-activator input-channel="orderStatusUpdateChannel"
+								  ref="orderStatusUpdateChannelListener"
+								  method="onMessage"/>
+
+	<alias name="defaultOrderStatusUpdateElementData" alias="orderStatusUpdateElementData"/>
+	<bean id="defaultOrderStatusUpdateElementData"
+			class="uk.co.thebodyshop.core.queues.data.OrderStatusUpdateElementData" scope="prototype"/>
+
+	<alias name="defaultOrderStatusUpdateElementPopulator" alias="orderStatusUpdateElementPopulator"/>
+	<bean id="defaultOrderStatusUpdateElementPopulator"
+			class="uk.co.thebodyshop.core.queues.populators.OrderStatusUpdateElementPopulator"/>
+
+	<alias name="defaultProductExpressUpdateElementConverter" alias="orderStatusUpdateElementConverter"/>
+	<bean id="defaultOrderStatusUpdateElementConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="orderStatusUpdateElementData"/>
+		<property name="populators">
+			<list>
+				<ref bean="orderStatusUpdateElementPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="orderStatusUpdateCleanerJob"
+			class="uk.co.thebodyshop.core.queues.cronjob.OrderStatusUpdateCleanerJob"
+			parent="abstractJobPerformable">
+		<property name="orderStatusUpdateQueue" ref="orderStatusUpdateQueue"/>
+	</bean>
+
+	<!-- Old cart cleaner -->
+	<bean id="oldCartRemovalJob" class="uk.co.thebodyshop.core.cronjob.OldCartRemovalJob"
+			parent="abstractJobPerformable">
+		<property name="commerceCartDao" ref="commerceCartDao"/>
+		<property name="timeService" ref="timeService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+
+    <alias alias="orderCodeIdentificationStrategy" name="defaultOrderCodeIdentificationStrategy"/>
+    <bean id="defaultOrderCodeIdentificationStrategy" class="uk.co.thebodyshop.core.strategies.impl.DefaultOrderCodeIdentificationStrategy">
+        <property name="idPattern" value="[0-9a-f]{40}|[0-9a-f-]{36}"/>
+    </bean>
+
+	<!-- Beans for user matching in commerce web services -->
+	<alias name="defaultWsUserFacade" alias="wsUserFacade"/>
+	<bean id="defaultWsUserFacade" parent="defaultUserFacade">
+		<property name="userMatchingService" ref="wsUserMatchingService"/>
+	</bean>
+
+	<alias name="defaultWsCustomerFacade" alias="wsCustomerFacade"/>
+	<bean id="defaultWsCustomerFacade" parent="defaultCustomerFacade">
+		<property name="userMatchingService" ref="wsUserMatchingService"/>
+		<property name="userFacade" ref="wsUserFacade"/>
+	</bean>
+
+	<alias name="defaultWsCustomerGroupFacade" alias="wsCustomerGroupFacade"/>
+	<bean id="defaultWsCustomerGroupFacade" parent="defaultCustomerGroupFacade">
+		<property name="userMatchingService" ref="wsUserMatchingService"/>
+	</bean>
+
+	<alias name="defaultWsUserMatchingService" alias="wsUserMatchingService"/>
+	<bean id="defaultWsUserMatchingService" parent="defaultUserMatchingService">
+		<property name="matchingStrategies">
+			<list>
+				<ref bean="customerIdMatchingStrategy"/>
+				<ref bean="userUIDMatchingStrategy"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultTbsStoreSessionFacade" alias="storeSessionFacade"/>
+	<bean id="defaultTbsStoreSessionFacade"
+		  class="uk.co.thebodyshop.core.languages.impl.TbsDefaultStoreSessionFacade"
+			parent="defaultStoreSessionFacade">
+	</bean>
+
+	<alias name="tbsProductCategorySearchPagePopulator" alias="productCategorySearchPagePopulator"/>
+	<bean id="tbsProductCategorySearchPagePopulator" class="uk.co.thebodyshop.core.category.populators.TbsProductCategorySearchPagePopulator" parent="defaultProductCategorySearchPagePopulator" >
+		<property name="breadcrumbCategoryConverter" ref="cwsCategoryConverter"/>
+		<property name="tbsCategoryService" ref="tbsCategoryService"/>
+	</bean>
+
+	<alias name="defaultProductPopulator" alias="productPopulator"/>
+    <bean id="defaultProductPopulator" parent="defaultProductUrlPopulator" class="uk.co.thebodyshop.core.product.populators.TbsProductPopulator">
+        <property name="productBasicPopulator" ref="productBasicPopulator"/>
+        <property name="productPrimaryImagePopulator" ref="productPrimaryImagePopulator"/>
+		<constructor-arg name="baseStoreService" ref="baseStoreService" />
+    </bean>
+
+	<alias name="tbsVariantFullPopulator" alias="variantFullPopulator"/>
+    <bean id="tbsVariantFullPopulator" parent="defaultVariantFullPopulator" class="uk.co.thebodyshop.core.product.populators.TbsVariantFullPopulator">
+    	<constructor-arg name="variantProductsSortStrategy" ref="variantProductsSortStrategy"/>
+		<constructor-arg name="productVisibilityService" ref="productVisibilityService"/>
+		<constructor-arg name="activeProductCatalogVersionSupplier" ref="activeProductCatalogVersionSupplier"/>
+    </bean>
+
+	<alias name="tbsVariantOptionDataPopulator" alias="variantOptionDataPopulator"/>
+    <bean id="tbsVariantOptionDataPopulator" parent="defaultVariantOptionDataPopulator" class="uk.co.thebodyshop.core.product.populators.TbsVariantOptionDataPopulator">
+		<property name="variantDataHelper" ref="variantDataHelper" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="tbsVariantOptionGalleryImagesPopulator" ref="tbsVariantOptionGalleryImagesPopulator" />
+    </bean>
+
+	<alias name="tbsContentSearchFacade" alias="contentSearchFacade"/>
+	<bean id="tbsContentSearchFacade" class="uk.co.thebodyshop.core.content.impl.DefaultContentSearchFacade">
+		<constructor-arg name="contentSearchService" ref="contentSearchService"/>
+		<constructor-arg name="threadContextService" ref="threadContextService"/>
+		<constructor-arg name="searchQueryDecoder" ref="solrSearchQueryDecoder"/>
+		<constructor-arg name="contentSearchPageConverter" ref="contentSearchPageConverter"/>
+	</bean>
+
+	<alias name="defaultTbsOrderEntryVariantProductPopulator" alias="tbsOrderEntryVariantProductPopulator"/>
+	<bean id="defaultTbsOrderEntryVariantProductPopulator" class="uk.co.thebodyshop.core.product.populators.TbsOrderEntryVariantProductPopulator">
+		<constructor-arg name="variantDataHelper" ref="variantDataHelper" />
+	</bean>
+
+	<alias name="tbsOrderEntryPopulator" alias="orderEntryPopulator"/>
+	<bean id="tbsOrderEntryPopulator" class="uk.co.thebodyshop.core.product.populators.TbsOrderEntryPopulator" parent="defaultOrderEntryPopulator">
+		<constructor-arg name="baseStoreService" ref="baseStoreService"/>
+	</bean>
+
+	<alias name="tbsVariantOptionGalleryImagesPopulator" alias="tbsVariantOptionGalleryImagesPopulator"/>
+	<bean id="tbsVariantOptionGalleryImagesPopulator" class="uk.co.thebodyshop.core.product.populators.TbsVariantOptionGalleryImagesPopulator">
+		<property name="modelService" ref="modelService"/>
+		<property name="mediaService" ref="mediaService"/>
+		<property name="mediaContainerService" ref="mediaContainerService"/>
+		<property name="productBadgesDataHelper" ref="productBadgesDataHelper"/>
+		<property name="imageFormatMapping" ref="cwsImageFormatMapping"/>
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderEntryProductConverter"/>
+		<property name="add" ref="tbsOrderEntryVariantProductPopulator"/>
+	</bean>
+
+	<alias alias="geoServiceWrapper" name="defaultGoogleMapsGeoServiceWrapper"/>
+
+	<alias name="defaultTbsCheckoutFacade" alias="checkoutFacade"/>
+	<alias name="defaultTbsCheckoutFacade" alias="tbsCheckoutFacade"/>
+    <bean id="defaultTbsCheckoutFacade" parent="defaultCheckoutFacade" class="uk.co.thebodyshop.core.order.impl.DefaultTbsCheckoutFacade">
+    	<property name="giftCardFacade" ref="giftCardFacade"/>
+    	<property name="paymentModeService" ref="paymentModeService"/>
+    	<property name="outstandingAmountCalculationStrategy" ref="outstandingAmountCalculationStrategy"/>
+    	<property name="restrictionsManager" ref="restrictionsManager" />
+    	<property name="tbsDeliveryService" ref="tbsDeliveryService" />
+    	<property name="collectionPointReverseConverter" ref="collectionPointReverseConverter" />
+    	<property name="tbsAcceleratorCheckoutService" ref="tbsAcceleratorCheckoutService" />
+    	<property name="pointOfServiceService" ref="pointOfServiceService"/>
+    	<property name="storeDetailReverseConverter" ref="storeDetailReverseConverter" />
+    	<property name="tbsCommerceStockService" ref="tbsCommerceStockService" />
+    </bean>
+
+     <util:map id="collectionPoint2ServiceMappingsMap">
+        <entry key="RoyalMail" value="royalMailCollectionPointService"/>
+        <entry key="AUSP" value="royalMailCollectionPointService"/>
+        <entry key="DPD" value="royalMailCollectionPointService"/>
+        <entry key="UPS" value="royalMailCollectionPointService"/>
+
+    </util:map>
+
+    <util:map id="collectionServiceName2ServiceMappingsMap">
+        <entry key="royalMailCollectionPointService" value-ref="royalMailCollectionPointService"/>
+    </util:map>
+
+    <alias name="defaultCollectionPointSearchFacade" alias="collectionPointSearchFacade" />
+    <bean id="defaultCollectionPointSearchFacade" class="uk.co.thebodyshop.facades.collectionpoint.search.DefaultCollectionPointSearchFacade">
+        <property name="collectionPoint2ServiceMappings" ref="collectionPoint2ServiceMappingsMap" />
+    </bean>
+
+    <alias name="defaultTbsStoreFinderStockFacade" alias="storeFinderStockFacade"/>
+    <bean id="defaultTbsStoreFinderStockFacade"
+          class="uk.co.thebodyshop.core.storefinder.impl.DefaultTbsStoreFinderStockFacade" parent="defaultStoreFinderStockFacade">
+    </bean>
+
+	<alias name="defaultTbsPointOfServiceDistanceDataPopulator" alias="pointOfServiceDistanceDataPopulator"/>
+	<bean id="defaultTbsPointOfServiceDistanceDataPopulator"
+		  class="uk.co.thebodyshop.core.stock.populator.TbsPointOfServiceDistanceDataPopulator" parent="defaultPointOfServiceDistanceDataPopulator">
+		<constructor-arg name="enumerationService" ref="enumerationService"/>
+		<constructor-arg name="collectionDistanceHelper" ref="collectionDistanceHelper"/>
+		<constructor-arg name="openingScheduleConverter" ref="openingScheduleConverter"/>
+		<constructor-arg name="tbsPointOfServiceService" ref="tbsPointOfServiceService"/>
+	</bean>
+
+    <alias name="defaultCollectionPointReverseConverter" alias="collectionPointReverseConverter"/>
+    <bean id="defaultCollectionPointReverseConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="uk.co.thebodyshop.core.model.CollectionPointModel"/>
+        <property name="populators">
+            <list>
+                <ref bean="collectionPointReversePopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultCollectionPointReversePopulator" alias="collectionPointReversePopulator"/>
+    <bean id="defaultCollectionPointReversePopulator"
+          class="uk.co.thebodyshop.core.order.converters.populator.CollectionPointReversePopulator">
+     	<property name="collectionOpeningDayReverseConverter" ref="collectionOpeningDayReverseConverter" />
+    </bean>
+
+    <alias name="defaultCollectionOpeningDayReverseConverter" alias="collectionOpeningDayReverseConverter"/>
+    <bean id="defaultCollectionOpeningDayReverseConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="uk.co.thebodyshop.core.model.CollectionOpeningDayModel"/>
+        <property name="populators">
+            <list>
+                <ref bean="collectionOpeningDayReversePopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultCollectionOpeningDayReversePopulator" alias="collectionOpeningDayReversePopulator"/>
+    <bean id="defaultCollectionOpeningDayReversePopulator"
+          class="uk.co.thebodyshop.core.order.converters.populator.CollectionOpeningDayReversePopulator">
+    </bean>
+
+    <alias name="defaultOrderCollectionPopulator" alias="orderCollectionPopulator" />
+	<bean id="defaultOrderCollectionPopulator" class="uk.co.thebodyshop.core.order.populator.OrderCollectionPopulator">
+		<property name="enumerationService" ref="enumerationService" />
+		<property name="collectionOpeningDayConverter" ref="collectionOpeningDayConverter" />
+		<property name="pointOfServiceConverter" ref="pointOfServiceConverter"/>
+		<property name="pickupPOSConsolidationStrategy" ref="pickupPOSConsolidationStrategy"/>
+		<property name="tbsPointOfServiceService" ref="tbsPointOfServiceService"/>
+	</bean>
+
+
+	<alias name="defaultCollectionOpeningDayConverter" alias="collectionOpeningDayConverter"/>
+    <bean id="defaultCollectionOpeningDayConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.storelocator.data.WeekdayOpeningDayData"/>
+        <property name="populators">
+            <list>
+                <ref bean="collectionOpeningDayPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultCollectionOpeningDayPopulator" alias="collectionOpeningDayPopulator"/>
+    <bean id="defaultCollectionOpeningDayPopulator"
+          class="uk.co.thebodyshop.core.order.converters.populator.CollectionOpeningDayPopulator">
+    </bean>
+
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="cartConverter"/>
+        <property name="add" ref="orderCollectionPopulator"/>
+    </bean>
+
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="extendedCartConverter"/>
+        <property name="add" ref="orderCollectionPopulator"/>
+    </bean>
+
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="orderConverter"/>
+        <property name="add" ref="orderCollectionPopulator"/>
+    </bean>
+
+	<alias name="defaultWishlistFacade" alias="wishlistFacade"/>
+	<bean id="defaultWishlistFacade" class="uk.co.thebodyshop.core.wishlist.impl.DefaultWishlistFacade">
+		<constructor-arg name="wishlistService" ref="wishlistService"/>
+		<constructor-arg name="productService" ref="productService"/>
+		<constructor-arg name="tbsWishlistConverter" ref="tbsWishlistConverter"/>
+		<constructor-arg name="productConverter" ref="productConverter"/>
+		<constructor-arg name="productVisibilityService" ref="productVisibilityService"/>
+		<constructor-arg name="productConfiguredPopulator" ref="productConfiguredPopulator"/>
+	</bean>
+
+	<alias name="defaultTbsWishlistConverter" alias="tbsWishlistConverter"/>
+    <bean id="defaultTbsWishlistConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="uk.co.thebodyshop.core.wishlist.WishlistData"/>
+        <property name="populators">
+            <list>
+                <ref bean="tbsWishlistPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+	<alias name="defaultTbsWishlistPopulator" alias="tbsWishlistPopulator"/>
+    <bean id="defaultTbsWishlistPopulator" class="uk.co.thebodyshop.core.wishlist.populators.TbsWishlistPopulator">
+    	<constructor-arg name="productConverter" ref="cwsProductConverter"/>
+		<constructor-arg name="productConfiguredPopulator" ref="productConfiguredPopulator"/>
+    </bean>
+
+
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="extendedCartConverter"/>
+    </bean>
+
+	<alias name="defaultTbsUserFacade" alias="userFacade"/>
+	<bean id="defaultTbsUserFacade" class="uk.co.thebodyshop.facades.user.impl.DefaultTbsUserFacade" parent="defaultUserFacade" >
+		<constructor-arg name="tbsCustomerAccountService" ref="customerAccountService"/>
+	</bean>
+
+	<bean id="collectionDistanceHelper" class="uk.co.thebodyshop.core.helper.CollectionDistanceHelper" parent="defaultDistanceHelper">
+     	<property name="commerceCommonI18NService" ref="commerceCommonI18NService"/>
+   	</bean>
+
+   	<alias name="defaultStoreDetailReverseConverter" alias="storeDetailReverseConverter"/>
+    <bean id="defaultStoreDetailReverseConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="uk.co.thebodyshop.core.model.StoreDetailModel"/>
+        <property name="populators">
+            <list>
+                <ref bean="storeDetailReversePopulator"/>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="defaultStoreDetailReversePopulator" alias="storeDetailReversePopulator"/>
+    <bean id="defaultStoreDetailReversePopulator"
+          class="uk.co.thebodyshop.core.order.converters.populator.StoreDetailReversePopulator" />
+
+	<alias name="tbsPointOfServicePopulator" alias="pointOfServicePopulator"/>
+	<bean id="tbsPointOfServicePopulator" class="uk.co.thebodyshop.core.order.converters.populator.TbsPointOfServicePopulator" parent="defaultPointOfServicePopulator">
+		<constructor-arg name="baseStoreService" ref="baseStoreService" />
+	</bean>
+          
+    <alias name="defaultGiftWrapFacade" alias="giftWrapFacade"/>
+	<bean id="defaultGiftWrapFacade" class="uk.co.thebodyshop.core.giftwrap.impl.DefaultGiftWrapFacade">
+		<constructor-arg name="giftWrapService" ref="giftWrapService"/>
+		<constructor-arg name="cartService" ref="cartService"/>
+	</bean>
+	
+	<alias name="defaultTbsPromotionResultPopulator" alias="promotionResultPopulator"/>
+    <bean id="defaultTbsPromotionResultPopulator" class="uk.co.thebodyshop.core.order.converters.populator.TbsPromotionResultPopulator" parent="defaultPromotionResultPopulator">
+    </bean>
+    
+    <alias name="defaultTbsCouponFacade" alias="voucherFacade"/>
+    <bean id="defaultTbsCouponFacade" class="uk.co.thebodyshop.facades.coupon.impl.DefaultTbsCouponFacade" parent="defaultCouponFacade">
+    </bean>
+
+	<alias name="defaultTbsCustomerAccountService" alias="customerAccountService"/>
+	<bean id="defaultTbsCustomerAccountService" class="uk.co.thebodyshop.core.customer.impl.DefaultTbsCustomerAccountService" parent="defaultCustomerAccountService" >
+		<property name="commerceCheckoutService" ref="commerceCheckoutService"/>
+	</bean>
+	
+	<alias name="defaultTbsStoreStockPopulator" alias="storeStockPopulator"/>
+    <bean id="defaultTbsStoreStockPopulator" parent="defaultStoreStockPopulator" class="uk.co.thebodyshop.core.product.converters.populator.TbsStoreStockPopulator">
+        <property name="tbsCommerceStockService" ref="tbsCommerceStockService"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/customersupportbackoffice/resources/backoffice/customersupportbackoffice_bof.jar"/>
+	<classpathentry kind="lib" path="resources"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="gensrc">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
+	<classpathentry kind="src" output="eclipsebin/backoffice/classes" path="backoffice/src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/customersupportbackoffice"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/theBodyShopcms"/>
+	<classpathentry kind="src" path="/acceleratorbackoffice"/>
+	<classpathentry kind="src" path="/theBodyShopcore"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/theBodyShoppayment"/>
+	<classpathentry kind="output" path="eclipsebin/notused"/>
+</classpath>

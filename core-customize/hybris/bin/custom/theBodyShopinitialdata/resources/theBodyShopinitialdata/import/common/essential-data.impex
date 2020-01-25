@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Import essential data for the Accelerator
+#
+INSERT_UPDATE Vendor ; code[unique=true] ; name          
+                     ; default           ; Default Vendor
+
+INSERT Warehouse ; code[unique=true] ; name         ; vendor(code)[default=default] ; default[default=true]
+                 ; DC01              ; UK DC        ;                               ;                      
+                 ; DC11              ; Germany DC   ;                               ;                      
+                 ; DC02              ; USA DC02     ;                               ;                      
+                 ; DC14              ; Mexico DC    ;                               ;                      
+                 ; DC29              ; Australia DC ;                               ;                      
+                 
+INSERT_UPDATE PaymentMode ; code[unique=true] ; name[lang=en] ; description[lang=en] ; active ; paymentinfotype(code) ; adyenPaymentType ;  
+                          ; giftcard          ; GiftCard      ; Gift Card payment    ; true   ; AdvancePaymentInfo    ;                  ;  
+                          ; loyalty           ; LoyaltyCard   ; Loyalty Card Payment ; true   ; AdvancePaymentInfo    ;                  ;  
+                          ; creditcard        ; Credit Card   ; Credit Card Payment  ; true   ; AdvancePaymentInfo    ; scheme           ;  
+                          ; paypal            ; PayPal        ; PayPal Payment       ; true   ; AdvancePaymentInfo    ;                  ;  
+                          ; ideal             ; iDEAL         ; iDEAL Payment        ; true   ; AdvancePaymentInfo    ; ideal            ;  
+                          ; giropay           ; GiroPay       ; GiroPay              ; true   ; AdvancePaymentInfo    ; giropay          ;
+                          ; klarna			  ; Klarna - Pay later 	; Klarna - Pay later   ; true	; AdvancePaymentInfo    ; klarna		    ;
+						  ; klarna_account	  ; Klarna - Slice it  	; Klarna - Slice it	   ; true	; AdvancePaymentInfo    ; klarna_account	;
+						  ; klarna_paynow	  ; Klarna - Pay now   	; Klarna - Pay now	   ; true	; AdvancePaymentInfo    ; klarna_paynow		;
+
+						                    
+INSERT_UPDATE RuleGroup ; code[unique=true]         
+                        ; orderPromotionRuleGroup   
+                        ; productPromotionRuleGroup 
+                        ; customerPromotionRuleGroup
+                        ; bundleFixedPriceRuleGroup 
+                        ; couponPromotionRuleGroup  
+						                  
+INSERT_UPDATE CodeGenerationConfiguration ; name[unique=true]     ; codeSeparator ;  
+                                          ; default-configuration ; -             ;  

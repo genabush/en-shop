@@ -1,0 +1,125 @@
+<ng-container *ngIf="giftWrapService$ | async as giftWrapService">
+  <!-- NO GIFT WRAP APPLIED -->
+  <ng-container *ngIf="!giftWrapService.giftWrapApplied; else giftWrapApplied">
+    <p
+      [attr.aria-label]="'cart.giftWrap.giftWrapMessage' | cxTranslate"
+      class="cart-gift-wrap__row-message px-3 pl-lg-4 col-lg-6 text-center text-lg-left mb-2"
+    >
+      {{ 'cart.giftWrap.giftWrapMessage' | cxTranslate }}
+      <span
+        [attr.aria-label]="cart.giftWrapPrice.formattedValue"
+        class="cart-gift-wrap__row-message-price d-block"
+        *ngIf="cart.giftWrapPrice.value > 0"
+        >{{ cart.giftWrapPrice.formattedValue }}</span
+      >
+      <span
+        [attr.aria-label]="'cart.giftWrap.addForFree' | cxTranslate"
+        class="cart-gift-wrap__row-message-sub d-block"
+        *ngIf="cart.giftWrapPrice.value == 0"
+      >
+        {{ 'cart.giftWrap.addForFree' | cxTranslate }}</span
+      >
+    </p>
+    <button
+      role="button"
+      type="button"
+      class="btn btn--primary border col-lg-6 ml-0"
+      title="{{ 'cart.giftWrap.giftWrapButton' | cxTranslate }}"
+      (click)="openGiftWrapModal()"
+      [attr.aria-label]="'cart.giftWrap.giftWrapButton' | cxTranslate"
+    >
+      {{ 'cart.giftWrap.giftWrapButton' | cxTranslate }}
+    </button>
+    <button
+      class="cart-gift-wrap__row-message-link col-12 text-center text-lg-left mt-3 mt-lg-0 pl-lg-4"
+      tabIndex="0"
+      role="link"
+      title="{{ 'cart.giftWrap.giftWrapMoreLink' | cxTranslate }}"
+      [attr.aria-label]="'cart.giftWrap.giftWrapMoreLink' | cxTranslate"
+    >
+      {{ 'cart.giftWrap.giftWrapMoreLink' | cxTranslate }}
+    </button>
+  </ng-container>
+  <!--  GIFT WRAP APPLIED -->
+  <ng-template #giftWrapApplied>
+    <div class="w-100 px-3 pl-lg-4 pr-lg-0 row justify-content-start align-items-center d-flex flex-row flex-lg-nowrap">
+      <img
+        role="img"
+        class="cart-gift-wrap__row-applied-img"
+        src="{{ giftWrapService.giftWrapServiceImage }}"
+        alt="{{ cmsData.name }}"
+      />
+      <div class="d-flex flex-column justify-content-center px-3">
+        <span [attr.aria-label]="'cart.giftWrap.giftWrapAdded' | cxTranslate">{{
+          'cart.giftWrap.giftWrapAdded' | cxTranslate
+        }}</span>
+        <span [attr.aria-label]="'cart.giftWrap.giftWrapAddedDisclaimer' | cxTranslate">{{
+          'cart.giftWrap.giftWrapAddedDisclaimer' | cxTranslate
+        }}</span>
+      </div>
+      <div
+        *ngIf="cart?.giftWrapPrice?.value > 0"
+        [attr.aria-label]="cart.giftWrapPrice.formattedValue"
+        class="cart-gift-wrap__row-message-sub cart-gift-wrap__row-applied-price d-flex flex-column align-items-center align-items-md-end px-3 flex-grow-1 glex-grow-lg-0 my-2 "
+      >
+        {{ cart.giftWrapPrice.formattedValue }}
+      </div>
+      <div
+        *ngIf="cart?.giftWrapPrice?.value == 0"
+        [attr.aria-label]="'cart.giftWrap.addForFree' | cxTranslate"
+        class="cart-gift-wrap__row-message-sub cart-gift-wrap__row-applied-price d-flex flex-column align-items-center align-items-md-end px-3 flex-grow-1 glex-grow-lg-0 my-2 "
+      >
+        {{ 'cart.giftWrap.addForFree' | cxTranslate }}
+      </div>
+      <button
+        tabIndex="0"
+        role="button"
+        type="button"
+        class="btn btn--warning btn--icon btn--invert justify-content-center m-0 mt-2 mt-md-0"
+        title="{{ 'common.removeBtn' | cxTranslate }}"
+        [attr.aria-label]="'common.removeBtn' | cxTranslate"
+        (click)="openGiftWrapRemoveModal()"
+      >
+        <span class="btn__icon icon icon--close"></span>
+        {{ 'common.removeBtn' | cxTranslate }}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #giftWrapModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h2
+      [attr.aria-label]="'cart.giftWrap.personalMessageModal.modalTitleService' | cxTranslate"
+      class="modal-title mt-3"
+      *ngIf="!isRemoving"
+    >
+      {{ 'cart.giftWrap.personalMessageModal.modalTitleService' | cxTranslate }}
+    </h2>
+    <h2
+      [attr.aria-label]="'cart.giftWrap.personalMessageModal.modalTitleServiceRemove' | cxTranslate"
+      class="modal-title mt-3"
+      *ngIf="isRemoving"
+    >
+      {{ 'cart.giftWrap.personalMessageModal.modalTitleServiceRemove' | cxTranslate }}
+    </h2>
+    <button type="button" class="btn close" aria-label="Close" (click)="closeGiftWrapModal()">
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <cx-gift-wrap-service-form
+          class="px-3"
+          [isRemoving]="isRemoving"
+          [cmsData]="cmsData"
+          (closeEmit)="closeGiftWrapModal()"
+          (submitEmit)="handleSubmit()"
+        ></cx-gift-wrap-service-form>
+      </div>
+    </div>
+  </div>
+</ng-template>

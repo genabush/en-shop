@@ -1,0 +1,16 @@
+$lang=en
+INSERT_UPDATE MarketSelectorSite ; uid[unique=true] ; name[lang=$lang] ; url                               ; enabled[default=true] ; 
+                                 ; austria          ; Austria          ; "/thebodyshop-at/de_AT/EUR/"      ; 
+                                 ; australia        ; Australia        ; "/thebodyshop-au/en_AU/AUD/"      ; 
+                                 ; canada           ; Canada           ; "/thebodyshop-ca/en_CA/CAD/"      ; 
+                                 ; germany          ; Germany          ; "/thebodyshop-de/de/EUR/"         ; 
+                                 ; denmark          ; Denmark          ; "/thebodyshop-dk/da/DKK/"         ; 
+                                 ; spain            ; Spain            ; "/thebodyshop-es/es/EUR/"         ; 
+                                 ; france           ; France           ; "/thebodyshop-fr/fr/EUR/"         ; 
+                                 ; netherlands      ; Netherlands      ; "/thebodyshop-nl/nl/EUR/"         ; 
+                                 ; sweden           ; Sweden           ; "/thebodyshop-se/sv/SEK/"         ; 
+                                 ; unitedKingdom    ; United Kingdom   ; "/thebodyshop-uk/en_GB/GBP/"      ; 
+                                 ; hongKong         ; Hong Kong        ; "/thebodyshop-hk/en_HK/HKD/"      ; 
+                                 ; singapore        ; Singapore        ; "/thebodyshop-sg/en_SG/SGD/"      ; 
+                                 ; usa              ; USA              ; "/thebodyshop-us/en_US/USD/"      ;
+                                 ; brazil           ; Brazil           ; "https://www.thebodyshop.com.br/" ; 

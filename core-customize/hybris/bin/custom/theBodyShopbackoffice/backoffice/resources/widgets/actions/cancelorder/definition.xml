@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 THE BODY SHOP INTERNATIONAL LIMITED. All rights reserved. -->
+<action-definition id="uk.co.thebodyshop.backoffice.actions.tbscancelorder"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+
+    <name>Cancel Order</name>
+    <description>Cancel Order Action</description>
+    <author>hybris</author>
+    <version>0.1</version>
+
+    <actionClassName>uk.co.thebodyshop.backoffice.actions.TbsCancelOrderAction</actionClassName>
+    <inputType>de.hybris.platform.core.model.order.OrderModel</inputType>
+    <outputType>de.hybris.platform.core.model.order.OrderModel</outputType>
+
+    <iconUri>icons/icon_action_cancel_default.png</iconUri>
+    <iconDisabledUri>icons/icon_action_cancel_disabled.png</iconDisabledUri>
+    <iconHoverUri>icons/icon_action_cancel_hover.png</iconHoverUri>
+
+    <settings>
+        <setting key="viewMode" default-value="iconAndText"/>
+    </settings>
+</action-definition>

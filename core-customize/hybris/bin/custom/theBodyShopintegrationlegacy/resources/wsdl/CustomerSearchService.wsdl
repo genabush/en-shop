@@ -1,0 +1,146 @@
+
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/customerSearchSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/customerSearchSchema" targetNamespace="http://thebodyshop/customerSearchSchema">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://thebodyshop/customerSearchSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/customerSearchSchema">
+            <xs:element name="CustomerSearchRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="SearchTerms" type="tns:NotNullStringMaxLength256" />
+                        <xs:element name="Market" type="tns:NotNullStringMaxLength256" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AdvancedCustomerSearchRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Market" type="xs:string" />
+                        <xs:element name="isLYBC" type="xs:string" />
+                        <xs:element name="Title" type="xs:string" />
+                        <xs:element name="FirstName" type="xs:string" />
+                        <xs:element name="LastName" type="xs:string" />
+                        <xs:element name="Gender" type="xs:string" />
+                        <xs:element name="DateOfBirth" type="xs:string" />
+                        <xs:element name="TelephoneNumber" type="xs:string" />
+                        <xs:element name="EmailAddress" type="xs:string" />
+                        <xs:element name="City" type="xs:string" />
+                        <xs:element name="LoyaltyCardNumber" type="xs:string" />
+                        <xs:element name="PostCode" type="xs:string" />
+                        <xs:element name="NationalID" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:simpleType name="StatusTypeEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="SUCCESS" />
+                    <xs:enumeration value="FAILURE" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="NotNullStringMaxLength256">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value=".*\S.*" />
+                    <xs:minLength value="1" />
+                    <xs:maxLength value="255" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element name="AddressLine1" type="xs:string" />
+                    <xs:element minOccurs="0" name="AddressLine2" type="xs:string" />
+                    <xs:element name="Town" type="xs:string" />
+                    <xs:element minOccurs="0" name="Region" type="xs:string" />
+                    <xs:element name="Country" type="xs:string" />
+                    <xs:element name="PostCode" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="CustomerSearchResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="CustomerData" type="tns:CustomerData" />
+                        <xs:element name="ResponseStatus" type="tns:ResponseStatus" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="LoyaltyMembership">
+                <xs:sequence>
+                    <xs:element name="ProgrammeID" type="xs:string" />
+                    <xs:element name="ProgrammeName" type="xs:string" />
+                    <xs:element name="LoyaltyCard" type="tns:LoyaltyCard" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LoyaltyCard">
+                <xs:sequence>
+                    <xs:element name="LoyaltyCardNumber" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerData">
+                <xs:sequence>
+                    <xs:element name="CustomerID" type="xs:string" />
+                    <xs:element minOccurs="0" name="NationalID" type="xs:string" />
+                    <xs:element name="FirstName" type="xs:string" />
+                    <xs:element minOccurs="0" name="MiddleName" type="xs:string" />
+                    <xs:element name="LastName" type="xs:string" />
+                    <xs:element minOccurs="0" name="DateOfBirth" type="xs:string" />
+                    <xs:element minOccurs="0" name="Gender" type="xs:string" />
+                    <xs:element name="EmailAddress" type="xs:string" />
+                    <xs:element minOccurs="0" name="PhoneNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="MobileNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="Address" type="tns:Address" />
+                    <xs:element minOccurs="0" name="LoyaltyMembership" type="tns:LoyaltyMembership" />
+                    <xs:element minOccurs="0" name="DirectMailOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="EmailOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="MobileOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="PhoneOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="PreferredLanguage" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ResponseStatus">
+                <xs:sequence>
+                    <xs:element name="status" type="tns:StatusTypeEnum" />
+                    <xs:element minOccurs="0" name="statusMessage" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="CustomerSearchResponse">
+        <wsdl:part element="tns:CustomerSearchResponse" name="CustomerSearchResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AdvancedCustomerSearchRequest">
+        <wsdl:part element="tns:AdvancedCustomerSearchRequest" name="AdvancedCustomerSearchRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CustomerSearchRequest">
+        <wsdl:part element="tns:CustomerSearchRequest" name="CustomerSearchRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CustomerSearchService">
+        <wsdl:operation name="CustomerSearch">
+            <wsdl:input message="tns:CustomerSearchRequest" name="CustomerSearchRequest"></wsdl:input>
+            <wsdl:output message="tns:CustomerSearchResponse" name="CustomerSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AdvancedCustomerSearch">
+            <wsdl:input message="tns:AdvancedCustomerSearchRequest" name="AdvancedCustomerSearchRequest"></wsdl:input>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CustomerSearchServiceSoap11" type="tns:CustomerSearchService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="CustomerSearch">
+            <soap:operation soapAction="" />
+            <wsdl:input name="CustomerSearchRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="CustomerSearchResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AdvancedCustomerSearch">
+            <soap:operation soapAction="" />
+            <wsdl:input name="AdvancedCustomerSearchRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CustomerSearchService">
+        <wsdl:port binding="tns:CustomerSearchServiceSoap11" name="CustomerSearchServiceSoap11">
+            <soap:address location="http://thebodyshop.local:9001/tbsdataprocessing/endpoints" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

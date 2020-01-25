@@ -1,0 +1,229 @@
+// -------------------------------------------------------------
+// RECOLETA
+
+@font-face {
+  font-family: 'RecoletaSemiBold';
+  font-display: swap;
+  src: url('/assets/fonts/Recoleta/Recoleta-SemiBold.eot');
+  src: url('/assets/fonts/Recoleta/Recoleta-SemiBold.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Recoleta/Recoleta-SemiBold.woff') format('woff'),
+    url('/assets/fonts/Recoleta/Recoleta-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'RecoletaMedium';
+  font-display: swap;
+  src: url('/assets/fonts/Recoleta/Recoleta-Medium.eot');
+  src: url('/assets/fonts/Recoleta/Recoleta-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Recoleta/Recoleta-Medium.woff') format('woff'),
+    url('/assets/fonts/Recoleta/Recoleta-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'RecoletaRegular';
+  font-display: swap;
+  src: url('/assets/fonts/Recoleta/Recoleta-Regular.eot');
+  src: url('/assets/fonts/Recoleta/Recoleta-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Recoleta/Recoleta-Regular.woff') format('woff'),
+    url('/assets/fonts/Recoleta/Recoleta-Regular.ttf') format('truetype');
+}
+
+// -------------------------------------------------------------
+// DRUK
+
+@font-face {
+  font-family: 'DrukBold';
+  font-display: swap;
+  src: url('/assets/fonts/Druk/Druk-Bold.eot');
+  src: url('/assets/fonts/Druk/Druk-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Druk/Druk-Bold.woff') format('woff'), url('/assets/fonts/Druk/Druk-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DrukSuper';
+  font-display: swap;
+  src: url('/assets/fonts/Druk/Druk-Super.eot');
+  src: url('/assets/fonts/Druk/Druk-Super.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Druk/Druk-Super.woff') format('woff'),
+    url('/assets/fonts/Druk/Druk-Super.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DrukWideBold';
+  font-display: swap;
+  src: url('/assets/fonts/Druk/DrukWide-Bold.eot');
+  src: url('/assets/fonts/Druk/DrukWide-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Druk/DrukWide-Bold.woff') format('woff'),
+    url('/assets/fonts/Druk/DrukWide-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DrukWideSuper';
+  font-display: swap;
+  src: url('/assets/fonts/Druk/DrukWide-Super.eot');
+  src: url('/assets/fonts/Druk/DrukWide-Super.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Druk/DrukWide-Super.woff') format('woff'),
+    url('/assets/fonts/Druk/DrukWide-Super.ttf') format('truetype');
+}
+
+// -------------------------------------------------------------
+// WORKSANS
+
+@font-face {
+  font-family: 'WorkSansLight';
+  font-display: swap;
+  src: url('/assets/fonts/Work_Sans/WorkSans-Light.eot');
+  src: url('/assets/fonts/Work_Sans/WorkSans-Light.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Work_Sans/WorkSans-Light.woff') format('woff'),
+    url('/assets/fonts/Work_Sans/WorkSans-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'WorkSansMedium';
+  font-display: swap;
+  src: url('/assets/fonts/Work_Sans/WorkSans-Medium.eot');
+  src: url('/assets/fonts/Work_Sans/WorkSans-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Work_Sans/WorkSans-Medium.woff') format('woff'),
+    url('/assets/fonts/Work_Sans/WorkSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'WorkSansRegular';
+  font-display: swap;
+  src: url('/assets/fonts/Work_Sans/WorkSans-Regular.eot');
+  src: url('/assets/fonts/Work_Sans/WorkSans-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Work_Sans/WorkSans-Regular.woff') format('woff'),
+    url('/assets/fonts/Work_Sans/WorkSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'WorkSansSemibold';
+  font-display: swap;
+  src: url('/assets/fonts/Work_Sans/WorkSans-SemiBold.eot');
+  src: url('/assets/fonts/Work_Sans/WorkSans-SemiBold.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Work_Sans/WorkSans-SemiBold.woff') format('woff'),
+    url('/assets/fonts/Work_Sans/WorkSans-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'WorkSansBold';
+  font-display: swap;
+  src: url('/assets/fonts/Work_Sans/WorkSans-Bold.eot');
+  src: url('/assets/fonts/Work_Sans/WorkSans-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Work_Sans/WorkSans-Bold.woff') format('woff'),
+    url('/assets/fonts/Work_Sans/WorkSans-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'WorkSansExtraBold';
+  font-display: swap;
+  src: url('/assets/fonts/Work_Sans/WorkSans-ExtraBold.eot');
+  src: url('/assets/fonts/Work_Sans/WorkSans-ExtraBold.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Work_Sans/WorkSans-ExtraBold.woff') format('woff'),
+    url('/assets/fonts/Work_Sans/WorkSans-ExtraBold.ttf') format('truetype');
+}
+
+// -------------------------------------------------------------
+// INTERSTATE
+
+@font-face {
+  font-family: 'InterstateCompressedLight';
+  font-display: swap;
+  src: url('/assets/fonts/Interstate/interstate-lightcondensed.eot');
+  src: url('/assets/fonts/Interstate/interstate-lightcondensed.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Interstate/interstate-lightcondensed.woff') format('woff'),
+    url('/assets/fonts/Interstate/interstate-lightcondensed.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'InterstateCompressedRegular'; // Regular = Black
+  font-display: swap;
+  src: url('/assets/fonts/Interstate/interstate-blackcondensed.eot');
+  src: url('/assets/fonts/Interstate/interstate-blackcondensed.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Interstate/interstate-blackcondensed.woff') format('woff'),
+    url('/assets/fonts/Interstate/interstate-blackcondensed.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'InterstateCompressedBold';
+  font-display: swap;
+  src: url('/assets/fonts/Interstate/interstate-boldcondensed.eot');
+  src: url('/assets/fonts/Interstate/interstate-boldcondensed.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/Interstate/interstate-boldcondensed.woff') format('woff'),
+    url('/assets/fonts/Interstate/interstate-boldcondensed.ttf') format('truetype');
+}
+
+// -------------------------------------------------------------
+// Definitions
+$headings-font-family: 'RecoletaMedium';
+$font-family-base: 'WorkSansRegular';
+$font-family-sans-serif: $font-family-base;
+$links-font-family: 'WorkSansBold';
+
+// Navs
+$nav-heading-header-font-family: 'WorkSansSemibold';
+$nav-heading-header-medium-font-family: 'WorkSansSemibold';
+$nav-heading-footer-font-family: 'DrukWideBold';
+$nav-heading-text-transform: uppercase;
+
+// Pdp
+$headings-product-intro-font-family: 'RecoletaSemiBold';
+$headings-product-key-ingredients-title-font-family: 'RecoletaMedium';
+$headings-product-key-ingredients-link-font-family: 'WorkSansBold';
+$headings-product-key-ingredients-link-full-font-family: 'WorkSansSemibold';
+$product-strapline-font-family: 'WorkSansSemibold';
+
+// Accordions
+$accordions-font-family: 'WorkSansMedium';
+
+// Prices
+$price-unit-family: 'WorkSansSemibold';
+$price-formatted-family: 'WorkSansBold';
+$price-rewards-family: 'WorkSansBold';
+
+// Modals
+$modals-heading-font-family: 'RecoletaSemiBold';
+
+// Search
+$search-col-header-font-family: 'RecoletaSemiBold';
+
+// Form Inputs
+$mat-input-field-font-family: 'WorkSansRegular';
+
+// Product listings
+$search-listing-refine-heading-font-family: 'RecoletaSemiBold';
+$product-title-font-family: 'WorkSansBold';
+
+// Articles
+$search-listing-articles-heading-font-family: 'RecoletaSemiBold';
+$articles-heading-font-family: 'WorkSansSemibold';
+
+// General
+$headings-alt-medium: 'RecoletaMedium';
+$headings-alt-semibold: 'RecoletaSemiBold';
+$headings-alt-bold: 'DrukBold';
+$headings-level3: 'WorkSansSemibold';
+
+// Cart
+$product-name: 'WorkSansSemibold';
+$product-total-price: 'WorkSansBold';
+$product-size: 'WorkSansSemibold';
+
+// fonts naming
+
+$recoleta-semi-bold: 'RecoletaSemiBold';
+$recoleta-medium: 'RecoletaMedium';
+$recoleta-regular: 'RecoletaRegular';
+
+$druk-bold: 'DrukBold';
+$druk-super: 'DrukSuper';
+$druk-wide-bold: 'DrukWideBold';
+$druk-wide-super: 'DrukWideSuper';
+
+$work-sans-extra-bold: 'WorkSansExtraBold';
+$work-sans-bold: 'WorkSansBold';
+$work-sans-semibold: 'WorkSansSemibold';
+$work-sans-medium: 'WorkSansMedium';
+$work-sans-light: 'WorkSansLight';
+$work-sans: 'WorkSansRegular';
+
+$font-awesome: 'Font Awesome 5 Free';

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.1.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!--
+	The hybris platform provides one single Spring application context for beans located at the jalo layer.
+	Each extension can add beans to this context by specifying them at this configuration file.
+	 
+	You can use and/or redefine beans defined at configuration files of other extensions as well as
+	adding new one.
+		
+	If you want to locate this file at a different location or want to use several files for better,
+	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
+	There you can specify a comma separated list of files where first is tried to find a file per classpath and
+	then per file system.
+
+	
+	If you want to configure beans for your web module please have a look at
+	your web/webroot/WEB-INF/<extname>-web-spring.xml.
+	-->
+	
+	<!--  Example how to override a manager -->
+	<!--
+	<bean id="core.productManager"   class="uk.co.thebodyshop.collectionpoints.jalo.TheBodyShopintegrationcollectionpointsProductManager" 	init-method="init"	destroy-method="destroy" />
+	-->
+	
+	
+ 	<!--  Example how to configure the class to use for jalo session creation -->
+	<!--
+	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
+		<property name="targetClassName" value="uk.co.thebodyshop.collectionpoints.jalo.TheBodyShopintegrationcollectionpointsJaloSession"/>
+	</bean>
+	-->
+
+	
+	<!--  Example how to override an item  -->
+	<!-- 
+	<bean id="de.hybris.platform.jalo.product.Product" class="uk.co.thebodyshop.collectionpoints.jalo.TheBodyShopintegrationcollectionpointsProduct" scope="prototype" />		
+ 	-->
+
+	<!--  
+	 Example how to register and use an AOP aspect 
+     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html	
+     -->
+	
+	<!-- 
+	<bean id="theBodyShopintegrationcollectionpointsProfBean" class="uk.co.thebodyshop.collectionpoints.aop.TheBodyShopintegrationcollectionpointsProfilingAspect"/>
+	<aop:config proxy-target-class="true">
+  		<aop:aspect id="theBodyShopintegrationcollectionpointsProfAspect" ref="theBodyShopintegrationcollectionpointsProfBean" >
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="execution(* getModificationTime(..))" />  	            
+	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
+  		</aop:aspect>
+	</aop:config>
+	 -->
+
+	
+	<!-- some other examples of a pointcut that matches everything:
+
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp; 
+	      	            !execution(* getPK(..))" />  	            
+	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
+	  -->
+	  
+	  <context:component-scan base-package="uk.co.thebodyshop.collectionpoints" />
+
+	<bean id="simpleHttpClient" class="uk.co.thebodyshop.collectionpoints.client.impl.SimpleHttpClient"/>
+
+	<bean id="collectionsHttpClient" class="uk.co.thebodyshop.collectionpoints.client.factory.HttpClientFactory">
+	</bean>
+
+	<!--<alias alias="collectionsHttpClient" name="defaultCollectionsHttpClient"/>-->
+	<!--<bean id="defaultCollectionsHttpClient" class="org.apache.http.impl.client.DefaultHttpClient">-->
+		<!--<constructor-arg>-->
+			<!--<bean class="org.apache.http.impl.conn.PoolingClientConnectionManager">-->
+				<!--<property name="maxTotal" value="100" />-->
+				<!--<property name="defaultMaxPerRoute" value="50" />-->
+			<!--</bean>-->
+		<!--</constructor-arg>-->
+	<!--</bean>-->
+
+	<!--<bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig"-->
+		  <!--factory-method="custom">-->
+		<!--<property name="socketTimeout" value="60000" />-->
+		<!--<property name="connectTimeout" value="60000" />-->
+	<!--</bean>-->
+
+	<!--<bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build" />-->
+
+	<!--<bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder"-->
+		  <!--factory-method="create">-->
+		<!--<property name="defaultRequestConfig" ref="requestConfig" />-->
+	<!--</bean>-->
+
+	<!--<bean id="sniEnabledHttpClient" factory-bean="httpClientBuilder" factory-method="build" />-->
+
+	<bean id="collectionPointJaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>uk.co.thebodyshop.collectionpoints.royalmail.jaxb.accessrequest.AccessRequest</value>
+				<value>uk.co.thebodyshop.collectionpoints.royalmail.jaxb.locatorrequest.LocatorRequest</value>
+				<value>uk.co.thebodyshop.collectionpoints.royalmail.jaxb.getlcdeliverylocationsrequest.GetLCDeliveryLocationsRequest</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="collectionPointJaxb2MarshallerResponse" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>uk.co.thebodyshop.collectionpoints.royalmail.jaxb.locatorresponse.LocatorResponse</value>
+				<value>uk.co.thebodyshop.collectionpoints.royalmail.jaxb.getlcdeliverylocationsresponse.GetLCDeliveryLocationsResponse</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<alias alias="royalMailCollectionPointClientHelper" name="defaultRoyalMailCollectionPointClientHelper" />
+	<bean id="defaultRoyalMailCollectionPointClientHelper" class="uk.co.thebodyshop.collectionpoints.royalmail.client.RoyalMailCollectionPointClientHelper" />
+	
+	<alias alias="royalMailCollectionPointClient" name="defaultRoyalMailCollectionPointClient" />
+	<bean id="defaultRoyalMailCollectionPointClient" class="uk.co.thebodyshop.collectionpoints.royalmail.client.DefaultRoyalMailCollectionPointClient" />
+	
+	<alias alias="royalMailCollectionPointService" name="defaultRoyalMailCollectionPointService" />
+	<bean id="defaultRoyalMailCollectionPointService" class="uk.co.thebodyshop.collectionpoints.services.impl.DefaultRoyalMailCollectionPointService" />
+	
+	<alias alias="royalMailCollectionPointsConverter" name="defaultRoyalMailCollectionPointsConverter" />
+	<bean id="defaultRoyalMailCollectionPointsConverter" class="uk.co.thebodyshop.collectionpoints.converters.RoyalMailCollectionPointsConverter" />
+	
+	<alias alias="royalMailCollectionPointsPopulator" name="defaultRoyalMailCollectionPointsPopulator" />
+	<bean id="defaultRoyalMailCollectionPointsPopulator" class="uk.co.thebodyshop.collectionpoints.converters.populators.RoyalMailCollectionPointsPopulator" />
+	
+	<alias alias="royalMailCollectionPointConverter" name="defaultRoyalMailCollectionPointConverter" />
+	<bean id="defaultRoyalMailCollectionPointConverter" class="uk.co.thebodyshop.collectionpoints.converters.RoyalMailCollectionPointConverter" />
+</beans>

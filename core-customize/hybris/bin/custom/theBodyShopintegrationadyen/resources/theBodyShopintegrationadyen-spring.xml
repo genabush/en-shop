@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+    <bean name="adyenCartPopulator" class="uk.co.thebodyshop.integration.adyen.populator.TbsAdyenCartPopulator" >
+        <property name="configurationService" ref="configurationService" />
+        <property name="commonI18NService" ref="commonI18NService" />
+    </bean>
+
+    <bean id="adyenPaymentRefusalMessageService" class="uk.co.thebodyshop.integration.adyen.service.DefaultAdyenPaymentRefusalMessageService">
+        <constructor-arg name="adyenPaymentRefusalMessageDao" ref="adyenPaymentRefusalMessageDao" />
+    <constructor-arg name="configurationService" ref="configurationService" />
+    </bean>
+    
+    <bean id="adyenPaymentRefusalMessageDao" class="uk.co.thebodyshop.integration.adyen.dao.DefaultAdyenPaymentRefusalMessageDao">
+        <constructor-arg name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+    
+     <bean id="adyenRequestFactory" class="uk.co.thebodyshop.integration.adyen.factory.TbsAdyenRequestFactory">
+        <property name="configurationService" ref="configurationService" />
+        <property name="orderRepository" ref="adyenOrderRepository" />
+    </bean>
+    
+    <alias name="defaultTbsAdyenOrderService" alias="adyenOrderService"/>
+    <bean id="defaultTbsAdyenOrderService" parent="defaultAdyenOrderService" class="uk.co.thebodyshop.integration.adyen.service.DefaultTbsAdyenOrderService"/>
+    
+    <alias name="defaultTbsAdyenTransactionService" alias="tbsAdyenTransactionService"/>
+    <alias name="defaultTbsAdyenTransactionService" alias="adyenTransactionService"/>
+    <bean id="defaultTbsAdyenTransactionService" parent="defaultAdyenTransactionService" class="uk.co.thebodyshop.integration.adyen.service.DefaultTbsAdyenTransactionService" autowire="byName"/>
+    
+    <alias name="defaultTbsAdyenCheckoutFacade" alias="adyenCheckoutFacade" />
+    <bean id="defaultTbsAdyenCheckoutFacade" parent="defaultAdyenCheckoutFacade" class="uk.co.thebodyshop.integration.adyen.facades.DefaultTbsAdyenCheckoutFacade">
+    	<property name="tbsAdyenTransactionService" ref="tbsAdyenTransactionService"/>
+    </bean>
+
+    <alias name="defaultTbsAdyenNotificationService" alias="adyenNotificationService"/>
+    <bean id="defaultTbsAdyenNotificationService" parent="defaultAdyenNotificationService" class="uk.co.thebodyshop.integration.adyen.service.DefaultTbsAdyenNotificationService">
+    	<property name="tbsAdyenTransactionService" ref="tbsAdyenTransactionService" />
+        <property name="tbsAdyenBusinessProcessService" ref="adyenBusinessProcessService" />
+    </bean>
+
+    <alias name="defaultTbsAdyenBusinessProcessService" alias="adyenBusinessProcessService"/>
+    <bean id="defaultTbsAdyenBusinessProcessService" parent="defaultAdyenBusinessProcessService" class="uk.co.thebodyshop.integration.adyen.service.DefaultTbsAdyenBusinessProcessService"/>
+
+</beans>

@@ -1,0 +1,148 @@
+.collection-point {
+  height: 100%;
+  background: var(--cx-color-base-white);
+  padding: 1rem;
+  color: var(--cx-color-core-primary);
+  display: flex;
+  flex-direction: column;
+  &__header {
+    padding: 10px 0;
+    position: relative;
+    height: 70px;
+    &--has-border {
+      border-bottom: 1px solid var(--cx-color-base-grey);
+      margin-bottom: 1rem;
+    }
+  }
+  &__logo {
+    max-height: 60px;
+    max-width: 60px;
+    margin-top: -5px;
+  }
+  &__distance {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--cx-color-base-nourishing-white);
+    text-align: center;
+    padding: 5px;
+    &-value {
+      font-size: 30px;
+      width: 100%;
+      line-height: 1;
+      font-family: 'WorkSansBold';
+    }
+    &-units {
+      font-size: 12px;
+    }
+  }
+  &__nav {
+    position: relative;
+    width: 100%;
+  }
+  &__title {
+    @include media-breakpoint-down(sm) {
+      text-align: center;
+    }
+  }
+  &__total-count {
+    @include media-breakpoint-down(sm) {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    @include media-breakpoint-up(sm) {
+      position: absolute;
+      right: 2rem;
+      top: 1rem;
+    }
+
+    color: var(--cx-color-core-primary);
+    .count-value {
+      font-family: 'WorkSansBold';
+    }
+  }
+  &__tabs {
+    border-bottom: none;
+  }
+  &__tabs-item {
+    cursor: pointer;
+    background-color: $base-silver-light;
+    padding: 1rem 2rem;
+    margin-right: 0.5rem;
+    &.active {
+      border-top: 4px solid var(--cx-color-core-primary);
+      background-color: var(--cx-color-base-silver);
+      font-family: 'WorkSansBold';
+    }
+  }
+  &__list-view {
+    padding: 2rem;
+    width: 100%;
+    background-color: var(--cx-color-base-silver);
+  }
+  &__list-view-list {
+    max-height: 350px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+  &__list-view-map {
+    position: relative;
+  }
+  &__body {
+    flex-grow: 1;
+  }
+
+  &__footer {
+    margin-top: 1rem;
+    text-align: center;
+    &.has-info-btn {
+      text-align: initial;
+      .btn {
+        &:nth-of-type(1) {
+          float: left;
+        }
+        &:nth-of-type(2) {
+          float: right;
+        }
+      }
+    }
+    &.btns-spacing {
+      .btn {
+        width: calc(50% - 1rem);
+        &:nth-of-type(1) {
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+        }
+        &:nth-of-type(2) {
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+  &__search-results {
+    width: 100%;
+  }
+
+  &__stock-status {
+    width: 100%;
+    text-align: center;
+    font-family: 'WorkSansBold';
+    padding: 5px 10px;
+    margin-bottom: 0.5rem;
+    &--instock {
+      @extend .alert-success;
+    }
+    &--outofstock {
+      @extend .alert-danger;
+    }
+  }
+  &__phone {
+    font-family: 'WorkSansBold';
+    text-decoration: underline;
+    display: block;
+    margin-top: 0.5rem;
+  }
+}

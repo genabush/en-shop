@@ -1,0 +1,31 @@
+<cx-generic-link
+  *ngIf="component.data$ | async as data"
+  [url]="data.url"
+  [ngSwitch]="data.styleAttributes"
+  (click)="toggleHamburgerMenu()"
+  [ngClass]="{ 'header__shop-link': data.uid == 'ICON_StoreFinderLink' }"
+>
+  <ng-container *ngSwitchCase="'ICON_StoreFinderLink'">
+    <span class="store-finder-link" [attr.aria-label]="data.linkName">{{ data.linkName }}</span>
+    <cx-icon role="img" class="store-finder-link" [type]="'MAP_MARKER'" aria-hidden="true"></cx-icon>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ICON_WishListLink'">
+    <cx-icon role="img" [type]="'WISH_LIST'" [attr.aria-label]="'common.wishlist' | cxTranslate"></cx-icon>
+    <span class="d-flex d-lg-none ml-2"> {{ data.name }}</span>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ICON_Login'">
+    <cx-icon
+      role="img"
+      [attr.aria-label]="'common.myAccount' | cxTranslate"
+      class="my-account"
+      [type]="'USER_CIRCLE'"
+    ></cx-icon>
+    <span class="d-flex d-lg-none ml-2"> {{ data.name }}</span>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    {{ data.linkName }}
+  </ng-container>
+</cx-generic-link>

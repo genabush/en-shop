@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+			
+	<collectiontypes>
+        <collectiontype code="RefusalReasonCodesSet" elementtype="java.lang.Integer" autocreate="true" generate="true" type="set"/>
+    </collectiontypes>
+	
+	<itemtypes>
+		<itemtype code="BaseStore" autocreate="false" generate="false">
+            <description>Extending BaseStore type with Adyen configurations.</description>
+            <attributes>
+                <attribute qualifier="adyenOriginKey" type="java.lang.String">
+                    <persistence type="property"/>
+                    <description>Adyen Origin Key </description>
+                </attribute>
+            </attributes>
+        </itemtype>
+	
+		<itemtype code="AdyenPaymentRefusalMessage" extends="GenericItem" autocreate="true" generate="true">
+             <deployment table="adyen_refusal_msg" typecode="22937"/>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <persistence type="property"/>
+                     <modifiers read="true" write="true" optional="false" unique="true"/>
+                </attribute>
+                <attribute qualifier="message" type="localized:java.lang.String">
+                    <persistence type="property"/>
+                     <modifiers read="true" write="true" optional="false"/>
+                </attribute>
+                <attribute qualifier="default" type="java.lang.Boolean">
+                    <persistence type="property"/>
+                     <modifiers read="true" write="true" optional="true"/>
+                </attribute>
+                <attribute qualifier="refusalReasonCodes" type="RefusalReasonCodesSet">
+                    <persistence type="property"/>
+                     <modifiers read="true" write="true" optional="true"/>
+                </attribute>
+            </attributes>
+    	</itemtype>
+	</itemtypes>
+</items>

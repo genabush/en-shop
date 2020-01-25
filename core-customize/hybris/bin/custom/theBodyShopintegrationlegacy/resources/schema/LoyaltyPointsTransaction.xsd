@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/LoyaltyPointsTransactionSchema" xmlns:tns="http://thebodyshop/LoyaltyPointsTransactionSchema" elementFormDefault="qualified">
+
+	<xs:element name="loyaltyPointsTransactionRequest" type="tns:loyaltyPointsTransactionRequest"></xs:element>
+	<xs:element name="loyaltyPointsTransactionResponse" type="tns:loyaltyPointsTransactionResponse"></xs:element>
+
+	<xs:complexType name="loyaltyPointsTransactionRequest">
+		<xs:sequence>
+			<xs:element name="request">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CustomerID" type="xs:string" />
+						<xs:element name="Market" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="messageId" type="xs:string"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="loyaltyPointsTransactionResponse">
+		<xs:sequence>
+			<xs:element name="CustomerID" type="xs:string" />
+			<xs:element name="transactionRecords" type="tns:transactionRecord" minOccurs="0" maxOccurs="unbounded" />
+			<xs:sequence>
+				<xs:element minOccurs="0" name="return" type="tns:hybrisResponse"></xs:element>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="transactionRecord">
+		<xs:sequence>
+			<xs:element name="TransactionDate" type="xs:dateTime" />
+			<xs:element name="TransactionType" type="xs:string" />
+			<xs:element name="TransactionSubType" type="xs:string" />
+			<xs:element name="Points" type="xs:integer" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="hybrisResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="messageId" type="xs:string"></xs:element>
+			<xs:element minOccurs="0" name="requestId" type="xs:string"></xs:element>
+			<xs:element minOccurs="0" name="status" type="xs:string"></xs:element>
+			<xs:element minOccurs="0" name="statusMessage" type="xs:string"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

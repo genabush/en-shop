@@ -1,0 +1,35 @@
+<form [formGroup]="createWishlistForm" novalidate (submit)="triggerCreateNewWishlist()">
+  <div class="row">
+    <div class="form-group mb-0 col-12">
+      <mat-form-field appearance="fill" class="mat-input-primary">
+        <mat-label class="required">{{ 'wishlists.createModal.name.label' | cxTranslate }}</mat-label>
+        <input
+          matInput
+          class="mat-form-control"
+          type="text"
+          required
+          formControlName="wishlistName"
+          name="wishlistName"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="!hideCancel" class="col-6 mb-2">
+      <button type="button" (click)="triggerCancel()" class="wishlists__cta-cancel btn btn--secondary">
+        {{ 'wishlists.createModal.actions.cancel' | cxTranslate }}
+      </button>
+    </div>
+    <div [ngClass]="{ 'col-6 text-right': !hideCancel, 'col-12': hideCancel }">
+      <button type="submit" class="btn btn--primary wishlists__cta-save" [disabled]="!enableSubmit">
+        <ng-container *ngIf="!isEdit">
+          {{ 'wishlists.createModal.actions.save' | cxTranslate }}
+        </ng-container>
+        <ng-container *ngIf="isEdit">
+          {{ 'wishlists.editModal.actions.save' | cxTranslate }}
+        </ng-container>
+      </button>
+    </div>
+  </div>
+</form>

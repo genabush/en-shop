@@ -1,0 +1,16 @@
+<div [formGroup]="form">
+  <div class="cx-item-list-row" *ngFor="let item of items">
+    <div class="cx-item-list-items p-0">
+      <cx-cart-item
+        [parent]="form.controls[item.product.code]"
+        [item]="item"
+        [potentialProductPromotions]="getPotentialProductPromotionsForItem(item)"
+        [isReadOnly]="isReadOnly"
+        (remove)="removeEntry($event)"
+        [cartIsLoading]="cartIsLoading"
+        (update)="updateEntry($event)"
+      >
+      </cx-cart-item>
+    </div>
+  </div>
+</div>

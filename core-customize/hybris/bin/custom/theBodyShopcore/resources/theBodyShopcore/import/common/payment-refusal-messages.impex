@@ -1,0 +1,13 @@
+$lang=en
+
+INSERT_UPDATE AdyenPaymentRefusalMessage;code[unique=true];message[lang=$lang];default[default=false];refusalReasonCodes
+;C1;"Declined - Call your payment provider or use another payment method";;0,2,3,5,11,15,23,25,27,33
+;C2;"Declined - Invalid Card Details";;8,24
+;C3;"Communication Error - Try again later or contact customer services";;4,21
+;C4;"Declined - Use another payment method";;32
+;C5;"Declined - Card Expired. Use another payment method";;6
+;C6;"Declined - Card not accepted. Use another payment method";;10
+;C7;"Declined - Insufficient Funds. Use another payment method";;12,34,35
+;C8;"Your payment provider is not responding. Try again later or use another payment method";;9
+;F1;"Fraud TBC";;13,14,26,31
+;F2;"Fraud TBC";;20,22,38

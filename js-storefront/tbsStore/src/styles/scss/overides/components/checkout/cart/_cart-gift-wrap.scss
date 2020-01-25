@@ -1,0 +1,110 @@
+.cart-gift-wrap {
+  &__wrapper {
+    background-color: var(--cx-color-core-primary);
+    color: var(--cx-color-base-white);
+    @include media-breakpoint-up(lg) {
+      .row:first-of-type {
+        max-height: 260px;
+        margin-top: -1rem !important;
+        margin-bottom: -1rem !important;
+      }
+    }
+  }
+  &__title {
+    font-family: $work-sans-bold;
+    color: var(--cx-color-base-white);
+    border-bottom: 1px solid var(--cx-color-base-white);
+  }
+  &__row {
+    font-size: 0.875rem;
+    &-message {
+      font-family: $work-sans-bold;
+      &-sub {
+        color: var(--cx-color-core-tertiary);
+        &.showing {
+          font-family: $work-sans;
+          color: var(--cx-color-base-white);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 305px;
+          overflow: hidden;
+          @include media-breakpoint-down(md) {
+            max-width: 65vw;
+          }
+        }
+      }
+      &-link {
+        font-family: $work-sans-medium;
+        color: var(--cx-color-core-tertiary);
+        text-decoration: underline;
+        cursor: pointer;
+        line-height: 1.5;
+        background: none;
+        border: none;
+        &:hover {
+          color: var(--cx-color-core-tertiary);
+        }
+      }
+      &-price {
+        font-family: $work-sans;
+      }
+    }
+    &-applied {
+      &-img {
+        max-width: 4rem;
+      }
+      &-price {
+        font-size: 1rem;
+        -webkit-box-align: end;
+        -ms-flex-align: end;
+        align-items: flex-end;
+        @include media-breakpoint-down(md) {
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+        }
+      }
+    }
+    &.row-underline {
+      &::after {
+        content: '';
+        position: absolute;
+        width: calc(100% + 1.25rem);
+        height: 1px;
+        border-bottom: 1px solid var(--cx-color-base-white);
+        bottom: 0;
+        @include media-breakpoint-down(sm) {
+          width: 100%;
+        }
+      }
+    }
+    .btn--warning {
+      margin-top: 2px;
+    }
+  }
+  &-form-group__image {
+    @include media-breakpoint-up(lg) {
+      .cart-gift-wrap__image {
+        max-height: 290px;
+      }
+    }
+  }
+  &__image {
+    margin: 0 -1rem 0 1.5rem;
+    overflow: hidden;
+    img {
+      height: calc(100% + 8px);
+      width: auto;
+      -o-object-fit: cover;
+      object-fit: cover;
+    }
+    @include media-breakpoint-down(md) {
+      margin: -1rem -1rem 2rem 0rem;
+      max-height: none;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

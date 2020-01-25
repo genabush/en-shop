@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="order-confirmation">
+    <div class="order-confirmation__container">
+      <div class="order-summary " *ngIf="order$ | async as order">
+        <div class="order-confirmation__item">
+          <div class="row">
+            <div class="col-6">
+              {{ 'orderConfirmationPage.deliveryMode' | cxTranslate }} {{ order.deliveryMode.name }}
+            </div>
+            <div class="col-6 text-right">
+              {{ order.deliveryMode.deliveryCost.formattedValue }}
+            </div>
+          </div>
+        </div>
+        <div class="order-confirmation__order-total mt-3">
+          <div class="row">
+            <div class="offset-4 col-4 text-right">{{ 'orderConfirmationPage.total' | cxTranslate }}</div>
+            <div class="col-4 text-right">{{ order.totalPriceWithTax.formattedValue }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

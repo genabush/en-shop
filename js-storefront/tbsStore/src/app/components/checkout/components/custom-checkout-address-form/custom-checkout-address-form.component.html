@@ -1,0 +1,303 @@
+<form [formGroup]="address" novalidate (submit)="verifyAddress($event)">
+  <input type="hidden" formControlName="id" name="id" />
+  <ngb-alert
+    type="danger"
+    [dismissible]="true"
+    class="col-12 px-3 rounded"
+    *ngIf="verificationError"
+    (close)="hideVerificationError()"
+  >
+    {{ verificationError }}
+  </ngb-alert>
+  <div class="row">
+    <!-- TITLE -->
+    <div class="form-group mb-0 col-6 clearfix" *ngIf="showTitleCode">
+      <mat-form-field *ngIf="titles$ | async as titles" appearance="fill" class="mat-select-primary">
+        <mat-label class="required">{{ 'addressForm.title' | cxTranslate }}</mat-label>
+        <mat-select
+          class="mat-select-primary"
+          formControlName="titleCode"
+          name="titleCode"
+          [placeholder]="'addressForm.title' | cxTranslate"
+          (change)="titleSelected($event)"
+        >
+          <mat-option *ngFor="let title of titles" class="mat-option-primary" [value]="title.code">{{
+            title.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <!-- FIRST NAME -->
+    <div class="form-group mb-0 col-12 col-lg-6">
+      <mat-form-field appearance="fill" class="mat-input-primary">
+        <mat-label class="required">{{ 'addressForm.firstName.label' | cxTranslate }}</mat-label>
+        <input
+          matInput
+          class="mat-form-control"
+          type="text"
+          required
+          placeholder="{{ 'addressForm.firstName.placeholder' | cxTranslate }}"
+          formControlName="firstName"
+          name="firstName"
+        />
+      </mat-form-field>
+    </div>
+    <!-- LAST NAME -->
+    <div class="form-group mb-0 col-12 col-md-6">
+      <mat-form-field appearance="fill" class="mat-input-primary">
+        <mat-label class="required">{{ 'addressForm.lastName.label' | cxTranslate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          class="mat-form-control"
+          required
+          placeholder="{{ 'addressForm.lastName.placeholder' | cxTranslate }}"
+          formControlName="lastName"
+          name="lastName"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <!-- COMPANY -->
+    <div
+      class="form-group mb-0 col-12 col-md-6"
+      [class.d-none]="'companyName' | addressFormShowField: this.selectedCountry$.value"
+    >
+      <mat-form-field appearance="fill" class="mat-input-primary">
+        <mat-label class="label-content">{{ 'addressForm.companyName.label' | cxTranslate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          class="mat-form-control"
+          placeholder="{{ 'addressForm.companyName.placeholder' | cxTranslate }}"
+          formControlName="companyName"
+          name="companyName"
+        />
+      </mat-form-field>
+    </div>
+    <!-- PHONE  -->
+    <div class="form-group mb-0 col-12 col-md-6">
+      <mat-form-field
+        appearance="fill"
+        class="mat-input-primary"
+        [class.mb-5]="address.controls['phone']?.hasError('pattern')"
+      >
+        <mat-label class="label-content">{{ 'addressForm.phoneNumber.label' | cxTranslate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          class="mat-form-control"
+          placeholder="{{ 'addressForm.phoneNumber.placeholder' | cxTranslate }}"
+          formControlName="phone"
+          name="phone"
+          [maxlength]="maxLengthObject.phone"
+        />
+        <mat-error class="pl-1" *ngIf="address.controls['phone']?.hasError('pattern')">{{
+          'addressForm.phoneNumber.disclaimer' | cxTranslate
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <hr class="cx-address-hr mt-2 mb-4" />
+
+  <div class="row">
+    <ng-container *ngIf="!manualAddressEntry">
+      <div class="form-group mb-0 col-12 mb-1">
+        <label>
+          <span class="label-content required">{{ 'addressForm.typeYourAddress' | cxTranslate }}</span>
+          <input
+            type="text"
+            class="form-control"
+            required
+            placeholder="{{ 'addressForm.streetAddress' | cxTranslate }}"
+            disabled
+          />
+          <button class="btn btn-search-address position-absolute" style="top:2rem;right:.8rem;line-height:1.6;">
+            <cx-icon
+              [type]="iconTypes.SEARCH"
+              [attr.aria-label]="'common.searchBtn' | cxTranslate"
+              class="search-address"
+              (click)="doAddressSearch()"
+            ></cx-icon>
+          </button>
+        </label>
+      </div>
+      <cx-generic-link (click)="toggleManualEntry()" [ngClass]="'switch-manual col-12'">{{
+        'adressForm.enterAdressManually' | cxTranslate
+      }}</cx-generic-link>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="manualAddressEntry">
+    <div class="row">
+      <!-- ADDRESS 1 -->
+      <div class="form-group mb-0 col-12 col-md-6">
+        <mat-form-field appearance="fill" class="mat-input-primary">
+          <mat-label class="required">{{ 'addressForm.address1' | cxTranslate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            class="mat-form-control"
+            required
+            placeholder="{{ 'addressForm.address1' | cxTranslate }}"
+            formControlName="line1"
+            name="line1"
+            [maxlength]="maxLengthObject.line1"
+          />
+        </mat-form-field>
+      </div>
+      <!-- ADDRESS 2 -->
+      <div class="form-group mb-0 col-12 col-md-6">
+        <mat-form-field appearance="fill" class="mat-input-primary">
+          <mat-label class="required">{{ 'addressForm.address2' | cxTranslate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            class="mat-form-control"
+            placeholder="{{ 'addressForm.address2' | cxTranslate }}"
+            formControlName="line2"
+            name="line2"
+            [maxlength]="maxLengthObject.line2"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <!-- CITY/TOWN -->
+      <div class="form-group mb-0 col-12 col-md-6">
+        <mat-form-field appearance="fill" class="mat-input-primary">
+          <mat-label>{{ 'addressForm.city.label' | cxTranslate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            class="mat-form-control"
+            required
+            placeholder="{{ 'addressForm.city.placeholder' | cxTranslate }}"
+            formControlName="town"
+            name="town"
+            [maxlength]="maxLengthObject.city"
+          />
+        </mat-form-field>
+      </div>
+      <!-- PROVINCE/REGION -->
+      <div
+        class="form-group mb-0 col-12 col-md-6"
+        [class.d-none]="'region' | addressFormShowField: this.selectedCountry$.value"
+      >
+        <ng-container *ngIf="regions$ | async as regions" formGroupName="region">
+          <mat-form-field appearance="fill" class="mat-select-primary">
+            <mat-select
+              class="mat-select-primary"
+              formControlName="isocode"
+              [placeholder]="'addressForm.selectOne' | cxTranslate"
+            >
+              <mat-option *ngFor="let region of regions" class="mat-option-primary" [value]="region.isocode">{{
+                region.name
+              }}</mat-option>
+            </mat-select>
+            <mat-label class="label-content required">{{ 'addressForm.state.label' | cxTranslate }}</mat-label>
+          </mat-form-field>
+        </ng-container>
+      </div>
+    </div>
+    <!-- COUNTRIES -->
+    <div class="row flex-wrap">
+      <div class="form-group col-md-6" formGroupName="country" [class.mb-4]="addressFormType == 'SHIPPING'">
+        <ng-container *ngIf="countries$ | async as countries">
+          <mat-form-field
+            class="mat-select-primary w-100"
+            appearance="fill"
+            *ngIf="countries?.length > 1; else countryInput"
+          >
+            <mat-label class="required">{{ 'addressForm.country' | cxTranslate }}</mat-label>
+            <mat-select
+              class="mat-select-primary"
+              formControlName="isocode"
+              name="countryiso"
+              (selectionChange)="countrySelected($event)"
+            >
+              <mat-option
+                *ngFor="let country of countries; let i = index"
+                class="mat-option-primary"
+                [value]="country"
+                >{{ country.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <ng-template #countryInput>
+            <mat-form-field
+              class="mat-native-form-field mat-input-primary mat-input-primary-readonly w-100"
+              appearance="fill"
+              *ngIf="countries?.length === 1"
+            >
+              <input matInput [value]="selectedCountryTitle$ | async" readonly />
+              <mat-label>{{ 'addressForm.country' | cxTranslate }}</mat-label>
+              <mat-hint *ngIf="addressFormType == 'SHIPPING' && selectedCountryTitle$ | async as selectedCountryTitle">
+                {{
+                  'addressForm.singleCountry'
+                    | cxTranslate
+                      : {
+                          title: selectedCountryTitle
+                        }
+                }}
+              </mat-hint>
+            </mat-form-field>
+          </ng-template>
+        </ng-container>
+      </div>
+      <!-- ZIP/POSTAL CODE -->
+      <div class="form-group mb-0 col-md-3">
+        <mat-form-field appearance="fill" class="mat-input-primary">
+          <mat-label class="required">{{ 'addressForm.zipCode.label' | cxTranslate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            class="mat-form-control"
+            required
+            placeholder="{{ 'addressForm.zipCode.placeholder' | cxTranslate }}"
+            formControlName="postalCode"
+            name="postalCode"
+            [maxlength]="maxLengthObject.postalCode"
+          />
+        </mat-form-field>
+      </div>
+      <!-- CLEAR ADDRESS -->
+      <div class="col-12 col-md-3 d-flex align-items-start pl-lg-0">
+        <button type="button" (click)="clearAddressEntries()" class="cx-address-clear-button text-nowrap w-100">
+          {{ 'addressForm.clearAddress' | cxTranslate }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- SET AS DEFAULT -->
+  <div class="form-group mb-0 mt-2" *ngIf="setAsDefaultField !== false">
+    <mat-checkbox
+      class="mat-checkbox-primary"
+      type="checkbox"
+      [attr.aria-label]="'addressForm.saveAsDefault' | cxTranslate"
+      formControlName="defaultAddress"
+      (change)="toggleDefaultAddress($event)"
+      >{{ 'addressForm.setAsDefault' | cxTranslate }}</mat-checkbox
+    >
+  </div>
+
+  <hr class="cx-address-hr my-4" />
+
+  <div class="cx-checkout-btns row mt-4 justify-content-end ">
+    <div class="col-12 col-lg-3 order-2 order-lg-1" *ngIf="showCancelBtn">
+      <button type="button" class="btn btn-block btn-action w-100 mt-2 mt-lg-0" (click)="back()">
+        {{ cancelBtnLabel || ('addressForm.chooseAddress' | cxTranslate) }}
+      </button>
+    </div>
+    <div class="col-12 col-lg-3 order-1 order-lg-2">
+      <button class="btn btn-block btn-primary w-100" type="submit" [disabled]="address.invalid">
+        {{ actionBtnLabel || ('common.continue' | cxTranslate) }}
+      </button>
+    </div>
+  </div>
+</form>

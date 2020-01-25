@@ -1,0 +1,65 @@
+<div class="gift-card-form">
+  <div class="gift-card-form__inner container">
+    <form
+      class="gift-card-form__field d-flex flex-wrap flex-column flex-lg-row align-items-start"
+      [formGroup]="formGroup"
+    >
+      <ng-container *ngIf="!(giftCardBalanceResponse$ | async)?.success">
+        <div>
+          <label class="gift-card-form__field-label" for="cardNumber">{{ 'gift.card.number' | cxTranslate }}</label>
+          <div class="gift-card-form__field-control gift-card-form__field-control--long">
+            <input class="input" formControlName="giftCardNumber" id="cardNumber" type="text" maxlength="19" />
+          </div>
+          <div *ngIf="showValidationError && !!formGroup.controls['giftCardNumber'].errors" class="warning">
+            {{ 'gift.validation.cardNumber' | cxTranslate }}
+            <div *ngIf="!!formGroup.controls['giftCardNumber'].errors.minlength">
+              {{ 'gift.validation.cardNumberMinLength' | cxTranslate }}
+            </div>
+            <div *ngIf="!!formGroup.controls['giftCardNumber'].errors.numbers">
+              {{ 'gift.validation.cardNumberNumbersOnly' | cxTranslate }}
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="gift-card-form__field-label" for="code">4 {{ 'gift.form.digitalCode' | cxTranslate }}</label>
+          <div class="gift-card-form__field-control  gift-card-form__field-control--short">
+            <input class="input" formControlName="giftCardPin" id="code" type="text" maxlength="4" />
+          </div>
+          <div *ngIf="showValidationError && !!formGroup.controls['giftCardPin'].errors" class="warning">
+            {{ 'gift.validation.cardPin' | cxTranslate }}
+            <div *ngIf="!!formGroup.controls['giftCardPin'].errors.minlength">
+              {{ 'gift.validation.cardPinMinLength' | cxTranslate }}
+            </div>
+            <div *ngIf="!!formGroup.controls['giftCardPin'].errors.numbers">
+              {{ 'gift.validation.cardPinNumbersOnly' | cxTranslate }}
+            </div>
+          </div>
+        </div>
+        <div class="field__control field__control--action">
+          <button class="btn btn-block btn-primary" (click)="checkGiftCardBalance()">
+            {{ 'gift.form.checkBalance' | cxTranslate }}
+          </button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="(giftCardBalanceResponse$ | async)?.success">
+        <span>
+          {{ 'gift.form.balance' | cxTranslate }} :
+          {{ (giftCardBalanceResponse$ | async)?.giftCardBalance }}
+        </span>
+        <div class="field__control field__control--action" *ngIf="giftCardBalanceResponse$ | async as giftCard">
+          <button class="btn btn-block btn-primary" (click)="checkAnotherGiftCard()">
+            {{ 'gift.form.checkAnotherCard' | cxTranslate }}
+          </button>
+        </div>
+      </ng-container>
+    </form>
+    <div class="warning" *ngIf="(giftCardBalanceResponse$ | async)?.errorMessage">
+      {{ (giftCardBalanceResponse$ | async)?.errorMessage | cxTranslate }}
+    </div>
+    <ng-container *ngIf="invalidGiftCard">
+      <div class="warning">
+        {{ 'giftcards.invalidCard' | cxTranslate }}
+      </div>
+    </ng-container>
+  </div>
+</div>

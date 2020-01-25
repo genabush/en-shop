@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="theBodyShopintegration-aop.xml"/>
+    <import resource="theBodyShopintegration-message-store-connectors.xml"/>
+    <import resource="theBodyShopintegration-message-store-common.xml"/>
+    <import resource="theBodyShopintegration-inbound.xml"/>
+    <import resource="theBodyShopintegration-outbound.xml"/>
+    <import resource="theBodyShopintegration-csv.xml"/>
+
+</beans>

@@ -1,0 +1,172 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import essential data for the Accelerator
+#
+
+# Language
+$lang=en
+
+# Languages
+UPDATE Language;isocode[unique=true];name[lang=$lang]
+;de;"German"
+;en;"English [Global]"
+;fr;"French"
+;en_AU;"English [AU]"
+;en_GB;"English [UK]"
+;en_CA;"English [CA]"
+;fr_CA;"French [CA]"
+;da;"Danish"
+;es;"Spanish"
+;nl;"Dutch"
+;sv;"Swedish";
+;en_US;"English [US]"
+;de_AT;"German [AT]"
+;en_HK;"English [HK]"
+;en_SG;"English [SG]"
+
+# Currencies
+UPDATE Currency;isocode[unique=true];name[lang=$lang]
+;EUR;"Euro"
+;GBP;"Pound"
+;AUD;"Australian Dollar"
+;USD;"US Dollar"
+;CAD;"Canadian Dollar"
+;SEK;"Swedish Korona"
+;DKK;"Danish Krone"
+;SEK;"Swedisk Krona"
+;HKD;"Hong Kong Dollar"
+;SGD;"Singapore Dollar"
+
+# Titles
+UPDATE Title;code[unique=true];name[lang=$lang]
+ ;dr;"Dr."
+ ;miss;"Miss"
+ ;mr;"Mr."
+ ;mrs;"Mrs."
+ ;ms;"Ms."
+ ;rev;"Rev."
+
+# Credit / Debit Cards
+UPDATE CreditCardType;code[unique=true];name[lang=$lang]
+ ;amex;"American Express"
+ ;diners;"Diner's Club"
+ ;maestro;"Maestro"
+ ;master;"Mastercard"
+ ;mastercard_eurocard;"Mastercard/Eurocard"
+ ;switch;"Switch"
+ ;visa;"Visa"
+
+# DistanceUnits for Storelocator 
+UPDATE DistanceUnit;code[unique=true];name[lang=$lang]
+ ;km;"km"
+ ;miles;"miles"
+
+# MediaFormats
+UPDATE MediaFormat;qualifier[unique=true];name[lang=$lang];
+ ;1200Wx1200H;"1200Wx1200H"
+ ;300Wx300H;"300Wx300H"
+ ;30Wx30H;"30Wx30H"
+ ;365Wx246H;"365Wx246H"
+ ;515Wx515H;"515Wx515H"
+ ;150Wx150H;"150Wx150H"
+ ;65Wx65H;"65Wx65H"
+ ;96Wx96H;"96Wx96H"
+
+# Product Tax Groups
+UPDATE ProductTaxGroup;code[unique=true];name[lang=$lang]
+;de-vat-full;"DE Full Tax rate"
+;de-vat-half;"DE Half Tax rate"
+;uk-vat-full;"UK Full Tax rate"
+;uk-vat-half;"UK Half Tax rate"
+;au-vat-half;"AU VAT Tax rate"
+;au-vat-full;"AU VAT Tax rate"
+;dk-vat-zero;"DK Zero VAT"
+;dk-vat-standard;"DK Standard VAT"
+;es-vat-reduced;"ES Reduced VAT"
+;es-vat-standard;"ES Standard VAT"
+;es-vat-medium;"ES Medium VAT"
+;fr-vat-reduced;"FR Reduced VAT"
+;fr-vat-standard;"FR Standard VAT"
+;fr-vat-medium;"FR Medium VAT"
+;nl-vat-zero;"NL Zero VAT"
+;nl-vat-standard;"NL Standard VAT"
+;nl-vat-medium;"NL Medium VAT"
+;se-vat-reduced;"SE Reduced VAT"
+;se-vat-standard;"SE STandard VAT"
+;se-vat-medium;"SE Medium VAT"
+;at-vat-full;"AT VAT full"
+;at-vat-half;"AT VAT half"
+;hk-sales-tax;"HK Sales TAX"
+;sg-sales-tax;"SG Sales TAX"
+
+# User Tax Groups
+UPDATE UserTaxGroup;code[unique=true];name[lang=$lang]
+;de-taxes;"DE Taxes"
+;uk-taxes;"UK Taxes"
+;fr-taxes;"FR Taxes"
+;au-taxes;"AU Taxes"
+;dk-taxes;"DK taxes"
+;es-taxes;"Es taxes"
+;nl-taxes;"NL taxes"
+;se-taxes;"SE taxes"
+;at-taxes;"AT taxes"
+;hk-taxes;"HK taxes"
+;sg-taxes;"SG taxes"
+
+# Tax
+UPDATE Tax;code[unique=true];name[lang=$lang]
+;de-vat-full;"DE VAT full"
+;de-vat-half;"DE VAT half"
+;uk-vat-full;"UK VAT full"
+;uk-vat-half;"UK VAT half"
+;au-vat-half;"AU VAT half"
+;au-vat-full;"AU VAT full"
+;dk-vat-zero;"DK Zero VAT"
+;dk-vat-standard;"DK Standard VAT"
+;es-vat-reduced;"ES Reduced VAT"
+;es-vat-standard;"ES Standard VAT"
+;es-vat-medium;"ES Medium VAT"
+;fr-vat-reduced;"FR Reduced VAT"
+;fr-vat-standard;"FR Standard VAT"
+;fr-vat-medium;"FR Medium VAT"
+;nl-vat-zero;"NL Zero VAT"
+;nl-vat-standard;"NL Standard VAT"
+;nl-vat-medium;"NL Medium VAT"
+;se-vat-reduced;"SE Reduced VAT"
+;se-vat-standard;"SE STandard VAT"
+;se-vat-medium;"SE Medium VAT"
+;at-vat-full;"AT VAT full"
+;at-vat-half;"AT VAT half"
+;hk-sales-tax;"HK Sales TAX"
+;sg-sales-tax;"SG Sales TAX"
+
+# Consginment statuses
+UPDATE ConsignmentStatus;code[unique=true];name[lang=$lang]
+ ;CANCELLED;"Cancelled"
+ ;PICKPACK;"Pickpack"
+ ;PICKUP_COMPLETE;"Pickup complete"
+ ;READY;"Ready"
+ ;READY_FOR_PICKUP;"Ready for pickup"
+ ;SHIPPED;"Shipped"
+ ;WAITING;"Waiting"
+
+UPDATE Unit;code[unique=true];name[lang=$lang]
+;each;Each
+;pieces;Piece
+;MG;Milligram
+;G;Gram
+;KG;Kilogram
+;TON;"Ton (US)"
+;TO;Tonne
+;LT;Kilotonne
+;ML;MilliLitre
+;L;Litre
+;CL;Centilitre
+;OC;Ounce
+;LB;Pound
+;PT;Pint
+;GAL;Gallon
+;FOZ;Fluid Ounce
+

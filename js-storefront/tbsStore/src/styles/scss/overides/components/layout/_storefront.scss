@@ -1,0 +1,30 @@
+@import './progress-bar';
+
+%cx-storefront {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &.start-navigating {
+    @extend %progress-bar, %progress-bar-loading !optional;
+  }
+  &.stop-navigating {
+    @extend %progress-bar, %progress-bar-loaded !optional;
+  }
+
+  > footer {
+    margin-top: auto;
+  }
+}
+
+.bg-my-account {
+  @include media-breakpoint-up(md) {
+    background: linear-gradient(
+      90deg,
+      rgba(244, 244, 244, 1) 49%,
+      rgba(250, 250, 250, 1) 49%,
+      rgba(255, 255, 255, 1) 51%,
+      rgba(255, 255, 255, 1) 100%
+    );
+  }
+}

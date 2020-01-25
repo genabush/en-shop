@@ -1,0 +1,50 @@
+@import './src/styles/scss/themes/tbs/_typography';
+.vouchers-list {
+  &__element {
+    border-radius: 15px 15px 0 0;
+    background-color: var(--cx-color-core-primary);
+    margin: 10px;
+    margin-bottom: 0;
+    padding: 10px 25px;
+    &--birthday {
+      background-color: var(--cx-color-core-tertiary);
+      color: var(--cx-color-core-primary);
+    }
+  }
+}
+.voucher-data {
+  &__currency {
+    text-align: center;
+    margin: auto;
+    font-size: 2rem;
+    font-weight: $work-sans-bold;
+    padding: 10px;
+  }
+  span {
+    font-weight: $work-sans-bold;
+    font-size: 1.1rem;
+  }
+}
+.payment-action {
+  text-align: center;
+  margin: 10px;
+  margin-top: 0;
+  padding: 5px;
+  cursor: pointer;
+  background-color: var(--cx-color-core-secondary);
+  border-radius: 0 0 15px 15px;
+  &--birthday {
+    background-color: var(--cx-color-core-primary);
+  }
+  &.blocked {
+    cursor: default;
+    color: var(--cx-color-core-secondary);
+  }
+}
+.terms {
+  padding: 10px;
+  a {
+    text-decoration: underline;
+    font-weight: $work-sans-bold;
+  }
+}

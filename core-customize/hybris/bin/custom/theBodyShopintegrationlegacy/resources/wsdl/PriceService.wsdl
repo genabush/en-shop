@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/priceSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/priceSchema" targetNamespace="http://thebodyshop/priceSchema">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/priceSchema" xmlns:tns="http://thebodyshop/priceSchema">
+			<xs:element name="PriceRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="Price" type="tns:Price" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="Price">
+				<xs:sequence>
+					<xs:element name="ArticleId">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="1" />
+								<xs:maxLength value="18" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Value">
+						<xs:simpleType>
+							<xs:restriction base="xs:decimal">
+								<xs:maxInclusive value="999999999999" />
+								<xs:fractionDigits value="2" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Currency">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:pattern value="[A-Z]{3}" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Type" type="tns:PriceTypeEnum" />
+					<xs:element minOccurs="0" name="Market" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="PriceResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="statusCode" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>The response of Price Feed Request</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="messageId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>The Hybris Id of the Price Feed</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:simpleType name="PriceTypeEnum">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="RRP" />
+					<xs:enumeration value="COST" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="PriceRequest">
+		<wsdl:part element="tns:PriceRequest" name="PriceRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="PriceResponse">
+		<wsdl:part element="tns:PriceResponse" name="PriceResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="PriceService">
+		<wsdl:operation name="Price">
+			<wsdl:input message="tns:PriceRequest" name="PriceRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:PriceResponse" name="PriceResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PriceServiceSoap11" type="tns:PriceService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Price">
+			<soap:operation soapAction="" />
+			<wsdl:input name="PriceRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="PriceResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PriceService">
+		<wsdl:port binding="tns:PriceServiceSoap11" name="PriceServiceSoap11">
+			<soap:address location="https://thebodyshop.local:9002/tbsdataprocessing/endpoints" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

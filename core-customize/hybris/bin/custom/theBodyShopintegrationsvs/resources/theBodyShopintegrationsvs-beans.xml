@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="uk.co.thebodyshop.integrations.svs.data.GiftCardData">
+		<property name="giftCardNumber" type="String" />
+		<property name="initialBalance" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="remainingBalance" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="appliedAmount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+		<property name="applied" type="boolean" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+        <property name="giftCards" type="java.util.List&lt;uk.co.thebodyshop.integrations.svs.data.GiftCardData&gt;" />
+        <property name="totalGiftCardsValue" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+        <property name="hasOutstandingAmount" type="boolean" />
+        <property name="outstandingAmount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+    </bean>
+        
+    <bean class="uk.co.thebodyshop.integrations.svs.dto.GiftCardWsDTO">
+        <description>Representation of a Gift Card</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">GiftCard</hint>
+        </hints>
+        <property name="giftCardNumber" type="String">
+            <description>Gift Card Number</description>
+        </property>
+        <property name="initialBalance" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Gift Card initial balance</description>
+        </property>
+        <property name="remainingBalance" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Gift Card remaining balance</description>
+        </property>
+        <property name="appliedAmount" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Gift Card applied amount</description>
+        </property>
+        <property name="applied" type="boolean" >
+        	<description>Gift Card applied flag</description>
+        </property>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.order.AbstractOrderWsDTO">
+        <description>Representation of an Abstract Order</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">AbstractOrder</hint>
+        </hints>
+        <property name="giftCards" type="java.util.List&lt;uk.co.thebodyshop.integrations.svs.dto.GiftCardWsDTO>">
+        	<description>Applied Gift Cards</description>
+        </property>
+        <property name="totalGiftCardsValue" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Total applied Gift Cards value</description>
+        </property>
+        <property name="hasOutstandingAmount" type="boolean">
+            <description>Outstanding amount flag</description>
+        </property>
+        <property name="outstandingAmount" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Outstanding amount after gift cards and loyalty points applied</description>
+        </property>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.integrations.svs.data.GiftCardResponseData">
+        <property name="giftCardNumber" type="String"/>
+        <property name="giftCardBalance" type="String"/>
+        <property name="giftCardAppliedAmount" type="java.lang.Double"/>
+    	<property name="success" type="boolean"/>
+		<property name="errorMessage" type="String"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.integrations.svs.dto.GiftCardRequestWsDTO">
+	    <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Gift Card Request</hint>
+        </hints>
+	    <property name="giftCardNumber" type="String">
+           	 <description>Gift Card Number</description>
+           	<hints>
+            	<hint name="required">true</hint>
+           	</hints>
+        </property>
+        <property name="giftCardPin" type="String">
+           	 <description>Gift Card Pin</description>
+        </property>
+        <property name="pinRequired" type="boolean">
+           	 <description>Gift Cards pin required flag</description>
+        </property>
+	</bean>
+    
+    <bean class="uk.co.thebodyshop.integrations.svs.dto.GiftCardResponseWsDTO">
+    	<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Gift Card Response</hint>
+        </hints>
+        <property name="giftCardNumber" type="String">
+            <description>Gift Card number</description>
+        </property>
+        <property name="giftCardBalance" type="String">
+            <description>Gift Card balance</description>
+        </property>
+        <property name="giftCardAppliedAmount" type="java.lang.Double">
+        	<description>Gift Card balance</description>
+        </property>
+    	<property name="success" type="boolean">
+			<description>Successful request flag</description>
+    	</property>
+		<property name="errorMessage" type="String">
+			<description>Error message</description>
+		</property>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.integrations.svs.data.GiftCardCaptureData">
+		<property name="amountRemaining" type="java.lang.Double" />
+		<property name="captureSuccesfull" type="boolean" />
+	</bean>
+ 
+</beans>

@@ -1,0 +1,241 @@
+<h3 class="cx-checkout-title d-none d-lg-block d-xl-block">{{ 'paymentMethods.title' | cxTranslate }}</h3>
+<ngb-accordion class="payment-method-accordion mb-4" [closeOthers]="true">
+  <!-- CREDIT CARDS PANEL -->
+  <ngb-panel
+    *ngIf="paymentMethodConfig?.creditCardPayment"
+    id="payment-method-credit-card"
+    title="Pay with credit-card"
+  >
+    <!-- CREDIT CARDS PANEL HEADER-->
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+            'paymentMethods.creditCard' | cxTranslate
+          }}</mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <!-- CREDIT CARDS PANEL CONTENT-->
+
+    <ng-template ngbPanelContent>
+      <ng-container *ngIf="hasSavedPaymentCards; else hasNoSavedCards">
+        <ngb-tabset #tabSet="ngbTabset" justify="center" (tabChange)="tabChangedEvent.emit($event)">
+          <!-- SAVED CARDS -->
+          <ngb-tab>
+            <ng-template ngbTabTitle>
+              {{ 'payment.savedCard' | cxTranslate }}
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div
+                [formGroup]="savedCardForm"
+                class="form-group mb-0 mt-3 col-12 col-lg-6 clearfix"
+                *ngIf="hasSavedPaymentCards"
+              >
+                <mat-form-field appearance="fill" class="mat-select-primary">
+                  <mat-label class="required"> {{ 'payment.savedCards' | cxTranslate }}</mat-label>
+                  <select
+                    matNativeControl
+                    class="mat-native-select"
+                    formControlName="savedCard"
+                    name="savedCard"
+                    (change)="savedCardSelected($event, tabSet)"
+                  >
+                    <option *ngFor="let card of savedPaymentCards" value="{{ card.subscriptionId }}">
+                      {{ card.accountHolderName }} <br />
+                      {{ card.cardNumber }} <br />
+                      {{ 'payment.Exp' | cxTranslate }} {{ card.expiryMonth }}/{{ card.expiryYear }} <br />
+                    </option>
+                    <option value="addNew">{{ 'payment.addNewCardLink' | cxTranslate }}</option>
+                  </select>
+                </mat-form-field>
+              </div>
+              <ng-container *ngIf="savedCardSelectedCode">
+                <div class="col-12 col-lg-6">
+                  <app-adyen-saved-credit-cards
+                    [savedPaymentMethod]="paymentMethodConfig"
+                    (savedCreditCarDetails)="setPaymentDetailEvent.emit($event)"
+                  ></app-adyen-saved-credit-cards>
+                </div>
+              </ng-container>
+            </ng-template>
+          </ngb-tab>
+          <!-- ADD NEW CARDS -->
+          <ngb-tab>
+            <ng-template ngbTabTitle>
+              {{ 'payment.addNewCard' | cxTranslate }}
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="mt-3">
+                <app-adyen-credit-cards
+                  *ngIf="!!paymentMethodConfig && (cart$ | async)?.hasOutstandingAmount"
+                  [paymentMethod]="paymentMethodConfig"
+                  (creditCarDetails)="setPaymentDetailEvent.emit($event)"
+                  (hasSavedCardChecked)="setSavedCardEvent.emit($event)"
+                ></app-adyen-credit-cards>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <!-- END ADD NEW CARDS -->
+        </ngb-tabset>
+      </ng-container>
+    </ng-template>
+    <ng-template #hasNoSavedCards>
+      <app-adyen-credit-cards
+        *ngIf="!!paymentMethodConfig && (cart$ | async)?.hasOutstandingAmount"
+        [paymentMethod]="paymentMethodConfig"
+        (creditCarDetails)="setPaymentDetailEvent.emit($event)"
+        (hasSavedCardChecked)="setSavedCardEvent.emit($event)"
+      ></app-adyen-credit-cards>
+    </ng-template>
+  </ngb-panel>
+  <!-- PAYPAL PANEL -->
+  <ngb-panel
+    id="payment-method-paypal"
+    title="Pay with Paypal"
+    *ngIf="isPaymentModeVisible('paypal') && (cart$ | async).hasOutstandingAmount"
+  >
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">
+            {{ 'paymentMethods.payPal' | cxTranslate }}
+          </mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <app-paypal class="d-flex px-3"></app-paypal>
+    </ng-template>
+  </ngb-panel>
+  <!-- GIROPAY PANEL -->
+  <ngb-panel
+    id="payment-method-giropay"
+    title="GiroPay"
+    *ngIf="isPaymentModeVisible('giropay') && (cart$ | async).hasOutstandingAmount"
+  >
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">
+            {{ 'paymentMethods.giropay' | cxTranslate }}
+          </mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <app-adyen-giropay [paymentMethod]="paymentMethodConfig" (creditCarDetails)="setPaymentDetailEvent.emit($event)">
+      </app-adyen-giropay>
+    </ng-template>
+  </ngb-panel>
+  <!-- iDEAL PANEL -->
+  <ngb-panel
+    id="payment-method-ideal"
+    title="iDEAL"
+    *ngIf="isPaymentModeVisible('ideal') && (cart$ | async).hasOutstandingAmount"
+  >
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="btn btn-link p-0">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+            'paymentMethods.ideal' | cxTranslate
+          }}</mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <app-adyen-ideal [paymentMethod]="paymentMethodConfig" (creditCarDetails)="setPaymentDetailEvent.emit($event)">
+      </app-adyen-ideal>
+    </ng-template>
+  </ngb-panel>
+
+  <ngb-panel id="payment-method-apple-pay" title="Pay with ApplePay">
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+            'paymentMethods.applePay' | cxTranslate
+          }}</mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <div class="d-flex px-3">{{ 'paymentMethods.payWithApplePay' | cxTranslate }}</div>
+    </ng-template>
+  </ngb-panel>
+
+  <!-- KLARNA PAY LATER PANEL -->
+  <ngb-panel
+    id="payment-method-klarna"
+    title="Klarna Pay Later"
+    *ngIf="isPaymentModeVisible('klarna') && (cart$ | async).hasOutstandingAmount"
+  >
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+            'paymentMethods.klarna' | cxTranslate
+          }}</mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <app-klarna
+        [type]="'klarna'"
+        [paymentMethod]="paymentMethodConfig"
+        (creditCarDetails)="setPaymentDetailEvent.emit($event)"
+      >
+      </app-klarna>
+    </ng-template>
+  </ngb-panel>
+
+  <!-- KLARNA ACCOUNT PANEL -->
+  <ngb-panel
+    id="payment-method-klarna_account"
+    title="Klarna Slice It"
+    *ngIf="isPaymentModeVisible('klarna_account') && (cart$ | async).hasOutstandingAmount"
+  >
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+            'paymentMethods.klarna_account' | cxTranslate
+          }}</mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <app-klarna
+        [type]="'klarna_account'"
+        [paymentMethod]="paymentMethodConfig"
+        (creditCarDetails)="setPaymentDetailEvent.emit($event)"
+      >
+      </app-klarna>
+    </ng-template>
+  </ngb-panel>
+
+  <!-- KLARNA PAY NOW PANEL -->
+  <ngb-panel
+    id="payment-method-klarna_paynow"
+    title="Klarna Pay Now"
+    *ngIf="isPaymentModeVisible('klarna_paynow') && (cart$ | async).hasOutstandingAmount"
+  >
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+          <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+            'paymentMethods.klarna_paynow' | cxTranslate
+          }}</mat-radio-button>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <app-klarna
+        [type]="'klarna_paynow'"
+        [paymentMethod]="paymentMethodConfig"
+        (creditCarDetails)="setPaymentDetailEvent.emit($event)"
+      >
+      </app-klarna>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

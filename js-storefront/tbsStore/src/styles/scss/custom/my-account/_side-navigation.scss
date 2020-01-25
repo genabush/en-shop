@@ -1,0 +1,92 @@
+.account-nav {
+  &__list {
+    &-item {
+      &--active {
+        .account-nav__link {
+          background-color: var(--cx-color-base-grey);
+          border-left: 3px solid var(--cx-color-core-primary);
+          font-family: $work-sans-semibold;
+        }
+      }
+      &--break {
+        margin-bottom: 40px;
+      }
+    }
+  }
+
+  &__link {
+    font-family: $work-sans;
+    display: block;
+    padding: 7px;
+    font-size: 18px;
+    color: var(--cx-color-core-primary);
+    padding-left: $grid-gutter-width/2;
+    display: flex;
+    align-items: center;
+    &:hover {
+      text-decoration: none;
+
+      & > .account-nav__link-icon {
+        &.icon--profile {
+          &:before {
+            content: $icon--profile_hover;
+          }
+        }
+        &.icon--my-account {
+          &:before {
+            content: $icon--my-account_hover;
+          }
+        }
+        &.icon--heart {
+          &:before {
+            content: $icon--heart_hover;
+          }
+        }
+        &.icon--preferences {
+          &:before {
+            content: $icon--preferences_hover;
+          }
+        }
+        &.icon--password {
+          &:before {
+            content: $icon--password_hover;
+          }
+        }
+        &.icon--order-history {
+          &:before {
+            content: $icon--order-history_hover;
+          }
+        }
+        &.icon--star_empty {
+          &:before {
+            content: $icon--star;
+          }
+        }
+        &.icon--addresses {
+          &:before {
+            content: $icon--addresses_hover;
+          }
+        }
+        &.icon--payment {
+          &:before {
+            content: $icon--payment_hover;
+          }
+        }
+        &.icon--privacy {
+          &:before {
+            content: $icon--privacy_hover;
+          }
+        }
+        &.icon--sign-out {
+          &:before {
+            content: $icon--sign-out_hover;
+          }
+        }
+      }
+    }
+    &-icon {
+      font-size: 23px;
+      padding-right: $grid-gutter-width;
+    }
+  }
+}

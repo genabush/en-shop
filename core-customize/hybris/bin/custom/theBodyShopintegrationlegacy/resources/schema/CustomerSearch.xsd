@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/customerSearchSchema" xmlns:tns="http://thebodyshop/customerSearchSchema" elementFormDefault="qualified">
+
+	<xs:element name="CustomerSearchRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SearchTerms" type="tns:NotNullStringMaxLength256" />
+				<xs:element name="Market" type="tns:NotNullStringMaxLength256" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AdvancedCustomerSearchRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Market" type="xs:string" />
+				<xs:element name="isLYBC" type="xs:string" />
+				<xs:element name="Title" type="xs:string" />
+				<xs:element name="FirstName" type="xs:string" />
+				<xs:element name="LastName" type="xs:string" />
+				<xs:element name="Gender" type="xs:string" />
+				<xs:element name="DateOfBirth" type="xs:string" />
+				<xs:element name="TelephoneNumber" type="xs:string" />
+				<xs:element name="EmailAddress" type="xs:string" />
+				<xs:element name="City" type="xs:string" />
+				<xs:element name="LoyaltyCardNumber" type="xs:string" />
+				<xs:element name="PostCode" type="xs:string" />
+				<xs:element name="NationalID" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<xs:simpleType name="StatusTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SUCCESS" />
+			<xs:enumeration value="FAILURE" />			
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="NotNullStringMaxLength256">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*\S.*" />
+			<xs:minLength value="1" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="AddressLine1" type="xs:string" />
+			<xs:element name="AddressLine2" minOccurs="0" type="xs:string" />
+			<xs:element name="Town" type="xs:string" />
+			<xs:element name="Region" minOccurs="0" type="xs:string" />
+			<xs:element name="Country" type="xs:string" />
+			<xs:element name="PostCode"  type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="CustomerSearchResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerData" type="tns:CustomerData" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />				
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AdvancedCustomerSearchResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerData" type="tns:CustomerData" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />				
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+    <xs:complexType name="LoyaltyMembership">
+        <xs:sequence>          
+        	<xs:element name="ProgrammeID" type="xs:string" />  
+        	<xs:element name="ProgrammeName" type="xs:string" />
+            <xs:element name="LoyaltyCard" type="tns:LoyaltyCard" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="LoyaltyCard">
+        <xs:sequence>            
+            <xs:element name="LoyaltyCardNumber" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="CustomerData">
+		<xs:sequence>
+			<xs:element name="CustomerID" type="xs:string" />
+			<xs:element name="NationalID" type="xs:string" minOccurs="0" />
+			<xs:element name="FirstName" type="xs:string" />
+			<xs:element name="MiddleName" type="xs:string" minOccurs="0" />
+			<xs:element name="LastName" type="xs:string" />
+			<xs:element name="DateOfBirth" type="xs:string" minOccurs="0" />
+			<xs:element name="Gender" type="xs:string" minOccurs="0" />
+			<xs:element name="EmailAddress" type="xs:string" />
+			<xs:element name="PhoneNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="MobileNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="Address" type="tns:Address" maxOccurs="1" minOccurs="0" />			
+			<xs:element name="LoyaltyMembership" type="tns:LoyaltyMembership" minOccurs="0" />
+			<xs:element name="DirectMailOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="EmailOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="MobileOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="PhoneOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="PreferredLanguage" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ResponseStatus">
+		<xs:sequence>
+			<xs:element name="status" type="tns:StatusTypeEnum" />
+			<xs:element name="statusMessage" type="xs:string" minOccurs="0" />			
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

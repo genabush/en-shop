@@ -1,0 +1,77 @@
+<cx-checkout-fulfillment-nav-tabs
+  class="w-100 mt-3"
+  [checkoutJourneyType]="checkoutJourneyType"
+  [fulfillmentEligibilityState]="fulfillmentEligibilityState"
+  (setJourneyType)="setCheckoutJourneyType($event)"
+></cx-checkout-fulfillment-nav-tabs>
+
+<div class="checkout-tab-row col-12 d-flex flex-row flex-wrap pr-lg-0">
+  <cx-checkout-fullfillment-tabs
+    class="d-flex flex-row flex-wrap flex-grow-1 px-0"
+    [ngClass]="
+      !deliveryRestricted?.isDeliveryRestricted || !deliveryModesRestricted?.isDeliveryModesRestricted
+        ? 'col-12 col-lg-5'
+        : ''
+    "
+    [checkoutJourneyType]="checkoutJourneyType"
+    (fulfillmentStateEmit)="setFulfillmentState($event)"
+    (deliveryRestrictedEmit)="setDeliveryRestricted($event)"
+  ></cx-checkout-fullfillment-tabs>
+
+  <!-- ERROR RESTRICTED -->
+  <cx-checkout-delivery-errors
+    class="col-12 col-lg-7 flex-column mb-3"
+    *ngIf="checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY && !checkoutStates.fullFillmentState"
+    [class.d-flex]="deliveryRestricted?.isDeliveryRestricted || deliveryModesRestricted?.isDeliveryModesRestricted"
+    [class.d-none]="!deliveryRestricted?.isDeliveryRestricted && !deliveryModesRestricted?.isDeliveryModesRestricted"
+    [deliveryRestricted]="deliveryRestricted"
+    [deliveryModesRestricted]="deliveryModesRestricted"
+  ></cx-checkout-delivery-errors>
+  <!-- DELIVERY MODES -->
+  <cx-checkout-delivery-modes
+    class="col-12 col-lg-7 checkout-address__content d-flex flex-grow-1 mb-4 px-0 px-lg-4"
+    *ngIf="
+      (!deliveryRestricted?.isDeliveryRestricted &&
+        !deliveryModesRestricted?.isDeliveryModesRestricted &&
+        checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY &&
+        checkoutStates.fullFillmentState) ||
+      (checkoutJourneyType === checkoutFulfillmentTabs.COLLECTION_POINT && collectionPoint$ | async)
+    "
+    (deliveryModesStateEmit)="setDeliveryModesState($event)"
+    (deliveryModesRestrictedEmit)="setDeliveryModesRestricted($event)"
+    [checkoutJourneyType]="checkoutJourneyType"
+  ></cx-checkout-delivery-modes>
+</div>
+
+<!-- WHO WILL COLLECT -->
+<div
+  class="checkout-tab-row col-12 d-flex flex-row flex-wrap"
+  *ngIf="
+    (checkoutJourneyType === checkoutFulfillmentTabs.COLLECTION_POINT &&
+      checkoutStates.deliveryModesState &&
+      collectionPoint$ | async) || (checkoutJourneyType === checkoutFulfillmentTabs.COLLECT_IN_STORE && cis$ | async)
+  "
+>
+  <div class="d-flex flex-column col-12 col-lg-5">
+    <cx-who-will-collect
+      (whoWillCollectEmit)="chooseWhoWillCollect($event)"
+      [checkoutJourneyType]="checkoutJourneyType"
+    ></cx-who-will-collect>
+  </div>
+</div>
+
+<!-- PAYMENT DETAILS -->
+<cx-checkout-payment-details
+  class="d-flex flex-row flex-wrap col-12 mb-4"
+  [showList]="
+    (checkoutStates.fullFillmentState &&
+      checkoutStates.deliveryModesState &&
+      checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY) ||
+    (checkoutJourneyType === checkoutFulfillmentTabs.COLLECTION_POINT &&
+      checkoutStates.whoWillCollectState &&
+      checkoutStates.deliveryModesState) ||
+    (checkoutJourneyType === checkoutFulfillmentTabs.COLLECT_IN_STORE && checkoutStates.whoWillCollectState)
+  "
+  [checkoutJourneyType]="checkoutJourneyType"
+  [checkoutState]="checkoutStates"
+></cx-checkout-payment-details>

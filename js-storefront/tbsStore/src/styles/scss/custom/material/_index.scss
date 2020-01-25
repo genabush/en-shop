@@ -1,0 +1,58 @@
+@import '~@angular/material/theming';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the theme.
+$candy-app-primary: mat-palette($mat-grey);
+$candy-app-accent: mat-palette($mat-yellow, A200, A100, A400);
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent);
+
+// Include the theme styles for only specified components
+@include mat-core-theme($candy-app-theme);
+
+mat-form-field,
+.mat-form-field {
+  width: 100%;
+  font-family: $mat-input-field-font-family !important;
+  max-height: $mat-form-field-height;
+  margin-bottom: 1.5rem;
+  &-underline {
+    height: 1px;
+    bottom: 0;
+    -webkit-transform: scaleY(1) !important;
+    transform: scaleY(1) !important;
+  }
+  &-subscript-wrapper {
+    margin-top: 1.25rem;
+  }
+  &.mat {
+    &-primary {
+      .mat-form-field-label {
+        font-family: $work-sans-medium;
+        color: $base-metal;
+        &.mat-form-field-empty {
+          color: $core-primary;
+        }
+      }
+    }
+  }
+}
+
+@import './material-input';
+@import './material-radio';
+@import './material-checkbox';
+@import './material-select';
+@import './material-select-address';
+@import './material-select-address-card';
+
+.cdk-overlay-container {
+  z-index: $mat-select-overlay-z-index;
+}
+
+.cdk-overlay-pane {
+  // -webkit-transform: translateX(0) !important;
+  // transform: translateX(0) !important;
+}

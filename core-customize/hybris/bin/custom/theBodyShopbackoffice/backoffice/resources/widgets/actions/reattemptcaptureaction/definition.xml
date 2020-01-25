@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 THE BODY SHOP INTERNATIONAL LIMITED. All rights reserved. -->
+<action-definition id="uk.co.thebodyshop.backoffice.actions.reattemptcaptureaction"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+
+    <name>Re-attempt Capture</name>
+    <description>Re-attempt Capture Action</description>
+    <author>hybris</author>
+    <version>0.1</version>
+
+    <actionClassName>uk.co.thebodyshop.backoffice.actions.ReAttemptCaptureOrderAction</actionClassName>
+    <inputType>de.hybris.platform.core.model.order.OrderModel</inputType>
+    <outputType>de.hybris.platform.core.model.order.OrderModel</outputType>
+
+    <iconUri>icons/icon_capture_reattempt_process_default.png</iconUri>
+    <iconDisabledUri>icons/icon_capture_reattempt_process_disabled.png</iconDisabledUri>
+    <iconHoverUri>icons/icon_capture_reattempt_process_hover.png</iconHoverUri>
+
+    <settings>
+        <setting key="viewMode" default-value="iconAndText"/>
+    </settings>
+</action-definition>

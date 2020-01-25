@@ -1,0 +1,18 @@
+<div class="product-intro">
+  <ng-container *ngIf="product$ | async as product">
+    <h1 class="product-intro__name">{{ product.name }}</h1>
+    <span class="product-intro__strapline">
+      <span *ngFor="let line of product.straplines" class="product-intro__strapline-item">{{ line }}</span>
+    </span>
+    <!-- <div class="rating">
+      <cx-star-rating [rating]="product?.averageRating" [disabled]="true"></cx-star-rating>
+      <div class="count">({{ product?.numberOfReviews }})</div>
+      <a class="btn-link" *ngIf="reviewsTabAvailable | async" (click)="showReviews()">{{
+        'productSummary.showReviews' | cxTranslate
+      }}</a>
+    </div> -->
+    <!-- <div class="code">
+      {{ 'productSummary.id' | cxTranslate }} {{ product?.code }}
+    </div> -->
+  </ng-container>
+</div>

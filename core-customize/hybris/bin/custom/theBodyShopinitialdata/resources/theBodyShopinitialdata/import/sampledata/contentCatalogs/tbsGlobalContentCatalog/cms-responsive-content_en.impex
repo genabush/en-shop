@@ -1,0 +1,209 @@
+$contentCatalog=tbsGlobalContentCatalog
+
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$picture=media(code, $contentCV);
+$wideContent=CMSImageComponent,BannerComponent,SimpleBannerComponent,CMSLinkComponent,CMSParagraphComponent
+$jarResource=jar:uk.co.thebodyshop.initialdata.setup.InitialDataSystemSetup&/theBodyShopinitialdata/import
+$siteResource=jar:uk.co.thebodyshop.initialdata.setup.InitialDataSystemSetup&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+
+# Language
+$lang=en
+
+# Site Logo Component
+UPDATE SimpleBannerComponent;$contentCV[unique=true];uid[unique=true];$picture[lang=$lang]
+;;SiteLogoComponent;/images/theme/logo-tbs.png;
+
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;FAQLink;"FAQs";
+;;PaymentDetailsLink;"Manage your payment details";
+;;OrderHistoryLink;"Order history";
+;;PaymentDetailsLink;"Payment methods";
+;;PersonalDetailsLink;"Profile";
+#;;UpdateEmailLink;"Update email";
+;;UpdatePasswordLink;"Update password";
+;;AddressBookLink;"Addresses";
+;;SavedCartsLink;"Saved Carts";
+;;ConsentManagementLink;"Consent Management";
+;;MyAccountSubNavNodeLink;"My account";
+;;CloseAccountLink;"Close Account";
+;;SignOutLink;"Sign-out";
+;;DataPrivacyLink;"Data & privacy";
+;;PointsRewardLink;"Points & rewards";
+;;ICON_WishListLink;"Wishlists";
+;;PreferencesLink;"Preferences";
+;;BodyCategoryLink;"View all Body";
+;;BodyTreatsCategoryLink;"Body Treats";
+;;BodyButtersCategoryLink;"Body Butters";
+;;BodyYogurtsCategoryLink;"Body Yogurts";
+;;BodyMassageOilsCategoryLink;"Body Massage";
+;;BodyBronzingCategoryLink;"Body Bronzing";
+;;DeodorantCategoryLink;"Deodorant";
+;;FootCareCategoryLink;"Foot Care";
+;;TravelSizesCategoryLink;"Travel Sizes";
+;;FaceCategoryLink;"View all Face";
+;;FaceMasksCategoryLink;"Face Masks";
+;;MakeUpRemoversCategoryLink;"Make-up Removers";
+;;EyeCareCategoryLink;"Eye Care";
+;;NightTimeTreatmentsCategoryLink;"Night Time Treatments";
+;;LipBalmCategoryLink;"Lip Balm";
+;;MenShavingCategoryLink;"Men's Shaving";
+;;CleansersAndTonersCategoryLink;"Cleansers and Toners";
+;;MoisturisersCategoryLink;"Moisturisers";
+;;AccessoriesCategoryLink;"Accessories";
+;;FaceScrubsCategoryLink;"Face Scrubs";
+;;HandsCategoryLink;"View all Hands";
+;;HandsMoisturisersCategoryLink;"Moisturisers";
+;;HandWashCategoryLink;"Hand Wash";
+;;TargetedTreatmentCategoryLink;"Targeted Treatment";
+;;HairCategoryLink;"View all Hair";
+;;BrushesAndCombsCategoryLink;"Brushes and Combs";
+;;ConditionerCategoryLink;"Conditioner";
+;;ShampooCategoryLink;"Shampoo";
+;;TreatmentCategoryLink;"Treatment";
+;;StylingCategoryLink;"Styling";
+;;MakeUpCategoryLink;"View all Make-up";
+;;FoundationsConcealersCategoryLink;"Foundations Concealers";
+;;BrushesAndToolsCategoryLink;"Brushes and Tools";
+;;BBCreamsCategoryLink;"BB Cream";
+;;BronzingCategoryLink;"Bronzing";
+;;CheeksCategoryLink;"Cheeks";
+;;EyeLinersCategoryLink;"Eye Liners";
+;;EyeShadowCategoryLink;"Eye Shadow";
+;;LipsCategoryLink;"Lips";
+;;MascaraCategoryLink;"Mascara";
+;;PrimersCategoryLink;"Primers";
+;;ICON_StoreFinderLink;"Shops";
+
+#Party
+;;BeYourOwnBossLink;"Be your own boss"
+;;HostAPartyNavNodeLink;"Host a party"
+
+#Tips & Advice
+;;HowToReduceBlackheadsLink;"How to reduce blackheads"
+;;SummerSkincareLink;"Summer skincare"
+;;HowToGetRidOfDarkCirclesLink;"How to get rid of dark circles"
+;;BestFaceMoisturisersLink;"Best Face Moisturisers"
+;;HowToKeepSkinLookingYouthfulLink;"How to keep skin looking youthful"
+;;GymSkincareTipsLink; "gym skincare tips"
+
+;;BenefitsOfDryBrushingLink;"Benefits of dry brushing"
+;;UnderstandingDrySkinLink;"Understanding dry skin"
+;;BestBodyExfoliatorsLink;"Best body exfoliators"
+
+;;HowToFindTheRightFoundationLink;"How to find the right foundation"
+;;HowToApplyFoundationLink;"How to apply foundation"
+;;HowToShapeEyebrowsLink;"How to shape eyebrows"
+;;HowToGetASunKissedGlowLink;"How to get a sun kissed glow"
+
+;;BestVeganCitiesInTheLink;"Best Vegan Cities in the "
+;;LongHaulFlightTipsLink;"Long haul flight tips"
+;;GymSkincareRoutineLink;"Gym skincare routine"
+;;ChildhoodDreamsLink;"Childhood Dreams"
+;;PixieGeldof’sTravelEssentialsLink;"Pixie Geldof’s Travel Essentials"
+
+;;BenefitsOfCharcoalLink;"Benefits of charcoal"
+;;HyaluronicAcidBenefitsLink;"Hyaluronic Acid Benefits"
+;;DiscoverAllIngredientsLink;"Discover all ingredients"
+;;SourcingOurIngredientsLink;"Sourcing our ingredients"
+
+#About_US
+;;OurHeritageLink;"Our Heritage"
+;;ForeverAgainstAnimalTestingLink;"Forever Against Animal Testing"
+;;B_CorpLink;"B Corp"
+;;LatestNewsLink;"Latest News"
+;;Natura_CoLink;"Natura &co"
+;;EducationalProgrammeLink;"Educational Programme"
+;;DonateMenstrualProductsLink;"Donate Menstrual Products"
+;;VegetarianBeautyLink;"Vegetarian Beauty"
+
+;;Loyalty_JoinNowLink;"Join Now"
+
+;;OurCommitmentLink;"Our Commitment"
+;;CommunityTradeLink;"Community Trade"
+;;Bio-BridgesLink;"Bio-Bridges"
+;;ReducingEnvironmentalFootprintLink;"Reducing Environmental Footprint"
+;;EmpoweringWomenLink;"Empowering Women"
+;;ModernSlaveryLink;"Modern Slavery"
+
+;;PlasticRecyclingInTheLink;"Plastic recycling in the "
+;;TerraCycleInterviewLink;"TerraCycle Interview "
+;;ReturnRecycleRepeatNavNodeLink;"Return. Recycle. Repeat"
+;;CommunityTradePlasticsLink;"Community Trade Plastics"
+;;PackagingAtTheBodyShopLink;"Packaging at The Body Shop"
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];title
+;BodyCategoryNavNode;;"Body";
+;FaceCategoryNavNode;;"Face";
+;HandsCategoryNavNode;;"Hands";
+;HairCategoryNavNode;;"Hair"
+;MakeUpCategoryNavNode;;"Make-up"
+;FAQNavNode;;"FAQ"
+;MyAccountNavNode;;"My Account"
+;UsefullInformationNavNode;;"Useful Information";
+;WaysToShopNavNode;;"Ways To Shop";
+;AboutUsNavNode;;"About Us";
+;BodyByProductTypeNavNode;;"By Product Type";
+;BodyBySkinTypeNavNode;;"By Skin Type";
+;FaceByProductTypeNavNode;;"By Product Type";
+;FaceBySkinTypeNavNode;;"By Skin Type";
+;HandsByProductTypeNavNode;;"By Product Type";
+;HandsBySkinTypeNavNode;;"By Skin Type";
+;HairByProductTypeNavNode;;"By Product Type";
+;HairByHairConcernTypeNavNode;;"By Hair Concern Type";
+;MakeUpByProductTypeNavNode;;"By Product Type";
+;MakeUpBySkinTypeNavNode;;"By Skin Type";
+
+;DiscoverPartyNavNode;;"Party"
+;DiscoverTipsAndAdviceNavNode;;"Tips & Advice"
+;DiscoverAboutUsNavNode;;"About Us"
+
+;Discover_TheBodyShopAtHomeNavNode;;"THE BODY SHOP AT HOME"
+
+;SkincareArticlesNavNode;;"SKINCARE ARTICLES"
+;BodyCareArticlesNavNode;;"BODYCARE ARTICLES"
+;Make-UpAeticlesNavNode;;"MAKE-UP ARTICLES"
+;LifeStyleArticlesNavNode;;"LIFESTYLE ARTICLES"
+;IngredientBenefitsNavNode;;"INGREDIENT BENEFITS"
+
+;WhoWeAreNavNode;;"WHO WE ARE"
+;LoyaltyProgramNavNode;;"LOYALTY PROGRAM"
+;SustainabilityNavNode;;"SUSTAINABILITY"
+;PlasticsNavNode;;"PLASTICS"
+
+# CMS Mini Cart Component
+UPDATE MiniCartComponent;$contentCV[unique=true];uid[unique=true];name;title[lang=$lang]
+;;MiniCart;Mini Cart;"YOUR SHOPPING CART"
+
+# CMS Footer Navigation Component
+#UPDATE FooterNavigationComponent;$contentCV[unique=true];uid[unique=true];notice[lang=en][translator=de.hybris.platform.acceleratorservices.dataimport.batch.converter.CopyrightTranslator,dateFormat=yyyy]
+#;;FooterNavigationComponent;"Copyright © {0} SAP SE or an SAP affiliate company. All rights reserved."
+
+UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[lang=en]
+#;;EmptyCartParagraphComponent;"<h2>Your shopping bag is empty</h2><p>Suggestions</p><ul>	<li>Browse our products by selecting a category above</li></ul>"
+;;HelpParagraphComponent;"<strong>Need Help with your checkout process?</strong> <span>Contact Us or Call phone number.</span>"
+
+# Media Content
+INSERT_UPDATE Media;mediaFormat(qualifier);$contentCV[unique=true];code[unique=true];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true];mime[default='image/jpeg'];realfilename;folder(qualifier)[default='images'];altText
+;mobile;;mobilehomepagebanner.jpg;$siteResource/images/banners/homepage/responsive/mobilehomepagebanner.jpg;;mobilehomepagebanner.jpg;;"Special Edition Body Care"
+;tablet;;tablethomepagebanner.jpg;$siteResource/images/banners/homepage/responsive/tablethomepagebanner.jpg;;tablethomepagebanner.jpg;;"Special Edition Body Care"
+;desktop;;desktophomepagebanner.jpg;$siteResource/images/banners/homepage/responsive/desktophomepagebanner.jpg;;desktophomepagebanner.jpg;;"Special Edition Body Care"
+
+INSERT_UPDATE MediaContainer;qualifier[unique=true];$medias;$contentCV[unique=true]
+;en-gb-homepage-spalsh-en;mobilehomepagebanner.jpg,tablethomepagebanner.jpg,desktophomepagebanner.jpg;;
+
+INSERT_UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique=true];$mediaContainer
+;;EN_GB_HompageSplashBannerComponent;en-gb-homepage-spalsh-en
+
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[lang=en];
+;;FooterContactParagraphComponent;"<hr></br><div><span style=""float:left;""><input type=""text""><button>Subscribe</button></span><span style=""float:right;""><a href="""">twitter</a>&nbsp;<a href="""">youtube</a>&nbsp;<a href="""">snapchat</a>&nbsp;<a href="""">facebook</a>&nbsp;<a href="""">instagram</a></span></div></br></br><hr>";
+
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];content[lang=en][translator=de.hybris.platform.acceleratorservices.dataimport.batch.converter.CopyrightTranslator,dateFormat=yyyy]
+;;FooterCopyrightParagraphComponent;"<p>© {0} The Body Shop International Limited</p><p>® a registered trademark of The Body Shop International Limited; a trademark of The Body Shop International Limited all rights reserved.</p><p>Registered office: Watersmead, Littlehampton, West Sussex, BN17 6LS, United Kingdom; registered in England no. 1284170</p>";
+
+INSERT_UPDATE AmplienceCMSComponent;$contentCV[unique=true];uid[unique=true];setName[lang=en];
+;;FooterHereToHelpAmplienceComponent;"5235b3b9-74d2-4907-9544-8b41d774f6fd";
+;;FooterCopyrightsAmplienceComponent;"4de7cc8d-01f8-4437-aa89-4496d7c8f5ec";

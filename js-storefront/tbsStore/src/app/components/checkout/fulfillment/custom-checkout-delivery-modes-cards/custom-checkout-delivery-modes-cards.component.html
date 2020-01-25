@@ -1,0 +1,47 @@
+<ng-container *ngIf="!isLoading; else loading">
+  <!-- SELECT DROPDOWN -->
+  <button
+    class="mat-form-field-address-overlay position-absolute w-100 h-100 m-0 border-0 p-0 text-hide"
+    (click)="deliveryModesChooseEmit.emit()"
+  >
+    {{ 'common.openModal' | cxTranslate }}
+  </button>
+  <!-- CHOOSE BUTTON -->
+  <button class="btn mat-form-field-address-btn m-0" (click)="deliveryModesChooseEmit.emit()">
+    <cx-icon [type]="iconTypes.EXPAND"></cx-icon>
+  </button>
+  <mat-select
+    appearance="fill"
+    class="pl-3 pr-0 mat-form-field-address"
+    [placeholder]="selectedDeliveryMode === null ? ('deliveryModes.chooseModes' | cxTranslate) : null"
+    [(value)]="selectedDeliveryMode"
+    [formControl]="deliveryModesFormControl"
+  >
+    <!-- ADDRESS CARDS -->
+    <mat-select-trigger class="cx-card-address-option cx-card-address-option-modes">
+      <div class="cx-card-inner h-100">
+        <cx-card
+          [border]="false"
+          [fitToContainer]="true"
+          [content]="selectedDeliveryMode | deliveryModesSelectedCard: supportedDeliveryModes"
+        ></cx-card>
+      </div>
+    </mat-select-trigger>
+    <mat-option
+      *ngFor="let deliveryMode of supportedDeliveryModes; index as i"
+      [value]="i + 1"
+      class="cx-card-address-option cx-card-address-option-modes"
+    >
+      <div class="cx-card-inner h-100">
+        <cx-card [border]="false" [fitToContainer]="true" [content]="deliveryMode | deliveryModesCard"></cx-card>
+      </div>
+    </mat-option>
+  </mat-select>
+</ng-container>
+
+<!-- LOADING  -->
+<ng-template #loading>
+  <div class="cx-spinner">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>

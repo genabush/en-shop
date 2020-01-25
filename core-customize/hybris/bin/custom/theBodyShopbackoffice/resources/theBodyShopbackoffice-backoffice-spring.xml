@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="theBodyShopbackofficeLabelLocator" class="com.hybris.cockpitng.util.labels.ResourcesLabelLocator" scope="singleton" init-method="init" lazy-init="false">
+  		<property name="location" value="/theBodyShopbackoffice-backoffice-labels/"/>
+  		<property name="name" value="labels"/>
+  	</bean>
+  	
+    <alias name="tbsProductApprovalStatusRenderer" alias="productApprovalStatusRenderer"/>
+    <bean  name="tbsProductApprovalStatusRenderer" parent="defaultProductApprovalStatusRenderer" class="uk.co.thebodyshop.backoffice.renderers.TbsProductApprovalStatusRenderer"/>
+
+	<bean id="tbsOrderConsignmentEntriesRenderer" class="uk.co.thebodyshop.backoffice.renderers.TbsOrderConsignmentEntriesRenderer"
+		  parent="editorAreaPanelRenderer">
+		<property name="typeFacade" ref="typeFacade"/>
+		<property name="nestedAttributeUtils" ref="nestedAttributeUtils"/>
+		<property name="labelService" ref="labelService"/>
+	</bean>
+
+	<alias name="tbsBackofficeValidationService" alias="backofficeValidationService"/>
+	<bean id="tbsBackofficeValidationService"
+		  class="com.hybris.backoffice.cockpitng.dataaccess.facades.object.validation.impl.DefaultBackofficeValidationService" parent="defaultBackofficeValidationService">
+		<property name="validateGroups">
+			<list merge="true">
+				<value>baseProductCoverageConstraintGroup</value>
+				<value>variantProductCoverageConstraintGroup</value>
+			</list>
+		</property>
+	</bean>
+	
+    <alias name="tbsExcelExportRenderer" alias="excelExportRenderer"/>
+    <bean id="tbsExcelExportRenderer"  parent="defaultExcelExportRenderer" class="uk.co.thebodyshop.backoffice.excel.export.wizard.renderer.TbsExcelExportRenderer">
+    	<property name="excelHelper" ref="excelHelper"/>
+    	<property name="userService" ref="userService"/>
+    </bean>
+	
+	<alias name="tbsExcelImportService" alias="excelImportService"/>
+	<bean id="tbsExcelImportService" parent="defaultExcelImportService" class="com.hybris.backoffice.excel.importing.DefaultExcelImportService">
+		<property name="workbookValidators" ref="tbsExcelWorkbookValidators"/>
+    </bean>
+	
+</beans>

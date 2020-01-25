@@ -1,0 +1,139 @@
+<ng-container *ngIf="cmsComponent$ | async as cms">
+  <div class="store-finder-banner-wrapper">
+    <div class="store-finder-banner" [ngClass]="{ 'store-finder-banner--50-50': !!cms.imageUrl }">
+      <div class="store-finder-banner__split-part split-part--left">
+        <div class="split-part-wrap">
+          <div class="store-finder-banner__text">
+            <h1>{{ 'storeFinder.title' | cxTranslate }}</h1>
+            <div>{{ 'storeFinder.text' | cxTranslate }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="store-finder-banner__split-part split-part--right" *ngIf="cms.imageUrl">
+        <div class="split-part-wrap">
+          <div class="store-finder-banner__image" [ngStyle]="{ 'background-image': 'url(' + cms.imageUrl + ')' }"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="store-finder">
+          <form [formGroup]="storeFinderForm" (ngSubmit)="onSubmit($event)" class="store-finder-form">
+            <mat-form-field appearance="fill" class="mat-input-primary store-finder-form__input">
+              <mat-label class="store-finder-form__label"> {{ 'storeFinder.label' | cxTranslate }}</mat-label>
+              <input
+                matInput
+                class="mat-form-control store-finder-form__input"
+                type="text"
+                formControlName="location"
+                name="location"
+                required
+              />
+            </mat-form-field>
+
+            <button
+              mat-button
+              matSuffix
+              mat-stroked-button
+              type="submit"
+              class="btn btn--primary btn--invert store-finder-form__submit-btn"
+              [disabled]="!storeFinderForm.valid"
+            >
+              {{ 'storeFinder.submitBtn' | cxTranslate }}
+            </button>
+          </form>
+          <a href="void(0)" (click)="getGeolocation($event)" class="link link--invert store-finder-form__geo-btn">
+            {{ 'storeFinder.geolocationBtn' | cxTranslate }}
+          </a>
+        </div>
+        <div class="store-finder-error" *ngIf="hasError">
+          <p class="store-finder-error__main">{{ 'storeFinder.error' | cxTranslate }}</p>
+          <p class="store-finder-error__searched-query">"{{ searchedQuery }}"</p>
+          <p class="store-finder-error__secondary">{{ 'storeFinder.checkSpelling' | cxTranslate }}</p>
+        </div>
+        <div class="store-finder-error" *ngIf="hasGeoError">
+          <p class="store-finder-error__main">{{ 'storeFinder.geoError' | cxTranslate }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="listOfStores$ | async as listOfStores" class="store-finder-results">
+      <div class="store-finder-results__heading">{{ 'storeFinder.results.heading' | cxTranslate }}</div>
+
+      <div class="store-finder-results__nav">
+        <div class="store-finder-results__total-count">
+          {{ 'storeFinder.searchCount' | cxTranslate: { count: listOfStores.length } }}
+        </div>
+        <ul class="store-finder-results__tabs nav nav-tabs">
+          <li
+            class="store-finder-results__tabs-item nav-item"
+            [ngClass]="{ active: listViewType === 'list' }"
+            (click)="toggleListView('list')"
+          >
+            {{ 'storeFinder.tabsListTitle' | cxTranslate }}
+          </li>
+          <li
+            class="store-finder-results__tabs-item nav-item"
+            [ngClass]="{ active: listViewType === 'map' }"
+            (click)="toggleListView('map')"
+          >
+            {{ 'storeFinder.tabsMapTitle' | cxTranslate }}
+          </li>
+        </ul>
+      </div>
+      <div class="row" *ngIf="listViewType === 'list'">
+        <div *ngFor="let store of listOfStores" class="col-12 col-md-4 mb-4">
+          <app-collection-point-item
+            [data]="store"
+            [showDirectionsBtn]="true"
+            [showInfoBtn]="false"
+            [showSelectBtn]="false"
+            [showStoreDetailsBtn]="true"
+            class="store-finder-results__item"
+            [searchedLocation]="location"
+          ></app-collection-point-item>
+        </div>
+      </div>
+      <div class="row" *ngIf="listViewType === 'map'">
+        <div class="col-12">
+          <div class="store-finder__map-view">
+            <agm-map
+              [latitude]="mapCenter?.lat"
+              [longitude]="mapCenter?.lng"
+              [zoom]="mapZoom"
+              [disableDefaultUI]="false"
+            >
+              <agm-marker
+                [latitude]="location?.lat"
+                [longitude]="location?.lng"
+                [iconUrl]="mapIcons.currentLocation"
+                [markerClickable]="false"
+              >
+              </agm-marker>
+              <agm-marker
+                *ngFor="let store of listOfStores; let i = index"
+                [latitude]="store.geoPoint.latitude"
+                [longitude]="store.geoPoint.longitude"
+                [markerClickable]="true"
+                (markerClick)="markerClicked(store)"
+                [iconUrl]="store.isActive ? mapIcons.secondary : mapIcons.secondaryInactive"
+              >
+              </agm-marker>
+            </agm-map>
+            <app-map-info-window
+              *ngIf="storeInfo"
+              [storeInfo]="storeInfo"
+              [showStoreDetailsBtn]="true"
+              [searchedLocation]="location"
+              [showDirectionsBtn]="true"
+              (closeInfoEmit)="onInfoCloseEmit()"
+            ></app-map-info-window>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

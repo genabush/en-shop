@@ -1,0 +1,170 @@
+$contentCatalog=tbsUSContentCatalog
+
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$picture=media(code, $contentCV);
+$wideContent=CMSImageComponent,BannerComponent,SimpleBannerComponent,CMSLinkComponent,CMSParagraphComponent
+$jarResource=jar:uk.co.thebodyshop.initialdata.setup.InitialDataSystemSetup&/theBodyShopinitialdata/import
+$siteResource=jar:uk.co.thebodyshop.initialdata.setup.InitialDataSystemSetup&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$medias=medias(code, $contentCV);
+$mediaContainer=media(qualifier, $contentCV)[lang=$lang];
+
+# Language
+$lang=en
+
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;USFAQLink;"FAQs";
+;;USBodyCategoryLink;"View all Body";
+;;USBodyTreatsCategoryLink;"Body Treats";
+;;USBodyButtersCategoryLink;"Body Butters";
+;;USBodyYogurtsCategoryLink;"Body Yogurts";
+;;USBodyMassageOilsCategoryLink;"Body Massage";
+;;USBodyBronzingCategoryLink;"Body Bronzing";
+;;USDeodorantCategoryLink;"Deodorant";
+;;USFootCareCategoryLink;"Foot Care";
+;;USTravelSizesCategoryLink;"Travel Sizes";
+;;USFaceCategoryLink;"View all Face";
+;;USFaceMasksCategoryLink;"Face Masks";
+;;USMakeUpRemoversCategoryLink;"Make-up Removers";
+;;USEyeCareCategoryLink;"Eye Care";
+;;USNightTimeTreatmentsCategoryLink;"Night Time Treatments";
+;;USLipBalmCategoryLink;"Lip Balm";
+;;USMenShavingCategoryLink;"Men's Shaving";
+;;USCleansersAndTonersCategoryLink;"Cleansers and Toners";
+;;USMoisturisersCategoryLink;"Moisturisers";
+;;USAccessoriesCategoryLink;"Accessories";
+;;USFaceScrubsCategoryLink;"Face Scrubs";
+;;USHandsCategoryLink;"View all Hands";
+;;USHandsMoisturisersCategoryLink;"Moisturisers";
+;;USHandWashCategoryLink;"Hand Wash";
+;;USTargetedTreatmentCategoryLink;"Targeted Treatment";
+;;USHairCategoryLink;"View all Hair";
+;;USBrushesAndCombsCategoryLink;"Brushes and Combs";
+;;USConditionerCategoryLink;"Conditioner";
+;;USShampooCategoryLink;"Shampoo";
+;;USTreatmentCategoryLink;"Treatment";
+;;USStylingCategoryLink;"Styling";
+;;USMakeUpCategoryLink;"View all Make-up";
+;;USFoundationsConcealersCategoryLink;"Foundations Concealers";
+;;USBrushesAndToolsCategoryLink;"Brushes and Tools";
+;;USBBCreamsCategoryLink;"BB Cream";
+;;USBronzingCategoryLink;"Bronzing";
+;;USCheeksCategoryLink;"Cheeks";
+;;USEyeLinersCategoryLink;"Eye Liners";
+;;USEyeShadowCategoryLink;"Eye Shadow";
+;;USLipsCategoryLink;"Lips";
+;;USMascaraCategoryLink;"Mascara";
+;;USPrimersCategoryLink;"Primers";
+;;USDeliveryLink;"Delivery";
+;;USReturnsLink;"Returns";
+;;USTermsAndConditionsLink;"Terms and Conditions";
+;;USPrivacyPolicyLink;"Privacy Policy";
+;;USSitemapLink;"Sitemap";
+;;USStoresLink;"Stores";
+;;USLoveYourBodyClubLink;"Love your body Club";
+;;USStudentDiscountLink;"Student Discount";
+;;USGiftCardsLink;"Gift Cards";
+;;USAboutUsLink;"About us";
+;;USTheBodyShopAtHomeLink;"The Body shop at home";
+;;USAffiliatesLink;"Affiliates";
+;;USGenderPayGapLink;"Gender pay gap";
+;;USModernSlaveryStatementLink;"Modern slavery statement";
+;;USAgainstAnimalTestingLink;"Against Animal testing";
+;;USTaxStrategyLink;"Tax strategy";
+;;USCareersLink;"Careers";
+
+#Party
+;;USBeYourOwnBossLink;"Be your own boss"
+;;USHostAPartyNavNodeLink;"Host a party"
+
+#Tips & Advice
+;;USHowToReduceBlackheadsLink;"How to reduce blackheads"
+;;USSummerSkincareLink;"Summer skincare"
+;;USHowToGetRidOfDarkCirclesLink;"How to get rid of dark circles"
+;;USBestFaceMoisturisersLink;"Best Face Moisturisers"
+;;USHowToKeepSkinLookingYouthfulLink;"How to keep skin looking youthful"
+;;USGymSkincareTipsLink; "gym skincare tips"
+
+;;USBenefitsOfDryBrushingLink;"Benefits of dry brushing"
+;;USUnderstandingDrySkinLink;"Understanding dry skin"
+;;USBestBodyExfoliatorsLink;"Best body exfoliators"
+
+;;USHowToFindTheRightFoundationLink;"How to find the right foundation"
+;;USHowToApplyFoundationLink;"How to apply foundation"
+;;USHowToShapeEyebrowsLink;"How to shape eyebrows"
+;;USHowToGetASunKissedGlowLink;"How to get a sun kissed glow"
+
+;;USBestVeganCitiesInTheUSLink;"Best Vegan Cities in the US"
+;;USLongHaulFlightTipsLink;"Long haul flight tips"
+;;USGymSkincareRoutineLink;"Gym skincare routine"
+;;USChildhoodDreamsLink;"Childhood Dreams"
+;;USPixieGeldof’sTravelEssentialsLink;"Pixie Geldof’s Travel Essentials"
+
+;;USBenefitsOfCharcoalLink;"Benefits of charcoal"
+;;USHyaluronicAcidBenefitsLink;"Hyaluronic Acid Benefits"
+;;USDiscoverAllIngredientsLink;"Discover all ingredients"
+;;USSourcingOurIngredientsLink;"Sourcing our ingredients"
+
+#About_US
+;;USOurHeritageLink;"Our Heritage"
+;;USForeverAgainstAnimalTestingLink;"Forever Against Animal Testing"
+;;USB_CorpLink;"B Corp"
+;;USLatestNewsLink;"Latest News"
+;;USNatura_CoLink;"Natura &co"
+;;USEducationalProgrammeLink;"Educational Programme"
+;;USDonateMenstrualProductsLink;"Donate Menstrual Products"
+;;USVegetarianBeautyLink;"Vegetarian Beauty"
+
+;;US_Loyalty_JoinNowLink;"Join Now"
+
+;;USOurCommitmentLink;"Our Commitment"
+;;USCommunityTradeLink;"Community Trade"
+;;USBio-BridgesLink;"Bio-Bridges"
+;;USReducingEnvironmentalFootprintLink;"Reducing Environmental Footprint"
+;;USEmpoweringWomenLink;"Empowering Women"
+;;USModernSlaveryLink;"Modern Slavery"
+
+;;USPlasticRecyclingInTheUSLink;"Plastic recycling in the US"
+;;USTerraCycleInterviewLink;"TerraCycle Interview "
+;;USReturnRecycleRepeatNavNodeLink;"Return. Recycle. Repeat"
+;;USCommunityTradePlasticsLink;"Community Trade Plastics"
+;;USPackagingAtTheBodyShopLink;"Packaging at The Body Shop"
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];title
+;USBodyCategoryNavNode;;"Body";
+;USFaceCategoryNavNode;;"Face";
+;USHandsCategoryNavNode;;"Hands";
+;USHairCategoryNavNode;;"Hair"
+;USMakeUpCategoryNavNode;;"Make-up"
+;USFAQNavNode;;"FAQ"
+;USUsefullInformationNavNode;;"Useful Information";
+;USWaysToShopNavNode;;"Ways To Shop";
+;USAboutUsNavNode;;"About Us";
+;USBodyByProductTypeNavNode;;"By Product Type";
+;USBodyBySkinTypeNavNode;;"By Skin Type";
+;USFaceByProductTypeNavNode;;"By Product Type";
+;USFaceBySkinTypeNavNode;;"By Skin Type";
+;USHandsByProductTypeNavNode;;"By Product Type";
+;USHandsBySkinTypeNavNode;;"By Skin Type";
+;USHairByProductTypeNavNode;;"By Product Type";
+;USHairByHairConcernTypeNavNode;;"By Hair Concern Type";
+;USMakeUpByProductTypeNavNode;;"By Product Type";
+;USMakeUpBySkinTypeNavNode;;"By Skin Type";
+
+;USDiscoverPartyNavNode;;"Party"
+;USDiscoverTipsAndAdviceNavNode;;"Tips & Advice"
+;USDiscoverAboutUsNavNode;;"About Us"
+
+;US_Discover_TheBodyShopAtHomeNavNode;;"THE BODY SHOP AT HOME"
+
+;USSkincareArticlesNavNode;;"SKINCARE ARTICLES"
+;USBodyCareArticlesNavNode;;"BODYCARE ARTICLES"
+;USMake-UpAeticlesNavNode;;"MAKE-UP ARTICLES"
+;USLifeStyleArticlesNavNode;;"LIFESTYLE ARTICLES"
+;USIngredientBenefitsNavNode;;"INGREDIENT BENEFITS"
+
+;USWhoWeAreNavNode;;"WHO WE ARE"
+;USLoyaltyProgramNavNode;;"LOYALTY PROGRAM"
+;USSustainabilityNavNode;;"SUSTAINABILITY"
+;USPlasticsNavNode;;"PLASTICS"

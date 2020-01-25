@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/orderSearchSchema" xmlns:tns="http://thebodyshop/orderSearchSchema" elementFormDefault="qualified">
+
+	<xs:element name="OrderSearchRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Market" type="tns:NotNullStringMaxLength256" />
+				<xs:element name="CreatedFromDate" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+				<xs:element name="CreatedToDate" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+				<xs:element name="SearchTerms" type="xs:string" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="AddressLine1" type="tns:NotNullStringMaxLength256" />
+			<xs:element name="AddressLine2" minOccurs="0" type="tns:NullStringMaxLength256" />
+			<xs:element name="Town" type="tns:NotNullStringMaxLength256" />
+			<xs:element name="State" minOccurs="0" type="tns:NullStringMaxLength256" />
+			<xs:element name="Province" minOccurs="0" type="tns:NullStringMaxLength256" />
+			<xs:element name="Country" type="tns:NotNullStringMaxLength256" />
+			<xs:element name="PostCode" type="tns:NotNullStringMaxLength256" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:simpleType name="NotNullStringMaxLength256">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*\S.*" />
+			<xs:minLength value="1" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="NullStringMaxLength256">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*\S.*" />
+			<xs:minLength value="0" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="OrderSearchResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />
+				<xs:element name="Orders" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Order" type="tns:Order" minOccurs="0" maxOccurs="unbounded" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="StatusTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SUCCESS" />
+			<xs:enumeration value="FAILURE" />			
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ResponseStatus">
+		<xs:sequence>
+			<xs:element name="status" type="tns:StatusTypeEnum" />
+			<xs:element name="statusMessage" minOccurs="0" type="xs:string" />			
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element name="OrderCode" type="tns:NotNullStringMaxLength256" maxOccurs="1" />
+			<xs:element name="Status" type="tns:NotNullStringMaxLength256" maxOccurs="1" />
+			<xs:element name="OrderTotal" type="xs:double" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Channel" type="tns:NotNullStringMaxLength256" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Date" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+			<xs:element name="FirstName" type="tns:NullStringMaxLength256" minOccurs="0"/>
+			<xs:element name="LastName" type="tns:NullStringMaxLength256" minOccurs="0" />
+			<xs:element name="Address" type="tns:AddressType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Entries" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ArticleID" minOccurs="1" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1" />
+									<xs:maxLength value="18" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

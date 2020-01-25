@@ -1,0 +1,9 @@
+{
+    "applications": [
+        {
+            "name": "tbsStore",
+            "path": "tbsStore"
+        }
+    ]
+}
+

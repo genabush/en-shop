@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<body bgcolor="#ffffff"
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff"
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top">
+					<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif"><b>Hello Team</b>,</font></p>
+					<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">These products were created in the $ctx.environmentName environment.</font></p>
+					<p><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">Below are the product list which are recently created.</font></p>
+					<p><ul>
+					#foreach($code in $ctx.productCodes)
+					 <li><font color="#666666" size="2" face="Arial, Helvetica, sans-serif">$code</font></li>
+					#end
+					</ul></p>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

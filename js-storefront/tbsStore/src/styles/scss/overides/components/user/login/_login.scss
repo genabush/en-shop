@@ -1,0 +1,42 @@
+%cx-login {
+  @include media-breakpoint-down(md) {
+    > a {
+      text-decoration: none;
+      color: var(--cx-color-base-white);
+      padding: 1rem;
+      display: block;
+    }
+    position: absolute;
+    left: 1rem;
+    top: -2px;
+  }
+
+  .cx-login--greet {
+    color: var(--cx-color-inverse);
+    @include type('7');
+    font-weight: var(--cx-font-weight-semi);
+
+    @include media-breakpoint-down(md) {
+      color: var(--cx-color-text);
+      padding: 0.5rem 1rem 0;
+      @include type();
+    }
+  }
+  .cx-login--icon {
+    text-transform: uppercase;
+    color: var(--cx-color-base-white);
+    width: 8rem;
+    margin-top: -2.75rem;
+    padding: 0;
+    .icon {
+      margin-right: 0.5rem;
+      margin-top: -2x;
+    }
+    @include media-breakpoint-down(md) {
+      text-decoration: none;
+      &:hover {
+        color: var(--cx-color-base-white);
+      }
+    }
+  }
+}

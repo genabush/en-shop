@@ -1,0 +1,23 @@
+$serverConfigName=tbsSolrServerConfig
+$indexConfigName=tbsSolrIndexConfig
+$searchConfigName=tbsSolrSearchConfig
+
+# Creates the Solr server configurations
+INSERT_UPDATE SolrServerConfig ; name[unique=true] ; mode(code) ; username   ; password  ; indexingUsername   ; indexingPassword
+                               ; $serverConfigName ; cloud      ; solrclient ; client123 ; solrindexingclient ; indexingclient123
+
+INSERT_UPDATE SolrServerConfig; name[unique = true]; mode(code)[forceWrite = true]; embeddedMaster
+                              ; $serverConfigName  ; cloud                        ; false
+
+INSERT_UPDATE SolrEndpointUrl; url[unique = true]    ; master; solrServerConfig(name)[unique = true]
+                             ; zookeeper-0.zookeeper ; true  ; $serverConfigName
+                             ; zookeeper-1.zookeeper ; false ; $serverConfigName
+                             ; zookeeper-2.zookeeper ; false ; $serverConfigName
+
+# Create the solr indexer configuration
+INSERT_UPDATE SolrIndexConfig ; name[unique=true] ; batchSize ; numberOfThreads ; indexMode(code) ; 
+                              ; $indexConfigName  ; 100       ; 1               ; DIRECT          ; 
+
+# Create the faceted search configuration
+INSERT_UPDATE SolrSearchConfig ; description[unique=true] ; pageSize ; legacyMode ;
+                               ; $searchConfigName        ; 12       ; false      ;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/orderStatusUpdateSchema" xmlns:tns="http://thebodyshop/orderStatusUpdateSchema" elementFormDefault="qualified">
+	
+    <xs:element name="OrderUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Order" type="tns:CCOrder" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="OrderUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="statusCode" type="xs:string" />
+                <xs:element name="messageId" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+	<xs:complexType name="CCOrder">
+	    <xs:sequence>
+            <xs:element name="Market" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="OrderNumber" type="xs:string" minOccurs="1" maxOccurs="1"/>
+	        <xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1"/>
+	    </xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

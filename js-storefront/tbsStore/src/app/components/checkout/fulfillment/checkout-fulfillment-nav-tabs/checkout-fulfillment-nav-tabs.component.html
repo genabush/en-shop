@@ -1,0 +1,39 @@
+<mat-radio-group [value]="checkoutFulfillmentTabs.DELIVERY" class="d-flex mt-4">
+  <ul class="nav nav-tabs nav-tabs-delivery w-100 d-flex flex-nowrap my-4">
+    <li
+      class="nav-item nav-link d-flex align-items-center justify-content-start rounded-0"
+      [class.active]="checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY"
+    >
+      <mat-radio-button
+        class="mat-radio-button-primary"
+        [value]="checkoutFulfillmentTabs.DELIVERY"
+        (click)="setCheckoutJourneyType(checkoutFulfillmentTabs.DELIVERY)"
+        >{{ 'deliveryTabs.delivery' | cxTranslate }}</mat-radio-button
+      >
+    </li>
+    <li
+      class="nav-item nav-link d-flex align-items-center justify-content-start rounded-0"
+      *ngIf="fulfillmentEligibilityState?.eligibleForCollectInStore"
+      [class.active]="checkoutJourneyType === checkoutFulfillmentTabs.COLLECT_IN_STORE"
+    >
+      <mat-radio-button
+        class="mat-radio-button-primary"
+        [value]="checkoutFulfillmentTabs.COLLECT_IN_STORE"
+        (click)="setCheckoutJourneyType(checkoutFulfillmentTabs.COLLECT_IN_STORE)"
+        >{{ 'deliveryTabs.collectInStore' | cxTranslate }}</mat-radio-button
+      >
+    </li>
+    <li
+      class="nav-item nav-link d-flex align-items-center justify-content-start rounded-0"
+      *ngIf="fulfillmentEligibilityState?.eligibleForCollectionPoint"
+      [class.active]="checkoutJourneyType === checkoutFulfillmentTabs.COLLECTION_POINT"
+    >
+      <mat-radio-button
+        class="mat-radio-button-primary"
+        [value]="checkoutFulfillmentTabs.COLLECTION_POINT"
+        (click)="setCheckoutJourneyType(checkoutFulfillmentTabs.COLLECTION_POINT)"
+        >{{ 'deliveryTabs.collectionPoint' | cxTranslate }}</mat-radio-button
+      >
+    </li>
+  </ul>
+</mat-radio-group>

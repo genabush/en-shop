@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<relations>
+        <relation code="AbstractOrderGiftCardRelation" autocreate="true" generate="false" localized="false">
+            <deployment table="order_giftcard" typecode="31000" />
+            <sourceElement qualifier="orders" type="AbstractOrder" cardinality="many" ordered="false">
+                <modifiers read="true" write="true" search="true" optional="true" />
+            </sourceElement>
+            <targetElement qualifier="giftCards" type="GiftCard" cardinality="many" collectiontype="set">
+                <modifiers read="true" write="true" search="true" optional="true" partof="true"/>
+            </targetElement>
+        </relation>
+    </relations>
+
+    <itemtypes>
+    
+    	<typegroup name="Order">
+	    	<itemtype code="AbstractOrder" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="amountGiftCards" type="java.lang.Double">
+						<persistence type="dynamic" attributeHandler="amountGiftCardsForOrderAttributeHandler"/>
+						<modifiers write="false"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="Order" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="cartCode" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="deliveredOrderTotal" type="java.lang.Double">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>	
+			</itemtype>
+		</typegroup>
+		
+		<typegroup name="PaymentTransaction">
+			<itemtype code="PaymentTransaction" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="merchantReferenceCode" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="paymentFailureReason" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="paymentRetryRequired" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<modifiers optional="true"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+    
+    	<typegroup name="GiftCard">
+	        <itemtype code="GiftCard" generate="true" autocreate="true" extends="GenericItem">
+	            <deployment table="giftcard" typecode="31001" />
+	            <attributes>
+	                <attribute qualifier="giftCardNumber" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="pinNumber" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="currentBalance" type="java.lang.Double">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="amountAppliedForOrder" type="java.lang.Double">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="stan" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="transactionID" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	            </attributes>
+	            <indexes>
+	                <index name="giftCardNumberIdx">
+	                    <key attribute="giftCardNumber" />
+	                    <key attribute="transactionID" />
+	                </index>
+	            </indexes>
+	        </itemtype>
+	
+	        <itemtype code="GiftCardPaymentInfo" generate="true" autocreate="true" extends="PaymentInfo">
+	            <attributes>
+	                <attribute qualifier="giftCardNumber" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="pinNumber" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="transactionId" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="status" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	                <attribute qualifier="statusDescription" type="java.lang.String">
+	                    <persistence type="property" />
+	                </attribute>
+	            </attributes>
+	            <indexes>
+	                <index name="giftCardNumberIdx" >
+	                    <key attribute="giftCardNumber" />
+	                    <key attribute="transactionId" />
+	                </index>
+	            </indexes>
+	        </itemtype>
+		</typegroup>
+		
+		<typegroup name="BaseStore">
+			<itemtype code="BaseStore" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="maximumSvsGiftCardPerOrder" type="int">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+	</itemtypes>
+
+</items>

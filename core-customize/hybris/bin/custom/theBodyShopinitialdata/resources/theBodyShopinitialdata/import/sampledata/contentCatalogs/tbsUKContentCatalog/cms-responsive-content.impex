@@ -1,0 +1,516 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsUKContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:uk.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsUKProductCatalog
+$productCatalogName=UK Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-uk;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;ukroot;;ukroot;;
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;UKStoreFinderLink;UK Store Finder Link;/store-finder;UKStoreFinderLink;UKStoreFinderLink;;;;
+;;UKLoginLink;UK Login Link;/login;UKLoginLink;UKLoginLink;;;;
+;;UKBodyCategoryLink;UK Body Category Link;/Body/c/c00001;UKBodyCategoryLink;UKBodyCategoryLink;;c00001;;
+;;UKBodyTreatsCategoryLink;UK Body Treats Category Link;/Body/Bath-Treats/c/c00013;UKBodyTreatsCategoryLink;UKBodyTreatsCategoryLink;;c00013;;
+;;UKBodyButtersCategoryLink;UK Body Butters Category Link;/Body/Body-Butters/c/c00014;UKBodyButtersCategoryLink;UKBodyButtersCategoryLink;;c00014;;
+;;UKBodyYogurtsCategoryLink;UK Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;UKBodyYogurtsCategoryLink;UKBodyYogurtsCategoryLink;;c00284;;
+;;UKBodyMassageOilsCategoryLink;UK Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;UKBodyMassageOilsCategoryLink;UKBodyMassageOilsCategoryLink;;c00024;;
+;;UKBodyBronzingCategoryLink;UK Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;UKBodyBronzingCategoryLink;UKBodyBronzingCategoryLink;;c00018;;
+;;UKDeodorantCategoryLink;UK Deodorant Category Link;/Body/Deodorant/c/c00019;UKDeodorantCategoryLink;UKDeodorantCategoryLink;;c00019;;
+;;UKFootCareCategoryLink;UK Foot Care Category Link;/Body/Foot-Care/c/c00020;UKFootCareCategoryLink;UKFootCareCategoryLink;;c00020;;
+;;UKTravelSizesCategoryLink;UK Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;UKTravelSizesCategoryLink;UKTravelSizesCategoryLink;;c00021;;
+;;UKFaceCategoryLink;UK Face Category Link;/Face/c/c00010;UKFaceCategoryLink;UKFaceCategoryLink;;c00010;;
+;;UKFaceMasksCategoryLink;UK Face Masks Category Link;/Face/Face-Masks/c/c00143;UKFaceMasksCategoryLink;UKFaceMasksCategoryLink;;c00143;;
+;;UKMakeUpRemoversCategoryLink;UK Make-up Removers Link;/Face/Make-up-Removers/c/c00145;UKMakeUpRemoversCategoryLink;UKMakeUpRemoversCategoryLink;;c00145;;
+;;UKEyeCareCategoryLink;UK Eye Care CategoryLink;/Face/Eye-Care/c/c00144;UKEyeCareCategoryLink;UKEyeCareCategoryLink;;c00144;;
+;;UKNightTimeTreatmentsCategoryLink;UK Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;UKNightTimeTreatmentsCategoryLink;UKNightTimeTreatmentsCategoryLink;;c00149;;
+;;UKLipBalmCategoryLink;UK Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;UKLipBalmCategoryLink;UKLipBalmCategoryLink;;c00146;;
+;;UKMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;UKMenShavingCategoryLink;UKMenShavingCategoryLink;;c00147;;
+;;UKCleansersAndTonersCategoryLink;UK Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;UKCleansersAndTonersCategoryLink;UKCleansersAndTonersCategoryLink;;c00141;;
+;;UKMoisturisersCategoryLink;UK Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;UKMoisturisersCategoryLink;UKMoisturisersCategoryLink;;c00148;;
+;;UKAccessoriesCategoryLink;UK Accessories CategoryLink;/Face/Accessories/c/c00140;UKAccessoriesCategoryLink;UKAccessoriesCategoryLink;;c00140;;
+;;UKFaceScrubsCategoryLink;UK Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;UKFaceScrubsCategoryLink;UKFaceScrubsCategoryLink;;c00275;;
+;;UKHandsCategoryLink;UK Hands CategoryLink;/Hands/c/c00006;UKHandsCategoryLink;UKHandsCategoryLink;;c00006;;
+;;UKHandsMoisturisersCategoryLink;UK Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;UKHandsMoisturisersCategoryLink;UKHandsMoisturisersCategoryLink;;c00054;;
+;;UKHandWashCategoryLink;UK Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;UKHandWashCategoryLink;UKHandWashCategoryLink;;c00056;;
+;;UKTargetedTreatmentCategoryLink;UK Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;UKTargetedTreatmentCategoryLink;UKTargetedTreatmentCategoryLink;;c00055;;
+;;UKHairCategoryLink;UK Hair Category Link;/Hair/c/c00005;UKHairCategoryLink;UKHairCategoryLink;;c00005;;
+;;UKBrushesAndCombsCategoryLink;UK Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;UKBrushesAndCombsCategoryLink;UKBrushesAndCombsCategoryLink;;c00047;;
+;;UKConditionerCategoryLink;UK Conditioner Category Link;/Hair/Conditioner/c/c00048;UKConditionerCategoryLink;UKConditionerCategoryLink;;c00048;;
+;;UKShampooCategoryLink;UK Shampoo Category Link;/Hair/Shampoo/c/c00051;UKShampooCategoryLink;UKShampooCategoryLink;;c00051;;
+;;UKTreatmentCategoryLink;UK Treatment Category Link;/Hair/Treatment/c/c00050;UKTreatmentCategoryLink;UKTreatmentCategoryLink;;c00050;;
+;;UKStylingCategoryLink;UK Styling Category Link;/Hair/Styling/c/c00049;UKStylingCategoryLink;UKStylingCategoryLink;;c00049;;
+;;UKMakeUpCategoryLink;UK Make-up Category Link;/Make-up/c/c00007;UKMakeUpCategoryLink;UKMakeUpCategoryLink;;c00007;;
+;;UKFoundationsConcealersCategoryLink;UK Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;UKFoundationsConcealersCategoryLink;UKFoundationsConcealersCategoryLink;;c00065;;
+;;UKBrushesAndToolsCategoryLink;UK Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;UKBrushesAndToolsCategoryLink;UKBrushesAndToolsCategoryLink;;c00059;;
+;;UKBBCreamsCategoryLink;UK BB Creams Category Link;/Make-up/BB-Creams/c/c00060;UKBBCreamsCategoryLink;UKBBCreamsCategoryLink;;c00060;;
+;;UKBronzingCategoryLink;UK Bronzing Category Link;/Make-up/Bronzing/c/c00061;UKBronzingCategoryLink;UK BronzingCategoryLink;;c00061;;
+;;UKCheeksCategoryLink;UK Cheeks Category Link;/Make-up/Cheeks/c/c00062;UKCheeksCategoryLink;UKCheeksCategoryLink;;c00062;;UK
+;;UKEyeLinersCategoryLink;UK Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;UKEyeLinersCategoryLink;UKEyeLinersCategoryLink;;c00064;;
+;;UKEyeShadowCategoryLink;UK Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;UKEyeShadowCategoryLink;UKEyeShadowCategoryLink;;c00063;;
+;;UKLipsCategoryLink;UK Lips Category Link;/Make-up/Lips/c/c00066;UKLipsCategoryLink;UKLipsCategoryLink;;c00066;;
+;;UKMascaraCategoryLink;UK Mascara Category Link;/Make-up/Mascara/c/c00067;UKMascaraCategoryLink;UKMascaraCategoryLink;;c00067;;
+;;UKPrimersCategoryLink;UK Primers Category Link;/Make-up/Primers/c/c00069;UKPrimersCategoryLink;UKPrimersCategoryLink;;c00069;;
+;;UKDeliveryLink;UK Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";UKDeliveryLink;UKDeliveryLink;newWindow;;;
+;;UKReturnsLink;UK Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";UKReturnsLink;UKReturnsLink;newWindow;;;
+;;UKFAQLink;UK FAQ Link;/faq;UKFAQLink;UKFAQLink;;;;
+;;UKTermsAndConditionsLink;UK TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";UKTermsAndConditionsLink;UKTermsAndConditionsLink;newWindow;
+;;UKPrivacyPolicyLink;UK PrivacyPolicy Link;/privacy-policy;UKPrivacyPolicyLink;UKPrivacyPolicyLink;newWindow;
+;;UKSitemapLink;UK Sitemap Link;/sitemap;UKSitemapLink;UKSitemapLink;newWindow;
+;;UKStoresLink;UK Stores Link;"https://www.thebodyshop.com/store-finder";UKStoresLink;UKStoresLink;newWindow;
+;;UKLoveYourBodyClubLink;UK Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";UKLoveYourBodyClubLink;UKLoveYourBodyClubLink;newWindow;
+;;UKStudentDiscountLink;UK Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";UKStudentDiscountLink;UKStudentDiscountLink;newWindow;
+;;UKGiftCardsLink;UK Gift Cards Link;/gift-card-balance;UKGiftCardsLink;UKGiftCardsLink;newWindow;
+;;UKAboutUsLink;UK About us Link;"https://www.thebodyshop.com/about-us";UKAboutUsLink;UKAboutUsLink;newWindow;
+;;UKTheBodyShopAtHomeLink;UK The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";UKTheBodyShopAtHomeLink;UKTheBodyShopAtHomeLink;newWindow;
+;;UKAffiliatesLink;UK Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";UKAffiliatesLink;UKAffiliatesLink;newWindow;
+;;UKGenderPayGapLink;UK Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";UKGenderPayGapLink;UKGenderPayGapLink;newWindow;
+;;UKModernSlaveryStatementLink;UK Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";UKModernSlaveryStatementLink;UKModernSlaveryStatementLink;newWindow;
+;;UKAgainstAnimalTestingLink;UK Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";UKAgainstAnimalTestingLink;UKAgainstAnimalTestingLink;newWindow;
+;;UKTaxStrategyLink;UK Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";UKTaxStrategyLink;UKTaxStrategyLink;newWindow;
+;;UKCareersLink;UK Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";UKCareersLink;UKCareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsUKRootNode					 ;                         ; TBS UK Root Node                   ; ukroot                        ;                                                               																										; TbsUKRootNode
+                                ; TbsUKNavNode                   ;                         ; TBS UK Site Nav Node               ; TbsUKRootNode                 ;                                              																										; TbsUKNavNode
+                                ; TbsUKCategoryNavNode           ;                         ; TBS UK Category Navigation         ; TbsUKNavNode                  ;                                                               																										; TbsUKCategoryNavNode
+                                ; TbsUKDiscoverNavNode           ;                         ; TBS UK Discover Navigation         ; TbsUKNavNode                  ;                                                               																										; TbsUKDiscoverNavNode
+                                ; TbsUKFooterNavNode             ;                         ; TBS UK Footer Navigation           ; TbsUKNavNode                  ;                                                               																										; TbsUKFooterNavNode
+                                ; UKUsefullInformationNavNode    ;                         ; UK Useful Information   			; TbsUKFooterNavNode            ; UKDeliveryLink,UKReturnsLink,UKFAQLink,UKTermsAndConditionsLink,UKPrivacyPolicyLink,UKSitemapLink                                										; UKUsefullInformationNavNode
+                                ; UKWaysToShopNavNode 		     ;                         ; UK Ways To Shop 					; TbsUKFooterNavNode            ; UKStoresLink,UKLoveYourBodyClubLink,UKStudentDiscountLink,UKGiftCardsLink                                  															; UKWaysToShopNavNode
+                                ; UKAboutUsNavNode               ;                         ; UK About Us               			; TbsUKFooterNavNode            ; UKAboutUsLink,UKTheBodyShopAtHomeLink,UKAffiliatesLink,UKGenderPayGapLink,UKModernSlaveryStatementLink,UKAgainstAnimalTestingLink,UKTaxStrategyLink,UKCareersLink 	; UKAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsUKCategoryNavNode;;Tbs UK Categories;TbsUKNavNode;UKBodyCategoryNavNode,UKFaceCategoryNavNode,UKHandsCategoryNavNode,UKHairCategoryNavNode,UKMakeUpCategoryNavNode;TbsUKCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; UKBodyCategoryNavNode;;UK Body Nav Node;Body;UKBodyByProductTypeNavNode,UKBodyBySkinTypeNavNode ;;UKBodyCategoryNavNode
+                               ; UKFaceCategoryNavNode;;UK Face Nav Node;Face;UKFaceByProductTypeNavNode,UKFaceBySkinTypeNavNode ;;UKFaceCategoryNavNode
+                               ; UKHandsCategoryNavNode;;UK Hands Nav Node;Hands;UKHandsByProductTypeNavNode ,UKHandsBySkinTypeNavNode ;;UKHandsCategoryNavNode
+                               ; UKHairCategoryNavNode;;UK Hair Nav Node;Hair;UKHairByProductTypeNavNode,UKHairByHairConcernTypeNavNode;;UKHairCategoryNavNode
+                               ; UKMakeUpCategoryNavNode;;UK MakeUp Nav Node;MakeUp;UKMakeUpByProductTypeNavNode,UKMakeUpBySkinTypeNavNode;;UKMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;UKBodyByProductTypeNavNode;;UK Body By Product Type;UKBodyTreatsCategoryNavNode,UKBodyTreatsCategoryNavNode,UKBodyButtersCategoryNavNode,UKBodyYogurtsCategoryNavNode,UKBodyMassageOilsCategoryNavNode,UKFootCareCategoryNavNode;;UKBodyByProductTypeNavNode ;
+                               ;UKBodyBySkinTypeNavNode;;UK Body By Skin Type;UKBodyTreatsCategoryNavNode,UKDeodorantCategoryNavNode,UKBodyTreatsCategoryNavNode,UKBodyBronzingCategoryNavNode,UKTravelSizesCategoryNavNode,UKBodyAllCategoryNavNode;;UKBodyBySkinTypeNavNode ;
+
+#Face_Category_NavNodes
+                               ;UKFaceByProductTypeNavNode;;UK Face By Product Type;UKBodyTreatsCategoryNavNode,UKFaceMasksCategoryNavNode,UKMakeUpRemoversCategoryNavNode,UKEyeCareCategoryNavNode,UKNightTimeTreatmentsCategoryNavNode,UKMenShavingCategoryNavNode;;UKFaceByProductTypeNavNode ;
+                               ;UKFaceBySkinTypeNavNode;;UK Face By Skin Type;UKBodyTreatsCategoryNavNode,UKLipBalmCategoryNavNode,UKCleansersAndTonersNavNode,UKMoisturisersCategoryNavNode,UKAccessoriesCategoryNavNode,UKFaceScrubsCategoryNavNode,UKFaceAllCategoryNavNode;;UKFaceBySkinTypeNavNode ;
+
+#Hands_Category_NavNodes
+                               ;UKHandsByProductTypeNavNode;;UK Hands By Product Type;UKHandsMoisturisersCategoryNavNode,UKHandWashCategoryNavNode;;UKHandsByProductTypeNavNode ;
+                               ;UKHandsBySkinTypeNavNode;;UK Hands By Skin Type;UKTargetedTreatmentCategoryNavNode,UKHandsAllCategoryNavNode;;UKHandsBySkinTypeNavNode ;
+
+#Hair_Category_NavNodes
+                               ;UKHairByProductTypeNavNode;;UK Hair By Product Type;UKBrushesAndCombsCategoryNavNode,UKConditionerCategoryNavNode,UKShampooCategoryNavNode;;UKHairByProductTypeNavNode ;
+                               ;UKHairByHairConcernTypeNavNode;;UK Hair By Hair Concern Type;UKTreatmentCategoryNavNode,UKStylingCategoryNavNode,UKHairAllCategoryNavNode;;UKHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;UKMakeUpByProductTypeNavNode;;UK MakeUp By Product Type;UKFoundationsConcealersCategoryNavNode,UKBrushesAndToolsCategoryNavNode,UKBBCreamsCategoryNavNode,UKBronzingCategoryNavNode,UKCheeksCategoryNavNode;;UKMakeUpByProductTypeNavNode;
+                               ;UKMakeUpBySkinTypeNavNode;;UK MakeUp By Skin Type;UKEyeLinersCategoryNavNode,UKEyeShadowCategoryNavNode,UKLipsCategoryNavNode,UKMascaraCategoryNavNode,UKPrimersCategoryNavNode,UKMakeUpAllCategoryNavNode;;UKMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;UKBodyTreatsCategoryNavNode;;UK Body Treats;;UKBodyTreatsCategoryNavNode
+                               ;UKBodyButtersCategoryNavNode;;UK Body Butters;;UKBodyButtersCategoryNavNode
+                               ;UKBodyYogurtsCategoryNavNode;;UK Body Yogurts;;UKBodyYogurtsCategoryNavNode
+                               ;UKBodyMassageOilsCategoryNavNode;;UK Body Massage Oils;;UKBodyMassageOilsCategoryNavNode
+                               ;UKFootCareCategoryNavNode;;UK Foot Care;;UKFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;UKBodyAllCategoryNavNode;;UK Body All Categories;;UKBodyAllCategoryNavNode
+                               ;UKBodyBronzingCategoryNavNode;;UK Body Bronzing;;UKBodyBronzingCategoryNavNode
+                               ;UKTravelSizesCategoryNavNode;;UK Travel Sizes;;UKTravelSizesCategoryNavNode
+                               ;UKDeodorantCategoryNavNode;;UK Deodorant;;UKDeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;UKFaceMasksCategoryNavNode;;UK Face Masks;;UKFaceMasksCategoryNavNode
+                               ;UKMakeUpRemoversCategoryNavNode;;UK Make-up Removers;;UKMakeUpRemoversCategoryNavNode
+                               ;UKEyeCareCategoryNavNode;;UK Eye Care;;UKEyeCareCategoryNavNode
+                               ;UKNightTimeTreatmentsCategoryNavNode;;UK Night Time Treatments;;UKNightTimeTreatmentsCategoryNavNode
+                               ;UKMenShavingCategoryNavNode;;UK Men's Shaving ;;UKMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;UKLipBalmCategoryNavNode;;UK Lip Balm;;UKLipBalmCategoryNavNode
+                               ;UKCleansersAndTonersNavNode;;UK Cleansers and Toners;;UKCleansersAndTonersNavNode
+                               ;UKMoisturisersCategoryNavNode;;UK Moisturisers;;UKMoisturisersCategoryNavNode
+                               ;UKAccessoriesCategoryNavNode;;UK Accessories;;UKAccessoriesCategoryNavNode
+                               ;UKFaceScrubsCategoryNavNode;;UK Face Scrubs;;UKFaceScrubsCategoryNavNode
+                               ;UKFaceAllCategoryNavNode;;UK Face All Categories;;UKFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;UKHandsMoisturisersCategoryNavNode;;UK Hands Moisturisers;;UKHandsMoisturisersCategoryNavNode
+                               ;UKHandWashCategoryNavNode;;UK Hand Wash;;UKHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;UKTargetedTreatmentCategoryNavNode;;UK Targeted Treatment;;UKTargetedTreatmentCategoryNavNode
+                               ;UKHandsAllCategoryNavNode;;UK Hands All Categories;;UKHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;UKBrushesAndCombsCategoryNavNode;;UK Brushes And Combs;;UKBrushesAndCombsCategoryNavNode
+                               ;UKConditionerCategoryNavNode;;UK Conditioner;;UKConditionerCategoryNavNode
+                               ;UKShampooCategoryNavNode;;UK Shampoo;;UKShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;UKTreatmentCategoryNavNode;;UK Treatment;;UKTreatmentCategoryNavNode
+                               ;UKStylingCategoryNavNode;;UK Styling;;UKStylingCategoryNavNode
+                               ;UKHairAllCategoryNavNode;;UK Hair All Categories;;UKHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;UKFoundationsConcealersCategoryNavNode;;UK Foundations Concealers;;UKFoundationsConcealersCategoryNavNode
+                               ;UKBrushesAndToolsCategoryNavNode;;UK Brushes and Tools;;UKBrushesAndToolsCategoryNavNode
+                               ;UKBBCreamsCategoryNavNode;;UK BB Creams;;UKBBCreamsCategoryNavNode
+                               ;UKBronzingCategoryNavNode;;UK Bronzing;;UKBronzingCategoryNavNode
+                               ;UKCheeksCategoryNavNode;;UK Cheeks;;UKCheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;UKEyeLinersCategoryNavNode;;UK Eye Liners;;UKEyeLinersCategoryNavNode
+                               ;UKEyeShadowCategoryNavNode;;UK Eye Shadow;;UKEyeShadowCategoryNavNode
+                               ;UKLipsCategoryNavNode;;UK Lips;;UKLipsCategoryNavNode
+                               ;UKMascaraCategoryNavNode;;UK Mascara;;UKMascaraCategoryNavNode
+                               ;UKPrimersCategoryNavNode;;UK Primers;;UKPrimersCategoryNavNode
+                               ;UKMakeUpAllCategoryNavNode;;UK Make-up All Categories;;UKMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;UKBodyAllCategoryNavNodeEntry;;UKBodyAllCategoryNavNodeEntry;UKBodyAllCategoryNavNode;UKBodyCategoryLink
+;UKBodyTreatsCategoryNavNodeEntry;;UKBodyTreatsCategoryNavNodeEntry;UKBodyTreatsCategoryNavNode;UKBodyTreatsCategoryLink;UK
+;UKBodyButtersCategoryNavNodeEntry;;UKBodyButtersCategoryNavNodeEntry;UKBodyButtersCategoryNavNode;UKBodyButtersCategoryLink;UK
+;UKBodyYogurtsCategoryNavNodeEntry;;UKBodyYogurtsCategoryNavNodeEntry;UKBodyYogurtsCategoryNavNode;UKBodyYogurtsCategoryLink
+;UKBodyMassageOilsCategoryNavNodeEntry;;UKBodyMassageOilsCategoryNavNodeEntry;UKBodyMassageOilsCategoryNavNode;UKBodyMassageOilsCategoryLink
+;UKBodyBronzingCategoryNavNodeEntry;;UKBodyBronzingCategoryNavNodeEntry;UKBodyBronzingCategoryNavNode;UKBodyBronzingCategoryLink
+;UKDeodorantCategoryNavNodeEntry;;UKDeodorantCategoryNavNodeEntry;UKDeodorantCategoryNavNode;UKDeodorantCategoryLink
+;UKFootCareCategoryNavNodeEntry;;UKFootCareCategoryNavNodeEntry;UKFootCareCategoryNavNode;UKFootCareCategoryLink
+;UKTravelSizesCategoryNavNodeEntry;;UKTravelSizesCategoryNavNodeEntry;UKTravelSizesCategoryNavNode;UKTravelSizesCategoryLink
+;UKFaceAllCategoryNavNodeEntry;;UKFaceAllCategoryNavNodeEntry;UKFaceAllCategoryNavNode;UKFaceCategoryLink;UK
+;UKFaceMasksCategoryNavNodeEntry;;UKFaceMasksCategoryNavNodeEntry;UKFaceMasksCategoryNavNode;UKFaceMasksCategoryLink;UK
+;UKMakeUpRemoversCategoryNavNodeEntry;;UKMakeUpRemoversCategoryNavNodeEntry;UKMakeUpRemoversCategoryNavNode;UKMakeUpRemoversCategoryLink;UK
+;UKEyeCareCategoryNavNodeEntry;;UKEyeCareCategoryNavNodeEntry;UKEyeCareCategoryNavNode;UKEyeCareCategoryLink
+;UKNightTimeTreatmentsCategoryNavNodeEntry;;UKNightTimeTreatmentsCategoryNavNodeEntry;UKNightTimeTreatmentsCategoryNavNode;UKNightTimeTreatmentsCategoryLink
+;UKMenShavingCategoryNavNodeEntry;;UKMenShavingCategoryNavNodeEntry;UKMenShavingCategoryNavNode;UKMenShavingCategoryLink
+;UKLipBalmCategoryNavNodeEntry;;UKLipBalmCategoryNavNodeEntry;UKLipBalmCategoryNavNode;UKLipBalmCategoryLink
+;UKCleansersAndTonersNavNodeEntry;;UKCleansersAndTonersNavNodeEntry;UKCleansersAndTonersNavNode;UKCleansersAndTonersCategoryLink
+;UKMoisturisersCategoryNavNodeEntry;;UKMoisturisersCategoryNavNodeEntry;UKMoisturisersCategoryNavNode;UKMoisturisersCategoryLink
+;UKAccessoriesCategoryNavNodeEntry;;UKAccessoriesCategoryNavNodeEntry;UKAccessoriesCategoryNavNode;UKAccessoriesCategoryLink
+;UKFaceScrubsCategoryNavNodeEntry;;UKFaceScrubsCategoryNavNodeEntry;UKFaceScrubsCategoryNavNode;UKFaceScrubsCategoryLink
+;UKHandsAllCategoryNavNodeEntry;;UKHandsAllCategoryNavNodeEntry;UKHandsAllCategoryNavNode;UKHandsCategoryLink
+;UKHandsMoisturisersCategoryNavNodeEntry;;UKHandsMoisturisersCategoryNavNodeEntry;UKHandsMoisturisersCategoryNavNode;UKHandsMoisturisersCategoryLink
+;UKHandWashCategoryNavNodeEntry;;UKHandWashCategoryNavNodeEntry;UKHandWashCategoryNavNode;UKHandWashCategoryLink
+;UKTargetedTreatmentCategoryNavNodeEntry;;UKTargetedTreatmentCategoryNavNodeEntry;UKTargetedTreatmentCategoryNavNode;UKTargetedTreatmentCategoryLink
+;UKHairAllCategoryNavNodeEntry;;UKHairAllCategoryNavNodeEntry;UKHairAllCategoryNavNode;UKHairCategoryLink
+;UKBrushesAndCombsCategoryNavNodeEntry;;UKBrushesAndCombsCategoryNavNodeEntry;UKBrushesAndCombsCategoryNavNode;UKBrushesAndCombsCategoryLink
+;UKConditionerCategoryNavNodeEntry;;UKConditionerCategoryNavNodeEntry;UKConditionerCategoryNavNode;UKConditionerCategoryLink
+;UKShampooCategoryNavNodeEntry;;UKShampooCategoryNavNodeEntry;UKShampooCategoryNavNode;UKShampooCategoryLink
+;UKTreatmentCategoryNavNodeEntry;;UKTreatmentCategoryNavNodeEntry;UKTreatmentCategoryNavNode;UKTreatmentCategoryLink
+;UKStylingCategoryNavNodeEntry;;UKStylingCategoryNavNodeEntry;UKStylingCategoryNavNode;UKStylingCategoryLink
+;UKMakeUpAllCategoryNavNodeEntry;;UKMakeUpAllCategoryNavNodeEntry;UKMakeUpAllCategoryNavNode;UKMakeUpCategoryLink
+;UKFoundationsConcealersCategoryNavNodeEntry;;UKFoundationsConcealersCategoryNavNodeEntry;UKFoundationsConcealersCategoryNavNode;UKFoundationsConcealersCategoryLink
+;UKBrushesAndToolsCategoryNavNodeEntry;;UKBrushesAndToolsCategoryNavNodeEntry;UKBrushesAndToolsCategoryNavNode;UKBrushesAndToolsCategoryLink
+;UKBBCreamsCategoryNavNodeEntry;;UKBBCreamsCategoryNavNodeEntry;UKBBCreamsCategoryNavNode;UKBBCreamsCategoryLink
+;UKBronzingCategoryNavNodeEntry;;UKBronzingCategoryNavNodeEntry;UKBronzingCategoryNavNode;UKBronzingCategoryLink
+;UKCheeksCategoryNavNodeEntry;;UKCheeksCategoryNavNodeEntry;UKCheeksCategoryNavNode;UKCheeksCategoryLink
+;UKEyeLinersCategoryNavNodeEntry;;UKEyeLinersCategoryNavNodeEntry;UKEyeLinersCategoryNavNode;UKEyeLinersCategoryLink
+;UKEyeShadowCategoryNavNodeEntry;;UKEyeShadowCategoryNavNodeEntry;UKEyeShadowCategoryNavNode;UKEyeShadowCategoryLink
+;UKLipsCategoryNavNodeEntry;;UKLipsCategoryNavNodeEntry;UKLipsCategoryNavNode;UKLipsCategoryLink
+;UKMascaraCategoryNavNodeEntry;;UKMascaraCategoryNavNodeEntry;UKMascaraCategoryNavNode;UKMascaraCategoryLink
+;UKPrimersCategoryNavNodeEntry;;UKPrimersCategoryNavNodeEntry;UKPrimersCategoryNavNode;UKPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsUKDiscoverNavNode;;Tbs UK Discover;TbsUKNavNode;UKDiscoverPartyNavNode,UKDiscoverTipsAndAdviceNavNode,UKDiscoverAboutUsNavNode;TbsUKDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; UKDiscoverPartyNavNode;;UK Party Nav Node;Party;UK_Discover_TheBodyShopAtHomeNavNode;;UKDiscoverPartyNavNode
+                               ; UKDiscoverTipsAndAdviceNavNode;;UK Tips & Advice Nav Node;Tips & Advice;UKSkincareArticlesNavNode,UKBodyCareArticlesNavNode,UKMake-UpAeticlesNavNode,UKLifeStyleArticlesNavNode,UKIngredientBenefitsNavNode;;UKDiscoverTipsAndAdviceNavNode
+                               ; UKDiscoverAboutUsNavNode;;UK About us Nav Node;About Us;UKWhoWeAreNavNode,UKLoyaltyProgramNavNode,UKSustainabilityNavNode,UKPlasticsNavNode;;UKDiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#UK_Discover_Party_NavNodes
+                               ;UK_Discover_TheBodyShopAtHomeNavNode;;UK BodyShop AtHome;UKBeYourOwnBossNavNode,UKHostAPartyNavNode;;UK_Discover_TheBodyShopAtHomeNavNode ;
+
+#UK_Discover_Tips_And_Advice_NavNode
+
+                               ;UKSkincareArticlesNavNode;;UK Skin Care Articles;UKHowToReduceBlackheadsNavNode,UKSummerSkincareNavNode,UKHowToGetRidOfDarkCirclesNavNode,UKBestFaceMoisturisersNavNode,UKHowToKeepSkinLookingYouthfulNavNode,UKGymSkincareTipsNavNode;;UKSkincareArticlesNavNode ;
+                               ;UKBodyCareArticlesNavNode;;UK Body Care Articles;UKBenefitsOfDryBrushingNavNode,UKUnderstandingDrySkinNavNode,UKBestBodyExfoliatorsNavNode;;UKBodyCareArticlesNavNode ;
+                               ;UKMake-UpAeticlesNavNode;;UK Make-Up Articles;UKHowToFindTheRightFoundationNavNode,UKHowToApplyFoundationNavNode,UKHowToShapeEyebrowsNavNode,UKHowToGetASunKissedGlowNavNode;;UKMake-UpAeticlesNavNode ;
+                               ;UKLifeStyleArticlesNavNode;;UK LifeStyle Articles;UKBestVeganCitiesInTheUKNavNode,UKLongHaulFlightTipsNavNode,UKGymSkincareRoutineNavNode,UKChildhoodDreamsNavNode,UKPixieGeldof’sTravelEssentialsNavNode;;UKLifeStyleArticlesNavNode ;
+                               ;UKIngredientBenefitsNavNode;;UK Ingedients Benefits;UKBenefitsOfCharcoalNavNode,UKHyaluronicAcidBenefitsNavNode,UKDiscoverAllIngredientsNavNode,UKSourcingOurIngredientsNavNode;;UKIngredientBenefitsNavNode ;
+
+#UK_Discover_AboutUs_NavNode
+
+                               ;UKWhoWeAreNavNode;;UK Who We Are;UKOurHeritageNavNode,UKForeverAgainstAnimalTestingNavNode,UKLatestNewsNavNode,UKNatura_CoNavNode,UKB_CorpNavNode,UKEducationalProgrammeNavNode,UKDonateMenstrualProductsNavNode,UKVegetarianBeautyNavNode;;UKWhoWeAreNavNode ;
+                               ;UKLoyaltyProgramNavNode;;UK Loyalty Program;UK_Loyalty_JoinNowNavNode;;UKLoyaltyProgramNavNode;
+                               ;UKSustainabilityNavNode;;UK Sustainability;UKOurCommitmentNavNode,UKCommunityTradeNavNode,UKBio-BridgesNavNode,UKReducingEnvironmentalFootprintNavNode,UKEmpoweringWomenNavNode,UKModernSlaveryNavNode;;UKSustainabilityNavNode;
+                               ;UKPlasticsNavNode;;UK Plastics;UKPlasticRecyclingInTheUKNavNode,UKTerraCycleInterviewNavNode,UKReturnRecycleRepeatNavNode,UKCommunityTradePlasticsNavNode,UKPackagingAtTheBodyShopNavNode;;UKPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;UKBeYourOwnBossNavNode;;UK Be your own boss;;UKBeYourOwnBossNavNode
+                               ;UKHostAPartyNavNode;;UK Host a party;;UKHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;UKHowToReduceBlackheadsNavNode;;UK How to reduce Blackheads;;UKHowToReduceBlackheadsNavNode
+                               ;UKSummerSkincareNavNode;;UK Summer Skincare;;UKSummerSkincareNavNode
+                               ;UKHowToGetRidOfDarkCirclesNavNode;;UK How To Get Rid Of Dark Circles;;UKHowToGetRidOfDarkCirclesNavNode
+                               ;UKBestFaceMoisturisersNavNode;;UK Best Face Moisturisers;;UKBestFaceMoisturisersNavNode
+                               ;UKHowToKeepSkinLookingYouthfulNavNode;;UK How To Keep Skin Looking Youthful;;UKHowToKeepSkinLookingYouthfulNavNode
+                               ;UKGymSkincareTipsNavNode;;UK Gym Skincare Tips;;UKGymSkincareTipsNavNode
+
+#Child_Nodes_UKBodyCareArticles_NavNode
+
+                               ;UKBenefitsOfDryBrushingNavNode;;UK Benefits Of Dry Brushing;;UKBenefitsOfDryBrushingNavNode
+                               ;UKUnderstandingDrySkinNavNode;;UK Understanding Dry Skin;;UKUnderstandingDrySkinNavNode
+                               ;UKBestBodyExfoliatorsNavNode;;UK Best Body Exfoliators;;UKBestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;UKHowToFindTheRightFoundationNavNode;;UK How to find the right foundation;;UKHowToFindTheRightFoundationNavNode
+                               ;UKHowToApplyFoundationNavNode;;UK How to apply foundation;;UKHowToApplyFoundationNavNode
+                               ;UKHowToShapeEyebrowsNavNode;;UK How to shape eyebrows;;UKHowToShapeEyebrowsNavNode
+                               ;UKHowToGetASunKissedGlowNavNode;;UK How to get a sun kissed glow;;UKHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;UKBestVeganCitiesInTheUKNavNode;;Best Vegan Cities in the UK;;UKBestVeganCitiesInTheUKNavNode
+                               ;UKLongHaulFlightTipsNavNode;;UK Long haul flight tips;;UKLongHaulFlightTipsNavNode
+                               ;UKGymSkincareRoutineNavNode;;UK Gym skincare routine;;UKGymSkincareRoutineNavNode
+                               ;UKChildhoodDreamsNavNode;;UK Childhood Dreams;;UKChildhoodDreamsNavNode
+                               ;UKPixieGeldof’sTravelEssentialsNavNode;;UK Pixie Geldof’s Travel Essentials;;UKPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;UKBenefitsOfCharcoalNavNode;;UK Benefits of charcoal;;UKBenefitsOfCharcoalNavNode
+                               ;UKHyaluronicAcidBenefitsNavNode;;UK Hyaluronic Acid Benefits;;UKHyaluronicAcidBenefitsNavNode
+                               ;UKDiscoverAllIngredientsNavNode;;UK Discover all ingredients;;UKDiscoverAllIngredientsNavNode
+                               ;UKSourcingOurIngredientsNavNode;;UK Sourcing our ingredients;;UKSourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_UKWhoWeAreNavNode
+                                ;UKOurHeritageNavNode;;UK Our Heritage;;UKOurHeritageNavNode
+                                ;UKForeverAgainstAnimalTestingNavNode;;UK Forever Against Animal Testing;;UKForeverAgainstAnimalTestingNavNode
+                                ;UKB_CorpNavNode;;UK B Corp;;UKB_CorpNavNode
+                                ;UKLatestNewsNavNode;;UK Latest News;;UKLatestNewsNavNode
+                                ;UKNatura_CoNavNode;;UK Natura & co;;UKNatura_CoNavNode
+                                ;UKEducationalProgrammeNavNode;;UK Educational Programme;;UKEducationalProgrammeNavNode
+                                ;UKDonateMenstrualProductsNavNode;;UK Donate Menstrual Products;;UKDonateMenstrualProductsNavNode
+                                ;UKVegetarianBeautyNavNode;;UK Vegetarian Beauty;;UKVegetarianBeautyNavNode
+
+#Child_Nodes_UKLoyaltyProgramNavNode
+                                ;UK_Loyalty_JoinNowNavNode;;UK Join Now;;UK_Loyalty_JoinNowNavNode
+
+#Child_Nodes_UKSustainabilityNavNode
+                                ;UKOurCommitmentNavNode;;UK Our Commitment;;UKOurCommitmentNavNode
+                                ;UKCommunityTradeNavNode;;UK Community Trade;;UKCommunityTradeNavNode
+                                ;UKBio-BridgesNavNode;;UK Bio-Bridges;;UKBio-BridgesNavNode
+                                ;UKReducingEnvironmentalFootprintNavNode;;UK Reducing Environmental Footprint;;UKReducingEnvironmentalFootprintNavNode
+                                ;UKEmpoweringWomenNavNode;;UK EmpoweringWomen;;UKEmpoweringWomenNavNode
+                                ;UKModernSlaveryNavNode;;UK ModernSlavery;;UKModernSlaveryNavNode
+
+#Child_Nodes_UKPlasticsNavNode
+                                ;UKPlasticRecyclingInTheUKNavNode;;UK Plastic Recycling In The UK;;UKPlasticRecyclingInTheUKNavNode
+                                ;UKTerraCycleInterviewNavNode;;UK Terra Cycle Interview;;UKTerraCycleInterviewNavNode
+                                ;UKReturnRecycleRepeatNavNode;;UK Return Recycle Repeat;;UKReturnRecycleRepeatNavNode
+                                ;UKCommunityTradePlasticsNavNode;;UK Community Trade Plastics;;UKCommunityTradePlasticsNavNode
+                                ;UKPackagingAtTheBodyShopNavNode;;UK Packaging At The Body Shop;;UKPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;UKBeYourOwnBossLink;UK Be your own boss Link;/;UKBeYourOwnBossLink;UKBeYourOwnBossLink;;;;
+                              ;;UKHostAPartyNavNodeLink;UK Host a party Link;/;UKHostAPartyNavNodeLink;UKHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;UKSummerSkincareLink;UK Summer Skincare Link;/;UKSummerSkincareLink;UKSummerSkincareLink;;;;
+                              ;;UKHowToReduceBlackheadsLink;UK How to reduce blackheads Link;/;UKHowToReduceBlackheadsLink;UKHowToReduceBlackheadsLink;;;;
+                              ;;UKHowToGetRidOfDarkCirclesLink;UK How to get rid of dark circles Link;/;UKHowToGetRidOfDarkCirclesLink;UKHowToGetRidOfDarkCirclesLink;;;;
+                              ;;UKBestFaceMoisturisersLink;UK Best Face Moisturisers Link;/;UKBestFaceMoisturisersLink;UKBestFaceMoisturisersLink;;;;
+                              ;;UKHowToKeepSkinLookingYouthfulLink;UK How to keep skin looking youthful Link;/;UKHowToKeepSkinLookingYouthfulLink;UKHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;UKGymSkincareTipsLink;UK Gym Skincare Tips Link;/;UKGymSkincareTipsLink;UKGymSkincareTipsLink;;;;
+
+                              ;;UKBenefitsOfDryBrushingLink;UK Benefits of dry brushing Link;/;UKBenefitsOfDryBrushingLink;UKBenefitsOfDryBrushingLink;;;;
+                              ;;UKUnderstandingDrySkinLink;UK Understanding dry skin Link;/;UKUnderstandingDrySkinLink;UKUnderstandingDrySkinLink;;;;
+                              ;;UKBestBodyExfoliatorsLink;UK Best body exfoliators Link;/;UKBestBodyExfoliatorsLink;UKBestBodyExfoliatorsLink;;;;
+
+                              ;;UKHowToFindTheRightFoundationLink;UK How to find the right foundation Link;/;UKHowToFindTheRightFoundationLink;UKHowToFindTheRightFoundationLink;;;;
+                              ;;UKHowToApplyFoundationLink;UK How to apply foundation Link;/;UKHowToApplyFoundationLink;UKHowToApplyFoundationLink;;;;
+                              ;;UKHowToShapeEyebrowsLink;UK How to shape eyebrows youthful Link;/;UKHowToShapeEyebrowsLink;UKHowToShapeEyebrowsLink;;;;
+                              ;;UKHowToGetASunKissedGlowLink;UK How to get a sun kissed glow Link;/;UKHowToGetASunKissedGlowLink;UKHowToGetASunKissedGlowLink;;;;
+
+                              ;;UKBestVeganCitiesInTheUKLink;Best Vegan Cities in the UK Link;/;UKBestVeganCitiesInTheUKLink;UKBestVeganCitiesInTheUKLink;;;;
+                              ;;UKLongHaulFlightTipsLink;UK Long haul flight tips Link;/;UKLongHaulFlightTipsLink;UKLongHaulFlightTipsLink;;;;
+                              ;;UKGymSkincareRoutineLink;UK Gym skincare routine Link;/;UKGymSkincareRoutineLink;UKGymSkincareRoutineLink;;;;
+                              ;;UKChildhoodDreamsLink;UK Childhood Dreams Link;/;UKChildhoodDreamsLink;UKChildhoodDreamsLink;;;;
+                              ;;UKPixieGeldof’sTravelEssentialsLink;UK Pixie Geldof’s Travel Essentials Link;/;UKPixieGeldof’sTravelEssentialsLink;UKPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;UKBenefitsOfCharcoalLink;UK Benefits of charcoal Link;/;UKBenefitsOfCharcoalLink;UKBenefitsOfCharcoalLink;;;;
+                              ;;UKHyaluronicAcidBenefitsLink;UK Hyaluronic Acid Benefits Link;/;UKHyaluronicAcidBenefitsLink;UKHyaluronicAcidBenefitsLink;;;;
+                              ;;UKDiscoverAllIngredientsLink;UK Discover all ingredients Link;/;UKDiscoverAllIngredientsLink;UKDiscoverAllIngredientsLink;;;;
+                              ;;UKSourcingOurIngredientsLink;UK Sourcing our ingredients Link;/;UKSourcingOurIngredientsLink;UKSourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;UKOurHeritageLink;UK Our Heritage Link;/;UKOurHeritageLink;UKOurHeritageLink;;;;
+                              ;;UKForeverAgainstAnimalTestingLink;UK How to reduce blackheads Link;/;UKForeverAgainstAnimalTestingLink;UKForeverAgainstAnimalTestingLink;;;;
+                              ;;UKB_CorpLink;UK B Corp Link;/;UKB_CorpLink;UKB_CorpLink;;;;
+                              ;;UKLatestNewsLink;UK Latest News Link;/;UKLatestNewsLink;UKLatestNewsLink;;;;
+                              ;;UKNatura_CoLink;UK Natura & co Link;/;UKNatura_CoLink;UKNatura_CoLink;;;;
+                              ;;UKEducationalProgrammeLink;UK Educational PRogramme Link;/;UKEducationalProgrammeLink;UKEducationalProgrammeLink;;;;
+                              ;;UKDonateMenstrualProductsLink;UK Donate Menstrual Products Link;/;UKDonateMenstrualProductsLink;UKDonateMenstrualProductsLink;;;;
+                              ;;UKVegetarianBeautyLink;UK Vegetarian Beauty Link;/;UKVegetarianBeautyLink;UKVegetarianBeautyLink;;;;
+
+                              ;;UK_Loyalty_JoinNowLink;UK Join Now Link;/;UK_Loyalty_JoinNowLink;UK_Loyalty_JoinNowLink;;;;
+
+                              ;;UKOurCommitmentLink;UK Our Commitment Link;/;UKOurCommitmentLink;UKOurCommitmentLink;;;;
+                              ;;UKCommunityTradeLink;UK Community Trade Link;/;UKCommunityTradeLink;UKCommunityTradeLink;;;;
+                              ;;UKBio-BridgesLink;UK Bio-Bridges Link;/;UKBio-BridgesLink;UKBio-BridgesLink;;;;
+                              ;;UKReducingEnvironmentalFootprintLink;UK Reducing Environmental Footprint Link;/;UKReducingEnvironmentalFootprintLink;UKReducingEnvironmentalFootprintLink;;;;
+                              ;;UKEmpoweringWomenLink;UK Empowering Women Link;/;UKEmpoweringWomenLink;UKEmpoweringWomenLink;;;;
+                              ;;UKModernSlaveryLink;UK Modern Slavery Link;/;UKModernSlaveryLink;UKModernSlaveryLink;;;;
+
+                              ;;UKPlasticRecyclingInTheUKLink;Plastic recycling in the UK Link;/;UKPlasticRecyclingInTheUKLink;UKPlasticRecyclingInTheUKLink;;;;
+                              ;;UKTerraCycleInterviewLink;UK TerraCycle Interview Link;/;UKTerraCycleInterviewLink;UKTerraCycleInterviewLink;;;;
+                              ;;UKReturnRecycleRepeatNavNodeLink;UK Return. Recycle. Repeat Link;/;UKReturnRecycleRepeatNavNodeLink;UKReturnRecycleRepeatNavNodeLink;;;;
+                              ;;UKCommunityTradePlasticsLink;UK Community Trade Plastics Link;/;UKCommunityTradePlasticsLink;UKCommunityTradePlasticsLink;;;;
+                              ;;UKPackagingAtTheBodyShopLink;UK Packaging at The Body Shop Link;/;UKPackagingAtTheBodyShopLink;UKPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;UKBeYourOwnBossNavNodeEntry;;UKBeYourOwnBossNavNodeEntry;UKBeYourOwnBossNavNode;UKBeYourOwnBossLink
+                                ;UKHostAPartyNavNodeEntry;;UKHostAPartyNavNodeEntry;UKHostAPartyNavNode;UKHostAPartyNavNodeLink
+
+#Entry_UKSkincareArticlesNavNode
+                                ;UKHowToReduceBlackheadsNavNodeEntry;;UKHowToReduceBlackheadsNavNodeEntry;UKHowToReduceBlackheadsNavNode;UKHowToReduceBlackheadsLink
+                                ;UKSummerSkincareNavNodeEntry;;UKSummerSkincareNavNodeEntry;UKSummerSkincareNavNode;UKSummerSkincareLink
+                                ;UKHowToGetRidOfDarkCirclesNavNodeEntry;;UKHowToGetRidOfDarkCirclesNavNodeEntry;UKHowToGetRidOfDarkCirclesNavNode;UKHowToGetRidOfDarkCirclesLink
+                                ;UKBestFaceMoisturisersNavNodeEntry;;UKBestFaceMoisturisersNavNodeEntry;UKBestFaceMoisturisersNavNode;UKBestFaceMoisturisersLink
+                                ;UKHowToKeepSkinLookingYouthfulNavNodeEntry;;UKHowToKeepSkinLookingYouthfulNavNodeEntry;UKHowToKeepSkinLookingYouthfulNavNode;UKHowToKeepSkinLookingYouthfulLink
+                                ;UKGymSkincareTipsNavNodeEntry;;UKGymSkincareTipsNavNodeEntry;UKGymSkincareTipsNavNode;UKGymSkincareTipsLink
+
+#Entry_UKBodyCareArticlesNavNode
+                                ;UKBenefitsOfDryBrushingNavNodeEntry;;UKBenefitsOfDryBrushingNavNodeEntry;UKBenefitsOfDryBrushingNavNode;UKBenefitsOfDryBrushingLink
+                                ;UKUnderstandingDrySkinNavNodeEntry;;UKUnderstandingDrySkinNavNodeEntry;UKUnderstandingDrySkinNavNode;UKUnderstandingDrySkinLink
+                                ;UKBestBodyExfoliatorsNavNodeEntry;;UKBestBodyExfoliatorsNavNodeEntry;UKBestBodyExfoliatorsNavNode;UKBestBodyExfoliatorsLink
+
+#Entry_UKMake-UpAeticlesNavNode
+                                ;UKHowToFindTheRightFoundationNavNodeEntry;;UKHowToFindTheRightFoundationNavNodeEntry;UKHowToFindTheRightFoundationNavNode;UKHowToFindTheRightFoundationLink
+                                ;UKHowToApplyFoundationNavNodeEntry;;UKHowToApplyFoundationNavNodeEntry;UKHowToApplyFoundationNavNode;UKHowToApplyFoundationLink
+                                ;UKHowToShapeEyebrowsNavNodeEntry;;UKHowToShapeEyebrowsNavNodeEntry;UKHowToShapeEyebrowsNavNode;UKHowToShapeEyebrowsLink
+                                ;UKHowToGetASunKissedGlowNavNodeEntry;;UKHowToGetASunKissedGlowNavNodeEntry;UKHowToGetASunKissedGlowNavNode;UKHowToGetASunKissedGlowLink
+
+#Entry_UKLifeStyleArticlesNavNode
+                                ;UKBestVeganCitiesInTheUKNavNodeEntry;;UKBestVeganCitiesInTheUKNavNodeEntry;UKBestVeganCitiesInTheUKNavNode;UKBestVeganCitiesInTheUKLink
+                                ;UKLongHaulFlightTipsNavNodeEntry;;UKLongHaulFlightTipsNavNodeEntry;UKLongHaulFlightTipsNavNode;UKLongHaulFlightTipsLink
+                                ;UKGymSkincareRoutineNavNodeEntry;;UKGymSkincareRoutineNavNodeEntry;UKGymSkincareRoutineNavNode;UKGymSkincareRoutineLink
+                                ;UKChildhoodDreamsNavNodeEntry;;UKChildhoodDreamsNavNodeEntry;UKChildhoodDreamsNavNode;UKChildhoodDreamsLink
+                                ;UKPixieGeldof’sTravelEssentialsNavNodeEntry;;UKPixieGeldof’sTravelEssentialsNavNodeEntry;UKPixieGeldof’sTravelEssentialsNavNode;UKPixieGeldof’sTravelEssentialsLink
+
+#Entry_UKIngredientBenefitsNavNode
+
+                                ;UKBenefitsOfCharcoalNavNodeEntry;;UKBenefitsOfCharcoalNavNodeEntry;UKBenefitsOfCharcoalNavNode;UKBenefitsOfCharcoalLink
+                                ;UKHyaluronicAcidBenefitsNavNodeEntry;;UKHyaluronicAcidBenefitsNavNodeEntry;UKHyaluronicAcidBenefitsNavNode;UKHyaluronicAcidBenefitsLink
+                                ;UKDiscoverAllIngredientsNavNodeEntry;;UKDiscoverAllIngredientsNavNodeEntry;UKDiscoverAllIngredientsNavNode;UKDiscoverAllIngredientsLink
+                                ;UKSourcingOurIngredientsNavNodeEntry;;UKSourcingOurIngredientsNavNodeEntry;UKSourcingOurIngredientsNavNode;UKSourcingOurIngredientsLink
+
+#Entry_UKWhoWeAre_NavNode
+                                ;UKOurHeritageNavNodeEntry;;UKOurHeritageNavNodeEntry;UKOurHeritageNavNode;UKOurHeritageLink
+                                ;UKForeverAgainstAnimalTestingNavNodeEntry;;UKForeverAgainstAnimalTestingNavNodeEntry;UKForeverAgainstAnimalTestingNavNode;UKForeverAgainstAnimalTestingLink
+                                ;UKB_CorpNavNodeEntry;;UKB_CorpNavNodeEntry;UKB_CorpNavNode;UKB_CorpLink
+                                ;UKLatestNewsNavNodeEntry;;UKLatestNewsNavNodeEntry;UKLatestNewsNavNode;UKLatestNewsLink
+                                ;UKNatura_CoNavNodeEntry;;UKNatura_CoNavNodeEntry;UKNatura_CoNavNode;UKNatura_CoLink
+                                ;UKEducationalProgrammeNavNodeEntry;;UKEducationalProgrammeNavNodeEntry;UKEducationalProgrammeNavNode;UKEducationalProgrammeLink
+                                ;UKDonateMenstrualProductsNavNodeEntry;;UKDonateMenstrualProductsNavNodeEntry;UKDonateMenstrualProductsNavNode;UKDonateMenstrualProductsLink
+                                ;UKVegetarianBeautyNavNodeEntry;;UKVegetarianBeautyNavNodeEntry;UKVegetarianBeautyNavNode;UKVegetarianBeautyLink
+
+#Entry_UKLoyaltyProgramNavNode
+                                ;UK_Loyalty_JoinNowNavNodeEntry;;UK_Loyalty_JoinNowNavNodeEntry;UK_Loyalty_JoinNowNavNode;UK_Loyalty_JoinNowLink
+
+#Entry_UKSustainabilityNavNode
+                                ;UKOurCommitmentNavNodeEntry;;UKOurCommitmentNavNodeEntry;UKOurCommitmentNavNode;UKOurCommitmentLink
+                                ;UKCommunityTradeNavNodeEntry;;UKCommunityTradeNavNodeEntry;UKCommunityTradeNavNode;UKCommunityTradeLink
+                                ;UKBio-BridgesNavNodeEntry;;UKBio-BridgesNavNodeEntry;UKBio-BridgesNavNode;UKBio-BridgesLink
+                                ;UKReducingEnvironmentalFootprintNavNodeEntry;;UKReducingEnvironmentalFootprintNavNodeEntry;UKReducingEnvironmentalFootprintNavNode;UKReducingEnvironmentalFootprintLink
+                                ;UKEmpoweringWomenNavNodeEntry;;UKEmpoweringWomenNavNodeEntry;UKEmpoweringWomenNavNode;UKEmpoweringWomenLink
+                                ;UKModernSlaveryNavNodeEntry;;UKModernSlaveryNavNodeEntry;UKModernSlaveryNavNode;UKModernSlaveryLink
+
+#Child_Nodes_UKPlasticsNavNode
+                                ;UKPlasticRecyclingInTheUKNavNodeEntry;;UKPlasticRecyclingInTheUKNavNodeEntry;UKPlasticRecyclingInTheUKNavNode;UKPlasticRecyclingInTheUKLink
+                                ;UKTerraCycleInterviewNavNodeEntry;;UKTerraCycleInterviewNavNodeEntry;UKTerraCycleInterviewNavNode;UKTerraCycleInterviewLink
+                                ;UKReturnRecycleRepeatNavNodeEntry;;UKReturnRecycleRepeatNavNodeEntry;UKReturnRecycleRepeatNavNode;UKReturnRecycleRepeatNavNodeLink
+                                ;UKCommunityTradePlasticsNavNodeEntry;;UKCommunityTradePlasticsNavNodeEntry;UKCommunityTradePlasticsNavNode;UKCommunityTradePlasticsLink
+                                ;UKPackagingAtTheBodyShopNavNodeEntry;;UKPackagingAtTheBodyShopNavNodeEntry;UKPackagingAtTheBodyShopNavNode;UKPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;UKUsefullInformationNavNode;;UK Useful Information;UKUsefullInformationNavNode;UKDeliveryNavNode,UKReturnsNavNode,UKFAQNavNode,UKTermsAndConditionsNavNode,UKPrivacyPolicyNavNode,UKSitemapNavNode
+;UKWaysToShopNavNode;;UK Ways to Shop;UKWaysToShopNavNode;UKStoresNavNode,UKLoveYourBodyClubNavNode,UKStudentDiscountNavNode,UKGiftCardsNavNode
+;UKAboutUsNavNode;;UK About Us;UKAboutUsNavNode;UKAboutUsInternalNavNode,UKTheBodyShopAtHomeNavNode,UKAffiliatesNavNode,UKGenderPayGapNavNode,UKModernSlaveryStatementNavNode,UKAgainstAnimalTestingNavNode,UKTaxStrategyNavNode,UKCareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;UKDeliveryNavNode;;UKDeliveryNavNode;UKDeliveryNavNode;
+;UKReturnsNavNode;;UKReturnsNavNode;UKReturnsNavNode;
+;UKFAQNavNode;;UKFAQ Page;UKFAQNavNode
+;UKTermsAndConditionsNavNode;;UKTermsAndConditionsNavNode;UKTermsAndConditionsNavNode;
+;UKPrivacyPolicyNavNode;;UKPrivacyPolicyNavNode;UKPrivacyPolicyNavNode;
+;UKSitemapNavNode;;UKSitemapNavNode;UKSitemapNavNode;
+;UKStoresNavNode;;UKStoresNavNode;UKStoresNavNode;
+;UKLoveYourBodyClubNavNode;;UKLoveYourBodyClubNavNode;UKLoveYourBodyClubNavNode;
+;UKStudentDiscountNavNode;;UKStudentDiscountNavNode;UKStudentDiscountNavNode;
+;UKGiftCardsNavNode;;UKGiftCardsNavNode;UKGiftCardsNavNode;
+;UKAboutUsInternalNavNode;;UKAboutUsInternalNavNode;UKAboutUsInternalNavNode
+;UKTheBodyShopAtHomeNavNode;;UKTheBodyShopAtHomeNavNode;UKTheBodyShopAtHomeNavNode
+;UKAffiliatesNavNode;;UKAffiliatesNavNode;UKAffiliatesNavNode
+;UKGenderPayGapNavNode;;UKGenderPayGapNavNode;UKGenderPayGapNavNode
+;UKModernSlaveryStatementNavNode;;UKModernSlaveryStatementNavNode;UKModernSlaveryStatementNavNode
+;UKAgainstAnimalTestingNavNode;;UKAgainstAnimalTestingNavNode;UKAgainstAnimalTestingNavNode
+;UKTaxStrategyNavNode;;UKTaxStrategyNavNode;UKTaxStrategyNavNode
+;UKCareersNavNode;;UKCareersNavNode;UKCareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;UKDeliveryNavNodeEntry;;UKDeliveryNavNodeEntry;UKDeliveryNavNode;UKDeliveryLink;
+;UKReturnsNavNodeEntry;;UKReturnsNavNodeEntry;UKReturnsNavNode;UKReturnsLink;
+;UKFAQNavNodeEntry;;UK FAQ Navigation Node Entry;UKFAQNavNode;UKFAQLink;
+;UKTermsAndConditionsNavNodeEntry;;UKTermsAndConditionsNavNodeEntry;UKTermsAndConditionsNavNode;UKTermsAndConditionsLink;
+;UKPrivacyPolicyNavNodeEntry;;UKPrivacyPolicyNavNodeEntry;UKPrivacyPolicyNavNode;UKPrivacyPolicyLink;
+;UKSitemapNavNodeEntry;;UKSitemapNavNodeEntry;UKSitemapNavNode;UKSitemapLink;
+;UKStoresNavNodeEntry;;UKStoresNavNodeEntry;UKStoresNavNode;UKStoresLink;
+;UKLoveYourBodyClubNavNodeEntry;;UKLoveYourBodyClubNavNodeEntry;UKLoveYourBodyClubNavNode;UKLoveYourBodyClubLink;
+;UKStudentDiscountNavNodeEntry;;UKStudentDiscountNavNodeEntry;UKStudentDiscountNavNode;UKStudentDiscountLink;
+;UKGiftCardsNavNodeEntry;;UKGiftCardsNavNodeEntry;UKGiftCardsNavNode;UKGiftCardsLink;
+;UKAboutUsInternalNavNodeEntry;;UKAboutUsInternalNavNodeEntry;UKAboutUsInternalNavNode;UKAboutUsLink;
+;UKTheBodyShopAtHomeNavNodeEntry;;UKTheBodyShopAtHomeNavNodeEntry;UKTheBodyShopAtHomeNavNode;UKTheBodyShopAtHomeLink;
+;UKAffiliatesNavNodeEntry;;UKAffiliatesNavNodeEntry;UKAffiliatesNavNode;UKAffiliatesLink;
+;UKGenderPayGapNavNodeEntry;;UKGenderPayGapNavNodeEntry;UKGenderPayGapNavNode;UKGenderPayGapLink;
+;UKModernSlaveryStatementNavNodeEntry;;UKModernSlaveryStatementNavNodeEntry;UKModernSlaveryStatementNavNode;UKModernSlaveryStatementLink;
+;UKAgainstAnimalTestingNavNodeEntry;;UKAgainstAnimalTestingNavNodeEntry;UKAgainstAnimalTestingNavNode;UKAgainstAnimalTestingLink;
+;UKTaxStrategyNavNodeEntry;;UKTaxStrategyNavNodeEntry;UKTaxStrategyNavNode;UKTaxStrategyLink;
+;UKCareersNavNodeEntry;;UKCareersNavNodeEntry;UKCareersNavNode;UKCareersLink;
+
+##CategoryBannerCMSComponent Start ##
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;UKCategoryBannerCMSComponent;UK CategoryBanner CMSComponent;UKCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-UKCategorybannerSlot;UKCategory Banner Slot;true;UKCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-UKCategoryPage;Section1;;Section1Slot-UKCategorybannerSlot;;;
+##CategorybannerCMSComponent End ##

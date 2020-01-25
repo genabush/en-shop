@@ -1,0 +1,35 @@
+<div
+  class="cart-order-summary-loyalty-points-wrapper d-flex flex-row flex-wrap position-relative px-3 px-md-3 py-3 my-4 my-md-3"
+>
+  <h2 class="cart-order-summary-loyalty-points-title text-uppercase col-7 col-md-9 pl-0">
+    {{ 'cart.loveYourBodyClub' | cxTranslate }}
+  </h2>
+  <div class="col-5 col-md-3 d-flex align-items-center justify-content-end">
+    <div
+      class="cart-order-summary-loyalty-points-radial d-flex flex-column align-items-center justify-content-center position-absolute"
+    >
+      <div>Earn</div>
+      <div class="cart-order-summary-loyalty-points-numeral">{{ cart.loyaltyPoints }}</div>
+      <div>points</div>
+      <div class="cart-order-summary-loyalty-points-overlay position-absolute">
+        <img
+          role="img"
+          src="assets/images/payment-logos/tbs_lybc.png"
+          alt="{{ 'cart.loveYourBodyClub' | cxTranslate }}"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xs-12 col-sm-10 col-md-8 mt-4 mt-sm-3 mt-md-0 pt-3 pt-md-0 pr-0 pr-sm-3 pr-md-0 pl-0">
+    <p class="cart-order-summary-loyalty-points-body m-0">
+      {{ 'cart.loyaltyPoints.pre' | cxTranslate }}
+      <strong *ngIf="cart.loyaltyPoints == 1">{{
+        'cart.loyaltyPoints.points' | cxTranslate: { loyaltyPoints: cart.loyaltyPoints }
+      }}</strong>
+      <strong *ngIf="cart.loyaltyPoints != 1">{{
+        'cart.loyaltyPoints.points_plural' | cxTranslate: { loyaltyPoints: cart.loyaltyPoints }
+      }}</strong>
+      {{ 'cart.loyaltyPoints.post' | cxTranslate }}
+    </p>
+  </div>
+</div>

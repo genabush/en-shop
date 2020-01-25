@@ -1,0 +1,331 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Import Customers
+#
+$passwordEncoding=md5
+$defaultPassword=123456
+$setPassword=@password[translator=de.hybris.platform.impex.jalo.translators.ConvertPlaintextToEncodedUserPasswordTranslator][default='$passwordEncoding:$defaultPassword']
+
+$contentCatalog=tbsGlobalContentCatalog
+$productCatalog=tbsGlobalProductCatalog
+
+$ukContentCatalog=tbsUKContentCatalog
+$ukProductCatalog=tbsUKProductCatalog
+
+$auContentCatalog=tbsAUContentCatalog
+$auProductCatalog=tbsAUProductCatalog
+
+$caContentCatalog=tbsCAContentCatalog
+$caProductCatalog=tbsCAProductCatalog
+
+$deContentCatalog=tbsDEContentCatalog
+$deProductCatalog=tbsDEProductCatalog
+
+$dkContentCatalog=tbsDKContentCatalog
+$dkProductCatalog=tbsDKProductCatalog
+
+$esContentCatalog=tbsESContentCatalog
+$esProductCatalog=tbsESProductCatalog
+
+$frContentCatalog=tbsFRContentCatalog
+$frProductCatalog=tbsFRProductCatalog
+
+$nlContentCatalog=tbsNLContentCatalog
+$nlProductCatalog=tbsNLProductCatalog
+
+$seContentCatalog=tbsSEContentCatalog
+$seProductCatalog=tbsSEProductCatalog
+
+$usContentCatalog=tbsUSContentCatalog
+$usProductCatalog=tbsUSProductCatalog
+
+$atContentCatalog=tbsATContentCatalog
+$atProductCatalog=tbsATProductCatalog
+
+$hkContentCatalog=tbsHKContentCatalog
+$hkProductCatalog=tbsHKProductCatalog
+
+$sgContentCatalog=tbsSGContentCatalog
+$sgProductCatalog=tbsSGProductCatalog
+
+INSERT_UPDATE UserGroup;UID[unique=true];writableCatalogVersions(catalog(id),version);writeableLanguages(isocode);groups(uid)[mode=append]
+;globalproductmarketgroup;$productCatalog:Staged,$productCatalog:Online;en;globalProductManagerRole
+;ukproductmarketgroup;$ukProductCatalog:Staged,$ukProductCatalog:Online;en_GB;marketSpecificManagerRole
+;usproductmarketgroup;$usProductCatalog:Staged,$usProductCatalog:Online;en_US;marketSpecificManagerRole
+;deproductmarketgroup;$deProductCatalog:Staged,$deProductCatalog:Online;de;marketSpecificManagerRole
+;dkproductmarketgroup;$dkProductCatalog:Staged,$dkProductCatalog:Online;da;marketSpecificManagerRole
+;auproductmarketgroup;$auProductCatalog:Staged,$auProductCatalog:Online;en_AU;marketSpecificManagerRole
+;caproductmarketgroup;$caProductCatalog:Staged,$caProductCatalog:Online;en_CA,fr_CA;marketSpecificManagerRole
+;esproductmarketgroup;$esProductCatalog:Staged,$esProductCatalog:Online;es;marketSpecificManagerRole
+;frproductmarketgroup;$frProductCatalog:Staged,$frProductCatalog:Online;fr;marketSpecificManagerRole
+;nlproductmarketgroup;$nlProductCatalog:Staged,$nlProductCatalog:Online;nl;marketSpecificManagerRole
+;seproductmarketgroup;$seProductCatalog:Staged,$seProductCatalog:Online;sv;marketSpecificManagerRole
+;atproductmarketgroup;$atProductCatalog:Staged,$atProductCatalog:Online;de_AT;marketSpecificManagerRole
+;hkproductmarketgroup;$hkProductCatalog:Staged,$hkProductCatalog:Online;en_HK;marketSpecificManagerRole
+;sgproductmarketgroup;$sgProductCatalog:Staged,$sgProductCatalog:Online;en_SG;marketSpecificManagerRole
+
+INSERT_UPDATE UserGroup;UID[unique=true];readableCatalogVersions(catalog(id),version);readableLanguages(isocode);groups(uid)[mode=append]
+;globalproductmarketgroup;$productCatalog:Staged,$productCatalog:Online;en;globalProductManagerRole
+;ukproductmarketgroup;$ukProductCatalog:Staged,$ukProductCatalog:Online;en,en_GB;marketSpecificManagerRole
+;usproductmarketgroup;$usProductCatalog:Staged,$usProductCatalog:Online;en,en_US;marketSpecificManagerRole
+;deproductmarketgroup;$deProductCatalog:Staged,$deProductCatalog:Online;en,de;marketSpecificManagerRole
+;dkproductmarketgroup;$dkProductCatalog:Staged,$dkProductCatalog:Online;en,da;marketSpecificManagerRole
+;auproductmarketgroup;$auProductCatalog:Staged,$auProductCatalog:Online;en,en_AU;marketSpecificManagerRole
+;caproductmarketgroup;$caProductCatalog:Staged,$caProductCatalog:Online;en,en_CA,fr_CA;marketSpecificManagerRole
+;esproductmarketgroup;$esProductCatalog:Staged,$esProductCatalog:Online;en,es;marketSpecificManagerRole
+;frproductmarketgroup;$frProductCatalog:Staged,$frProductCatalog:Online;en,fr;marketSpecificManagerRole
+;nlproductmarketgroup;$nlProductCatalog:Staged,$nlProductCatalog:Online;en,nl;marketSpecificManagerRole
+;seproductmarketgroup;$seProductCatalog:Staged,$seProductCatalog:Online;en,sv;marketSpecificManagerRole
+;atproductmarketgroup;$atProductCatalog:Staged,$atProductCatalog:Online;en,de,de_AT;marketSpecificManagerRole
+;hkproductmarketgroup;$hkProductCatalog:Staged,$hkProductCatalog:Online;en,en_HK;marketSpecificManagerRole
+;sgproductmarketgroup;$sgProductCatalog:Staged,$sgProductCatalog:Online;en,en_SG;marketSpecificManagerRole
+
+INSERT_UPDATE UserGroup;UID[unique=true];readableCatalogVersions(catalog(id),version);
+;customersupportagentgroup;$ukProductCatalog:Staged,$ukProductCatalog:Online,$usProductCatalog:Staged,$usProductCatalog:Online,$deProductCatalog:Staged,$deProductCatalog:Online,$dkProductCatalog:Staged,$dkProductCatalog:Online,$auProductCatalog:Staged,$auProductCatalog:Online,$caProductCatalog:Staged,$caProductCatalog:Online, $esProductCatalog:Staged,$esProductCatalog:Online, $frProductCatalog:Staged,$frProductCatalog:Online, $nlProductCatalog:Staged,$nlProductCatalog:Online, $seProductCatalog:Staged,$seProductCatalog:Online, $atProductCatalog:Staged,$atProductCatalog:Online, $hkProductCatalog:Staged,$hkProductCatalog:Online, $sgProductCatalog:Staged,$sgProductCatalog:Online;
+;customersupportmanagergroup;$ukProductCatalog:Staged,$ukProductCatalog:Online, $usProductCatalog:Staged,$usProductCatalog:Online, $deProductCatalog:Staged,$deProductCatalog:Online, $dkProductCatalog:Staged,$dkProductCatalog:Online, $auProductCatalog:Staged,$auProductCatalog:Online, $caProductCatalog:Staged,$caProductCatalog:Online, $esProductCatalog:Staged,$esProductCatalog:Online, $frProductCatalog:Staged,$frProductCatalog:Online, $nlProductCatalog:Staged,$nlProductCatalog:Online, $seProductCatalog:Staged,$seProductCatalog:Online, $atProductCatalog:Staged,$atProductCatalog:Online, $hkProductCatalog:Staged,$hkProductCatalog:Online, $sgProductCatalog:Staged,$sgProductCatalog:Online;
+
+UPDATE UserGroup;UID[unique=true];readableLanguages(isocode); writeableLanguages(isocode);
+;cmsmanagergroup;en;en;
+;cmseditorgroup;en;en;
+
+##Market Specific Manager role start ##
+INSERT_UPDATE BackofficeRole;UID[unique=true];locname[lang=en];backOfficeLoginDisabled;authorities
+                            ;marketSpecificManagerRole;Market Specific Manager Role;FALSE;marketSpecificManagerRole
+
+INSERT_UPDATE PrincipalGroupRelation;source(uid)[unique=true];target(uid)[unique=true]
+                                    ;ukproductmarketgroup;marketSpecificManagerRole
+                                    ;usproductmarketgroup;marketSpecificManagerRole
+                                    ;deproductmarketgroup;marketSpecificManagerRole
+                                    ;dkproductmarketgroup;marketSpecificManagerRole
+                                    ;auproductmarketgroup;marketSpecificManagerRole
+                                    ;caproductmarketgroup;marketSpecificManagerRole
+                                    ;esproductmarketgroup;marketSpecificManagerRole
+                                    ;frproductmarketgroup;marketSpecificManagerRole
+                                    ;nlproductmarketgroup;marketSpecificManagerRole
+                                    ;seproductmarketgroup;marketSpecificManagerRole
+                                    ;atproductmarketgroup;marketSpecificManagerRole
+                                    ;hkproductmarketgroup;marketSpecificManagerRole
+                                    ;sgproductmarketgroup;marketSpecificManagerRole
+
+##Market Specific Manager role end ##
+
+INSERT_UPDATE Employee ; uid[unique=true]       ; name                            ; groups(uid)                                                                                                             ; sessionLanguage(isocode)[default=en] ; sessionCurrency(isocode)[default=GBP] ; $setPassword ; backOfficeLoginDisabled ;
+                       ; csagent                ; Customer Service Agent          ; customersupportagentgroup                                                                                               ;                                      ;                                       ;              ; false                   ; 
+                       ; csmanager              ; Customer Service Manager        ; customersupportmanagergroup                                                                                             ;                                      ;                                       ;              ; false                   ; 
+                       ; csadmin                ; Customer Service Admin          ; customersupportadministratorgroup                                                                                       ;                                      ;                                       ;              ; false                   ;                                                                                       ;                                      ;                                       ;              ; false                   ; 
+                       ; superuser              ; Super User                      ; admingroup,backofficeadmingroup,backofficeadministratorrole,customersupportadministratorrole ;                                      ;                                       ;              ; false                   ; 
+                       ; productmanager         ; Product Manager                 ; productmanagergroup                                                                                                     ; en                                   ; GBP                                   ;              ; false                   ; 
+                       ; globalProductManager   ; Global Product Manager          ; globalproductmarketgroup                                                                                                ; en                                   ; GBP                                   ;              ; false                   ; 
+                       ; ukProductManager       ; Uk Product Market User          ; ukproductmarketgroup                                                                                                    ; en_GB                                ; GBP                                   ;              ; false                   ; 
+                       ; usProductManager       ; US Product Market User          ; usproductmarketgroup                                                                                                    ; en_US                                ; USD                                   ;              ; false                   ; 
+                       ; deProductManager       ; Germany Product Market User     ; deproductmarketgroup                                                                                                    ; de                                   ; EUR                                   ;              ; false                   ; 
+                       ; dkProductManager       ; Denmark Product Market User     ; dkproductmarketgroup                                                                                                    ; da                                   ; DKK                                   ;              ; false                   ; 
+                       ; auProductManager       ; Australia Product Market User   ; auproductmarketgroup                                                                                                    ; en_AU                                ; AUD                                   ;              ; false                   ; 
+                       ; caProductManager       ; Canada Product Market User      ; caproductmarketgroup                                                                                                    ; en_CA                                ; CAD                                   ;              ; false                   ; 
+                       ; esProductManager       ; Spain Product Market User       ; esproductmarketgroup                                                                                                    ; es                                   ; EUR                                   ;              ; false                   ; 
+                       ; frProductManager       ; France Product Market User      ; frproductmarketgroup                                                                                                    ; fr                                   ; EUR                                   ;              ; false                   ; 
+                       ; nlProductManager       ; Netherlands Product Market User ; nlproductmarketgroup                                                                                                    ; nl                                   ; EUR                                   ;              ; false                   ; 
+                       ; seProductManager       ; Sweden Product Market User      ; seproductmarketgroup                                                                                                    ; sv                                   ; SEK                                   ;              ; false                   ; 
+                       ; atProductManager       ; Austria Product Market User     ; atproductmarketgroup                                                                                                    ; de_AT                                ; EUR                                   ;              ; false                   ; 
+                       ; hzProductManager       ; Hong Kong Product Market User   ; hkproductmarketgroup                                                                                                    ; en_HK                                ; HKD                                   ;              ; false                   ; 
+                       ; sgProductManager       ; Singapore Product Manager User  ; sgproductmarketgroup                                                                                                    ; en_SG                                ; SGD                                   ;              ; false                   ; 
+
+INSERT_UPDATE Employee;uid[unique=true];writableCatalogVersions(catalog(id),version);
+;cmsmanager;$contentCatalog:Staged,$contentCatalog:Online,$ukContentCatalog:Staged,$ukContentCatalog:Online,$auContentCatalog:Staged,$auContentCatalog:Online,$caContentCatalog:Staged,$caContentCatalog:Online,$deContentCatalog:Staged,$deContentCatalog:Online,$dkContentCatalog:Staged,$dkContentCatalog:Online,$esContentCatalog:Staged,$esContentCatalog:Online,$frContentCatalog:Staged,$frContentCatalog:Online,$nlContentCatalog:Staged,$nlContentCatalog:Online,$seContentCatalog:Staged,$seContentCatalog:Online,$usContentCatalog:Staged,$usContentCatalog:Online,$atContentCatalog:Staged,$atContentCatalog:Online,$hkContentCatalog:Staged,$hkContentCatalog:Online,$sgContentCatalog:Staged,$sgContentCatalog:Online;
+;cmseditor;$contentCatalog:Staged,$ukContentCatalog:Staged,$auContentCatalog:Staged,$caContentCatalog:Staged,$deContentCatalog:Staged,$dkContentCatalog:Staged,$esContentCatalog:Staged,$nlContentCatalog:Staged,$seContentCatalog:Staged,$usContentCatalog:Staged,$atContentCatalog:Staged,$hkContentCatalog:Staged,$sgContentCatalog:Staged;
+;superuser;$contentCatalog:Staged,$contentCatalog:Online,$ukContentCatalog:Staged,$ukContentCatalog:Online,$auContentCatalog:Staged,$auContentCatalog:Online,$caContentCatalog:Staged,$caContentCatalog:Online,$deContentCatalog:Staged,$deContentCatalog:Online,$dkContentCatalog:Staged,$dkContentCatalog:Online,$esContentCatalog:Staged,$esContentCatalog:Online,$frContentCatalog:Staged,$frContentCatalog:Online,$nlContentCatalog:Staged,$nlContentCatalog:Online,$seContentCatalog:Staged,$seContentCatalog:Online,$usContentCatalog:Staged,$usContentCatalog:Online,$atContentCatalog:Staged,$atContentCatalog:Online,$hkContentCatalog:Staged,$hkContentCatalog:Online,$sgContentCatalog:Staged,$sgContentCatalog:Online,$productCatalog:Staged,$productCatalog:Online,$ukProductCatalog:Staged,$ukProductCatalog:Online,$auProductCatalog:Staged,$auProductCatalog:Online,$caProductCatalog:Staged,$caProductCatalog:Online,$deProductCatalog:Staged,$deProductCatalog:Online,$dkProductCatalog:Staged,$dkProductCatalog:Online,$esProductCatalog:Staged,$esProductCatalog:Online,$frProductCatalog:Staged,$frProductCatalog:Online,$nlProductCatalog:Staged,$nlProductCatalog:Online,$seProductCatalog:Staged,$seProductCatalog:Online,$usProductCatalog:Staged,$usProductCatalog:Online,$atProductCatalog:Staged,$atProductCatalog:Online,$hkProductCatalog:Staged,$hkProductCatalog:Online,$sgProductCatalog:Staged,$sgProductCatalog:Online;
+;productmanager;$productCatalog:Staged,$productCatalog:Online,$ukProductCatalog:Staged,$ukProductCatalog:Online,$auProductCatalog:Staged,$auProductCatalog:Online,$caProductCatalog:Staged,$caProductCatalog:Online,$deProductCatalog:Staged,$deProductCatalog:Online,$dkProductCatalog:Staged,$dkProductCatalog:Online,$esProductCatalog:Staged,$esProductCatalog:Online,$frProductCatalog:Staged,$frProductCatalog:Online,$nlProductCatalog:Staged,$nlProductCatalog:Online,$seProductCatalog:Staged,$seProductCatalog:Online,$usProductCatalog:Staged,$usProductCatalog:Online,$atProductCatalog:Staged,$atProductCatalog:Online,$hkProductCatalog:Staged,$hkProductCatalog:Online,$sgProductCatalog:Staged,$sgProductCatalog:Online;
+
+
+INSERT_UPDATE Employee;uid[unique=true];readableCatalogVersions(catalog(id),version)
+;cmsmanager;$contentCatalog:Staged,$contentCatalog:Online,$ukContentCatalog:Staged,$ukContentCatalog:Online,$auContentCatalog:Staged,$auContentCatalog:Online,$caContentCatalog:Staged,$caContentCatalog:Online,$deContentCatalog:Staged,$deContentCatalog:Online,$dkContentCatalog:Staged,$dkContentCatalog:Online,$esContentCatalog:Staged,$esContentCatalog:Online,$frContentCatalog:Staged,$frContentCatalog:Online,$nlContentCatalog:Staged,$nlContentCatalog:Online,$seContentCatalog:Staged,$seContentCatalog:Online,$usContentCatalog:Staged,$usContentCatalog:Online,$atContentCatalog:Staged,$atContentCatalog:Online,$hkContentCatalog:Staged,$hkContentCatalog:Online,$sgContentCatalog:Staged,$sgContentCatalog:Online,$productCatalog:Staged,$productCatalog:Online,$ukProductCatalog:Staged,$ukProductCatalog:Online,$auProductCatalog:Staged,$auProductCatalog:Online,$caProductCatalog:Staged,$caProductCatalog:Online,$deProductCatalog:Staged,$deProductCatalog:Online,$dkProductCatalog:Staged,$dkProductCatalog:Online,$esProductCatalog:Staged,$esProductCatalog:Online,$frProductCatalog:Staged,$frProductCatalog:Online,$nlProductCatalog:Staged,$nlProductCatalog:Online,$seProductCatalog:Staged,$seProductCatalog:Online,$usProductCatalog:Staged,$usProductCatalog:Online,$atProductCatalog:Staged,$atProductCatalog:Online,$hkProductCatalog:Staged,$hkProductCatalog:Online,$sgProductCatalog:Staged,$sgProductCatalog:Online;
+;cmseditor;$contentCatalog:Staged,$contentCatalog:Online,$ukContentCatalog:Staged,$ukContentCatalog:Online,$auContentCatalog:Staged,$auContentCatalog:Online,$caContentCatalog:Staged,$caContentCatalog:Online,$deContentCatalog:Staged,$deContentCatalog:Online,$dkContentCatalog:Staged,$dkContentCatalog:Online,$esContentCatalog:Staged,$esContentCatalog:Online,$frContentCatalog:Staged,$frContentCatalog:Online,$nlContentCatalog:Staged,$nlContentCatalog:Online,$seContentCatalog:Staged,$seContentCatalog:Online,$usContentCatalog:Staged,$usContentCatalog:Online,$atContentCatalog:Staged,$atContentCatalog:Online,$hkContentCatalog:Staged,$hkContentCatalog:Online,$sgContentCatalog:Staged,$sgContentCatalog:Online,$productCatalog:Staged,$productCatalog:Online,$ukProductCatalog:Staged,$ukProductCatalog:Online,$auProductCatalog:Staged,$auProductCatalog:Online,$caProductCatalog:Staged,$caProductCatalog:Online,$deProductCatalog:Staged,$deProductCatalog:Online,$dkProductCatalog:Staged,$dkProductCatalog:Online,$esProductCatalog:Staged,$esProductCatalog:Online,$frProductCatalog:Staged,$frProductCatalog:Online,$nlProductCatalog:Staged,$nlProductCatalog:Online,$seProductCatalog:Staged,$seProductCatalog:Online,$usProductCatalog:Staged,$usProductCatalog:Online,$atProductCatalog:Staged,$atProductCatalog:Online,$hkProductCatalog:Staged,$hkProductCatalog:Online,$sgProductCatalog:Staged,$sgProductCatalog:Online;
+;superuser;$contentCatalog:Staged,$contentCatalog:Online,$ukContentCatalog:Staged,$ukContentCatalog:Online,$auContentCatalog:Staged,$auContentCatalog:Online,$caContentCatalog:Staged,$caContentCatalog:Online,$deContentCatalog:Staged,$deContentCatalog:Online,$dkContentCatalog:Staged,$dkContentCatalog:Online,$esContentCatalog:Staged,$esContentCatalog:Online,$frContentCatalog:Staged,$frContentCatalog:Online,$nlContentCatalog:Staged,$nlContentCatalog:Online,$seContentCatalog:Staged,$seContentCatalog:Online,$usContentCatalog:Staged,$usContentCatalog:Online,$atContentCatalog:Staged,$atContentCatalog:Online,$hkContentCatalog:Staged,$hkContentCatalog:Online,$sgContentCatalog:Staged,$sgContentCatalog:Online,$productCatalog:Staged,$productCatalog:Online,$ukProductCatalog:Staged,$ukProductCatalog:Online,$auProductCatalog:Staged,$auProductCatalog:Online,$caProductCatalog:Staged,$caProductCatalog:Online,$deProductCatalog:Staged,$deProductCatalog:Online,$dkProductCatalog:Staged,$dkProductCatalog:Online,$esProductCatalog:Staged,$esProductCatalog:Online,$frProductCatalog:Staged,$frProductCatalog:Online,$nlProductCatalog:Staged,$nlProductCatalog:Online,$seProductCatalog:Staged,$seProductCatalog:Online,$usProductCatalog:Staged,$usProductCatalog:Online,$atProductCatalog:Staged,$atProductCatalog:Online,$hkProductCatalog:Staged,$hkProductCatalog:Online,$sgProductCatalog:Staged,$sgProductCatalog:Online;
+;productmanager;$productCatalog:Staged,$productCatalog:Online,$ukProductCatalog:Staged,$ukProductCatalog:Online,$auProductCatalog:Staged,$auProductCatalog:Online,$caProductCatalog:Staged,$caProductCatalog:Online,$deProductCatalog:Staged,$deProductCatalog:Online,$dkProductCatalog:Staged,$dkProductCatalog:Online,$esProductCatalog:Staged,$esProductCatalog:Online,$frProductCatalog:Staged,$frProductCatalog:Online,$nlProductCatalog:Staged,$nlProductCatalog:Online,$seProductCatalog:Staged,$seProductCatalog:Online,$usProductCatalog:Staged,$usProductCatalog:Online,$atProductCatalog:Staged,$atProductCatalog:Online,$hkProductCatalog:Staged,$hkProductCatalog:Online,$sgProductCatalog:Staged,$sgProductCatalog:Online;
+
+UPDATE Employee;uid[unique=true];$setPassword;
+;searchmanager;;
+;cmsmanager;;
+;cmseditor;;
+
+UPDATE Employee;uid[unique=true];groups(uid);
+;cmsmanager;previewmanagergroup,cmsmanagergroup;
+;cmseditor;previewmanagergroup,cmseditorgroup;
+
+##Amplience Image Update role start
+INSERT_UPDATE BackofficeRole;UID[unique=true];locname[lang=en];backOfficeLoginDisabled;authorities
+                            ;amplienceImageUpdateRole;Amplience Image Update Role;FALSE;amplienceImageUpdateRole
+                            ;globalProductManagerRole;Global Product Manager Role;FALSE;globalProductManagerRole
+
+INSERT_UPDATE Usergroup;uid[unique=true];groups(uid)[mode=append];name
+                       ;globalproductmarketgroup;amplienceImageUpdateRole,globalProductManagerRole;Global Product Manager Group
+
+INSERT_UPDATE PrincipalGroupRelation;source(uid)[unique=true];target(uid)[unique=true]
+                                    ;globalproductmarketgroup;amplienceImageUpdateRole
+                                    ;globalproductmarketgroup;globalProductManagerRole
+
+INSERT_UPDATE Employee;uid[unique=true];name;groups(uid);sessionLanguage(isocode)[default=en];sessionCurrency(isocode)[default=GBP];$setPassword;backOfficeLoginDisabled;
+                      ;amplienceImageUpdateManager;Amplience Image Update User;globalproductmarketgroup;en;GBP;;false;
+
+##Amplience Image Update role End
+
+$START_USERRIGHTS;;;;;;;;;
+Type;UID;MemberOfGroups;Password;Target;read;change;create;remove;change_perm
+UserGroup;productmanagergroup;employeegroup;;;;;;;
+
+# Access Rights for Products & Catalog;;;;;;;;;
+;;;;ItemSyncTimestamp;+;;;
+;;;;SyncItemJob;+;;;
+;;;;Type;+;;;
+;;;;Product;+;+;+;+;+;
+;;;;Category;+;+;+;+;+;
+;;;;variantType;+;+;+;+;+;
+;;;;Catalog;+;;;
+;;;;CatalogVersion;+;+;+;+;+;
+;;;;ClassificationAttributeUnit;+;;;
+;;;;Media;+;+;+;+;+;
+;;;;MediaContainer;+;+;+;+;+;
+;;;;MediaFormat;+;+;+;+;+;
+;;;;MediaFolder;+;+;+;+;+;
+;;;;Vendor;+;+;+;+;+;
+;;;;StockLevel;+;-;-;-;-;
+;;;;Tax;+;+;+;+;+;
+;;;;TaxRow;+;+;+;+;+;
+;;;;PriceRow;+;+;+;+;+;
+;;;;ProductFeature;+;+;+;+;+;
+;;;;ProductReference;+;+;+;+;+;
+;;;;Warehouse;+;+;+;+;+;
+;;;;ProductTaxCode;+;+;+;+;+;
+;;;;ProductOrderLimit;+;+;+;+;+;
+;;;;SwatchColour;+;+;+;+;+;
+;;;;Keyword;+;+;+;+;+;
+;;;;Unit;+;+;+;+;+;
+;;;;CustomerReview;+;+;+;+;+;
+;;;;Product.onlineDate;+;+;+;+;
+;;;;Product.offlineDate;+;+;+;+;
+;;;;VariantProduct.onlineDate;+;+;+;+;
+;;;;VariantProduct.offlineDate;+;+;+;+;
+;;;;VariantProduct.giftWrap;+;+;+;+;
+;;;;VariantProduct.collectInStore;+;+;+;+;
+;;;;TbsVariantProduct.size;+;+;+;-;
+;;;;TbsVariantProduct.unit;+;+;+;-;
+;;;;FinishFacet;+;+;+;+;
+;;;;TargetAreaFacet;+;+;+;+;
+;;;;ConcernFacet;+;+;+;+;
+;;;;ScentFacet;+;+;+;+;
+;;;;CoverageFacet;+;+;+;+;
+;;;;RangeFacet;+;+;+;+;
+;;;;ProductTypeFacet;+;+;+;+;
+;;;;CategoryTypeFacet;+;+;+;+;
+;;;;VeganFacet;+;+;+;+;
+;;;;FreeFromFacet;+;+;+;+;
+;;;;VariantProduct;+;+;-;-;-;
+;;;;TbsVariantProduct;+;+;-;-;-;
+;;;;TbsBaseProduct.finish;+;+;+;+;
+;;;;TbsBaseProduct.targetArea;+;+;+;+;
+;;;;TbsBaseProduct.concern;+;+;+;+;
+;;;;TbsBaseProduct.scent;+;+;+;+;
+;;;;TbsBaseProduct.coverage;+;+;+;+;
+;;;;TbsBaseProduct.range;+;+;+;+;
+;;;;TbsBaseProduct.productType;+;+;+;+;
+;;;;TbsBaseProduct.categoryType;+;+;+;+;
+;;;;TbsBaseProduct.vegan;+;+;+;+;
+;;;;TbsBaseProduct.freeFrom;+;+;+;+;
+;;;;KeyIngredient;+;+;+;+;
+;;;;TbsBaseProduct.keyIngredients;+;+;+;+;
+;;;;TbsVariantProduct.code;+;+;+;+;
+;;;;TbsBaseProduct.code;+;+;+;+;
+;;;;TbsVariantProduct.eans;+;-;-;-;
+;;;;TbsVariantProduct.mainEan;+;-;-;-;
+;;;;TbsVariantProduct.technicalIngredients;+;+;+;+;
+;;;;TbsVariantProduct.colour;+;+;+;+;
+;;;;TbsVariantProduct.type;+;+;+;+;
+;;;;MediaContainerList;+;+;+;+;
+;;;;Product.galleryImages;+;+;+;+;
+;;;;CatalogVersionSyncCronJobHistory;+;-;-;-;
+;;;;ProductBadge;+;+;+;+;
+;;;;Product.productBadges;+;+;+;+;
+$END_USERRIGHTS;;;;;
+
+$START_USERRIGHTS;;;;;;;;;
+Type;UID;MemberOfGroups;Password;Target;read;change;create;remove;change_perm
+UserGroup;productmarketgroup;employeegroup;;;;;;;
+
+# Access Rights for Products & Catalog;;;;;;;;;
+;;;;ItemSyncTimestamp;+;;;
+;;;;SyncItemJob;+;;;
+;;;;Type;+;;;
+;;;;Product;+;+;+;+;+;
+;;;;Category;+;+;+;+;+;
+;;;;variantType;+;+;+;+;+;
+;;;;Catalog;+;;;
+;;;;CatalogVersion;+;+;+;+;+;
+;;;;ClassificationAttributeUnit;+;;;
+;;;;Media;+;+;+;+;+;
+;;;;MediaContainer;+;+;+;+;+;
+;;;;MediaFormat;+;+;+;+;+;
+;;;;MediaFolder;+;+;+;+;+;
+;;;;Vendor;+;+;+;+;+;
+;;;;StockLevel;+;-;-;-;-;
+;;;;Tax;+;+;+;+;+;
+;;;;TaxRow;+;+;+;+;+;
+;;;;PriceRow;+;+;+;+;+;
+;;;;ProductFeature;+;+;+;+;+;
+;;;;ProductReference;+;+;+;+;+;
+;;;;Warehouse;+;+;+;+;+;
+;;;;ProductTaxCode;+;+;+;+;+;
+;;;;ProductOrderLimit;+;+;+;+;+;
+;;;;SwatchColour;+;-;-;-;-;
+;;;;Keyword;+;+;+;+;+;
+;;;;CustomerReview;+;+;+;+;+;
+;;;;Product;+;+;+;-;-;
+;;;;TbsBaseProduct;+;+;-;-;-;
+;;;;TbsVariantProduct;+;+;-;-;-;
+;;;;Product.onlineDate;+;+;+;+;
+;;;;Product.offlineDate;+;+;+;+
+;;;;VariantProduct.onlineDate;+;+;+;+;
+;;;;VariantProduct.offlineDate;+;+;+;+;
+;;;;Product.code;+;+;+;-;
+;;;;TbsBaseProduct.code;+;+;+;-;
+;;;;TbsVariantProduct.code;+;+;+;-;
+;;;;TbsVariantProduct.technicalIngredients;+;-;-;-;
+;;;;TbsVariantProduct.eans;+;-;-;-;
+;;;;TbsVariantProduct.mainEan;+;-;-;-;
+;;;;TbsVariantProduct.size;+;+;+;-;
+;;;;TbsVariantProduct.unit;+;+;+;-;
+;;;;TbsVariantProduct.colour;+;-;-;-;
+;;;;TbsVariantProduct.type;+;-;-;-;
+;;;;TbsVariantProduct.sample;+;+;+;+;
+;;;;Unit;+;-;-;-;
+;;;;FinishFacet;+;-;-;-
+;;;;TargetAreaFacet;+;-;-;-
+;;;;ConcernFacet;+;-;-;-
+;;;;ScentFacet;+;-;-;-
+;;;;CoverageFacet;+;-;-;-
+;;;;RangeFacet;+;-;-;-
+;;;;ProductTypeFacet;+;-;-;-
+;;;;CategoryTypeFacet;+;-;-;-
+;;;;VeganFacet;+;-;-;-
+;;;;FreeFromFacet;+;-;-;-
+;;;;TbsBaseProduct.finish;+;-;-;-;
+;;;;TbsBaseProduct.targetArea;+;-;-;-;
+;;;;TbsBaseProduct.concern;+;-;-;-;
+;;;;TbsBaseProduct.scent;+;-;-;-;
+;;;;TbsBaseProduct.coverage;+;-;-;-;
+;;;;TbsBaseProduct.range;+;-;-;-;
+;;;;TbsBaseProduct.productType;+;-;-;-;
+;;;;TbsBaseProduct.categoryType;+;-;-;-;
+;;;;TbsBaseProduct.vegan;+;-;-;-;
+;;;;TbsBaseProduct.freeFrom;+;-;-;-;
+;;;;CatalogVersionSyncCronJobHistory;+;-;-;-;
+;;;;PriceRow.unit;+;-;-;-;-;
+;;;;PriceRow.price;+;-;-;-;-;
+;;;;PriceRow.currency;+;-;-;-;-;
+;;;;KeyIngredient;+;-;-;-;-;
+;;;;TbsBaseProduct.keyIngredients;+;-;-;-;
+;;;;MediaContainerList;+;-;-;-;
+;;;;Product.galleryImages;+;-;-;-;
+;;;;ProductBadge;+;+;+;+;
+;;;;Product.productBadges;+;+;+;+;
+$END_USERRIGHTS;;;;;

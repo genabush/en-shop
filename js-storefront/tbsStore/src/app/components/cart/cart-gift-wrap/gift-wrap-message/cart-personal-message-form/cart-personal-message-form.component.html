@@ -1,0 +1,76 @@
+<form [formGroup]="messageForm" (ngSubmit)="onSubmit($event)">
+  <ng-container *ngIf="!isRemoval; else messageRemoval">
+    <p class="pt-3">{{ 'cart.giftWrap.personalMessageModal.disclaimer' | cxTranslate }}</p>
+    <!-- RECIPIENT -->
+    <div class="form-group">
+      <mat-form-field appearance="fill" class="mat-input-primary">
+        <mat-label>{{ 'cart.giftWrap.personalMessageModal.giftWrapMessageName.label' | cxTranslate }}</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="giftMessageName"
+          maxlength="255"
+          [placeholder]="'cart.giftWrap.personalMessageModal.giftWrapMessageName.placeholder' | cxTranslate"
+        />
+      </mat-form-field>
+    </div>
+    <!-- SENDER -->
+    <div class="form-group">
+      <mat-form-field appearance="fill" class="mat-input-primary">
+        <mat-label>{{ 'cart.giftWrap.personalMessageModal.giftWrapMessageFrom.label' | cxTranslate }}</mat-label>
+        <input
+          type="text"
+          matInput
+          class="mat-form-control"
+          formControlName="giftMessageSenderName"
+          maxlength="255"
+          [placeholder]="'cart.giftWrap.personalMessageModal.giftWrapMessageFrom.placeholder' | cxTranslate"
+        />
+      </mat-form-field>
+    </div>
+    <!-- MESSAGE BODY -->
+    <div class="form-group">
+      <mat-form-field appearance="fill" class="mat-input-primary mat-input-textarea">
+        <mat-label>{{ 'cart.giftWrap.personalMessageModal.giftWrapMessage.label' | cxTranslate }}</mat-label>
+        <textarea type="text" matInput formControlName="giftMessage" maxlength="255" minRows="5"></textarea>
+        <mat-hint class="w-100 text-right"
+          ><span *ngIf="messageForm?.controls?.giftMessage?.value">{{
+            255 - messageForm.get('giftMessage').value.length
+          }}</span>
+          <span *ngIf="!messageForm?.controls?.giftMessage?.value">255</span>
+          {{ 'cart.giftWrap.personalMessageModal.characters' | cxTranslate }}</mat-hint
+        >
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <!-- REMOVE -->
+  <ng-template #messageRemoval>
+    <p class="pt-3">{{ 'cart.giftWrap.personalMessageModal.removalMessage' | cxTranslate }}</p>
+  </ng-template>
+  <div class="d-flex flex-row flex-wrap justify-content-end">
+    <div class="col-12 col-lg-6">
+      <button
+        role="button"
+        type="button"
+        class="btn btn--secondary w-100"
+        [attr.aria-label]="'common.cancel' | cxTranslate"
+        (click)="closeEmit.emit()"
+      >
+        {{ 'common.cancel' | cxTranslate }}
+      </button>
+    </div>
+    <div class="mt-2 mt-lg-0 col-12 col-lg-6">
+      <button
+        role="button"
+        type="submit"
+        class="btn btn--primary w-100"
+        [attr.aria-label]="'common.addBtn' | cxTranslate"
+        [disabled]="(!messageForm.valid || messageForm.pristine) && !isRemoval"
+      >
+        <span *ngIf="isEditing && !isRemoval">{{ 'common.saveBtn' | cxTranslate }}</span>
+        <span *ngIf="!isEditing && !isRemoval">{{ 'common.addBtn' | cxTranslate }}</span>
+        <span *ngIf="isRemoval">{{ 'common.removeBtn' | cxTranslate }}</span>
+      </button>
+    </div>
+  </div>
+</form>

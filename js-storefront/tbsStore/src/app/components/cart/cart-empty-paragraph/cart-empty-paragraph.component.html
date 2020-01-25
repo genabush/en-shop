@@ -1,0 +1,21 @@
+<div class="col-12 mt-5 text-center py-5">
+  <h2>{{ 'cart.title' | cxTranslate }}</h2>
+
+  <ng-container *ngIf="isMovedToWishlist$ | async as isMovedToWishlist">
+    <ng-container *ngIf="isMovedToWishlist.addFromCart">
+      <app-messaging type="info" content="{{ 'cart.movedToWishList' | cxTranslate }}"> </app-messaging>
+      This is where message to be displayed !
+    </ng-container>
+  </ng-container>
+
+  <p>{{ 'cart.emptyBasket' | cxTranslate }}</p>
+  <a
+    role="link"
+    class="btn btn--primary"
+    tabIndex="0"
+    [routerLink]="{ cxRoute: 'home' } | cxUrl"
+    [attr.aria-label]="'common.continueShopping' | cxTranslate"
+  >
+    {{ 'common.continueShopping' | cxTranslate }}
+  </a>
+</div>

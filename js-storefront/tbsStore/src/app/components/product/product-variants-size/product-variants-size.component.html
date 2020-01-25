@@ -1,0 +1,16 @@
+<div class="price-variant price-variant--size">
+  <span class="price-variant__col">
+    <span class="price__element price__element--unit">{{ variant.size }}</span>
+    <span class="price__element price__element--formatted">{{ variant.priceData?.formattedValue }}</span>
+    <span class="price__element price__element--per-metric"
+      >{{ variant.priceData?.pricePerMetric }} (#{{ variant.code }})</span
+    >
+  </span>
+  <span class="price-variant__col">
+    <ng-container *ngIf="variant.priceData?.loyaltyPoints && variant.priceData?.loyaltyPoints > 0">
+      <span class="price__element price__element--rewards"
+        >{{ variant.priceData?.loyaltyPoints }} {{ 'product.reward' | cxTranslate }}</span
+      >
+    </ng-container>
+  </span>
+</div>

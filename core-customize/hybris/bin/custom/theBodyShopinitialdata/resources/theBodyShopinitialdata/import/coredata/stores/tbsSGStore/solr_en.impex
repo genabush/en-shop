@@ -1,0 +1,90 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the Solr configuration for the store
+#
+
+# Index Type
+$solrIndexedType=tbsSGStoreIndex
+$solrIndexedTypeBase=tbsSGStoreBaseIndex
+$solrContentIndexedType=tbsSGStoreContentIndex
+
+# Language
+$lang=en
+
+# Solr Indexed Property
+UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+;$solrIndexedType;allPromotions;"Promotion"
+;$solrIndexedType;availableInStores;"Stores"
+;$solrIndexedType;code;"Code"
+;$solrIndexedType;category;"Category"
+;$solrIndexedType;price;"Price"
+;$solrIndexedType;description;"Description"
+;$solrIndexedType;name;"Name"
+;$solrIndexedType;summary;"Summary"
+;$solrIndexedType;finish;"Finish"
+;$solrIndexedType;targetArea;"Target Area"
+;$solrIndexedType;concern;"Concern"
+;$solrIndexedType;scent;"Scent"
+;$solrIndexedType;coverage;"Coverage"
+;$solrIndexedType;range;"Range"
+;$solrIndexedType;productType;"Product Type"
+;$solrIndexedType;categoryType;"Category Type"
+;$solrIndexedType;vegan;"Vegan"
+;$solrIndexedType;freeFrom;"Free From"
+;$solrIndexedType;ratingRange;"Star Rating"
+
+
+# Define the available sorts
+UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang]
+#;$solrIndexedType;name-asc;"Name (ascending)"
+#;$solrIndexedType;name-desc;"Name (descending)"
+;$solrIndexedType;price-asc;"Price (lowest first)"
+;$solrIndexedType;price-desc;"Price (highest first)"
+;$solrIndexedType;rated-desc;"Top Rated"
+;$solrIndexedType;relevance;"Best Seller"
+;$solrIndexedType;newIn;"New In (recent first)"
+
+# Solr Indexed Property
+UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+;$solrIndexedTypeBase;allPromotions;"Promotion"
+;$solrIndexedTypeBase;availableInStores;"Stores"
+;$solrIndexedTypeBase;code;"Code"
+;$solrIndexedTypeBase;category;"Category"
+;$solrIndexedTypeBase;price;"Price"
+;$solrIndexedTypeBase;description;"Description"
+;$solrIndexedTypeBase;name;"Name"
+;$solrIndexedTypeBase;summary;"Summary"
+;$solrIndexedTypeBase;finish;"Finish"
+;$solrIndexedTypeBase;targetArea;"Target Area"
+;$solrIndexedTypeBase;concern;"Concern"
+;$solrIndexedTypeBase;scent;"Scent"
+;$solrIndexedTypeBase;coverage;"Coverage"
+;$solrIndexedTypeBase;range;"Range"
+;$solrIndexedTypeBase;productType;"Product Type"
+;$solrIndexedTypeBase;categoryType;"Category Type"
+;$solrIndexedTypeBase;vegan;"Vegan"
+;$solrIndexedTypeBase;freeFrom;"Free From"
+;$solrIndexedTypeBase;ratingRange;"Star Rating"
+
+# Define the available sorts
+UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang]
+#;$solrIndexedTypeBase;name-asc;"Name (ascending)"
+#;$solrIndexedTypeBase;name-desc;"Name (descending)"
+;$solrIndexedTypeBase;price-asc;"Price (lowest first)"
+;$solrIndexedTypeBase;price-desc;"Price (highest first)"
+;$solrIndexedTypeBase;relevance;"Best Seller"
+;$solrIndexedTypeBase;rated-desc;"Top Rated"
+;$solrIndexedTypeBase;newIn;"New In (recent first)"
+
+UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+                          ;$solrContentIndexedType;title;"Title"
+                          ;$solrContentIndexedType;summary;"Summary"
+                          ;$solrContentIndexedType;url;"URL"
+                          ;$solrContentIndexedType;imageUrl;"Image URL"
+                          ;$solrContentIndexedType;keywords;"Keywords"
+
+
+UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang]
+               ;$solrContentIndexedType;relevance;"Relevance"

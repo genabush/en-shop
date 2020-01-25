@@ -1,0 +1,33 @@
+<ng-container *ngIf="vouchersConfig?.loyaltyVouchers?.length; else emptyList">
+  <ng-container *ngIf="availableVouchers.length">
+    <div class="info">
+      <p class="info__description">{{ 'payment.vouchers.info' | cxTranslate }}</p>
+      <p class="info__rewards">{{ 'payment.vouchers.available' | cxTranslate }}</p>
+    </div>
+    <div tabindex="0" class="vouchers-list">
+      <app-loyalty-voucher
+        *ngFor="let voucher of availableVouchers"
+        [voucher]="voucher"
+        [blocked]="vouchersConfig.maxVouchersReached"
+        (add)="useVoucher($event)"
+      ></app-loyalty-voucher>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="appliedVouchers.length">
+    <div class="info">
+      <p class="info__rewards">{{ 'payment.vouchers.applied' | cxTranslate }}</p>
+    </div>
+    <div tabindex="0" class="vouchers-list">
+      <app-loyalty-voucher
+        *ngFor="let voucher of appliedVouchers"
+        [voucher]="voucher"
+        (remove)="removeVoucher($event)"
+      ></app-loyalty-voucher>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-template #emptyList>
+  <div class="info">
+    {{ 'payment.vouchers.empty' | cxTranslate }}
+  </div>
+</ng-template>

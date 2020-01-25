@@ -1,0 +1,56 @@
+.store-finder-results {
+  margin-bottom: 2rem;
+  &__heading {
+    text-align: center;
+    font-size: 28px;
+    font-family: 'WorkSansSemiBold';
+  }
+  &__item {
+    display: block;
+    margin-bottom: 2rem;
+    border: 1px solid var(--cx-color-misc-field-hint);
+    height: 100%;
+  }
+  &__nav {
+    position: relative;
+    border-bottom: 1px solid var(--cx-color-misc-field-hint);
+    padding-bottom: 0rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    .nav-tabs {
+      border-bottom: none;
+    }
+    .nav-item {
+      padding-bottom: 0.5rem;
+      cursor: pointer;
+      &:nth-of-type(1) {
+        @include media-breakpoint-up(md) {
+          margin-right: 1rem;
+        }
+      }
+      @include media-breakpoint-down(md) {
+        width: 50%;
+        text-align: center;
+      }
+      &.active {
+        border-bottom: 2px solid var(--cx-color-core-primary);
+      }
+    }
+  }
+  &__total-count {
+    @include media-breakpoint-down(sm) {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    @include media-breakpoint-up(md) {
+      position: absolute;
+      right: 0;
+      top: 0.5rem;
+    }
+    color: var(--cx-color-core-primary);
+    font-family: 'WorkSansBold';
+  }
+  &__map-view {
+    position: relative;
+  }
+}

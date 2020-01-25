@@ -1,0 +1,39 @@
+<ng-template #wishlistDeleteModal let-c="close" let-d="dismiss">
+  <ng-container>
+    <button
+      type="button"
+      class="modal__close"
+      [attr.aria-label]="'common.closeBtn' | cxTranslate"
+      (click)="closeDeleteModal()"
+    >
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+
+    <div class="modal__body">
+      <div class="row">
+        <div class="col-12">
+          <h2 [attr.aria-label]="'wishlists.deleteWishlistModal.text' | cxTranslate" class="modal__title">
+            {{ 'wishlists.deleteWishlistModal.text' | cxTranslate }}
+          </h2>
+          <button
+            [attr.aria-label]="'wishlists.deleteWishlistModal.actions.cancel' | cxTranslate"
+            class="btn btn--secondary"
+            (click)="closeDeleteModal()"
+          >
+            {{ 'wishlists.deleteWishlistModal.actions.cancel' | cxTranslate }}
+          </button>
+
+          <button
+            [attr.aria-label]="'wishlists.deleteWishlistModal.actions.confirm' | cxTranslate"
+            class="btn btn--primary margin-left-20"
+            (click)="confirmDeletion()"
+          >
+            {{ 'wishlists.deleteWishlistModal.actions.confirm' | cxTranslate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

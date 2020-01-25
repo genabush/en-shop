@@ -1,0 +1,10 @@
+<h3 aria-hidden="true" class="cx-navigation-ui-title m-0 p-3 d-flex d-lg-none">
+  {{ 'hamburgerMenu.' + hamburgerSection | cxTranslate }}
+</h3>
+<cx-navigation-ui
+  [attr.aria-label]="'common.siteNavigation' | cxTranslate"
+  [node]="node$ | async"
+  [ngClass]="(data$ | async).styleClass"
+  [wrapAfter]="(data$ | async).wrapAfter"
+  [allowAlignToRight]="true"
+></cx-navigation-ui>

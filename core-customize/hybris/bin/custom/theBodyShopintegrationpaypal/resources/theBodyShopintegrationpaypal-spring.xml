@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+    <bean id="theBodyShoppaypalSystemSetup" class="uk.co.thebodyshop.integration.paypal.setup.TheBodyShoppaypalSystemSetup" parent="abstractCoreSystemSetup"/>
+
+	<alias alias="paypalClientFactory" name="defaultPaypalClientFactory"/>
+    <bean id="defaultPaypalClientFactory" class="uk.co.thebodyshop.integration.paypal.client.factory.DefaultPaypalClientFactory">
+        <constructor-arg name="baseStoreService" ref="baseStoreService"/>
+    </bean>
+    
+	<alias alias="paypalPaymentService" name="defaultPaypalPaymentService"/>
+    <bean id="defaultPaypalPaymentService" class="uk.co.thebodyshop.integration.paypal.service.impl.DefaultPaypalPaymentService">
+        <constructor-arg name="paypalClientFactory" ref="paypalClientFactory"/>
+        <constructor-arg name="storeNameSupplier" ref="baseStoreNameSupplier"/>
+    </bean>
+    
+	<alias alias="paypalPaymentCreationStrategy" name="defaultPaypalPaymentCreationStrategy"/>
+    <bean id="defaultPaypalPaymentCreationStrategy" class="uk.co.thebodyshop.integration.paypal.strategy.DefaultPaypalPaymentCreationStrategy">
+        <constructor-arg name="checkoutCustomerStrategy" ref="checkoutCustomerStrategy"/>
+        <constructor-arg name="modelService" ref="modelService"/>
+        <constructor-arg name="commerceCommonI18NService" ref="commerceCommonI18NService"/>
+    </bean>
+    
+	<alias alias="paypalFacade" name="defaultPaypalFacade"/>
+    <bean id="defaultPaypalFacade" class="uk.co.thebodyshop.integration.paypal.facade.DefaultPaypalFacade">
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="checkoutFacade" ref="checkoutFacade"/>
+        <constructor-arg name="paypalPaymentService" ref="paypalPaymentService"/>
+        <constructor-arg name="paypalPaymentCreationStrategy" ref="paypalPaymentCreationStrategy"/>
+        <constructor-arg name="modelService" ref="modelService"/>
+    </bean>
+
+    <!-- Used for commands triggered by order-process -->
+    <bean name="paypalCommandFactory" class="de.hybris.platform.payment.commands.factory.impl.DefaultCommandFactoryImpl" >
+        <property name="paymentProvider" value="PAYPAL"/>
+        <property name="commands">
+            <map>
+                <entry>
+                    <key>
+                        <value type="java.lang.Class">de.hybris.platform.payment.commands.VoidCommand</value>
+                    </key>
+                    <bean class="uk.co.thebodyshop.integration.paypal.command.PayPalVoidCommand">
+                        <property name="paypalPaymentService" ref="paypalPaymentService"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

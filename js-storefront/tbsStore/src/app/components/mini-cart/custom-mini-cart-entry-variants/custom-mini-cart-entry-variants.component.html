@@ -1,0 +1,11 @@
+<div *ngIf="product?.size" class="mini-cart-variant__size d-flex align-items-center p-0 mb-3">{{ product.size }}</div>
+
+<div *ngIf="product?.colour" class="mini-cart-variant__colour d-flex flex-row flex-nowrap align-items-center p-0">
+  <div
+    class="mini-cart-variant__colour-swatch colour-variants__swatch"
+    [style.backgroundColor]="product.colour.hexCode"
+  >
+    &nbsp;
+  </div>
+  <div class="mini-cart-variant__colour-title color-variants__name pl-2">{{ product.colour.name }}</div>
+</div>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/orderShipmentConfirmationSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/orderShipmentConfirmationSchema" targetNamespace="http://thebodyshop/orderShipmentConfirmationSchema">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/orderShipmentConfirmationSchema" xmlns:tns="http://thebodyshop/orderShipmentConfirmationSchema">
+			<xs:element name="OrderShipmentConfirmationRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="OrderShipmentConfirmation" type="tns:OrderShipmentConfirmation" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="OrderShipmentConfirmation">
+				<xs:sequence>
+					<xs:element name="Code" type="xs:string" />
+					<xs:element default="Y2" name="Status" type="xs:string" />
+					<xs:element name="StatusNotificationDate" type="xs:string" />
+					<xs:element name="StatusNotificationTime" type="xs:string" />
+					<xs:element name="ShippingDate" type="xs:string" />
+					<xs:element name="ShippingTime" type="xs:string" />
+					<xs:element name="Carrier" type="xs:string" />
+					<xs:element minOccurs="0" name="CarrierService" type="xs:string" />
+					<xs:element name="TrackingID" type="xs:string" />
+					<xs:element name="Entries">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" name="Entry">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="EntryNumber">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:minLength value="1" />
+														<xs:maxLength value="5" />
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="ArticleId">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:minLength value="1" />
+														<xs:maxLength value="18" />
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="Gtin" type="xs:string" minOccurs="0" maxOccurs="1"/>
+											<xs:element name="QuantityDispatched" type="xs:int" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="OrderShipmentConfirmationResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="statusCode" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>The response of OrderShipmentConfirmation Request</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="messageId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>The Hybris Id of the Feed</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="OrderShipmentConfirmationRequest">
+		<wsdl:part element="tns:OrderShipmentConfirmationRequest" name="OrderShipmentConfirmationRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="OrderShipmentConfirmationResponse">
+		<wsdl:part element="tns:OrderShipmentConfirmationResponse" name="OrderShipmentConfirmationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="OrderShipmentConfirmationService">
+		<wsdl:operation name="OrderShipmentConfirmation">
+			<wsdl:input message="tns:OrderShipmentConfirmationRequest" name="OrderShipmentConfirmationRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:OrderShipmentConfirmationResponse" name="OrderShipmentConfirmationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OrderShipmentConfirmationServiceSoap11" type="tns:OrderShipmentConfirmationService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="OrderShipmentConfirmation">
+			<soap:operation soapAction="" />
+			<wsdl:input name="OrderShipmentConfirmationRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="OrderShipmentConfirmationResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OrderShipmentConfirmationService">
+		<wsdl:port binding="tns:OrderShipmentConfirmationServiceSoap11" name="OrderShipmentConfirmationServiceSoap11">
+			<soap:address location="http://thebodyshop.local:9001/tbsdataprocessing/endpoints" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

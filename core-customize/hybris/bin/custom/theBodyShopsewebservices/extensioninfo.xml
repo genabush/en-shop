@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+	<extension abstractclassprefix="Generated" classprefix="TheBodyShopsewebservices" managername="TheBodyShopsewebservicesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShopsewebservices" usemaven="false">
+		<requires-extension name="theBodyShopcore" />
+		<requires-extension name="webservicescommons" />
+		<coremodule generated="true" manager="uk.co.thebodyshop.smarteditwebservices.jalo.TheBodyShopsewebservicesManager" packageroot="uk.co.thebodyshop.smarteditwebservices" />
+		<webmodule jspcompile="false" webroot="/theBodyShopsewebservices" />
+	</extension>
+</extensioninfo>

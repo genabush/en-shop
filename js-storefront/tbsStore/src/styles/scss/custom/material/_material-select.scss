@@ -1,0 +1,136 @@
+// @matarial/select
+
+.mat {
+  &-select {
+    &:focus:not(.mat-select-disabled) {
+      .mat-form-field-underline {
+        background-color: $core-tertiary;
+      }
+    }
+    &-value {
+      line-height: 1.6rem;
+    }
+    &-trigger {
+      height: 1.6rem;
+    }
+    &-panel {
+      border-radius: 0 !important;
+      margin-left: -12px;
+      margin-top: -3px;
+      margin-right: -32px;
+      min-width: calc(100% + 22px) !important;
+      &.ng-animating {
+        visibility: hidden;
+      }
+    }
+    &-panel-wrap {
+      min-width: calc(100% + 1px);
+      margin-top: -6px;
+      margin-left: 15px;
+    }
+    &-primary {
+      .mat-select-value {
+        color: var(--cx-color-core-primary);
+      }
+      .mat-form-field-flex {
+        background-color: var(--cx-color-base-nourishing-white);
+      }
+      .mat-form-field-underline {
+        background-color: rgba($core-primary, 0.4);
+        .mat-form-field-ripple {
+          background-color: var(--cx-color-core-primary);
+        }
+      }
+    }
+    &:focus {
+      outline: -webkit-focus-ring-color auto 5px;
+    }
+  }
+  &-option {
+    height: $mat-select-height !important;
+    border-bottom: 1px solid var(--cx-color-base-nourishing-white);
+    &-text {
+      font-family: inherit;
+    }
+    &-primary {
+      color: var(--cx-color-base-nourishing-white);
+      background: var(--cx-color-core-primary);
+      &.mat-active {
+        color: $core-primary;
+        background-color: var(--cx-color-core-tertiary);
+      }
+      &.mat-selected {
+        &:not(.mat-option-multiple):not(.mat-option-disabled) {
+          background-color: var(--cx-color-core-tertiary) !important;
+          border-bottom: 1px solid var(--cx-color-core-tertiary);
+        }
+        &:not(.mat-option-disabled) {
+          color: var(--cx-color-core-primary) !important;
+          background: var(--cx-color-core-tertiary) !important;
+        }
+      }
+      &:hover:not(.mat-option-disabled),
+      &:focus:not(.mat-option-disabled) {
+        color: var(--cx-color-core-primary);
+        background: var(--cx-color-core-tertiary);
+      }
+
+      .mat-form-field-underline {
+        background-color: rgba($core-primary, 0.4);
+        .mat-form-field-ripple {
+          background-color: var(--cx-color-core-primary);
+        }
+      }
+    }
+  }
+  &-option-text {
+    padding: 0;
+  }
+}
+
+.mat-form-field-type-mat-select {
+  .mat-form-field {
+    &-flex {
+      height: calc(#{$mat-form-field-height});
+    }
+    &-wrapper {
+      padding: 0;
+      max-height: calc(#{$mat-form-field-height} + 0.5rem);
+    }
+    &-infix {
+      padding: 0;
+      max-height: calc(#{$mat-form-field-height} - 0.85rem);
+      border-top: 0.5rem solid transparent;
+    }
+    &-underline {
+      bottom: 0;
+    }
+  }
+}
+// native @matarial/select
+.mat-form-field-type-mat-native-select {
+  &.mat-select {
+    &-primary {
+      .mat-form-field-underline {
+        background-color: rgba($core-primary, 0.4);
+        .mat-form-field-ripple {
+          background-color: $core-primary;
+        }
+      }
+    }
+    &-tertiary {
+      .mat-form-field-underline {
+        background-color: rgba($core-tertiary, 0.4);
+        .mat-form-field-ripple {
+          background-color: $core-tertiary;
+        }
+      }
+    }
+  }
+}
+
+.mat-form-field-type-mat-native-select {
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+}

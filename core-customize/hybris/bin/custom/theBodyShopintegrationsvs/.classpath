@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+		<accessrules>
+			<accessrule kind="accessible" pattern="“javax/smartcardio/**”"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry exported="true" kind="src" path="/cms2"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/theBodyShopcore"/>
+	<classpathentry exported="true" kind="lib" path="lib/svsgiftcard.jar"/>
+	<classpathentry kind="lib" path="lib/FastInfoset-1.2.16.jar"/>
+	<classpathentry kind="lib" path="lib/gmbal-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/ha-api-3.1.12.jar"/>
+	<classpathentry kind="lib" path="lib/istack-commons-runtime-3.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.activation-api-1.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.annotation-api-1.3.4.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.jws-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.xml.bind-api-2.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.xml.soap-api-1.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.xml.ws-api-2.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/javax.activation-api-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/javax.annotation-api-1.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/javax.xml.soap-api-1.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jaxb-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/jaxws-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/jaxws-ri-2.3.2.wso2v1.jar"/>
+	<classpathentry kind="lib" path="lib/jaxws-rt-2.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/management-api-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/mimepull-1.9.11.jar"/>
+	<classpathentry kind="lib" path="lib/pfl-asm-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/pfl-basic-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/pfl-basic-tools-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/pfl-dynamic-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/pfl-tf-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/pfl-tf-tools-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/policy-2.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/saaj-impl-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/stax-ex-1.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/stax2-api-4.1.jar"/>
+	<classpathentry kind="lib" path="lib/streambuffer-1.5.7.jar"/>
+	<classpathentry kind="lib" path="lib/txw2-2.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/woodstox-core-5.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/jaxb-runtime-2.3.1.jar"/>
+	<classpathentry kind="lib" path="resources"/>
+	<classpathentry kind="src" path="gensrc">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
+	<classpathentry kind="output" path="eclipsebin/notused"/>
+</classpath>

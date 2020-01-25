@@ -1,0 +1,142 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import Delivery Modes / Zones
+#
+
+# Language
+$lang=en
+
+# Zone Delivery Modes
+UPDATE ZoneDeliveryMode; code[unique = true]                  ; name[lang = $lang]                                    ; description[lang = $lang]
+                       ; premium-gross                        ; "Premium Delivery"                                    ; "1-2 business days"
+                       ; premium-net                          ; "Premium Delivery"                                    ; "1-2 business days"
+                       ; standard-gross                       ; "Standard Delivery"                                   ; "3-5 business days"
+                       ; standard-net                         ; "Standard Delivery"                                   ; "3-5 business days"
+#AT Zone
+                       ; AT-freestandard Delivery             ; "AT Free delivery"                                    ; "Free Standard delivery"
+                       ; AT-REGULAR                           ; "Regular Delivery"                                    ; "3 Werktage"
+                       ; AT-EXPRESS                           ; "Express Delivery"                                    ; "2-3 days delivery"
+                       ; AT-REGULAR-PROMO                     ; "Regular Delivery"                                    ; "3 Werktage"
+                       ; at-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; at-collection-point                  ; "at-collection-point"                                 ; "at-collection-point"
+                       ; AT REGULARCOLLECTION                 ; "DPD Regular Collection"                              ; "3 Werktage"
+                       ; AT-DPD-EXPRESS-HOME                  ; "Regular Delivery"                                    ; "3 - 5 Werktage"
+#AU Zone
+                       ; au-standard                          ; "Standard Delivery"                                   ; "Standard delivery - 2-3 day service. Available for all orders."
+                       ; au-express                           ; "Next Working Day"                                    ; "Next Working Day - expedited delivery next working day"
+                       ; ausp                                 ; "Australia Post Collections"                          ;
+                       ; au-click-and-collect                 ; "Click and Collect"                                   ; "Click and Collect"
+                       ; Australia Standard Delivery - Free   ; "Standard Delivery - Free"                            ; "Standard Delivery - Free"
+                       ; aus-click-and-collect                ; "Collect In Store"                                    ; "Collect In Store"
+#CA Zone
+                       ; ca-ground-provinces                  ; "Ground Provinces"                                    ;
+                       ; ca-EXPEDITED-provinces               ; "Expedited Provinces"                                 ; "Next Working Day - expedited delivery via airmail where possible. Available for orders up to 20kg."
+                       ; ca-ground-territories                ; "Ground Territories"                                  ; "Ground Territories"
+                       ; ca-EXPEDITED-territories             ; "Expedited Territories"                               ; "Expedited Delivery to the Territories"
+                       ; CA_FREE_Ground_Province              ; "CA_Free_Ground_Province"                             ; "Delivery time of 4-8 days"
+                       ; CA-REGULAR                           ; "Regular Delivery"                                    ;
+                       ; CA-EXPRESS                           ; "Express Delivery"                                    ;
+                       ; CA_50FREE_Ground_Province            ; "Purolator Ground"                                    ; "Delivery time of 4-8 days"
+                       ; CA-FREE-Ontario                      ; "Free Ontario Delivery "                              ; " Free Delivery within Ontario"
+                       ; ca-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; CA - ground 7.95 DM                  ; "Province Ground (Over 50)"                           ; "Purolator Ground 50"
+                       ; CA - Ground free DM                  ; "Purolator Ground free"                               ; "Purolator Ground free"
+                       ; CA-FREESHIP-Quebec                   ; "Free Shipping Quebec"                                ; "Free Shipping Quebec"
+
+#DE Zone
+                       ; de-standard                          ; "Standard"                                            ; "Standard delivery - a safe and reliable overland service. Available for all orders."
+                       ; DE-REGULAR                           ; "Regular Delivery"                                    ; "3 day delivery"
+                       ; DE-EXPRESS                           ; "Express Delivery (Not Active)"                       ;
+                       ; DE-REGULAR-COLLECTION                ; "Regular Collection"                                  ; "3 Werktage"
+                       ; DE-REGULAR-PROMO                     ; "Regular Delivery"                                    ; "3-5 Werktage"
+                       ; DE Regular collection point mode     ; "DE Regular collection point"                         ; "DE Regular collection point"
+                       ; de-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; DE-DHL-REGULAR-COLLECTION            ; "DHL Paketshop"                                       ;
+                       ; de-dhl-promo-collection              ; "DHL Promo Paketshop"                                 ;
+#DK Zone
+
+                       ; dk-standard                          ; "Standard"                                            ; "Standard delivery - a safe and reliable overland service. Available for all orders."
+                       ; DK-Fri                               ; "Fri Fragt"                                           ; "Fri Fragt"
+                       ; DK-REGULAR                           ; "Regular Delivery"                                    ; "6-8 days delivery"
+                       ; DK-EXPRESS                           ; "Express Delivery"                                    ; "3-5 hverdage"
+                       ; DK-REGULAR-PROMO                     ; "Regular Delivery"                                    ; "6-7 hverdage"
+                       ; dk-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; dk-coll-point                        ; "dk-coll-point"                                      ; "dk-coll-point"
+                       ; DKREGULARCOLLECTION                  ; "DPD Regular Collection"                              ; "3 Werktage"
+                       ; DK-DPD-EXPRESS-HOME                  ; "Express Delivery"                                    ; "4 - 5 hverdage"
+                       ; dk-postnord-regular-collection       ; "Levering til posthus"                                ;
+                       ; dk-postnord-promo-collection         ; "PostNord Promo Service Point"                        ;
+                       ; DK-REGULAR-CP Mode                   ; "Regular Delivery"                                    ; "6-8 days delivery"
+#ES Zone
+
+                       ; es-dpd-free-shipping                 ; "es_DPD_Free_Shipping"                                ; "Envío Gratis a Domicilio"
+                       ; ES-REGULAR                           ; "Regular Delivery"                                    ;
+                       ; ES-EXPRESS                           ; "Express Delivery (Not Active)"                       ;
+                       ; ES-REGULAR-PROMO                     ; "Regular Delivery"                                    ; "6-9 días laborables"
+                       ; es-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; ES REGULARCOLLECTION                 ; "DPD Regular Collection"                              ; "3 Werktage"
+                       ; ES-UPS-COLLECTION                    ; "ES-UPS-COLLECTION"                                   ;
+#FR Zone
+
+                       ; FR-REGULAR                           ; "Delivery"                                            ;
+                       ; FR-EXPRESS                           ; "Express Delivery"                                    ;
+                       ; FR-REGULAR-COLLECTION-PROMO          ; "Regular Collection"                                  ;
+                       ; FR-REGULAR-PROMO                     ; "Regular Delivery--PROMO"                             ; "3 à 4 jours ouvrés"
+                       ; fr-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; FR REGULARCOLLECTION                 ; "DPD Regular Collection"                              ; "3 Werktage"
+                       ; FR-UPS-COLLECTION                    ; "FR-UPS COLLECTION"                                   ; "3 à 4 jours ouvrés"
+
+#NL Zone
+
+                       ; nl-standard                          ; "Standard"                                            ; "Standard delivery - a safe and reliable overland service. Available for all orders."
+                       ; NL-REGULAR                           ; "Regular Delivery"                                    ;
+                       ; NL-EXPRESS                           ; "Express Delivery (Not Active)"                       ; "2-3 day delivery"
+                       ; NL-UPS-COLLECTION                    ; "NL-UPS COLLECTION"                                   ; "4-7 days Collection"
+                       ; NL-Regular-Promo                     ; "Regular Delivery Promo"                              ;
+                       ; NL-Regular-Promotion                 ; "Regular Delivery Promo"                              ;
+                       ; nl-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; NL REGULARCOLLECTION                 ; "DPD Regular Collection"                              ; "3 Werktage"
+
+#SE Zone
+
+                       ; se-standard                          ; "Standard  "                                          ; "Standard delivery - a safe and reliable overland service. Available for all orders."
+                       ; SE-FriFrakt                          ; "Fri Frakt"                                           ; "Fri Frakt"
+                       ; SE-REGULAR                           ; "Regular Delivery"                                    ; "6-8 days delivery"
+                       ; SE-REGULAR-PROMO                     ; "Regular Delivery"                                    ; "7 arbetsdagar"
+                       ; se-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"
+                       ; SE-HOME                              ; "HOME Delivery"                                       ; "6-8 days delivery"
+                       ; SE-collection-point                 ; "SE-collection-point"                                  ; "SE-collection-point"
+                       ; SEREGULARCOLLECTION                  ; "DPD Regular Collection"                              ; "3 Werktage"
+                       ; SE-DPD-EXPRESS-HOME                  ; "Regular Delivery"                                    ; "4 - 5 days delivery"
+                       ; se-postnord-regular-collection       ; "PostNord Service Point"                              ;
+                       ; se-postnord-promo-collection         ; "PostNord PromoService Point"                         ;
+                       ; SE-REGULAR-CP Mode DM                ; "Regular Delivery"                                    ; "6-8 days delivery"
+#UK Zone
+
+                       ; UK-4-DPD-SATURDAY                    ; "Saturday Delivery"                                   ; "Saturday delivery if ordered before 2pm on Thursday"
+                       ; UK-1-ECONOMY                         ; "Economy Delivery"                                    ;
+                       ; UK-2-REGULAR                         ; "Regular Delivery"                                    ; "Estimated delivery in 2-3 days"
+                       ; UK-ECONOMY-PROMO                     ; "Economy Delivery"                                    ; "Estimated Delivery within 5 days"
+                       ; uk-click-and-collect                 ; "Click and Collect"                                   ; "Click and Collect"
+                       ; UK- Regular Collection Free Delivery ; "UK-Regular Collection Free"                          ; "UK-Regular Collection Free"
+                       ; UK-FreeRegularDelivery               ; "UK-FreeRegularDelivery"                              ; "UK-FreeRegularDelivery"
+                       ; UK-3-EXPRESS                         ; "Express Delivery"                                    ;
+                       ; UK-5-REGULAR-COLLECTION              ; "Standard Collection Points"                          ;
+                       ; UK-6-EXPRESS-COLLECTION              ; "Collection Express"                                  ;
+                       ; UK_Free_Standard_Coll_Point          ; "UK_Free_Standard_Coll_Point"                         ; "UK_Free_Standard_Coll_Point"
+                       ; UK-STANDARD                          ; "Standard Delivery"                                   ; "Delivery in 3 - 5 days"
+
+#US Zone
+                       ; us-ground                            ; "Ground (Not available for Hawaii)"                   ; "Standard delivery - a safe and reliable overland service."
+                       ; us-twoday                            ; "Two-Day"                                             ; "Two Day"
+                       ; us-overnight                         ; "Overnight (Not Available for Hawaii or Alaska)"      ; "Overnight"
+                       ; US_FREE_GROUND                       ; "Free Ground Delivery"                                ; "Free Ground Delivery"
+                       ; US-REGULAR                           ; "Regular Delivery"                                    ;
+                       ; US-EXPRESS                           ; "Express Delivery"                                    ;
+                       ; US-2DAY                              ; "2 Day Delivery"                                      ; "2 day delivery (Not available)"
+                       ; US-3DAY                              ; "3 Days delivery (Not Active)"                        ; "3 Day delivery"
+                       ; US-2DAY-FREE                         ; "Free 2 Day Delivery"                                 ; "Free 2 Day Delivery"
+                       ; us-FREE-overnight-Shipping           ; "Free Overnight (Not Available for Hawaii or Alaska)" ; "Free Overnight"
+                       ; us-click-and-collect                 ; "Collect In Store"                                    ; "Collect In Store"

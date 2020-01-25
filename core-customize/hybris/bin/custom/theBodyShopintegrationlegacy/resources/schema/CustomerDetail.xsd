@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/customerDetailSchema" xmlns:tns="http://thebodyshop/customerDetailSchema" elementFormDefault="qualified">
+
+	<xs:element name="CustomerDetailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerID" type="xs:string" minOccurs="0" />
+				<xs:element name="LoyaltyCardNumber" type="xs:string" minOccurs="0" />
+                <xs:element name="NationalID" type="xs:string" minOccurs="0" />
+				<xs:element name="Market" type="tns:NotNullStringMaxLength256" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CustomerDetailResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerDetail" type="tns:CustomerDetail" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="StatusTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SUCCESS" />
+			<xs:enumeration value="FAILURE" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MessageClassEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Long" />
+			<xs:enumeration value="Short" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="BenefitTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AbsoluteMonetary" />			
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="NotNullStringMaxLength256">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*\S.*" />
+			<xs:minLength value="1" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="NotNullStringMaxLength512">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*\S.*" />
+			<xs:minLength value="1" />
+			<xs:maxLength value="512" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="AddressLine1" type="xs:string" />
+			<xs:element name="AddressLine2" type="xs:string" minOccurs="0" />
+			<xs:element name="Town" type="xs:string" />
+			<xs:element name="Region" minOccurs="0" type="xs:string" />
+			<xs:element name="PostCode" type="xs:string" />
+			<xs:element name="Country" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LoyaltyMembership">
+		<xs:sequence>
+			<xs:element name="ProgrammeName" type="xs:string" />
+			<xs:element name="ProgrammeID" type="xs:string" />
+			<xs:element name="LoyaltyCard" type="tns:LoyaltyCard" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="PointsBalance" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LoyaltyCard">
+		<xs:sequence>
+			<xs:element name="CardType" type="xs:string" />
+			<xs:element name="CardNumber" type="xs:string" />
+			<xs:element name="IssueDate" type="xs:string" />
+			<xs:element name="CardIssuingStore" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Benefit">
+		<xs:sequence>
+			<xs:element name="BenefitType" type="tns:BenefitTypeEnum" />
+			<xs:element name="BenefitValue" type="xs:string" />
+			<xs:element name="BenefitCode" type="xs:string" />
+			<xs:element name="Reason" type="xs:string" />
+			<xs:element name="Status" type="xs:string" />
+			<xs:element name="ExpiryDate" type="xs:string" />
+			<xs:element name="Currency" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Segments">
+		<xs:sequence>
+			<xs:element name="SegmentID" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CustomerDetail">
+		<xs:sequence>
+			<xs:element name="CustomerID" type="xs:string" />
+			<xs:element name="EmployeeID" type="xs:string" minOccurs="0" />
+			<xs:element name="NationalID" type="xs:string" minOccurs="0" />
+			<xs:element name="Title" type="xs:string" minOccurs="0" />
+			<xs:element name="FirstName" type="xs:string" />
+			<xs:element name="MiddleName" type="xs:string" minOccurs="0" />
+			<xs:element name="LastName" type="xs:string" />
+			<xs:element name="RegistrationDate" type="xs:string" />
+			<xs:element name="Market" type="xs:string" />
+			<xs:element name="DateOfBirth" type="xs:string" minOccurs="0" />
+			<xs:element name="Gender" type="xs:string" minOccurs="0" />
+			<xs:element name="EmailAddress" type="xs:string" />
+			<xs:element name="PhoneNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="MobileNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="ContactAddress" type="tns:Address" maxOccurs="1" minOccurs="0" />
+			<xs:element name="LoyaltyMembership" type="tns:LoyaltyMembership" minOccurs="0" />
+			<xs:element name="Benefit" type="tns:Benefit" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="Segments" type="tns:Segments" minOccurs="0"/>
+			<xs:element name="DirectMailOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="EmailOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="MobileOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="PhoneOptIn" type="xs:boolean" minOccurs="0" />
+			<xs:element name="PreferredLanguage" type="xs:string" minOccurs="0" />
+			<xs:element name="MarketingMessages" minOccurs="0" maxOccurs="1">
+	            <xs:complexType>
+	                <xs:sequence>
+	                    <xs:element name="MarketingMessage" type="tns:MarketingMessage" minOccurs="0" maxOccurs="unbounded" />
+	                </xs:sequence>
+	            </xs:complexType>
+	        </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ResponseStatus">
+		<xs:sequence>
+			<xs:element name="status" type="tns:StatusTypeEnum" />
+			<xs:element name="statusMessage" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MarketingMessage">
+		<xs:sequence>
+			<xs:element name="MessageClass" minOccurs="1" maxOccurs="1" type="tns:MessageClassEnum" />
+			<xs:element name="MessageType" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="MessageString" minOccurs="1" maxOccurs="1" type="tns:NotNullStringMaxLength512" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

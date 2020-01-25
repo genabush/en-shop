@@ -1,0 +1,130 @@
+<div class="product-tile">
+  <div class="product-tile__image-wrapper">
+    <ng-container *ngIf="product.label">
+      <ng-container *ngIf="product.label.type === 'regular'">
+        <span class="product-label product-label--large">{{ product.label.text }}</span>
+      </ng-container>
+      <ng-container *ngIf="product.label.type === 'bright'">
+        <span class="product-label product-label--large product-label--bright">{{ product.label.text }}</span>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="product.badge">
+      <img class="product-badge" src="{{ product.badge.url }}" alt="{{ product.badge.text }}" />
+    </ng-container>
+    <a
+      [attr.aria-label]="product.name"
+      [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+      class="product-tile__image-container"
+    >
+      <cx-media
+        class="product-tile__image"
+        [container]="product.images?.PRIMARY"
+        format="product"
+        [alt]="product.nameHtml"
+      ></cx-media>
+    </a>
+  </div>
+  <a
+    [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+    class="product-tile__name"
+    [innerHTML]="product.nameHtml"
+  ></a>
+
+  <div class="product-tile__rating">
+    <cx-star-rating
+      tabindex="0"
+      [attr.aria-label]="('product.starRating' | cxTranslate) + product?.averageRating"
+      [rating]="product?.averageRating"
+      [disabled]="true"
+    ></cx-star-rating>
+  </div>
+  <div *ngIf="product.description" class="product-tile__subname">{{ product.summary }}</div>
+
+  <div *ngIf="product.variantSize" class="product-tile__size product-tile__size--lg">
+    {{ product.variantSize }}
+  </div>
+
+  <div class="product-tile__price-container">
+    <div class="product-tile__price" [attr.aria-label]="'product.productPrice' | cxTranslate">
+      {{ product.price?.formattedValue }}
+    </div>
+    <div *ngIf="product.variantSize" class="product-tile__size">
+      {{ product.variantSize }}
+    </div>
+  </div>
+  <div class="product-tile__cta-container">
+    <button class="btn btn--primary" (click)="openVariantsModal(productVariants)">
+      {{ 'common.addToBag' | cxTranslate }}
+    </button>
+    <cx-add-to-cart
+      (triggerParentForVariantModal)="shouldOpenVariantModal($event, productVariants)"
+      [guestFirst]="guestFirst"
+      [wishlistOnlyForProduct]="product"
+      [multiVariant]="product.multiVariant"
+      [variants]="product.variants"
+      [variantCode]="product.isVariant ? product.code : false"
+      [isCart]="false"
+    ></cx-add-to-cart>
+  </div>
+</div>
+
+<ng-template #productVariants let-c="close" let-d="dismiss">
+  <button
+    tabindex="0"
+    type="button"
+    class="modal__close"
+    [attr.aria-label]="'common.closeBtn' | cxTranslate"
+    (click)="modalVariants.close()"
+  >
+    <span aria-hidden="true">
+      <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+    </span>
+  </button>
+  <div class="modal__body modal__body--product">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="modal__title">
+          {{ product.name }}
+        </h2>
+        <cx-star-rating
+          tabindex="0"
+          [attr.aria-label]="('product.starRating' | cxTranslate) + product?.averageRating"
+          [rating]="product?.averageRating"
+          [disabled]="true"
+        ></cx-star-rating>
+        <p *ngIf="product.previewDescription">
+          {{ product.previewDescription }}
+          <a *ngIf="product.summary" class="link">{{ 'product.fullDetails' | cxTranslate }}</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12 col-md-5 pl-md-3">
+        <ng-container *ngIf="selectedVariant$ | async as selectedVariant">
+          <cx-media
+            class="product-tile__image product-tile__image--unset"
+            [container]="selectedVariant.container"
+            format="product"
+            [alt]="product.summary"
+          ></cx-media>
+        </ng-container>
+      </div>
+      <div class="col-12 col-md-7">
+        <cx-product-summary [productCode]="product.code" [quickview]="true"></cx-product-summary>
+        <div class="add-to-bag-set">
+          <cx-add-to-cart
+            [showQuantity]="true"
+            [guestFirst]="guestFirst"
+            [doNotShowAddedToBasketInterstitial]="true"
+            [hasStock]="product.stock.stockLevelStatus !== 'outOfStock' ? true : false"
+            [showEmailMeWhenInStockToggle]="product.emailMeWhenInStockToggle"
+            [quickview]="true"
+            [isCart]="false"
+            (triggerParentForVariantModal)="shouldOpenVariantModal($event, productVariants)"
+          ></cx-add-to-cart>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

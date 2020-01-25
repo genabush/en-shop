@@ -1,0 +1,20 @@
+<form [formGroup]="subscribeForm" novalidate (submit)="onSubmitSubscribeForm()">
+  <div class="row">
+    <div class="form-group mb-0 col-12 d-inline-flex">
+      <mat-form-field appearance="fill" class="mat-input-quaternary">
+        <mat-label class="required">{{ 'subscribe.placeholder' | cxTranslate }}</mat-label>
+        <input
+          matInput
+          class="mat-form-control"
+          type="text"
+          required
+          formControlName="subscribeEmail"
+          name="subscribeEmail"
+        />
+      </mat-form-field>
+      <button type="submit" class="btn btn--tertiary wishlists__cta-save">
+        {{ 'subscribe.submit' | cxTranslate }}
+      </button>
+    </div>
+  </div>
+</form>

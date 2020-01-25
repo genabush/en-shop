@@ -1,0 +1,1262 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="FreeFromFacets" elementtype="FreeFromFacet" autocreate="true" generate="true" type="list"/>
+		<collectiontype code="ProductBadgeColl" elementtype="ProductBadge" autocreate="true" generate="true" type="set"/>
+		<collectiontype code="MarkPriceRowCollectionType" elementtype="MarkDownPriceRow" autocreate="true" generate="false" type="set"/>
+		<collectiontype code="ProductTypeFacets" elementtype="ProductTypeFacet" autocreate="true" generate="true" type="list"/>
+		<collectiontype code="DeliveryModeColl" elementtype="DeliveryMode" autocreate="true" generate="true" type="list"/>
+		<collectiontype code="CollectionOpeningDays" elementtype="CollectionOpeningDay" autocreate="true" generate="true" type="list"/>
+	</collectiontypes>
+
+	<enumtypes>
+        <enumtype code="ArticleApprovalStatus" autocreate="false" generate="true">
+            <value code="readyToBeLocalised"/>
+            <value code="suspended"/>
+            <value code="discontinued"/>
+			<value code="readyForPIPO"/>
+        </enumtype>
+        
+        <enumtype code="TbsBaseType" generate="true" autocreate="true" dynamic="true">
+            <value code="SIZE"/>
+            <value code="COLOUR"/>
+            <value code="SERVICE"/>
+        </enumtype>
+       
+        <enumtype code="CurrencySymbolPosition" generate="true" autocreate="true" dynamic="true">
+            <value code="AFTER_PRICE"/>
+            <value code="BEFORE_PRICE"/>
+        </enumtype>
+
+		<enumtype code="OrderStatus" autocreate="false">
+			<value code="ORDER_HELD"/>
+			<value code="ORDER_RELEASED"/>
+			<value code="SENT_TO_SAP"/>
+			<value code="SENT_TO_ERP"/>
+			<value code="PRIMARY_PAYMENT_NOT_CAPTURED"/>
+            <value code="PAYMENT_FAILED"/>
+			<value code="ORDER_CONFIRMED"/>
+			<value code="SHIPPED"/>
+			<value code="NOT_SHIPPED"/>
+			<value code="PART_SHIPPED"/>
+			<value code="PAYMENT_PENDING"/>
+			<value code="READY_FOR_PICKING"/>
+			<value code="AWAIT_FOR_COLLECTION"/>
+			<value code="READY_FOR_COLLECTION"/>
+			<value code="COLLECTED"/>
+			<value code="REFUNDED"/>
+			<value code="PART_PICKED"/>
+			<value code="NOT_PICKED"/>
+			<value code="NOT_COLLECTED"/>
+			<value code="PICKUP_COMPLETE"/>
+			<value code="PAYMENT_CAPTURE_CHECK_REQUIRED"/>
+		</enumtype>
+		
+		<enumtype code="PaymentStatus" autocreate="false" generate="false">
+			<value code="CANCELLED"/>
+			<value code="REJECTED"/>
+			<value code="REVIEW"/>
+			<value code="AUTHORIZED"/>
+			<value code="PARTAUTHORIZED"/>
+			<value code="AUTHORIZATION_PENDING"/>
+			<value code="CAPTURE_PENDING"/>
+		</enumtype>
+
+		<enumtype code="CollectionPointsEnum" generate="true" autocreate="true" dynamic="true">
+            <value code="RoyalMail"/>
+            <value code="AUSP"/>
+            <value code="DPD"/>
+            <value code="UPS"/>
+        </enumtype>
+        
+        <enumtype code="FulfillmentMethodEnum" generate="true" autocreate="true">
+            <value code="DIRECT"/>
+            <value code="COLLECTION"/>
+            <value code="COLLECTINSTORE"/>
+        </enumtype>
+
+		<enumtype code="ConsignmentEntryStatus">
+			<value code="READY"/>
+			<value code="SHIPPED"/>
+			<value code="PART_SHIPPED"/>
+			<value code="NOT_SHIPPED"/>
+			<value code="READY_FOR_PICKING"/>
+			<value code="PICKUP_COMPLETE"/>
+			<value code="NOT_PICKED"/>
+			<value code="PART_PICKED"/>
+			<value code="READY_FOR_COLLECTION"/>
+			<value code="COLLECTED"/>
+			<value code="NOT_COLLECTED"/>
+			<value code="REFUNDED"/>
+		</enumtype>
+
+		<enumtype code="ConsignmentStatus" autocreate="false" generate="false">
+			<value code="SENT"/>
+			<value code="RECEIVED"/>
+			<value code="PART_SHIPPED"/>
+			<value code="NOT_SHIPPED"/>
+			<value code="PAYMENT_CAPTURE_CHECK_REQUIRED"/>
+			<value code="PAYMENT_CAPTURED"/>
+			<value code="PAYMENT_FAILED"/>
+			<value code="READY_FOR_PICKING"/>
+			<value code="AWAIT_FOR_COLLECTION"/>
+			<value code="READY_FOR_COLLECTION"/>
+			<value code="COLLECTED"/>
+			<value code="NOT_COLLECTED"/>
+			<value code="PART_PICKED"/>
+			<value code="NOT_PICKED"/>
+			<value code="REFUNDED"/>
+		</enumtype>
+
+		<enumtype code="SalesApplication" generate="false" autocreate="false" dynamic="true">
+			<value code="STORE"/>
+		</enumtype>
+
+		<enumtype code="Channel" autocreate="true" generate="true" dynamic="true">
+			<description>Channel</description>
+			<value code="POS"/>
+			<value code="WEB"/>
+			<value code="IPAD"/>
+			<value code="CCARE"/>
+		</enumtype>
+
+    </enumtypes>
+    
+	<maptypes>
+        <maptype code="MarketSelectorSiteMap"
+                 argumenttype="java.lang.String"
+                 returntype="java.lang.Object"
+                 autocreate="true"
+                 generate="false"/>
+                 
+    	<!-- argument type is Language ISO code and return type is CurrencySymbolPosition -->
+		<maptype code="CurrencySymbolPositionMap" argumenttype="java.lang.String" returntype="CurrencySymbolPosition" autocreate="true" generate="true"/>
+		
+		<maptype code="MeasurementUnitTypeMap" argumenttype="Unit" returntype="java.lang.Double" autocreate="true" generate="true"/>
+
+    	<maptype code="localized:StringCollection" argumenttype="Language" returntype="StringCollection" autocreate="true" generate="false"/>
+	</maptypes>
+    
+    <relations>
+   		<relation code="Product2PrincipalRelation" autocreate="true" generate="true" localized="false">
+			<deployment table="tbs_prod2princrel" typecode="10300"/>
+    		<sourceElement qualifier="restrictedProducts" type="Product" cardinality="many" ordered="false">
+    		   <description>Products which are restricted for this principal</description>
+    			<modifiers read="true" write="false" search="true" optional="true"/>
+    		</sourceElement>
+    		<targetElement qualifier="restrictedFor" type="Principal" cardinality="many" collectiontype="set" >
+    		   <description>Principals which are allowed to access this product</description>
+    			<modifiers read="true" write="true" search="true" optional="true"/>
+    		</targetElement>
+    	</relation>
+    	<relation code="Product2KeyIngredientRelation" autocreate="true" generate="true" localized="false">
+            <deployment table="tbs_prod2keyingrel" typecode="	10301"/>
+            <sourceElement qualifier="products" type="TbsBaseProduct" cardinality="many" ordered="false">
+               <description>Products containing specific key ingredients</description>
+                <modifiers read="true" write="false" search="true" optional="true"/>
+            </sourceElement>
+            <targetElement qualifier="keyIngredients" type="KeyIngredient" cardinality="many" collectiontype="set" ordered="true">
+               <description>Key ingredients available for specific product</description>
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </targetElement>
+        </relation>
+        <relation code="BaseSite2ProductCreateNotificationCronjob" generate="true" localized="false" autocreate="true">
+            <deployment table="tbs_bs2prodnotifycronjob" typecode="10302" />
+			<sourceElement qualifier="sites" type="BaseSite" cardinality="many">
+				<modifiers read="true" write="true" search="true" optional="true" />
+			</sourceElement>
+			<targetElement qualifier="productCreateNotificationCronjobs" type="ProductCreateNotificationCronjob" cardinality="many">
+				<modifiers read="true" write="true" search="true" optional="true" />
+			</targetElement>
+		</relation>
+        <relation code="ProductMarkDownPricesRelation" autocreate="true" localized="false">
+            <sourceElement qualifier="product" type="TbsVariantProduct" cardinality="one">
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </sourceElement>
+            <targetElement qualifier="ownMarkDownPrices" type="MarkDownPriceRow" cardinality="many" collectiontype="set">
+                <modifiers read="true" write="true" search="true" optional="true" partof="true"/>
+         	 </targetElement>
+        </relation>
+		<relation code="DeliveryModeDeliveryRestrictionRelation" autocreate="true" generate="true" localized="false">
+            <sourceElement qualifier="deliveryMode" type="DeliveryMode" cardinality="one"/>
+            <targetElement qualifier="deliveryRestrictions" type="DeliveryModeDeliveryRestriction" cardinality="many" collectiontype="set">
+                <modifiers partof="true"/>
+            </targetElement>
+        </relation>
+        <relation code="ProductDeliveryRestrictionRelation" autocreate="true" generate="true" localized="false">
+            <sourceElement qualifier="product" type="VariantProduct" cardinality="one"/>
+            <targetElement qualifier="deliveryRestrictions" type="ProductDeliveryRestriction" cardinality="many" collectiontype="set">
+                <modifiers partof="true"/>
+            </targetElement>
+        </relation>
+
+    </relations>
+
+    <itemtypes>
+
+        <!-- Add your item definitions here -->
+	   	<typegroup name="Swatch Colour"> 
+			<itemtype code="SwatchColour" extends="GenericItem" generate="true" autocreate="true">
+				<deployment table="tbs_swatch_colour" typecode="10303"/>
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<description>Colour code</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="false" unique="true" initial="true"/>
+					</attribute>
+					<attribute qualifier="hexCode" type="java.lang.String">
+						<description>Colour hex code value</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<description>Colour name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" encrypted="false" optional="true" removable="true" initial="false" unique="false" private="false" partof="false"/>
+					</attribute>
+					<attribute qualifier="swatchImage" type="Media">
+						<description>Media associated to the colour object</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Tbs Product Facet">
+			<itemtype code="TbsProductFacet" extends="GenericItem" generate="true" autocreate="true" abstract="true">
+				<deployment table="tbs_facet" typecode="10304"/>
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<description>unique identifier of product facet</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<description>localized name that is displayed on frontend</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<!-- Derivates of the facets. Hint for create a new facet type: Name it '<NewType>Facet',
+			 and name the indexed property <newType> (the first letter lower case), so that for display of the
+			   facet, you can use the tbsProductFacetDisplayNameProvider - and don't need to write a new one -->
+
+			<itemtype code="FinishFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="TargetAreaFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="ConcernFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="ScentFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="CoverageFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="RangeFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="ProductTypeFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="CategoryTypeFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="VeganFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+
+			<itemtype code="FreeFromFacet" extends="TbsProductFacet" generate="true" autocreate="true">
+			</itemtype>
+		</typegroup>
+    
+        <typegroup name="Tbs Product Ingredients">
+            <itemtype code="KeyIngredient" extends="GenericItem" autocreate="true" generate="true">
+                <description>Key Ingredient</description>
+                <deployment table="tbs_key_ingredient" typecode="10305"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                            <description>UID for key ingredient</description>
+                            <modifiers read="true" write="true" optional="false" unique="true"/>
+                            <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String">
+                            <description>Name for key ingredient</description>
+                            <modifiers read="true" write="true" optional="true"/>
+                            <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="description" type="localized:java.lang.String">
+                        <description>Description  of key ingredient</description>
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="pageLink" type="java.lang.String">
+                            <description>Link to key ingredient page</description>
+                            <modifiers read="true" write="true" optional="true"/>
+                            <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+    
+        <typegroup name="Tbs Product">
+        	<itemtype code="Product" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="StringCollection" qualifier="barcodelist">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="productBadges" type="ProductBadgeColl">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="productNew" type="java.lang.Boolean">
+						<persistence type="property" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+            <itemtype code="TbsBaseProduct" extends="Product" autocreate="true" generate="true">
+                <description>Base product Tbs extension that contains additional attributes.</description>
+                <attributes>
+					<attribute qualifier="metaTitle" type="localized:java.lang.String">
+						<description>Specific meta title to use in the PDP</description>
+     					<persistence type="property" />
+     					<modifiers read="true" write="true" search="true" optional="true" />
+     				</attribute>
+     				<attribute qualifier="metaDescription" type="localized:java.lang.String" generate="true" autocreate="true">
+     					<description>Specific meta description to use in the PDP</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="true" unique="false" />
+					</attribute>
+					<attribute qualifier="howToInstructions" type="localized:java.lang.String" generate="true" autocreate="true">
+						<description>Set of how to use instructions displayed on PDP</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="sqlserver">
+								<value>nvarchar(max)</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>varchar(4000)</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true" optional="true" unique="false" />
+					</attribute>
+					<attribute qualifier="howToVideo" type="localized:Media">
+						<description>How to use video displayed don PDP</description>
+     					<persistence type="property" />
+     					<modifiers read="true" write="true" search="true" optional="true" unique="false" />
+     				</attribute>
+     				<attribute qualifier="doNotSearch" type="java.lang.Boolean">
+     					<description>Set to FALSE to exclude the base product and its variants from the search </description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="primaryCategory" type="Category">
+						<description>Primary category for product</description>
+     					<persistence type="property" />
+     					<modifiers read="true" write="true" search="true" optional="true" unique="false" />
+     				</attribute>
+     				<attribute qualifier="finish" type="FinishFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="targetArea" type="TargetAreaFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="concern" type="ConcernFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="scent" type="ScentFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="coverage" type="CoverageFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="range" type="RangeFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="productType" type="ProductTypeFacets">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="categoryType" type="CategoryTypeFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="vegan" type="VeganFacet">
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+					<attribute qualifier="freeFrom" type="FreeFromFacets">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="localized:StringCollection" qualifier="straplines">
+                		<persistence type="property" />
+                	</attribute>
+                	 <attribute qualifier="type" type="TbsBaseType">
+                        <modifiers read="true" write="true" optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+            
+           	<itemtype code="VariantProduct" autocreate="false" generate="false">
+            	<attributes>
+					<attribute qualifier="technicalIngredients" type="java.lang.String" generate="true" autocreate="true">
+						<description>Set of technical ingredients used in the product. This attribute must never be updated by the market teams.</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="sqlserver">
+								<value>nvarchar(max)</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>varchar(4000)</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true" optional="true" unique="false" initial="true"/>
+					</attribute>
+					<attribute qualifier="erpHazardous" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="eans" type="StringSet">
+						<description>A list of previous Eans</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="mainEan" type="java.lang.String">
+						<description>Current EAN in use(from ECC as attribute EAN11)</description>
+     					<persistence type="property" />
+     					<modifiers read="true" write="true" optional="false" initial="true"/>
+     				</attribute>
+     				<attribute qualifier="giftWrap" type="java.lang.Boolean">
+						<description>Is eligible for gift wrap and messaging</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="collectInStore" type="java.lang.Boolean">
+						<description>Is eligible for the collect in store delivery option</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="bioBridge" type="java.lang.Boolean">
+						<description>Enabled for Bio Bridge calculations</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="sample" type="java.lang.Boolean">
+						<description>Is a sample product and must not be sold or displayed separately</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="loyalty" type="java.lang.Boolean">
+						<description>Is eligible for loyalty points calculation</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="erpUnitOfMeasure" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true"/>
+					</attribute>
+					<attribute qualifier="erpMeasurement" type="java.lang.Double">
+						<persistence type="property"/>
+						<modifiers read="true" write="true"/>
+					</attribute>
+					<attribute qualifier="erpMllVariant" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true"/>
+					</attribute>
+					<attribute qualifier="erpFlavour" type="java.lang.String">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="erpInternalName" type="java.lang.String">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="erpSeasonYear" type="java.lang.Integer">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="erpSeason" type="java.lang.String">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="erpCollection" type="java.lang.String">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="erpColour" type="java.lang.String">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="erpType" type="java.lang.String">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+            	</attributes>
+            </itemtype>
+            
+
+            <itemtype code="TbsVariantProduct" extends="VariantProduct" autocreate="true" generate="true">
+                <description>Tbs variant type that contains additional attributes describing variant size and colour.
+                </description>
+                <attributes>
+                    <attribute qualifier="colour" type="SwatchColour" >
+                        <description>Colour of the product.</description>
+                        <modifiers read="true" write="true" optional="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="size" type="java.lang.String" >
+                        <description>Size of the product.</description>
+                        <modifiers read="true" write="true" optional="false"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="unit" type="Unit" redeclare="true">
+                        <description>Unit of the product. Redeclaring to mandate Unit on Variant Product</description>
+                        <modifiers read="true" write="true" search="true" optional="false"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="colourPosition" type="java.lang.Integer" >
+                        <description>Colour Position.</description>
+                        <modifiers read="true" write="true" optional="false"/>
+                        <persistence type="property"/>
+                        <defaultvalue>Integer.valueOf(0)</defaultvalue>
+                    </attribute>
+					<attribute qualifier="emailMeWhenInStockToggle" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="markDownPrices" type="MarkPriceRowCollectionType">
+						<persistence type="dynamic"/>
+						<modifiers read="true" write="true" search="false" initial="false" optional="true" partof="true"/>
+					</attribute>
+					<attribute qualifier="phaseInProduct" type="TbsVariantProduct">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="storeStockBuffer" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+                </attributes>
+            </itemtype>
+            
+            <itemtype code="ServiceProduct" extends="TbsBaseProduct" autocreate="true" generate="true">
+            </itemtype>
+            
+            <itemtype code="MarkDownPriceRow"
+            			 extends="GenericItem" 
+            			 autocreate="true" 
+            			 generate="true">
+            	<deployment table="MarkDownPriceRows" typecode="10314"/>
+            	<custom-properties>
+					<property name="catalogItemType">
+						<value>java.lang.Boolean.TRUE</value>
+					</property>
+					<property name="catalogVersionAttributeQualifier">
+						<value>"catalogVersion"</value>
+					</property>
+					<property name="uniqueKeyAttributeQualifier">
+						<value>"product,startTime,endTime,price"</value>
+					</property>
+				</custom-properties>
+	            <attributes>
+	            	<attribute qualifier="catalogVersion" type="CatalogVersion" autocreate="true" generate="true">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="true"/>
+					</attribute>
+	            	<attribute qualifier="product" type="TbsVariantProduct" autocreate="true">
+						<persistence type="property"/>
+						<modifiers read="true" write="false" search="true" optional="true" removable="false" initial="true" />
+					</attribute>
+	            	<attribute qualifier="startTime" type="java.util.Date" autocreate="true">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="false" removable="false"/>
+					</attribute>
+					<attribute qualifier="endTime" type="java.util.Date" autocreate="true">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="false" removable="false"/>
+					</attribute>
+					<attribute qualifier="price" type="java.lang.Double" autocreate="true">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="false" removable="false" initial="true" private="false"
+								  partof="false"/>
+					</attribute>
+					<attribute qualifier="markDownMessage" type="MarkDownPriceMessage">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="true"/>
+					</attribute>
+				</attributes>
+				<indexes>
+			       	<index name="versionIDX" unique="false">
+		         		<key attribute="catalogVersion"/>
+		        	</index>
+		        	<index name="PIdx">
+						<key attribute="product"/>
+					</index>
+					<index name="stIdx">
+						<key attribute="startTime"/>
+					</index>
+					<index name="etIdx">
+						<key attribute="endTime"/>
+					</index>
+					<index name="priceIdx">
+						<key attribute="endTime"/>
+					</index>
+		        </indexes>
+			</itemtype>
+			
+			<itemtype code="MarkDownPriceMessage" extends="GenericItem" generate="true" autocreate="true">
+				<deployment table="markdown_price_message" typecode="10315"/>
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="message" type="localized:java.lang.String">
+						<modifiers read="true" write="true" optional="true"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+        </typegroup>
+
+		<typegroup name="Tbs Market Selector">
+			<itemtype code="MarketSelectorSite" extends="GenericItem" autocreate="true" generate="true">
+				<description>Market selector</description>
+				<deployment table="tbs_market_selector" typecode="10306"/>
+				<attributes>
+					<attribute qualifier="uid" type="java.lang.String">
+							<description>UID for market selector.</description>
+							<modifiers read="true" write="true" optional="false" unique="true"/>
+							<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<description>Name of the market selector.</description>
+						<modifiers read="true" write="true" optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="enabled" type="java.lang.Boolean">
+							<description>Enable market selector.</description>
+							<modifiers read="true" write="true" optional="false"/>
+							<defaultvalue>Boolean.TRUE</defaultvalue>
+							<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="url" type="java.lang.String">
+							<description>URL for market selector.</description>
+							<modifiers read="true" write="true" optional="false"/>
+							<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+			
+		<typegroup name="BaseStore">
+			<itemtype code="BaseStore" autocreate="false" generate="false">
+				<description>Extending BaseStore type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="currencySymbolPositionMap" type="CurrencySymbolPositionMap">
+						<description>Describes the Currency Symbol Position, whether it appears After Price or Before Price</description>
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="measurementUnitTypeMap" type="MeasurementUnitTypeMap">
+						<description>Measurement Unit type map for unit type and numerical value</description>
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="pricePerMetricToggle" type="java.lang.Boolean">
+						<description>Toggles(enable/disable) the Calculated Price Per Metric on Storefront</description>
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="defaultProductTaxGroup" type="ProductTaxGroup">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="productCreateNotifyEmailList" type="StringCollection">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="orderHoldDuration" type="java.lang.Integer">
+						<description>determines the time in minutes for which order should be held before sending to ERP</description>
+						<persistence type="property"/>
+						<defaultvalue>5</defaultvalue>
+					</attribute>
+					<attribute qualifier="maxProductOrderQuantity" type="java.lang.Integer">
+						<description>defining the default maximum order quantity for a product.</description>
+						<modifiers optional="false" />
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf(10)</defaultvalue>
+					</attribute>
+					<attribute type="PaymentModeCollection" qualifier="supportedPaymentModes">
+						<persistence type="property"/>
+						<description> Supported Payment Modes to validate against Adyen response</description>
+					</attribute>
+					<attribute qualifier="poBoxToggle" type="java.lang.Boolean">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="collectionPoint" type="CollectionPointsEnum">
+                     	<persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="newInThreshold" type="java.lang.Integer">
+						<description>NewIn Product Threshold Value</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf(180)</defaultvalue>
+					</attribute>
+                    <attribute qualifier="findInStoreEnabled" type="java.lang.Boolean">
+						<description>Toggles(enable/disable) the Find In Store button on PDP</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="baseStoreUserPriceGroup" type="UserPriceGroup">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" initial="false" optional="true"/>
+					</attribute>
+					<attribute qualifier="eligibleForCollectInStore" type="java.lang.Boolean">
+						<description>CIS fulfillment Method Toggle for Checkout Flow</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="cisDeliveryMode" type="DeliveryMode">
+						<description>CIS Selected Delivery Mode</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="giftWrapEnabled" type="java.lang.Boolean">
+						<description>Gift wrap enabled</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="giftWrapProduct" type="ServiceProduct">
+						<description>Service product for gift wrap</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="defaultStoreImageUrl" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="eligibleForGiftMessage" type="java.lang.Boolean">
+						<description>checks the eligibilty for gift wrap message</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="defaultStoreAmplienceSlotId" type="java.lang.String">
+					     <persistence type="property"/>
+					     <modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="int" qualifier="maxResultsForPosSearch">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="maximumCouponsAllowed" type="java.lang.Integer">
+						<description>Maximum Coupon Codes Threshold Value</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf(1)</defaultvalue>
+					</attribute>
+					<attribute qualifier="storeStockProductBuffer" type="java.lang.Integer">
+						<description>defining the default store Stock Buffer for Product.</description>
+						<modifiers optional="false" />
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf(5)</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+
+		<typegroup name="Category">
+			<itemtype code="Category" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="variantCategory" type="boolean">
+						<description>Type of Category either base or varient</description>
+						<persistence type="property"/>
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute qualifier="amplienceIdForThirdSlot" type="java.lang.String">
+						<description>Amplience ID for displaying Amplience Content on third tile of PLP page</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="amplienceIdForSixthSlot" type="java.lang.String">
+						<description>Amplience ID for displaying Amplience Content on sixth tile of PLP page</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="categoryImageUrl" type="java.lang.String">
+						<description>Category image URL to hold the Amplience image URL</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup name="Wishlist">
+			<itemtype code="Wishlist2" extends="GenericItem" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="id" type="java.lang.String">
+							<modifiers read="true" write="true" optional="false" unique="true"/>
+							<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="ProductBadge">
+			<itemtype code="ProductBadge" generate="true" autocreate="true">
+				<deployment table="tbs_prd_badge" typecode="10307"/>
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="url" type="java.lang.String">
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="position" type="BadgePosition">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BadgePosition" generate="true" autocreate="true">
+				<deployment table="tbs_bdge_pos" typecode="10308"/>
+				<attributes>
+				     <attribute qualifier="code" type="java.lang.String">
+                        <modifiers read="true" write="true" optional="false" unique="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+					<attribute qualifier="top" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="bottom" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="left" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="right" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="anchor" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="opacity" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="width" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="height" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+		
+		<typegroup name="BaseCommerce">
+			<itemtype code="StockLevel" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="activeEan" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="int" qualifier="fulfilled">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="int" qualifier="extendedStock">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="Warehouse" autocreate="false" generate="false">
+				<description>Extending Warehouse type with additional attributes.</description>
+				<attributes>
+					<attribute type="DeliveryModeColl" qualifier="restrictedDeliveryModes">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DeliveryMode" autocreate="false" generate="false">
+				<description>Extending DeliveryMode type with additional attributes.</description>
+				<attributes>
+					<attribute type="boolean" qualifier="restrictedForHazardousProducts">
+						<persistence type="property" />
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute qualifier="collectionPoint" type="java.lang.Boolean">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="sapCarrierShippingCode" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="collectionPointServiceName" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="forCollectInStore" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DeliveryRestriction" abstract="true" autocreate="true" generate="true" jaloclass="uk.co.thebodyshop.core.jalo.deliveryrestrictions.DeliveryRestriction">
+                <deployment table="tbs_deliv_restr" typecode="10316"/>
+                <attributes>
+                    <attribute qualifier="city" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers read="true" write="true" search="true" optional="true"/>
+                    </attribute>
+                    <attribute qualifier="region" type="Region">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="country" type="Country">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="name" type="java.lang.String">
+                        <persistence type="property"/>
+                        <defaultvalue>"Delivery Restrictions"</defaultvalue>
+                    </attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="DeliveryModeDeliveryRestriction" autocreate="true" generate="true" extends="DeliveryRestriction" jaloclass="uk.co.thebodyshop.core.jalo.deliveryrestrictions.DeliveryModeDeliveryRestriction">
+                <attributes>
+                    <attribute qualifier="postcode" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers read="true" write="true" search="true" optional="true"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="ProductDeliveryRestriction" autocreate="true" generate="true" extends="DeliveryRestriction" jaloclass="uk.co.thebodyshop.core.jalo.deliveryrestrictions.ProductDeliveryRestriction" />
+            
+            <itemtype code="PointOfService" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="enabledForCis" type="java.lang.Boolean">
+						<description>Store Display Toggle for Checkout Flow</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="maxCapacity" type="java.lang.Integer">
+						<description>CIS orders threshold</description>
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf(20)</defaultvalue>
+					</attribute>
+					<attribute qualifier="cisOpenOrders" type="java.lang.Integer">
+						<description>CIS Open Orders</description>
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf(0)</defaultvalue>
+					</attribute>
+					<attribute qualifier="imageUrl" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="amplienceSlotId" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="temporaryClosedFromDate" type="java.util.Date">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="temporaryClosedToDate" type="java.util.Date">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="permanentlyClosed" type="java.lang.Boolean">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup name="Processes">
+			<itemtype code="ProductCreateNotificationCronjob"  extends="CronJob"
+					  autocreate="true" generate="true" />
+		  	<itemtype code="ProductCreateNotificationProcess" extends="StoreFrontCustomerProcess"
+					autocreate="true" generate="true" >
+				<attributes>
+					<attribute qualifier="productCodes" type="StringCollection">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="emailList" type="StringCollection">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="catalogId" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+     	</typegroup>
+
+		<typegroup name="Amplience" >
+			<itemtype code="AmplienceSyncCronJob"
+					  extends="CronJob" autocreate="true" generate="true">
+				<attributes>
+					<attribute type="CatalogVersion" qualifier="catalogVersion">
+						<modifiers read="true" write="true" search="true" optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="MediaFormat" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="amplienceTemplate">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup name="Email When In Stock">
+			<itemtype code="EmailWhenInStock" extends="GenericItem" autocreate="true" generate="true">
+				<description>Email When In Stock</description>
+				<deployment table="tbs_email_stock" typecode="10313"/>
+				<attributes>
+					<attribute qualifier="email" type="java.lang.String">
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="productCode" type="java.lang.String">
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="baseSite" type="CMSSite">
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Payment Mode">	
+			<itemtype code="PaymentMode" autocreate="false" generate="false">
+	            <attributes>
+					<attribute qualifier="adyenPaymentType" type="java.lang.String">
+						<modifiers read="true" write="true" optional="true"/>
+						<persistence type="property"/>
+					</attribute>
+	             </attributes>
+             </itemtype>
+		</typegroup>
+
+		<typegroup name="Order">
+			<itemtype code="CollectionOpeningDay" extends="GenericItem" generate="true" autocreate="true">
+				<deployment table="tbs_col_open_day" typecode="10319"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="day">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="openingTime">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="closingTime">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="CollectionPoint" extends="GenericItem" generate="true" autocreate="true">
+				<deployment table="tbs_collection_point" typecode="10318"/>
+				<attributes>
+					<attribute type="CollectionOpeningDays" qualifier="collectionOpeningDays">
+						<persistence type="property" />
+						<modifiers partof="true"/>
+						<description>It is property representing Opening Days</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="distance">
+						<persistence type="property" />
+						<description>It is property representing a schedule of Collection Point Distance</description>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="latitude">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="longitude">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="sourceLatitude">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="sourceLongitude">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="StoreDetail" extends="GenericItem" generate="true" autocreate="true">
+				<deployment table="tbs_store_dtl" typecode="10321"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="distance">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="sourceLatitude">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="sourceLongitude">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractOrder" autocreate="false" generate="false">
+				<description>Extending AbstractOrder type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="fulfillmentMethod" type="FulfillmentMethodEnum">
+						<description>The fulfillment method to determine the place of delivery of products</description>
+						<persistence type="property" />
+						<defaultvalue>DIRECT</defaultvalue>
+					</attribute>
+					<attribute qualifier="collectionPoint" type="CollectionPoint">
+						<description>Collection Point Details on the cart</description>
+						<persistence type="property" />
+						<modifiers partof="true"/>
+					</attribute>
+					<attribute qualifier="bonusPoints" type="java.lang.Integer">
+						<description>Bonus Points of cart</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="deliveryPointOfService" type="PointOfService">
+						<description>The point of service to deliver to/collect from.</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="extendedStoreDtl" type="StoreDetail">
+						<description>Extended Store Details on the cart</description>
+						<persistence type="property" />
+						<modifiers partof="true"/>
+					</attribute>
+					<attribute qualifier="eligibleForGiftWrap" type="java.lang.Boolean">
+						<description>checks the eligibiltyfor gift wrap on the cart</description>
+						<persistence type="dynamic" />
+					</attribute>
+					<attribute qualifier="giftWrapProduct" type="ServiceProduct">
+						<description>Service product for gift wrap</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="giftWrapPrice" type="java.lang.Double">
+						<description>Service product gift wrap price</description>
+						<persistence type="property">
+                        <columntype>
+                            <value>java.math.BigDecimal</value>
+                        </columntype>
+	                    </persistence>
+	                    <modifiers read="true" write="true" search="true" optional="true"/>
+	                    <defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+					</attribute>
+					<attribute qualifier="giftMessageName" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="giftMessageSenderName" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="giftMessage" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+            <itemtype code="Order" autocreate="false" generate="false">
+                <attributes>
+                    <attribute type="java.util.Date" qualifier="confirmationDate">
+                        <persistence type="property"/>
+                    </attribute>
+					<attribute qualifier="agentId" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="storeId" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+                </attributes>
+            </itemtype>
+		</typegroup>
+
+		<typegroup name="Consignment">
+			<itemtype code="ConsignmentEntry" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="status" type="ConsignmentEntryStatus">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="PointOfService">
+			<itemtype code="TbsWeekdayOpeningDay" extends="WeekdayOpeningDay">
+				<attributes>
+					<attribute qualifier="storeOpeningTime" type="java.util.Date">
+						<modifiers  write="true" read="true"
+									optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="storeClosingTime" type="java.util.Date">
+						<modifiers  write="true" read="true"
+									optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Address">
+			<itemtype code="Address" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="line3" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="line4" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<!-- TODO Add all the attributes added for gigya-->
+		<typegroup name="Customer">
+			<itemtype code="Customer" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="nationalId" type="java.lang.String">
+						<modifiers optional="true" write="true" read="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="accountType" type="java.lang.String">
+						<modifiers optional="true" write="true" read="true"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+    </itemtypes>
+</items>

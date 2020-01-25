@@ -1,0 +1,80 @@
+<div class="cx-counter-wrapper">
+  <div
+    *ngIf="!isCart; else basketSelect"
+    class="counter btn-group"
+    [ngClass]="{ 'add-to-bag-set__counter ': quickview }"
+    role="group"
+    tabindex="0"
+    [attr.aria-label]="'common.addMoreItems' | cxTranslate"
+    [class.focused]="focus"
+    (keydown)="onKeyDown($event)"
+    (blur)="onBlur($event)"
+    (focus)="onFocus($event)"
+  >
+    <button
+      #decrementBtn
+      type="button"
+      role="button"
+      class="counter__btn counter__btn--decrement text-hide"
+      (click)="decrement()"
+      [disabled]="value <= min"
+      *ngIf="isValueChangeable"
+    >
+      {{ 'common.btnDecrement' | cxTranslate }}
+    </button>
+    <input
+      [attr.aria-label]="'product.quantity' | cxTranslate"
+      #itemCounterInput
+      class="counter__input"
+      type="text"
+      name="value"
+      cxOnlyNumber
+      (change)="checkInputProperty($event)"
+      [formControl]="inputValue"
+      *ngIf="isValueChangeable"
+    />
+    <div class="counter__input" *ngIf="!isValueChangeable">
+      {{ value }}
+    </div>
+    <button
+      #incrementBtn
+      type="button"
+      role="button"
+      class="counter__btn counter__btn--increment text-hide"
+      (click)="increment()"
+      [disabled]="cartIsLoading || value >= max"
+      *ngIf="isValueChangeable"
+    >
+      {{ 'common.btnIncrement' | cxTranslate }}
+    </button>
+  </div>
+  <ng-template #basketSelect>
+    <div class="basket-select-container">
+      <mat-form-field appearance="fill" class="mat-form-field-quantity-selector">
+        <mat-select
+          (selectionChange)="checkSelectProperty($event)"
+          class="mat-select mat-select-quantity-selector__{{ productCode }}"
+          [formControl]="inputValue"
+          [(value)]="value"
+          disableOptionCentering="true"
+          panelClass="mat-form-field-quantity-selector-overlay__{{ productCode }}"
+          id="mat-select-quantity-selector__{{ productCode }}"
+          tabIndex="0"
+        >
+          <mat-label class="d-none" aria-hidden="true">{{ value }}</mat-label>
+          <mat-select-trigger
+            ><span>{{ value }} </span></mat-select-trigger
+          >
+          <mat-option
+            class="mat-form-field-quantity-selector-option"
+            tabIndex="0"
+            *ngFor="let item of productItems"
+            [value]="item"
+          >
+            {{ item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </ng-template>
+</div>

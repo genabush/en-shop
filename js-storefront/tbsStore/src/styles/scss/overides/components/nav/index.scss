@@ -1,0 +1,16 @@
+.nav-wrapper {
+  &.has-amplience {
+    .column {
+      position: relative;
+      .amplience-content {
+        @include media-breakpoint-up(md) {
+          position: absolute;
+          right: 0;
+          top: 15px;
+          max-height: 100px;
+          max-width: 300px;
+        }
+      }
+    }
+  }
+}

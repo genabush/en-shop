@@ -1,0 +1,12 @@
+{   
+
+      "httpHandlers": { 
+        "validationErrors": {
+          "invalid": {
+            "code": "There was a problem test"
+          }
+        }
+    }
+    
+  
+}

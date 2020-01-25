@@ -1,0 +1,112 @@
+.price {
+  font-size: $price-font-size;
+  color: $price-color;
+  border-bottom: 1px solid $price-block-border-color;
+
+  &__heading {
+    font-family: $accordions-font-family;
+    height: 3.25rem;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__block {
+    display: flex;
+    border-bottom: 1px solid $price-block-loop-border-color;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    margin-bottom: 0;
+
+    &:last-child,
+    &:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0px;
+    }
+
+    &--disabled {
+      .price__element {
+        color: var(--cx-color-base-metal);
+      }
+    }
+  }
+
+  &__radio {
+    vertical-align: top !important;
+  }
+
+  &__stock {
+    @include h3();
+    color: var(--cx-color-base-metal);
+    vertical-align: top;
+    margin-left: 15px;
+  }
+
+  &__label {
+    color: $price-color;
+    display: flex;
+    flex-grow: 1;
+  }
+
+  &__element {
+    color: $price-color;
+    display: block;
+
+    &--unit {
+      font-family: $price-unit-family;
+      font-size: $price-unit-font-size;
+
+      @include media-breakpoint-up(lg) {
+        font-size: $price-unit-font-size-lg;
+      }
+
+      padding-bottom: 3px;
+    }
+
+    &--formatted {
+      font-size: $price-formatted-font-size;
+      font-family: $price-formatted-family;
+      line-height: $price-formatted-font-size;
+
+      @include media-breakpoint-up(lg) {
+        font-size: $price-formatted-font-size-lg;
+        line-height: $price-formatted-font-size-lg;
+      }
+
+      padding-bottom: 4px;
+    }
+
+    &--per-metric {
+      font-size: $price-metric-font-size;
+
+      @include media-breakpoint-up(lg) {
+        font-size: $price-metric-font-size-lg;
+      }
+    }
+
+    &--rewards {
+      font-size: $price-rewards-font-size;
+      font-family: $price-rewards-family;
+      text-decoration: $price-rewards-text-decoration;
+      color: $price-rewards-colour;
+      text-align: right;
+
+      @include media-breakpoint-up(lg) {
+        font-size: $price-rewards-font-size-lg;
+      }
+    }
+  }
+
+  &-variant {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    justify-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+app-product-variants-size {
+  width: 100%;
+}

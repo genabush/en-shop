@@ -1,0 +1,20 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Store / Point of Service
+# English localisations
+
+$lang=en
+
+UPDATE StoreLocatorFeature ; code[unique=true]      ; name[lang=$lang]   
+                           ; buyOnlinePickupInStore ; "Click and collect"
+
+UPDATE PointOfService ; name[unique=true] ; displayName               ;  
+                      ; 2253              ; OXFORD STREET SOHO        ;  
+                      ; 2348              ; WOOD GREEN                ;  
+                      ; 2487              ; CHEAPSIDE LONDON          ;  
+                      ; 2559              ; WHITE CITY WESTFIELD      ;  
+                      ; 2636              ; OXFORD STREET BOND STREET ;  
+                      ; 2745              ; THE ANGEL                 ;  
+
+

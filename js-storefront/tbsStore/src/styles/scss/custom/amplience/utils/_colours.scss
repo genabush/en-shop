@@ -1,0 +1,40 @@
+$opacity-list: (
+  '10': 0.1,
+  '20': 0.2,
+  '30': 0.3,
+  '40': 0.4,
+  '50': 0.5,
+  '60': 0.6,
+  '70': 0.7,
+  '80': 0.8,
+  '90': 0.9
+);
+
+$colours-list: (
+  'tbs-green': $core-primary,
+  'brighton-green': $core-secondary,
+  'stem-green': $core-tertiary,
+  'natural-warmth': $base-natural-warmth,
+  'nourishing-white': $base-nourishing-white,
+  'terracotta': $base-terracotta,
+  'white': $base-white,
+  'black': $base-black
+);
+
+@each $name, $value in $colours-list {
+  // Background colours
+  .bg--#{$name} {
+    background-color: $value !important;
+
+    @each $opacity, $alpha in $opacity-list {
+      &-#{$opacity} {
+        background-color: rgba($value, $alpha) !important;
+      }
+    }
+  }
+
+  // Text colours
+  .txt--#{$name} {
+    color: $value !important;
+  }
+}

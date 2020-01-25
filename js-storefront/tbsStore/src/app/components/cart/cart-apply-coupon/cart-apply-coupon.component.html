@@ -1,0 +1,86 @@
+<div *ngIf="cart$ | async as cart" class="cx-cart-apply-coupon">
+  <div class="cx-cart-coupon__wrapper w-100 d-flex flex-column align-items-center justify-content-center">
+    <!-- VOUCHER HEADING -->
+    <h3
+      [attr.aria-label]="'cart.promoVouchers.title' | cxTranslate"
+      class="cx-cart-coupon__title d-flex align-items-center d-flex justify-content-left justify-content-md-center col-12 col-md-6 mb-3"
+    >
+      {{ 'cart.promoVouchers.title' | cxTranslate }}
+    </h3>
+    <!-- VOUCHER FORM -->
+    <form (submit)="applyVoucher($event)" [formGroup]="form" class="cx-cart-coupon__form d-flex flex-wrap w-100">
+      <div class="form-group d-flex flex-row flex-wrap w-100 justify-content-center m-0">
+        <mat-form-field class="mat-input-primary col-8 col-md-5 col-lg-4 px-0 mb-1" appearance="fill">
+          <mat-label [attr.aria-label]="'cart.promoVouchers.promoCodeInput.label' | cxTranslate">{{
+            'cart.promoVouchers.promoCodeInput.label' | cxTranslate
+          }}</mat-label>
+          <input
+            matInput
+            type="text"
+            class="mat-form-control input-coupon-code"
+            tabIndex="0"
+            id="applyVoucher"
+            formControlName="couponCode"
+            (change)="handleValueChange()"
+            [placeholder]="'cart.promoVouchers.promoCodeInput.placeholder' | cxTranslate"
+          />
+        </mat-form-field>
+        <button
+          class="btn btn--primary apply-coupon-button col-4 col-md-2"
+          type="submit"
+          tabIndex="0"
+          [disabled]="submitDisabled$ | async"
+          [class.disabled]="submitDisabled$ | async"
+          title="{{ 'common.applyBtn' | cxTranslate }}"
+          [attr.aria-label]="'common.applyBtn' | cxTranslate"
+        >
+          {{ 'common.applyBtn' | cxTranslate }}
+        </button>
+
+        <mat-error *ngFor="let error of errorList$.value; index as e" class="w-100 text-center">
+          <span
+            [attr.aria-label]="'cart.promoVouchers.errors.alreadyExistsCoupon' | cxTranslate"
+            *ngIf="error.message == 'coupon.already.exists.cart'"
+            >{{ 'cart.promoVouchers.errors.alreadyExistsCoupon' | cxTranslate }}</span
+          >
+          <span
+            [attr.aria-label]="'cart.promoVouchers.errors.invalidCoupon' | cxTranslate"
+            *ngIf="error.message == 'coupon.invalid.code.provided'"
+            >{{ 'cart.promoVouchers.errors.invalidCoupon' | cxTranslate }}</span
+          >
+          <span
+            [attr.aria-label]="'cart.promoVouchers.errors.tooManyCoupons' | cxTranslate"
+            *ngIf="error.message == 'coupon.maximum.allowed.threshold'"
+            >{{ 'cart.promoVouchers.errors.tooManyCoupons' | cxTranslate }}</span
+          >
+        </mat-error>
+      </div>
+    </form>
+    <!-- DISCLAIMER -->
+    <p
+      [attr.aria-label]="'cart.promoVouchers.disclaimer' | cxTranslate"
+      class="cx-cart-coupon__disclaimer text-center mx-0 my-2"
+    >
+      {{ 'cart.promoVouchers.disclaimer' | cxTranslate }}
+    </p>
+  </div>
+  <!-- VOUCHER IMAGE (TODO) AMPLIENCE -->
+  <img
+    role="img"
+    src="https://i1.adis.ws/i/thebodyshop/tbs_hoou_illustration.png"
+    alt=""
+    class="cx-cart-coupon__promo-image position-absolute d-none d-md-flex"
+  />
+</div>
+<!-- VOUCHER APPLIED COUPONS -->
+<ng-container *ngIf="cart$ | async as cart">
+  <cx-applied-coupons
+    *ngIf="appliedVouchers$?.value?.length > 0"
+    class="cx-cart-coupon__voucher-wrapper"
+    [vouchers]="appliedVouchers$.value"
+    [cartIsLoading]="cartIsLoading$ | async"
+    [isReadOnly]="false"
+    (removeVoucherEmit)="removeVoucher()"
+  >
+  </cx-applied-coupons>
+</ng-container>

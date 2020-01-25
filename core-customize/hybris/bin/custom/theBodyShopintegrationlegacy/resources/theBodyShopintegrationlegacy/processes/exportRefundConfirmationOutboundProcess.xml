@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="createExportRefundConfirmationRequest" name="exportRefundConfirmationOutboundProcess" processClass="uk.co.thebodyshop.integration.model.process.ExportRefundConfirmationOutboundProcessModel">
+    <action id="createExportRefundConfirmationRequest" bean="createExportRefundConfirmationRequestAction">
+        <transition name="NOK" to="error" />
+        <transition name="WAIT" to="waitForWebserviceResponse" />
+    </action>
+
+    <wait id="waitForWebserviceResponse" then="checkWebserviceResponse" prependProcessCode="false">
+  		<event>${process.code}_wsResponse</event>
+	</wait>
+
+    <action id="checkWebserviceResponse" bean="checkWebserviceResponseAction">
+        <transition name="OK" to="success" />
+        <transition name="NOK" to="waitForResend" />
+        <transition name="RETRY" to="retryWebservice" />
+    </action>
+	
+	<action id="retryWebservice" bean="retryWebserviceAction">
+		<transition name="OK" to="createExportRefundConfirmationRequest" />
+		<transition name="NOK" to="waitForResend" />
+	</action>
+	
+    <wait id="waitForResend" then="processResend" prependProcessCode="false">
+  		<event>${process.code}_wsResend</event>
+	</wait>
+
+    <action id="processResend" bean="processResendAction">
+        <transition name="FAIL" to="failed" />
+        <transition name="RETRY" to="createExportRefundConfirmationRequest" />
+    </action>
+
+    <end id="error" state="ERROR">All went wrong.</end>
+    <end id="failed" state="FAILED">Request failed.</end>
+	<end id="success" state="SUCCEEDED">Request sent.</end>
+</process>

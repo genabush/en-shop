@@ -1,0 +1,6 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+INSERT_UPDATE Trigger;cronJob(code)[unique=true];second;minute;hour;day;month;year;relative;active;maxAcceptableDelay
+#;full-tbsHKStoreIndex-cronJob;0;5;3;-1;-1;-1;false;false;-1
+#;update-tbsHKStoreIndex-cronJob;0;3;-1;-1;-1;-1;false;false;-1

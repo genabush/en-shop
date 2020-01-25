@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="classpath:/spring-integration-config/theBodyShopintegration-main-xml.xml"/>
+
+	<bean id="orderSender" class="uk.co.thebodyshop.integration.ws.outbound.sender.impl.DefaultMessageSender">
+		<property name="receiverChannel" ref="exportOrderChannel"/>
+	</bean>
+	
+	<bean id="orderPaymentCaptureSender" class="uk.co.thebodyshop.integration.ws.outbound.sender.impl.DefaultMessageSender">
+		<property name="receiverChannel" ref="exportPaymentConfirmationChannel"/>
+	</bean>
+
+	<bean id="retryOnErrorResponsePredicate" class="uk.co.thebodyshop.integration.ws.predicates.RetryOnErrorResponsePredicate"/>
+
+	<bean id="placeOrderPopulator" class="uk.co.thebodyshop.integration.populators.PlaceOrderPopulator">
+		<constructor-arg name="internalExternalChannelTypeMapping">
+			<map>
+				<entry key="Store" value="INSTORE" />
+				<entry key="Web" value="WEB" />
+				<entry key="WebMobile" value="WEB" />
+				<entry key="CallCenter" value="CCARE" />
+			</map>
+		</constructor-arg>
+		<constructor-arg name="placeOrderCustomerConverter" ref="placeOrderCustomerConverter"/>
+		<constructor-arg name="placeOrderAddressConverter" ref="placeOrderAddressConverter"/>
+		<constructor-arg name="placeOrderEntryConverter" ref="placeOrderEntryConverter"/>
+	</bean>
+
+	<bean id="placeOrderCustomerPopulator" class="uk.co.thebodyshop.integration.populators.PlaceOrderCustomerPopulator"/>
+
+	<bean id="placeOrderAddressPopulator" class="uk.co.thebodyshop.integration.populators.PlaceOrderAddressPopulator"/>
+	
+	<bean id="placeOrderEntryPopulator" class="uk.co.thebodyshop.integration.populators.PlaceOrderEntryPopulator"/>
+
+	<bean id="placeOrderConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.integration.jaxb.order.Order" />
+		<property name="populators">
+			<list>
+				<ref bean="placeOrderPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="placeOrderCustomerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.integration.jaxb.order.Order.Customer" />
+		<property name="populators">
+			<list>
+				<ref bean="placeOrderCustomerPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="placeOrderEntryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.integration.jaxb.order.Order.Entries" />
+		<property name="populators">
+			<list>
+				<ref bean="placeOrderEntryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="placeOrderAddressConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.integration.jaxb.order.AddressType"/>
+		<property name="populators">
+			<list>
+				<ref bean="placeOrderAddressPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="orderSendResponseAction" class="uk.co.thebodyshop.integration.actions.OrderSendResponseAction">
+		<constructor-arg name="placeOrderGateway" ref="placeOrderGateway"/>
+		<constructor-arg name="orderResponseHandler" ref="orderResponseHandler"/>
+	</bean>
+
+	<bean id="abstractResponseHandler" class="uk.co.thebodyshop.integration.ws.response.handlers.AbstractResponseHandler" abstract="true">
+		<property name="modelService" ref="modelService"/>
+		<property name="retryOnErrorPredicate" ref="retryOnErrorResponsePredicate"/>
+	</bean>
+
+	<bean id="orderResponseHandler" class="uk.co.thebodyshop.integration.ws.response.handlers.OrderResponseHandler" parent="abstractResponseHandler">
+		<constructor-arg name="tbsOrderService" ref="tbsOrderService"/>
+	</bean>
+
+	<!-- Order payment capture -->
+	<bean id="orderSendPaymentPopulator" parent="placeOrderPopulator" class="uk.co.thebodyshop.integration.populators.OrderSendPaymentPopulator">
+		<constructor-arg name="internalExternalChannelTypeMapping">
+			<map>
+				<entry key="Store" value="INSTORE" />
+				<entry key="Web" value="WEB" />
+				<entry key="WebMobile" value="WEB" />
+				<entry key="CallCenter" value="CCARE" />
+			</map>
+		</constructor-arg>
+		<constructor-arg name="placeOrderCustomerConverter" ref="placeOrderCustomerConverter"/>
+		<constructor-arg name="placeOrderAddressConverter" ref="placeOrderAddressConverter"/>
+	</bean>
+	
+	<bean id="orderSendPaymentConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.integration.jaxb.order.Order" />
+		<property name="populators">
+			<list>
+				<ref bean="orderSendPaymentPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="orderSendCaptureAction" class="uk.co.thebodyshop.integration.actions.OrderSendCaptureAction">
+		<constructor-arg name="exportPaymentConfirmationGateway" ref="exportPaymentConfirmationGateway"/>
+		<constructor-arg name="orderPaymentCaptureHandler" ref="orderPaymentCaptureHandler"/>
+	</bean>
+	
+	<bean id="orderPaymentCaptureHandler" class="uk.co.thebodyshop.integration.ws.response.handlers.OrderPaymentCaptureHandler" parent="abstractResponseHandler">
+		<constructor-arg name="tbsOrderService" ref="tbsOrderService"/>
+	</bean>
+
+	<bean id="rmsOrderSendResponseAction" class="uk.co.thebodyshop.integration.actions.OrderSendResponseAction">
+		<constructor-arg name="placeOrderGateway" ref="rmsPlaceOrderGateway"/>
+		<constructor-arg name="orderResponseHandler" ref="orderResponseHandler"/>
+	</bean>
+
+	<bean id="rmsOrderSendCaptureAction" class="uk.co.thebodyshop.integration.actions.OrderSendCaptureAction">
+		<constructor-arg name="exportPaymentConfirmationGateway" ref="rmsExportPaymentConfirmationGateway"/>
+		<constructor-arg name="orderPaymentCaptureHandler" ref="orderPaymentCaptureHandler"/>
+	</bean>
+</beans>

@@ -1,0 +1,94 @@
+%cx-breadcrumb {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 0.75rem 0;
+  text-align: center;
+  color: currentcolor;
+  background-color: var(--cx-color-background);
+  min-height: 3.6rem;
+  width: 100%;
+  nav {
+    font-size: 0.85rem;
+    padding: 5px 1rem;
+    @include media-breakpoint-up(md) {
+      padding: 10px 1rem;
+    }
+    span {
+      color: var(--cx-color-secondary);
+      &:not(:last-child):after {
+        content: '/';
+        position: relative;
+        -webkit-transform: rotate(30deg);
+        transform: rotate(30deg);
+        display: inline-block;
+        font-weight: 100;
+        font-size: 20px;
+        font-family: sans-serif;
+        color: var(--cx-color-core-primary);
+        padding: 0px 5px 0 5px;
+        top: 2px;
+      }
+      a {
+        color: inherit;
+        padding: 5px 5px;
+      }
+    }
+  }
+}
+
+cx-breadcrumb {
+  background-color: transparent !important; // TODO investigate the pattern lab implementation
+  nav span {
+    a {
+      color: var(--cx-color-core-primary);
+      font-family: $work-sans-semibold;
+    }
+    &:last-child {
+      a {
+        font-size: 1rem;
+        font-family: $work-sans;
+      }
+    }
+  }
+  .breadcrumbs {
+    &-content {
+      position: relative;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 1240px;
+      z-index: 1;
+      color: var(--cx-color-core-primary);
+      @include media-breakpoint-down(sm) {
+        white-space: nowrap;
+        text-align: left;
+      }
+    }
+    &-title {
+      color: var(--cx-color-core-primary);
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      @include media-breakpoint-down(sm) {
+        max-width: 100%;
+      }
+      @include media-breakpoint-down(xs) {
+        max-width: calc(50% - 10px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.app-sort-dropdown {
+  width: 100%;
+  @include media-breakpoint-up(md) {
+    width: auto;
+  }
+}

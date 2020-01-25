@@ -1,0 +1,11 @@
+<div class="amp-dc-card-list amp-dc-prod-rows amp-dc-prod-{{length cards}}-rows {{#if heroList}}amp-dc-cards-hero{{/if}}">
+    {{#if header }}
+        <div class="amp-dc-card-title">
+            {{ header }}
+        </div>
+    {{/if}}
+
+    <div class="amp-dc-card-list-wrap">
+        {{#each cards}}{{> card-template}}{{/each}}
+    </div>
+</div>

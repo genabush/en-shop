@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<import resource="classpath:/thebodyshoployalty-integration/hot-folder-loyalty-spring.xml" />
+
+	<bean id="theBodyShoployaltySystemSetup" class="uk.co.thebodyshop.loyalty.setup.TheBodyShoployaltySystemSetup" />
+
+	<bean id="loyaltyService" class="uk.co.thebodyshop.loyalty.service.impl.DefaultLoyaltyService">
+		<constructor-arg name="loyaltyCardDao" ref="loyaltyCardDao" />
+		<constructor-arg name="modelService" ref="modelService" />
+		<constructor-arg name="paymentService" ref="paymentService"/>
+	</bean>
+
+	<bean id="loyaltyCardDao" class="uk.co.thebodyshop.loyalty.dao.impl.DefaultLoyaltyCardDao">
+		<constructor-arg name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<bean id="loyaltyVoucherPopulator" class="uk.co.thebodyshop.loyalty.populators.LoyaltyVoucherPopulator">
+		<constructor-arg name="cartService" ref="cartService" />
+	</bean>
+
+	<alias name="defaultLoyaltyVoucherFacade" alias="loyaltyVoucherFacade" />
+	<bean id="defaultLoyaltyVoucherFacade" class="uk.co.thebodyshop.loyalty.voucher.impl.DefaultLoyaltyVoucherFacade">
+		<constructor-arg name="loyaltyService" ref="loyaltyService" />
+		<constructor-arg name="loyaltyVoucherConverter" ref="loyaltyVoucherConverter" />
+		<constructor-arg name="cartService" ref="cartService" />
+		<constructor-arg name="baseStoreService" ref="baseStoreService" />
+		<constructor-arg name="modelService" ref="modelService" />
+		<constructor-arg name="userService" ref="userService" />
+		<constructor-arg name="outstandingAmountCalculationStrategy" ref="outstandingAmountCalculationStrategy" />
+		<constructor-arg name="orderEntryLoyaltyDiscountCalculationStrategy" ref="orderEntryLoyaltyDiscountCalculationStrategy" />
+	</bean>
+
+	<alias name="defaultLoyaltyVoucherConverter" alias="loyaltyVoucherConverter" />
+	<bean id="defaultLoyaltyVoucherConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.loyalty.data.LoyaltyVoucherData" />
+		<property name="populators">
+			<list>
+				<ref bean="loyaltyVoucherPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="loyaltyPopulator" class="uk.co.thebodyshop.loyalty.populators.LoyaltyPopulator">
+		<constructor-arg name="baseStoreService" ref="baseStoreService" />
+		<constructor-arg name="loyaltyService" ref="loyaltyService" />
+		<constructor-arg name="priceDataFactory" ref="priceDataFactory" />
+		<constructor-arg name="userService" ref="userService" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="cartConverter" />
+		<property name="add" ref="loyaltyPopulator" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="extendedCartConverter" />
+		<property name="add" ref="loyaltyPopulator" />
+	</bean>
+
+	<bean id="loyaltyRegistrationEventListener" class="uk.co.thebodyshop.loyalty.event.LoyaltyRegistrationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<constructor-arg name="loyaltyService" ref="loyaltyService" />
+	</bean>
+
+	<bean id="loyaltyVoucherDiscountForOrderAttributeHandler" class="uk.co.thebodyshop.loyalty.order.dynamicattributes.LoyaltyVoucherDiscountForOrderAttributeHandler" />
+
+	<bean id="loyaltyVoucherRedemptionPlaceOrderMethodHook" class="uk.co.thebodyshop.loyalty.order.hook.LoyaltyVoucherRedemptionPlaceOrderMethodHook">
+		<constructor-arg name="modelService" ref="modelService" />
+		<constructor-arg name="loyaltyService" ref="loyaltyService" />
+		<constructor-arg name="userService" ref="userService" />
+	</bean>
+
+	<bean id="loyaltyVoucherRedemptionPlaceOrderMethodHookListMergeDirective" depends-on="commercePlaceOrderMethodHooks" parent="listMergeDirective">
+        <property name="add" ref="loyaltyVoucherRedemptionPlaceOrderMethodHook"/>
+    </bean>
+
+	<bean id="tbsLybcPointsPopulator" class="uk.co.thebodyshop.loyalty.populators.TbsLybcPointsPopulator">
+		<constructor-arg name="loyaltyPointsCalculationStrategy" ref="loyaltyPointsCalculationStrategy"/>
+		<constructor-arg name="baseStoreService" ref="baseStoreService"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderConverter"/>
+		<property name="add" ref="tbsLybcPointsPopulator"/>
+	</bean>
+    
+</beans>

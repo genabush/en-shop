@@ -1,0 +1,29 @@
+
+# Import config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor] ; pk[unique=true]
+$websiteAtUrl=$config-website.thebodyshop-at.https
+$websiteAuUrl=$config-website.thebodyshop-au.https
+$websiteCaUrl=$config-website.thebodyshop-ca.https
+$websiteDeUrl=$config-website.thebodyshop-de.https
+$websiteDkUrl=$config-website.thebodyshop-dk.https
+$websiteEsUrl=$config-website.thebodyshop-es.https
+$websiteFrUrl=$config-website.thebodyshop-fr.https
+$websiteGlobalUrl=$config-website.thebodyshop-global.https
+$websiteNlUrl=$config-website.thebodyshop-nl.https
+$websiteSeUrl=$config-website.thebodyshop-se.https
+$websiteUkUrl=$config-website.thebodyshop-uk.https
+$websiteUsUrl=$config-website.thebodyshop-us.https
+
+INSERT_UPDATE CMSSite ; uid[unique=true]   ; previewURL ; 
+                      ; thebodyshop-at     ; $websiteAtUrl
+                      ; thebodyshop-au     ; $websiteAuUrl
+                      ; thebodyshop-ca     ; $websiteCaUrl
+                      ; thebodyshop-de     ; $websiteDeUrl
+                      ; thebodyshop-dk     ; $websiteDkUrl
+                      ; thebodyshop-es     ; $websiteEsUrl
+                      ; thebodyshop-fr     ; $websiteFrUrl
+                      ; thebodyshop-global ; $websiteGlobalUrl
+                      ; thebodyshop-nl     ; $websiteNlUrl
+                      ; thebodyshop-se     ; $websiteSeUrl
+                      ; thebodyshop-uk     ; $websiteUkUrl
+                      ; thebodyshop-us     ; $websiteUsUrl

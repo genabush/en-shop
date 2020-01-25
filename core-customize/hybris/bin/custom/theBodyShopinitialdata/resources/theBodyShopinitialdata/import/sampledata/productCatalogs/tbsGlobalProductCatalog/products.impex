@@ -1,0 +1,584 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+# Macros / Replacement Parameter definitions
+#% impex.setLocale( Locale.ENGLISH);
+
+$productCatalog=tbsGlobalProductCatalog
+$productCatalogName=Global Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$onlineDate=onlineDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-01-2019 06:30:00']
+
+INSERT_UPDATE SwatchColour;code[unique=true];hexCode;name;
+;s00155;"#EEBBA8";"01 Lighter Skin Tones";
+;s00156;"#CD936B";"02 Medium Skin Tones"
+;s00157;"#D39065";"03 Darker Skin Tones";
+;s00178;"#BE7B5E";"04 Dark Skin Tones";
+;96109;"#C51F71";"001 Pink Hibiscusis";
+;96148;"#B62657";"029 Deep Berryis";
+;96261;"#C4171D";"003 Red Pomegranate";
+
+
+INSERT_UPDATE KeyIngredient;code[unique=true];name[lang=en];description[lang=en];pageLink;
+;Ginger;Ginger;"Ginger from Sri Lanka, which gets the nod from traditional Ayuverdic medicine and boffins in lab coats.";"/ginger";
+;Camomile;Camomile;"Camomile has been proven to be highly effective for soothing sensitive skin with its anti-irritant properties. This wonder flower is suitable for all skin types.";"/camomile";
+;TeaTree;Tea Tree;"Discover the roots of our iconic, blemish-banishing Tea Tree range. Near the foothills of Mount Kenya, our farmers hand-pick and harvest tea tree leaves for our products.";"/teatree"
+;Default;Default;
+
+INSERT_UPDATE BadgePosition;code[unique=true];top;right;left;
+;topRightPos;50;150;;
+;topLeftPos;50;;50;
+
+INSERT_UPDATE ProductBadge;code[unique=true];name;url;position(code);
+;BestSellerBadge;Best Seller;/i/thebodyshop/badge-best-seller;topRightPos;
+;NewItemBadge;New Item;/i/thebodyshop/badge-new;topLeftPos;
+
+# Insert Products
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];$supercategories;manufacturerName;keyIngredients(code);type(code)[default=SIZE];manufacturerAID;unit(code)[default=pieces];ean;variantType(code);$catalogVersion;$approved;$onlineDate;productNew[default=false]
+;p003257;c00143;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000341;c00149;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002002;c00143;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002445;c00143;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003101;c00143;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p001102;c00143;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002457;c00143;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000971;c00143;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003255;c00143;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p003254;c00143;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003173;c00143;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000694;c00143;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002003;c00143;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000936;c00145;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002013;c00144;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000810;c00144;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002833;c00147;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p003268;c00147;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002835;c00141;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000664;c00148;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003259;c00148;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000067;c00140;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000056;c00140;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002017;c00140;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000499;c00013;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000253;c00013;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000019;c00014;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002347;c00014;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002812;c00284;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002419;c00024;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000480;c00018;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002863;c00019;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000466;c00019;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000644;c00019;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000787;c00020,c00021;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000676;c00020,c00021;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000461;c00054;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000111;c00054;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000106;c00054;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000795;c00056;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000797;c00056;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p003200;c00047;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000789;c00047;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000063;c00047;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003090;c00048;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002733;c00048;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000142;c00051;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000120;c00051;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002449;c00051;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003091;c00050;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000767;c00050;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002453;c00050;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000767;c00049;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002144;c00065;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002448;c00059;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002145;c00059;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003111;c00060;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000360;c00060;The Body Shop;Ginger,Camomile,TeaTree;COLOUR;;;;;;;
+;p001081;c00061;The Body Shop;Ginger,Camomile;;;;;;;
+;p002819;c00061;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000467;c00061;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000851;c00062;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000436;c00064;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000435;c00064;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002668;c00064;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000362;c00064;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000726;c00064;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002817;c00064;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003237;c00063;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002001;c00063;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000048;c00065;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002867;c00065;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000042;c00065;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p002171;c00066;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000657;c00066;The Body Shop;Ginger,Camomile,TeaTree;COLOUR;;;;;;;
+;p000069;c00066;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000621;c00066;The Body Shop;Ginger,Camomile;;;;;;;;
+;p003235;c00067;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000184;c00067;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002818;c00067;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p000222;c00069;The Body Shop;Ginger,Camomile;;;;;;;;
+;p002437;c00069;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p001050;c00069;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000269;c00146;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+;p003087;c00051;The Body Shop;Ginger,Camomile;;;;;;;;
+;p000247;c00014;The Body Shop;Ginger,Camomile,TeaTree;;;;;;;;
+
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];name;keyIngredients(code);type(code)[default=SIZE];varianttype(code)[default=TbsVariantProduct];$approved;$catalogVersion;productNew[default=false]
+;0000000000;Dummy Base Product;Default;
+
+# Create Variants
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];type(code)[default=SIZE];productBadges(code[unique=true])[collection-delimiter = , ];varianttype(code)[default=TbsVariantProduct];$catalogVersion;productNew[default=false]
+;p000360;COLOUR;
+;p000019;
+;p003257;
+;p000341;
+;p002002;
+;p002445;
+;p003101;
+;p001102;
+;p002457;
+;p000971;
+;p003255;
+;p003254;
+;p003173;
+;p000694;
+;p002003;
+;p000936;
+;p002013;
+;p000810;
+;p002833;
+;p003268;
+;p002835;
+;p000664;
+;p003259;
+;p000067;
+;p000056;
+;p002017;
+;p000499;
+;p000253;
+;p002347;
+;p002812;
+;p002419;;BestSellerBadge,NewItemBadge;
+;p000480;
+;p002863;
+;p000466;
+;p000644;
+;p000787;
+;p000676;
+;p000461;
+;p000111;
+;p000106;
+;p000795;
+;p000797;
+;p003200;
+;p000789;
+;p000063;
+;p003090;
+;p002733;
+;p000142;
+;p000120;
+;p002449;
+;p003091;
+;p000767;
+;p002453;
+;p000767;
+;p002144;
+;p002448;
+;p002145;
+;p003111;
+;p001081;
+;p002819;
+;p000467;
+;p000851;
+;p000436;
+;p000435;
+;p002668;
+;p000362;
+;p000726;
+;p002817;
+;p003237;
+;p002001;
+;p000048;
+;p002867;
+;p000042;
+;p002171;
+;p000657;COLOUR;
+;p000069;
+;p000621;
+;p003235;
+;p000184;
+;p002818;
+;p000222;
+;p002437;
+;p001050;
+;p000269;
+;p003087;
+;p000247;
+
+INSERT_UPDATE TbsVariantProduct;code[unique=true];$baseProduct;mainEan;technicalIngredients;colourPosition[default=0];colour(code);TbsVariantProduct.size;unit(code)[default=ML];erpUnitOfMeasure[default=ML];erpMeasurement[default=200];$approved;$catalogVersion;$onlineDate;productNew[default=false]
+;1030196;p000360;1030196;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil, Hydrogenated Castor Oil, Phenoxyethanol, Magnesium Sulfate, Sodium Chloride, Tocopheryl Acetate, Mica, Gluconolactone, Polyester-1, Silica Dimethyl Silylate, Aloe Barbadensis Leaf Juice, Triethoxycaprylylsilane, Sodium Benzoate, Tocopherol, Trisodium Ethylenediamine Disuccinate, Glycine Soja Oil/Glycine Soja (Soybean) Oil, Calcium Gluconate, CI 77891/Titanium Dioxide, CI 77492/Iron Oxides, CI 77491/Iron Oxides, CI 77499/Iron Oxides.";1;;25.0;;;25.0;
+;1030226;p000360;1030226;"Aqua/Water/Eau, Isohexadecane, Hydrogenated Polydecene, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Talc, Hydrogenated Castor Oil, Sclerocarya Birrea Seed Oil, Mica, Phenoxyethanol, Magnesium Sulfate, Sodium Chloride, Tocopheryl Acetate, Polyester-1, Silica Dimethyl Silylate, Gluconolactone, Aloe Barbadensis Leaf Juice, Triethoxycaprylylsilane, Sodium Benzoate, Tocopherol, Trisodium Ethylenediamine Disuccinate, Glycine Soja Oil/Glycine Soja (Soybean) Oil, Calcium Gluconate. [+/- CI 77891/Titanium Dioxide, CI 77492/Iron Oxides, CI 77491/Iron Oxides, CI 77499/Iron Oxides].";2;;25.0;;;25.0;
+;1030227;p000360;1030227;"Aqua/Water/Eau, Isohexadecane, Hydrogenated Polydecene, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Talc, Hydrogenated Castor Oil, Sclerocarya Birrea Seed Oil, Mica, Phenoxyethanol, Magnesium Sulfate, Sodium Chloride, Tocopheryl Acetate, Polyester-1, Silica Dimethyl Silylate, Gluconolactone, Aloe Barbadensis Leaf Juice, Triethoxycaprylylsilane, Sodium Benzoate, Tocopherol, Trisodium Ethylenediamine Disuccinate, Glycine Soja Oil/Glycine Soja (Soybean) Oil, Calcium Gluconate. [+/- CI 77891/Titanium Dioxide, CI 77492/Iron Oxides, CI 77491/Iron Oxides, CI 77499/Iron Oxides].";3;;25.0;;;25.0;
+;1032512;p000360;1032512;"Aqua/Water/Eau, Isohexadecane, Hydrogenated Polydecene, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Talc, Hydrogenated Castor Oil, Sclerocarya Birrea Seed Oil, Mica, Phenoxyethanol, Magnesium Sulfate, Sodium Chloride, Tocopheryl Acetate, Polyester-1, Silica Dimethyl Silylate, Gluconolactone, Aloe Barbadensis Leaf Juice, Triethoxycaprylylsilane, Sodium Benzoate, Tocopherol, Trisodium Ethylenediamine Disuccinate, Glycine Soja Oil/Glycine Soja (Soybean) Oil, Calcium Gluconate. [+/- CI 77891/Titanium Dioxide, CI 77492/Iron Oxides, CI 77491/Iron Oxides, CI 77499/Iron Oxides].";4;;30.0;;;30.0;
+;1059021;p000019;1059021;"Aqua (Solvent/Diluent), Butyrospermum Parkii (Skin-Conditioning Agent/Emollient), Theobroma Cacao Seed Butter (Emollient), Glycerin (Humectant), Cyclopentasiloxane (Skin-Conditioning Agent/Emollient), Orbignya Oleifera Seed Oil (Emollient), Glyceryl Stearate (Emulsifier), PEG-100 Stearate (Surfactant), Cetearyl Alcohol (Emulsifier), Cyclohexasiloxane (Conditioning Agent), Cera Alba (Emulsifier/Emollient), Lanolin Alcohol (Stabiliser/Emollient), Phenoxyethanol (Preservative), Parfum (Fragrance), Methylparaben (Preservative), Propylparaben (Preservative), Xanthan Gum (Viscosity Modifier), Benzyl Alcohol (Preservative), Disodium EDTA (Chelating Agent), Linalool (Fragrance Ingredient), Coumarin (Fragrance Ingredient), Sodium Hydroxide (pH Adjuster), Alpha-Isomethyl Ionone (Fragrance Ingredient), Limonene (Fragrance Ingredient), Citric Acid (pH Adjuster), Caramel (Colour), CI 19140 (Colour).";;;50.0;;;50.0;
+;1055790;p000019;1055790;"Aqua (Solvent/Diluent), Butyrospermum Parkii (Skin-Conditioning Agent/Emollient), Theobroma Cacao Seed Butter (Emollient), Glycerin (Humectant), Cyclopentasiloxane (Skin-Conditioning Agent/Emollient), Orbignya Oleifera Seed Oil (Emollient), Glyceryl Stearate (Emulsifier), PEG-100 Stearate (Surfactant), Cetearyl Alcohol (Emulsifier), Cyclohexasiloxane (Conditioning Agent), Cera Alba (Emulsifier/Emollient), Lanolin Alcohol (Stabiliser/Emollient), Phenoxyethanol (Preservative), Parfum (Fragrance), Methylparaben (Preservative), Propylparaben (Preservative), Xanthan Gum (Viscosity Modifier), Benzyl Alcohol (Preservative), Disodium EDTA (Chelating Agent), Linalool (Fragrance Ingredient), Coumarin (Fragrance Ingredient), Sodium Hydroxide (pH Adjuster), Alpha-Isomethyl Ionone (Fragrance Ingredient), Limonene (Fragrance Ingredient), Citric Acid (pH Adjuster), Caramel (Colour), CI 19140 (Colour).";;;200.0;;;200.0;
+;1076327;p000019;1076327;"Aqua (Solvent/Diluent), Butyrospermum Parkii (Skin-Conditioning Agent/Emollient), Theobroma Cacao Seed Butter (Emollient), Glycerin (Humectant), Cyclopentasiloxane (Skin-Conditioning Agent/Emollient), Orbignya Oleifera Seed Oil (Emollient), Glyceryl Stearate (Emulsifier), PEG-100 Stearate (Surfactant), Cetearyl Alcohol (Emulsifier), Cyclohexasiloxane (Conditioning Agent), Cera Alba (Emulsifier/Emollient), Lanolin Alcohol (Stabiliser/Emollient), Phenoxyethanol (Preservative), Parfum (Fragrance), Methylparaben (Preservative), Propylparaben (Preservative), Xanthan Gum (Viscosity Modifier), Benzyl Alcohol (Preservative), Disodium EDTA (Chelating Agent), Linalool (Fragrance Ingredient), Coumarin (Fragrance Ingredient), Sodium Hydroxide (pH Adjuster), Alpha-Isomethyl Ionone (Fragrance Ingredient), Limonene (Fragrance Ingredient), Citric Acid (pH Adjuster), Caramel (Colour), CI 19140 (Colour).";;;400.0;;;400.0;
+;p003257v;p003257;p003257v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000341v;p000341;p000341v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002002v;p002002;p002002v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002445v;p002445;p002445v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003101v;p003101;p003101v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p001102v;p001102;p001102v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002457v;p002457;p002457v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000971v;p000971;p000971v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003255v;p003255;p003255v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003254v;p003254;p003254v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003173v;p003173;p003173v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000694v;p000694;p000694v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002003v;p002003;p002003v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000936v;p000936;p000936v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002013v;p002013;p002013v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000810v;p000810;p000810v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002833v;p002833;p002833v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003268v;p003268;p003268v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002835v;p002835;p002835v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000664v;p000664;p000664v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003259v;p003259;p003259v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000067v;p000067;p000067v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000056v;p000056;p000056v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002017v;p002017;p002017v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000499v;p000499;p000499v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000253v;p000253;p000253v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002347v;p002347;p002347v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002812v;p002812;p002812v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002419v;p002419;p002419v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000480v;p000480;p000480v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002863v;p002863;p002863v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000466v;p000466;p000466v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000644v;p000644;p000644v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000787v;p000787;p000787v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000676v;p000676;p000676v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000461v;p000461;p000461v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000111v;p000111;p000111v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000106v;p000106;p000106v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000795v;p000795;p000795v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000797v;p000797;p000797v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003200v;p003200;p003200v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000789v;p000789;p000789v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000063v;p000063;p000063v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003090v;p003090;p003090v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002733v;p002733;p002733v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000142v;p000142;p000142v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000120v;p000120;p000120v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002449v;p002449;p002449v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003091v;p003091;p003091v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000767v;p000767;p000767v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002453v;p002453;p002453v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000767v;p000767;p000767v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002144v;p002144;p002144v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002448v;p002448;p002448v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002145v;p002145;p002145v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003111v;p003111;p003111v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p001081v;p001081;p001081v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002819v;p002819;p002819v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000467v;p000467;p000467v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000851v;p000851;p000851v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000436v;p000436;p000436v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000435v;p000435;p000435v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002668v;p002668;p002668v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000362v;p000362;p000362v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000726v;p000726;p000726v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002817v;p002817;p002817v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003237v;p003237;p003237v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002001v;p002001;p002001v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000048v;p000048;p000048v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002867v;p002867;p002867v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000042v;p000042;p000042v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002171v;p002171;p002171v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000069v;p000069;p000069v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000621v;p000621;p000621v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p003235v;p003235;p003235v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000184v;p000184;p000184v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002818v;p002818;p002818v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000222v;p000222;p000222v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p002437v;p002437;p002437v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p001050v;p001050;p001050v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;p000269v;p000269;p000269v;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;1055311;p003087;1055311;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;250.0;;;250
+;1062021;p003087;1062021;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;400.0;;;400
+;1094138;p000247;1094138;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;200.0;
+;1094188;p000247;1094188;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";;;50.0;;;50
+;1096109;p000657;1096109;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";1;96109;7.2;;;7.2
+;1096148;p000657;1096148;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";2;96148;7.2;;;7.2
+;1096261;p000657;1096261;"Aqua/Water/Eau, Hydrogenated Polydecene, Isohexadecane, Polyglyceryl-3 Diisostearate, Ethylhexyl Palmitate, Glycerin, Pentylene Glycol, Sclerocarya Birrea Seed Oil";3;96261;7.2;;;7.2
+
+# Facet Data For Products
+UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];$catalogVersion;code[unique=true];finish(code);targetArea(code);concern(code);scent(code);coverage(code);range(code);productType(code);categoryType(code);freeFrom(code[collection-delimiter = , ]);vegan(code)[default=YES];productNew[default=false]
+;;p003257;CREAMY;AREA_FACE;AGING_SKIN;FLORAL;MEDIUM;ACTIVIST;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS,FRAGRANCE_FREE";
+;;p000341;CREAMY;AREA_FACE;AGING_SKIN;FLORAL;MEDIUM;VITAMIN_C;FACE_MOISTURISER_NIGHT;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002002;CREAMY;AREA_FACE;AGING_SKIN;FLORAL;MEDIUM;VITAMIN_C;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002445;CREAMY;AREA_FACE;AGING_SKIN;FLORAL;MEDIUM;OILS_OF_LIFE;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p003101;CREAMY;AREA_FACE;AGING_SKIN;FLORAL;MEDIUM;OILS_OF_LIFE;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p001102;CREAMY;AREA_FACE;AGING_SKIN;FLORAL;MEDIUM;ACTIVIST;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002457;CREAMY;AREA_FACE;AGING_SKIN;FLORAL;MEDIUM;ELIXIRS_OF_NATURE;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS,FRAGRANCE_FREE";NO;
+;;p000971;CREAMY;AREA_FACE;COMBINATION_SKIN;FLORAL;LIGHT;ACTIVIST;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS,FRAGRANCE_FREE";NO;
+;;p003255;CREAMY;AREA_FACE;COMBINATION_SKIN;FLORAL;LIGHT;VITAMIN_C;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";NO;
+;;p003254;CREAMY;AREA_FACE;COMBINATION_SKIN;FLORAL;LIGHT;VITAMIN_C;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";NO;
+;;p003173;CREAMY;AREA_FACE;COMBINATION_SKIN;FLORAL;LIGHT;OILS_OF_LIFE;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";NO;
+;;p000694;CREAMY;AREA_FACE;COMBINATION_SKIN;FRESH;MEDIUM;ELIXIRS_OF_NATURE;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";NO;
+;;p002003;CREAMY;AREA_FACE;COMBINATION_SKIN;FRESH;MEDIUM;ACTIVIST;FACE_MASKS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p000936;CREAMY;AREA_FACE;COMBINATION_SKIN;FRESH;MEDIUM;ELIXIRS_OF_NATURE;MAKE_UP_REMOVERS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002013;CREAMY;AREA_FACE;COMBINATION_SKIN;FRESH;MEDIUM;DROPS_OF_YOUTH;EYE_CREAMS_TREATMENTS;EYE_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p000810;GLOSSY;AREA_FACE;COMBINATION_SKIN;FRESH;MEDIUM;DROPS_OF_YOUTH;EYE_CREAMS_TREATMENTS;EYE_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002833;GLOSSY;AREA_FACE;DEHYDRATED_SKIN;FRESH;MEDIUM;DROPS_OF_YOUTH;SHAVING;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY";
+;;p003268;GLOSSY;AREA_FACE;DEHYDRATED_SKIN;FRESH;MEDIUM;ACTIVIST;SHAVING;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY";
+;;p002835;GLOSSY;AREA_FACE;DRY_SKIN;FRESH;HIGH_TO_FULL;OILS_OF_LIFE;FACE_CLEANSERS;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY";
+;;p000664;GLOSSY;AREA_FACE;DRY_SKIN;FRESH;HIGH_TO_FULL;OILS_OF_LIFE;FACE_MOISTURISER_DAY;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p003259;GLOSSY;AREA_FACE;DRY_SKIN;FRESH;HIGH_TO_FULL;ELIXIRS_OF_NATURE;FACE_MOISTURISER_DAY;SKIN_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY";NO;
+;;p000067;GLOSSY;AREA_FACE;DRY_SKIN;FRESH;HIGH_TO_FULL;VITAMIN_C;FACE_ACCESSORIES;ACCESSORIES;"GLUTEN,SILICONE,SULFATES,OIL,SOY";
+;;p000056;GLOSSY;AREA_FACE;NORMAL_SKIN;FRUITY;HIGH_TO_FULL;VITAMIN_C;FACE_ACCESSORIES;ACCESSORIES;"GLUTEN,SILICONE,SULFATES,OIL,SOY";
+;;p002017;GLOSSY;AREA_FACE;NORMAL_SKIN;FRUITY;HIGH_TO_FULL;ELIXIRS_OF_NATURE;FACE_ACCESSORIES;ACCESSORIES;"GLUTEN,SILICONE,SULFATES,OIL,SOY";
+;;p000499;GLOSSY;AREA_BODY;SENSITIVE_SKIN;WOODY;HIGH_TO_FULL;DROPS_OF_YOUTH;BATH_TREATS;BATH_SHOWER;"GLUTEN,SILICONE,SULFATES,NUTS,FRAGRANCE_FREE";
+;;p000253;GLOSSY;AREA_BODY;SENSITIVE_SKIN;WOODY;HIGH_TO_FULL;DROPS_OF_YOUTH;BATH_TREATS;BATH_SHOWER;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p000019;GLOSSY;AREA_BODY;SENSITIVE_SKIN;WOODY;HIGH_TO_FULL;ACTIVIST;BODY_BUTTERS;BODY_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002347;GLOSSY;AREA_BODY;SENSITIVE_SKIN;WOODY;HIGH_TO_FULL;DROPS_OF_YOUTH;BODY_BUTTERS;BODY_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002812;GLOSSY;AREA_BODY;SENSITIVE_SKIN;WOODY;HIGH_TO_FULL;ELIXIRS_OF_NATURE;BODY_YOGURTS;BODY_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002419;GLOSSY;AREA_BODY;SENSITIVE_SKIN;WOODY;HIGH_TO_FULL;VITAMIN_C;BODY_MASSAGE_OILS;BODY_CARE;"GLUTEN,SILICONE,SULFATES,NUTS,FRAGRANCE_FREE";NO;
+;;p000480;GLOSSY;AREA_BODY;SENSITIVE_SKIN;WOODY;HIGH_TO_FULL;VITAMIN_C;BRONZERS;BODY_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002863;GLOSSY;AREA_BODY;SENSITIVE_SKIN;FRUITY;HIGH_TO_FULL;OILS_OF_LIFE;DEODORANTS;FRAGRANCE;"GLUTEN,SILICONE,NUTS,OIL";
+;;p000466;GLOSSY;AREA_BODY;NORMAL_SKIN;FRUITY;HIGH_TO_FULL;OILS_OF_LIFE;DEODORANTS;FRAGRANCE;"GLUTEN,SILICONE,NUTS,OIL";
+;;p000644;MATTE;AREA_BODY;NORMAL_SKIN;FRUITY;MEDIUM;ACTIVIST;DEODORANTS;FRAGRANCE;"GLUTEN,SILICONE,NUTS,OIL";
+;;p000787;MATTE;AREA_BODY;NORMAL_SKIN;FRUITY;MEDIUM;OILS_OF_LIFE;FOOT_TREATMENTS;FOOT_CARE;"OIL,NUTS";
+;;p000676;MATTE;AREA_BODY;NORMAL_SKIN;GOURMAND;MEDIUM;OILS_OF_LIFE;FOOT_TREATMENTS;FOOT_CARE;"OIL,NUTS";
+;;p000461;MATTE;AREA_HANDS;SENSITIVE_SKIN;GOURMAND;MEDIUM;ELIXIRS_OF_NATURE;HAIR_TREATMENTS;HAIR_CARE;"OIL,NUTS";
+;;p000111;MATTE;AREA_HANDS;SENSITIVE_SKIN;GOURMAND;MEDIUM;VITAMIN_C;HAIR_TREATMENTS;HAIR_CARE;"OIL,NUTS";
+;;p000106;MATTE;AREA_HANDS;SENSITIVE_SKIN;GOURMAND;MEDIUM;VITAMIN_C;HAIR_TREATMENTS;HAIR_CARE;"OIL,NUTS";
+;;p000795;MATTE;AREA_HANDS;SENSITIVE_SKIN;GOURMAND;MEDIUM;DROPS_OF_YOUTH;HAND_WASHES;HAND_CARE;"OIL,NUTS";
+;;p000797;NATURAL;AREA_HANDS;SENSITIVE_SKIN;GOURMAND;MEDIUM;DROPS_OF_YOUTH;HAND_WASHES;HAND_CARE;"OIL,NUTS";
+;;p003200;NATURAL;AREA_HAIR;DRY_HAIR;FLORAL;MEDIUM;DROPS_OF_YOUTH;BRUSHES_COMBS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p000789;NATURAL;AREA_HAIR;DRY_HAIR;FLORAL;MEDIUM;OILS_OF_LIFE;BRUSHES_COMBS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p000063;NATURAL;AREA_HAIR;DRY_HAIR;FLORAL;MEDIUM;ACTIVIST;BRUSHES_COMBS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p003090;NATURAL;AREA_HAIR;DRY_HAIR;FLORAL;MEDIUM;OILS_OF_LIFE;CONDITIONERS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p002733;NATURAL;AREA_HAIR;DRY_HAIR;FLORAL;MEDIUM;DROPS_OF_YOUTH;CONDITIONERS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p000142;NATURAL;AREA_HAIR;FINE_HAIR;FLORAL;MEDIUM;DROPS_OF_YOUTH;SHAMPOOS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,NUTS";
+;;p000120;NATURAL;AREA_HAIR;FINE_HAIR;FLORAL;MEDIUM;ELIXIRS_OF_NATURE;SHAMPOOS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p002449;NATURAL;AREA_HAIR;THICK_HAIR;FLORAL;MEDIUM;VITAMIN_C;SHAMPOOS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p003091;NATURAL;AREA_HAIR;THICK_HAIR;FLORAL;MEDIUM;VITAMIN_C;HAIR_TREATMENTS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000767;NATURAL;AREA_HAIR;DULL_HAIR;FLORAL;MEDIUM;OILS_OF_LIFE;HAIR_STYLING;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p002453;NATURAL;AREA_FACE;AGING_SKIN;ORIENTAL;MEDIUM;DROPS_OF_LIGHT;HAIR_TREATMENTS;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000767;NATURAL;AREA_FACE;AGING_SKIN;ORIENTAL;MEDIUM;VITAMIN_C;HAIR_STYLING;HAIR_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p002144;NATURAL;AREA_FACE;AGING_SKIN;ORIENTAL;MEDIUM;DROPS_OF_LIGHT;FOUNDATIONS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p002448;NATURAL;AREA_FACE;AGING_SKIN;ORIENTAL;MEDIUM;ACTIVIST;MAKE_UP_TOOLS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p002145;NATURAL;AREA_FACE;AGING_SKIN;ORIENTAL;MEDIUM;ELIXIRS_OF_NATURE;MAKE_UP_TOOLS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p003111;NATURAL;AREA_FACE;AGING_SKIN;ORIENTAL;MEDIUM;ELIXIRS_OF_NATURE;BB_CC_CREAMS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000360;NATURAL;AREA_FACE;AGING_SKIN;FRUITY;LIGHT;ELIXIRS_OF_NATURE;BB_CC_CREAMS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p001081;NATURAL;AREA_FACE;AGING_SKIN;FRUITY;LIGHT;OILS_OF_LIFE;BRONZERS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p002819;NATURAL;AREA_FACE;COMBINATION_SKIN;FRUITY;LIGHT;ELIXIRS_OF_NATURE;BRONZERS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000467;NATURAL;AREA_FACE;COMBINATION_SKIN;FRUITY;LIGHT;ELIXIRS_OF_NATURE;BRONZERS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000851;NATURAL;AREA_FACE;COMBINATION_SKIN;FRUITY;LIGHT;ACTIVIST;FOOT_TREATMENTS;FOOT_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000436;NATURAL;AREA_FACE;COMBINATION_SKIN;FRUITY;LIGHT;DROPS_OF_LIGHT;EYE_LINERS;EYE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000435;NATURAL;AREA_FACE;COMBINATION_SKIN;FRUITY;LIGHT;VITAMIN_C;EYE_LINERS;EYE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p002668;NATURAL;AREA_FACE;COMBINATION_SKIN;FRUITY;LIGHT;VITAMIN_C;EYE_LINERS;EYE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY,FRAGRANCE_FREE,NUTS";
+;;p000362;NATURAL;AREA_FACE;COMBINATION_SKIN;FRUITY;LIGHT;DROPS_OF_LIGHT;EYE_LINERS;EYE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p000726;NATURAL;AREA_FACE;DEHYDRATED_SKIN;FRUITY;LIGHT;DROPS_OF_LIGHT;EYE_LINERS;EYE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY";
+;;p002817;NATURAL;AREA_FACE;DEHYDRATED_SKIN;FRUITY;LIGHT;ACTIVIST;EYE_LINERS;EYE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY";
+;;p003237;NATURAL;AREA_FACE;DEHYDRATED_SKIN;FRUITY;LIGHT;DROPS_OF_LIGHT;EYE_SHADOWS;EYE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY";
+;;p002001;NATURAL;AREA_FACE;DRY_SKIN;FRUITY;LIGHT;DROPS_OF_LIGHT;EYE_SHADOWS;EYE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY";
+;;p000048;NATURAL;AREA_LIPS;DRY_SKIN;FRUITY;LIGHT;DROPS_OF_LIGHT;FOUNDATIONS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY";NO;
+;;p002867;NATURAL;AREA_LIPS;DRY_SKIN;FRUITY;LIGHT;DROPS_OF_LIGHT;FOUNDATIONS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY";NO;
+;;p000042;NATURAL;AREA_LIPS;DRY_SKIN;FRUITY;LIGHT;ACTIVIST;FOUNDATIONS;FACE_MAKE_UP;"GLUTEN,SILICONE,SULFATES,OIL,SOY";NO;
+;;p002171;SHIMMER;AREA_LIPS;DRY_SKIN;FRUITY;HIGH_TO_FULL;ELIXIRS_OF_NATURE;LIP_BALMS;LIP_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY";NO;
+;;p000657;SHIMMER;AREA_LIPS;DRY_SKIN;FRUITY;HIGH_TO_FULL;VITAMIN_C;LIP_CHEEK_STAINS;LIP_CARE;"GLUTEN,SILICONE,SULFATES,OIL,SOY";NO;
+;;p000069;SHIMMER;AREA_LIPS;ANTI_POLLUTION;FRUITY;HIGH_TO_FULL;ELIXIRS_OF_NATURE;LIPSTICKS;LIP_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";NO;
+;;p000621;SHIMMER;AREA_FACE;ANTI_POLLUTION;FRUITY;HIGH_TO_FULL;VITAMIN_C;LIP_LINERS;LIP_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p003235;SHIMMER;AREA_FACE;ANTI_POLLUTION;FRUITY;HIGH_TO_FULL;ACTIVIST;MASCARAS;FACE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p000184;SHIMMER;AREA_FACE;ANTI_POLLUTION;FRUITY;HIGH_TO_FULL;DROPS_OF_LIGHT;MASCARAS;FACE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p002818;SHIMMER;AREA_FACE;ANTI_POLLUTION;FRUITY;HIGH_TO_FULL;DROPS_OF_LIGHT;MASCARAS;FACE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p000222;SHIMMER;AREA_FACE;BLEMISHES_IMPERFECTIONS;FRUITY;MEDIUM;DROPS_OF_LIGHT;PRIMERS;FACE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p002437;SHIMMER;AREA_FACE;BLEMISHES_IMPERFECTIONS;FRUITY;MEDIUM;VITAMIN_C;PRIMERS;FACE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p001050;SHIMMER;AREA_FACE;BLEMISHES_IMPERFECTIONS;FRUITY;MEDIUM;DROPS_OF_LIGHT;PRIMERS;FACE_MAKE_UP;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+;;p000269;SHIMMER;AREA_FACE;BLEMISHES_IMPERFECTIONS;FRUITY;MEDIUM;DROPS_OF_LIGHT;LIP_BALMS;LIP_CARE;"GLUTEN,SULFATES,OIL,SOY,FRAGRANCE_FREE";
+
+#Straplines
+UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];$catalogVersion;code[unique=true];straplines(key(isocode)[default=en], value)[map-delimiter=|][key2value-delimiter=->];productNew[default=false]
+;;p003257;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000341;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002002;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002445;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003101;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p001102;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002457;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000971;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003255;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p003254;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003173;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000694;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002003;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000936;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002013;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000810;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002833;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p003268;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002835;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000664;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003259;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000067;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000056;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002017;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000499;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000253;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000019;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002347;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002812;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002419;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000480;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002863;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000466;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000644;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000787;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000676;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000461;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000111;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000106;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000795;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000797;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p003200;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000789;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000063;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003090;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002733;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000142;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000120;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002449;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p003091;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002453;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000767;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002144;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002448;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002145;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003111;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000360;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p001081;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002819;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000467;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000851;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000436;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000435;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p002668;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000362;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000726;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002817;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003237;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002001;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000048;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002867;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000042;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002171;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000657;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000069;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000621;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p003235;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000184;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002818;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p000222;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p002437;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p001050;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000269;"FOR DRY\, FLAKY SKIN,COFFEE";
+;;p003087;"FOR DRY\, FLEAKY SCALP,VEGAN";
+;;p000247;"FOR DRY\, FLAKY SKIN,COFFEE";
+
+# Update review ratings
+UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];reviewRating;$catalogVersion;$approved;productNew[default=false]
+;p003257;2.8
+;p000341;5.0
+;p002002;1.2
+;p002445;4.3
+;p003101;3.3
+;p001102;2.0
+;p002457;2.5
+;p000971;4.5
+;p003255;3.2
+;p003254;2.1
+;p003173;4.3
+;p000694;1.5
+;p002003;2.3
+;p000936;4.4
+;p002013;3.0
+;p000810;1.2
+;p002833;1.4
+;p003268;1.6
+;p002835;1.8
+;p000664;2.0
+;p003259;2.2
+;p000067;2.4
+;p000056;2.6
+;p002017;2.8
+;p000499;3.0
+;p000253;3.2
+;p000019;3.4
+;p002347;3.6
+;p002812;3.8
+;p002419;4.0
+;p000480;4.2
+;p002863;4.4
+;p000466;4.6
+;p000644;4.8
+;p000787;5.0
+;p000676;1.1
+;p000461;1.3
+;p000111;1.5
+;p000106;1.7
+;p000795;1.9
+;p000797;2.1
+;p003200;2.3
+;p000789;2.5
+;p000063;2.7
+;p003090;2.9
+;p002733;3.1
+;p000142;3.3
+;p000120;3.5
+;p002449;3.7
+;p003091;3.9
+;p000767;4.1
+;p002453;4.3
+;p002144;4.7
+;p002448;4.9
+;p002145;1.0
+;p003111;1.3
+;p000360;1.6
+;p001081;1.9
+;p002819;2.2
+;p000467;2.5
+;p000851;2.8
+;p000436;3.1
+;p000435;3.4
+;p002668;3.7
+;p000362;4.0
+;p000726;4.3
+;p002817;4.6
+;p003237;4.9
+;p002001;1.0
+;p000048;1.2
+;p002867;1.4
+;p000042;1.6
+;p002171;1.8
+;p000069;2.2
+;p000621;2.4
+;p003235;2.6
+;p000184;2.8
+;p002818;3.0
+;p000222;3.2
+;p002437;3.4
+;p001050;3.6
+;p000269;3.8
+;p003087;3.2
+;p000657;3.3
+;p000247;4.8
+
+INSERT_UPDATE ServiceProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];$approved;$catalogVersion;type(code)[default=SERVICE];keyIngredients(code)[default=Default];productNew[default=false]
+;S003412;

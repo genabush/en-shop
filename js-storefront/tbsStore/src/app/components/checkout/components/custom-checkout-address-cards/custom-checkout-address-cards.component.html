@@ -1,0 +1,57 @@
+<ng-container *ngIf="!isLoadingAddresses; else loadingAddresses">
+  <button class="btn mat-form-field-address-btn m-0" (click)="addressAdd()">
+    <cx-icon [type]="iconTypes.EXPAND"></cx-icon>
+  </button>
+
+  <button
+    *ngIf="!userAddresses || userAddresses?.length == 0"
+    type="button"
+    title="{{ 'common.openModal' | cxTranslate }}"
+    [attr.aria-label]="'common.openModal' | cxTranslate"
+    class="mat-form-field-address-overlay position-absolute w-100 h-100 ml-0 my-0 border-0 p-0"
+    (click)="addressAdd()"
+  >
+    &nbsp;
+  </button>
+  <mat-select
+    appearance="fill"
+    class="mat-form-field-address mat-primary pl-3 pr-0"
+    [placeholder]="'addressBook.addAddress' | cxTranslate"
+    [(value)]="selectedAddress"
+    [formControl]="selectFormFieldControl"
+    panelClass="mat-form-field-address-overlay"
+    (selectionChange)="addressSelected($event)"
+  >
+    <!-- ADDRESS CARDS -->
+    <mat-select-trigger class="cx-card-address-option">
+      <div class="cx-card-inner h-100">
+        <cx-card
+          [border]="false"
+          [fitToContainer]="true"
+          [content]="userAddresses | addressSelectCard: { selectedAddress: selectFormFieldControl.value }"
+        ></cx-card>
+      </div>
+    </mat-select-trigger>
+
+    <mat-option
+      class="cx-card-address-option pr-0"
+      *ngFor="let addressItem of userAddresses; let i = index"
+      [value]="addressItem.id"
+    >
+      <div class="cx-card-inner">
+        <cx-card
+          [border]="false"
+          [fitToContainer]="true"
+          [content]="[addressItem] | addressSelectCard: { selectedAddress: undefined }"
+        ></cx-card>
+      </div>
+    </mat-option>
+  </mat-select>
+</ng-container>
+
+<!-- LOADING  -->
+<ng-template #loadingAddresses>
+  <div class="cx-spinner">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>

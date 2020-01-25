@@ -1,0 +1,16 @@
+@import '~@spartacus/styles/scss/theme/sparta/variables';
+
+%cx-address-form {
+  @include checkout-media-style();
+}
+
+.cx-address-clear-button {
+  font-family: $work-sans-semibold;
+  height: $mat-form-field-height;
+  color: var(--cx-color-base-white);
+  background-color: var(--cx-color-danger);
+}
+
+.cx-address-hr {
+  border-top: 1px solid var(--cx-color-core-primary);
+}

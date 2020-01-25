@@ -1,0 +1,117 @@
+<ng-container
+  *ngIf="{
+    product: product$ | async,
+    selectedFromStore: selectedFromStore$ | async
+  } as productSelected"
+>
+  <div
+    class="price"
+    *ngIf="productSelected.product && productSelected.selectedFromStore && productSelected.selectedFromStore.code"
+  >
+    <ng-container *ngIf="productHasColours; else sizeVariants">
+      <span class="d-flex align-items-center price__heading">{{ 'product.selectColour' | cxTranslate }}</span>
+      <div class="colour-variants">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-start align-items-center">
+              <ng-container class="colour-variants__preview" *ngIf="productSelected.selectedFromStore.code">
+                <div class="colour-variants__preview">
+                  <div
+                    class="colour-variants__preview-swatch"
+                    [style.background-color]="productSelected.selectedFromStore.colour"
+                  ></div>
+                  <p class="colour-variants__preview-name">
+                    {{ productSelected.selectedFromStore.colourName }}
+                    <span
+                      *ngIf="
+                        productSelected.selectedFromStore.stock &&
+                        productSelected.selectedFromStore.stock.stockLevelStatus === 'outOfStock' &&
+                        productSelected.selectedFromStore.stock.stockLevel <= 0
+                      "
+                      class="colour-variants__preview-stock"
+                    >
+                      {{ 'product.outOfStock' | cxTranslate }}
+                    </span>
+                  </p>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="colour-variants__wrapper">
+              <ng-container *ngIf="productSelected.selectedFromStore.code">
+                <div
+                  *ngFor="let variant of productSelected.product.variantOptions"
+                  [ngClass]="{
+                    'colour-variants__swatch': true,
+                    'colour-variants__swatch--active': productSelected.selectedFromStore.code == variant.code,
+                    'colour-variants__swatch--disabled':
+                      variant.stock && variant.stock.stockLevelStatus === 'outOfStock' && variant.stock.stockLevel <= 0
+                  }"
+                  (click)="changeSelected($event, variant)"
+                >
+                  <div class="colour-variants__swatch-inner" [style.background-color]="variant?.colour"></div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="price__block">
+              <ng-container *ngIf="productSelected.selectedFromStore.code; else selectedProductDetails">
+                <app-product-variants-size [variant]="productSelected.selectedFromStore"></app-product-variants-size>
+              </ng-container>
+              <ng-template #selectedProductDetails>
+                <app-product-variants-size [variant]="productSelected.selected"></app-product-variants-size>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #sizeVariants>
+      <ng-container *ngIf="!quickview">
+        <span class="d-flex align-items-center price__heading">{{ 'product.selectSize' | cxTranslate }}</span>
+      </ng-container>
+      <div
+        [ngClass]="{
+          price__block: true,
+          'form-check': productSelected.product.variantOptions.length > 1,
+          'price__block--disabled':
+            variant.stock && variant.stock.stockLevelStatus === 'outOfStock' && variant.stock.stockLevel <= 0
+        }"
+        *ngFor="let variant of productSelected.product.variantOptions"
+      >
+        <input
+          type="radio"
+          name="variantOptions"
+          id="variantOptions{{ variant.code }}"
+          [ngClass]="
+            productSelected.product.variantOptions.length <= 1
+              ? 'price__radio form-check-input d-none'
+              : 'price__radio form-check-input'
+          "
+          (change)="changeSelected($event, variant, true, productSelected.product.emailMeWhenInStockToggle)"
+          [checked]="productSelected.selectedFromStore.code == variant.code"
+        />
+
+        <label
+          tabindex="0"
+          for="variantOptions{{ variant.code }}"
+          class="price__label form-check-label form-radio-label"
+          [attr.aria-label]="'product.newItemPrice' | cxTranslate"
+        >
+          <app-product-variants-size [variant]="variant"></app-product-variants-size>
+        </label>
+
+        {{ productSelected.selectedFromStore.colourName }}
+        <span
+          *ngIf="variant.stock && variant.stock.stockLevelStatus === 'outOfStock' && variant.stock.stockLevel <= 0"
+          class="price__stock"
+        >
+          {{ 'product.outOfStock' | cxTranslate }}
+        </span>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>

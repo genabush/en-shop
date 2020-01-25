@@ -1,0 +1,50 @@
+.info-window {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 300px;
+  background-color: var(--cx-color-base-white);
+  &__close-btn {
+    cursor: pointer;
+    background-color: var(--cx-color-base-white);
+    position: absolute;
+    top: 0;
+    right: -30px;
+    width: 30px;
+    height: 30px;
+    padding: 5px 5px 5px 7px;
+    color: var(--cx-color-core-primary);
+  }
+}
+.collection-point-info {
+  position: relative;
+  width: 100%;
+  padding: 1rem 0;
+  &__left-col,
+  &__right-col,
+  &__address,
+  &__opening-hrs {
+    float: left;
+  }
+  &__left-col {
+    text-align: center;
+    width: 30%;
+    @include media-breakpoint-up(lg) {
+      width: 10%;
+    }
+  }
+  &__right-col {
+    width: 70%;
+    @include media-breakpoint-up(lg) {
+      width: 90%;
+    }
+  }
+
+  &__address,
+  &__opening-hrs {
+    width: 100%;
+    @include media-breakpoint-up(lg) {
+      width: 33%;
+    }
+  }
+}

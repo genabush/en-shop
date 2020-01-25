@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/orderSchema" xmlns:tns="http://thebodyshop/orderSchema" elementFormDefault="qualified">
+	
+    <xs:element name="OrderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Order" type="tns:Order" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="OrderResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="statusCode" type="xs:string" />
+                <xs:element name="statusMessage" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	
+	<xs:complexType name="AddressType">
+	     <xs:sequence>
+	         <xs:element name="AddressID" type="xs:string" minOccurs="0" maxOccurs="1" />
+	         <xs:element name="AddressLine1" type="xs:string" minOccurs="1" maxOccurs="1" />
+	         <xs:element name="AddressLine2" type="xs:string" minOccurs="0" maxOccurs="1" />
+	         <xs:element name="AddressLine3" type="xs:string" minOccurs="0" maxOccurs="1" />
+	         <xs:element name="FirstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			 <xs:element name="LastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+	         <xs:element name="City" type="xs:string" minOccurs="0" maxOccurs="1" />
+	         <xs:element name="PostCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+	         <xs:element name="Region" type="xs:string" minOccurs="0" maxOccurs="1" />
+	         <xs:element name="Country" type="xs:string" minOccurs="1" maxOccurs="1" />
+	     </xs:sequence>
+	 </xs:complexType>
+
+	<xs:complexType name="ShippingAddressType">
+	    <xs:complexContent>
+	        <xs:extension base="tns:AddressType">
+	            <xs:sequence>
+	                <xs:element name="EmailAddress" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                <xs:element name="SMSNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                <xs:element name="PhoneNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+	            </xs:sequence>
+	        </xs:extension>
+	    </xs:complexContent>
+	</xs:complexType>
+ 
+	<xs:complexType name="Promotion">
+		<xs:sequence>
+			<xs:element name="Code" type="xs:string" minOccurs="1" maxOccurs="1" />
+		       <xs:element name="DiscountValue" type="xs:double" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Order">
+	    <xs:sequence>
+            <xs:element name="CancellationReason" type="xs:string" minOccurs="0" maxOccurs="1"/>
+	        <xs:element name="Identifiers" minOccurs="0" maxOccurs="1">
+	            <xs:complexType>
+	                <xs:sequence>
+	                    <xs:element name="Identifier" minOccurs="0" maxOccurs="unbounded">
+	                        <xs:complexType>
+	                            <xs:sequence>
+                                    <xs:element name="IdentifierType" type="xs:string" minOccurs="1" maxOccurs="1" />
+                                    <xs:element name="IdentifierCode" type="xs:string" minOccurs="1" maxOccurs="1" />
+                               </xs:sequence>
+	                        </xs:complexType>
+	                    </xs:element>
+	                </xs:sequence>
+	            </xs:complexType>
+	        </xs:element>
+            <xs:element name="Code" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Market" type="xs:string" minOccurs="1" maxOccurs="1" />
+	        <xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1"/>
+	        <xs:element name="Currency">
+	            <xs:simpleType>
+	                <xs:restriction base="xs:string">
+	                    <xs:pattern value="[A-Z]{3}" />
+	                </xs:restriction>
+	            </xs:simpleType>
+	        </xs:element>
+	        <xs:element name="Channel" type="xs:string" minOccurs="1" maxOccurs="1" />
+	        <xs:element name="Customer">
+	            <xs:complexType>
+	                <xs:sequence>
+	                    <xs:element name="CustomerID" type="xs:string" minOccurs="1" maxOccurs="1" />
+	                    <xs:element name="LoyaltyCardNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                    <xs:element name="EmailAddress" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                    <xs:element name="Gender" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                    <xs:element name="CompanyName" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                </xs:sequence>
+	            </xs:complexType>
+	        </xs:element>
+	        <xs:element name="AgentID" type="xs:string" minOccurs="0" maxOccurs="1" />
+	        <xs:element name="StoreID" type="xs:string" minOccurs="0" maxOccurs="1" />
+	        <xs:element name="Date" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+	        <xs:element name="Delivery" minOccurs="0" maxOccurs="1">
+	            <xs:complexType>
+	                <xs:sequence>
+	                    <xs:element name="DeliveryMethod" type="xs:string" minOccurs="1" maxOccurs="1" />
+	                    <xs:element name="DeliveryCost" type="xs:double" minOccurs="1" maxOccurs="1" />
+	                    <xs:element name="DeliverySpecialInstructions" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                    <xs:element name="DiscountPromotionCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                    <xs:element name="DiscountValue" type="xs:string" minOccurs="0" maxOccurs="1" />
+	                </xs:sequence>
+	            </xs:complexType>
+	        </xs:element>
+	        <xs:element name="CollectionPoint" type="xs:string" minOccurs="0" maxOccurs="1" />
+	        <xs:element name="CollectionPointMobileNumber" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="CollectionPointType" type="xs:string" minOccurs="0" maxOccurs="1" />
+	        <xs:element name="OrderPromotions" minOccurs="0" maxOccurs="1">
+	            <xs:complexType>
+	                <xs:sequence>
+	                    <xs:element name="Code" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+	                </xs:sequence>
+	            </xs:complexType>
+	        </xs:element>
+	        <xs:element name="TotalDiscount" type="xs:double" minOccurs="1" maxOccurs="1" />
+	        <xs:element name="Payments" minOccurs="0" maxOccurs="1">
+	            <xs:complexType>
+	                <xs:sequence>
+	                    <xs:element name="Payment" minOccurs="0" maxOccurs="unbounded">
+	                        <xs:complexType>
+	                            <xs:sequence>
+	                                <xs:element name="ID" type="xs:string" minOccurs="1" maxOccurs="1" />
+	                                <xs:element name="Type" type="xs:string" minOccurs="1" maxOccurs="1" />
+	                                <xs:element name="Amount" type="xs:double" minOccurs="1" maxOccurs="1" />
+	                                <xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1" />
+	                                <xs:element name="TransactionDate" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+	                            </xs:sequence>
+	                        </xs:complexType>
+	                    </xs:element>
+	                </xs:sequence>
+	            </xs:complexType>
+	        </xs:element>
+	       	
+	      	<xs:choice minOccurs="1" maxOccurs="1">
+	  			<xs:element name="TotalNet" type="xs:double" />
+	       	<xs:element name="TotalGross" type="xs:double" />
+		</xs:choice>            
+		<xs:element name="Taxes" minOccurs="0" maxOccurs="1">
+		    <xs:complexType>
+		        <xs:sequence>
+		            <xs:element name="Tax" minOccurs="0" maxOccurs="unbounded">
+		                <xs:complexType>
+		                    <xs:simpleContent>
+		                        <xs:extension base="xs:double">
+		                            <xs:attribute name="code" type="xs:string" use="optional" />
+		                        </xs:extension>
+		                    </xs:simpleContent>
+		                </xs:complexType>
+		            </xs:element>
+		        </xs:sequence>
+		    </xs:complexType>
+		</xs:element>
+	       <xs:element name="BillingAddress" type="tns:AddressType" minOccurs="1" maxOccurs="1" />
+	       <xs:element name="ShippingAddress" type="tns:ShippingAddressType" minOccurs="1" maxOccurs="1" />
+		<xs:element name="Entries" minOccurs="1" maxOccurs="1">
+		    <xs:complexType>
+		        <xs:sequence>
+		            <xs:element name="Entry" minOccurs="1" maxOccurs="unbounded">
+		                <xs:complexType>
+		                    <xs:sequence>
+		                        <xs:element name="EntryNumber" minOccurs="1" maxOccurs="1">
+		                            <xs:simpleType>
+		                                <xs:restriction base="xs:string">
+		                                    <xs:minLength value="1" />
+		                                    <xs:maxLength value="5" />
+		                                </xs:restriction>
+		                            </xs:simpleType>
+		                        </xs:element>
+		                        <xs:element name="ProductType" type="xs:string" />
+		                        <xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1" />
+		                        <xs:element name="ArticleId" minOccurs="1" maxOccurs="1">
+		                            <xs:simpleType>
+		                                <xs:restriction base="xs:string">
+		                                    <xs:minLength value="1" />
+		                                    <xs:maxLength value="18" />
+		                                </xs:restriction>
+		                            </xs:simpleType>
+		                        </xs:element>
+                                <xs:element name="Gtin" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		                        <xs:element name="Quantity" type="xs:int" minOccurs="1" maxOccurs="1" />
+						        <xs:element name="GiftWrapped" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+								<xs:element name="GiftMessage" minOccurs="0" maxOccurs="1">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="From" type="xs:string" minOccurs="0" maxOccurs="1" />
+											<xs:element name="To" type="xs:string" minOccurs="0" maxOccurs="1" />
+											<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+		                        <xs:element name="Unit" type="xs:string" minOccurs="1" maxOccurs="1" />
+		                        <xs:element name="UnitPrice" type="xs:double" minOccurs="1" maxOccurs="1" />
+		                        <xs:element name="LinePromotions" minOccurs="0" maxOccurs="1">
+		                            <xs:complexType>
+		                                <xs:sequence>
+		                                    <xs:element name="Promotion" type="tns:Promotion" minOccurs="0" maxOccurs="unbounded" />
+		                                </xs:sequence>
+		                            </xs:complexType>
+		                        </xs:element>
+		                        <xs:element name="LineDiscount" type="xs:double" minOccurs="0" maxOccurs="1" />
+		                        <xs:element name="LineTotal" type="xs:double" minOccurs="0" maxOccurs="1" />
+								<xs:element name="Taxes" minOccurs="0" maxOccurs="1">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Tax" minOccurs="0" maxOccurs="unbounded">
+												<xs:complexType>
+													<xs:simpleContent>
+														<xs:extension base="xs:double">
+															<xs:attribute name="code" type="xs:string" use="optional" />
+														</xs:extension>
+													</xs:simpleContent>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+		                    </xs:sequence>
+		                </xs:complexType>
+		            </xs:element>
+		        </xs:sequence>
+		    </xs:complexType>
+		</xs:element>
+	    </xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

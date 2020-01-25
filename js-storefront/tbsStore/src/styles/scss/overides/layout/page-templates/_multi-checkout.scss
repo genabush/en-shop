@@ -1,0 +1,17 @@
+cx-page-slot {
+  &.BodyContent {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 100%;
+    flex: 0 100%;
+  }
+  &.SideContent {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 100%;
+    flex: 0 100%;
+    margin-top: 3rem;
+    display: none; // TODO REMOVE CONTENT SLOT FROM BE
+  }
+}
+@include media-breakpoint-down(sm) {
+  padding: 0;
+}

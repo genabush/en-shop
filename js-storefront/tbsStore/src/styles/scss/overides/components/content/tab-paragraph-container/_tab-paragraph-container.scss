@@ -1,0 +1,91 @@
+.product-details-accordion {
+  a {
+    text-decoration: underline !important;
+    font-family: 'WorkSansBold';
+    cursor: pointer;
+    &:hover {
+      text-emphasis: none;
+      color: $core-secondary !important;
+    }
+  }
+  .mat-expansion {
+    &-panel.mat-expanded {
+      .mat-expansion-indicator {
+        &:after {
+          content: $icon--minus;
+        }
+      }
+    }
+
+    &-indicator {
+      transform: none !important;
+
+      &:after {
+        font-family: '${icomoon-font-family}';
+        content: $icon--plus;
+        border: none;
+        margin: 0.3rem 0 0.3rem 0.9rem;
+        font-size: 1.25rem;
+        position: absolute;
+        bottom: 0px;
+        top: 0;
+        right: 0;
+        color: var(--cx-color-core-primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: none !important;
+      }
+    }
+
+    &-panel {
+      &-spacing {
+        margin: 0;
+      }
+
+      &-content {
+        font-family: $work-sans;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      &-header {
+        padding: 0;
+        position: relative;
+        height: 3.25rem !important;
+        border-radius: 0;
+        border-top: $accordions-border-width var(--cx-color-core-primary) solid;
+
+        &-title {
+          margin-right: 0;
+          font-size: 1.1rem;
+          font-weight: 700;
+          font-family: $accordions-font-family;
+          text-align: $accordions-text-align;
+          color: $accordions-heading-unactive-colour;
+          position: relative;
+        }
+      }
+
+      &-body {
+        padding: 0.9rem 0;
+      }
+    }
+
+    &-panel:not(:first-child) {
+      .mat-expansion-panel-header {
+        border-bottom: $accordions-border-width var(--cx-color-core-primary) solid;
+      }
+
+      &.mat-expanded {
+        .mat-expansion-panel-header {
+          border-bottom: 0;
+        }
+
+        .mat-expansion-panel-body {
+          border-bottom: $accordions-border-width var(--cx-color-core-primary) solid;
+        }
+      }
+    }
+  }
+}

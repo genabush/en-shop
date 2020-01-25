@@ -1,0 +1,72 @@
+<ng-container *ngFor="let child of node?.children">
+  <ng-container *ngTemplateOutlet="nav; context: { node: child }"> </ng-container>
+  <div class="header__overlay"></div>
+</ng-container>
+
+<!-- we generate links in a recursive manner -->
+<ng-template #nav let-node="node">
+  <nav
+    tabindex="0"
+    class="large-down"
+    [ngClass]="{ 'hide-navigation-node': node.enabledForMegaNav == 'false' }"
+    (click)="toggleOpen($event)"
+    (mouseenter)="onMouseEnter($event)"
+  >
+    <ng-container *ngTemplateOutlet="navContent; context: { node: node }"> </ng-container>
+  </nav>
+
+  <nav
+    tabindex="0"
+    class="large-up"
+    [ngClass]="{ 'hide-navigation-node': node.enabledForMobileNav == 'false' }"
+    (click)="toggleOpen($event)"
+    (mouseenter)="onMouseEnter($event)"
+  >
+    <ng-container *ngTemplateOutlet="navContent; context: { node: node }"> </ng-container>
+  </nav>
+</ng-template>
+
+<ng-template #navContent let-node="node">
+  <cx-generic-link
+    [target]="node.target"
+    *ngIf="node?.url && (!node?.children || node?.children?.length === 0); else heading"
+    [url]="node.url"
+  >
+    {{ node.title }}
+  </cx-generic-link>
+
+  <ng-template #heading>
+    <h5 role="link" [attr.aria-label]="node.title">
+      {{ node.title }}
+      <div class="icon icon--chevron-up node-icon--closed"></div>
+      <div class="icon icon--chevron-down node-icon--open"></div>
+    </h5>
+  </ng-template>
+
+  <!-- we add a wrapper to allow for better layout handling in CSS -->
+  <div
+    [attr.aria-label]="'common.subMenu' | cxTranslate"
+    class="wrapper nav-wrapper"
+    *ngIf="node?.children?.length > 0"
+    [ngClass]="{ 'has-amplience': node.amplienceId }"
+  >
+    <cx-generic-link *ngIf="node.url" [url]="node.url" [target]="node.target" class="all">
+      {{ 'navigation.shopAll' | cxTranslate: { navNode: node.title } }}!
+    </cx-generic-link>
+
+    <div
+      class="childs column"
+      [attr.depth]="getDepth(node)"
+      [attr.wrap-after]="node.children?.length > wrapAfter ? wrapAfter : null"
+    >
+      <ng-container *ngFor="let child of node.children">
+        <ng-container *ngTemplateOutlet="nav; context: { node: child }"> </ng-container>
+      </ng-container>
+      <div class="content-slot-amplience" *ngIf="node.amplienceId">
+        <div class="amplience-content">
+          <app-amplience [amplienceInput]="node.amplienceId"></app-amplience>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

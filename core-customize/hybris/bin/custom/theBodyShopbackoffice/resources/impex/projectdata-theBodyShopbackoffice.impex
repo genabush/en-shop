@@ -1,0 +1,14 @@
+# ------------------------------------------#
+# Copyright (c) #
+# 2019 THE BODY SHOP INTERNATIONAL LIMITED. #
+# All rights reserved. #
+# ------------------------------------------#
+$solrIndexedType = solrIndexedType(identifier)[unique = true, default = 'BackofficeProduct'];
+
+INSERT_UPDATE SolrIndexedProperty ; name[unique = true] ; $solrIndexedType ; type(code) ; localized[default = false] ; currency[default = false] ; multiValue[default = false] ; includeInResponse[default = false] ; useForSpellChecking[default = false] ;  
+                                  ; itemtype            ;                  ; string     ;                            ;                           ;                             ;                                    ;                                      ;  
+
+UPDATE SolrIndexedProperty ; $solrIndexedType ; name[unique = true] ; type(code) ; sortableType(code) ; currency[default = false] ; localized[default = false] ; multiValue[default = false] ; facet[default = true] ; facetType(code) ; facetSort(code) ; priority ; visible ; useForSpellchecking[default = false] ; useForAutocomplete[default = false] ; facetDisplayNameProvider ; customFacetSortProvider ; topValuesProvider[default = defaultTopValuesProvider] ;  
+                           ;                  ; itemtype            ; string     ;                    ;                           ;                            ;                             ;                       ; MultiSelectOr   ; Alpha           ; 4000     ; true    ;                                      ;                                     ;                          ;                         ;                                                       ;  
+
+

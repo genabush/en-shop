@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<enum class="uk.co.thebodyshop.core.populator.options.PaymentInfoOption">
+		<value>BASIC</value>
+		<value>BILLING_ADDRESS</value>
+	</enum>
+
+	<!--auth response  -->
+	<bean class="uk.co.thebodyshop.core.auth.data.LogoutResponse">
+		<property name="success" type="boolean"/>
+	</bean>
+
+	<!-- storesession data -->
+
+	<bean class="uk.co.thebodyshop.core.storesession.data.LanguageDataList">
+		<property name="languages"
+		          type="java.util.Collection&lt;de.hybris.platform.commercefacades.storesession.data.LanguageData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.storesession.data.CurrencyDataList">
+		<property name="currencies"
+		          type="java.util.Collection&lt;de.hybris.platform.commercefacades.storesession.data.CurrencyData>"/>
+	</bean>
+
+	<!-- order data -->
+
+	<bean class="uk.co.thebodyshop.core.order.data.CartDataList">
+		<property name="carts"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.CartData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.order.data.OrderEntryDataList">
+		<property name="orderEntries"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.OrderEntryData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.order.data.CardTypeDataList">
+		<property name="cardTypes"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.CardTypeData>"/>
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.order.data.CartModificationDataList">
+		<property name="cartModificationList"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.CartModificationData>"/>
+	</bean>
+
+	<!-- product data -->
+
+	<bean class="uk.co.thebodyshop.core.product.data.ProductDataList">
+		<property name="products"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.ProductData>"/>
+		<property name="catalog" type="String"/>
+		<property name="version" type="String"/>
+		<property name="totalProductCount" type="int"/>
+		<property name="totalPageCount" type="int"/>
+		<property name="currentPage" type="int"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.product.data.PromotionDataList">
+		<property name="promotions"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.PromotionData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.product.data.PromotionResultDataList">
+		<property name="promotions"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.PromotionResultData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.product.data.ReviewDataList">
+		<property name="reviews" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.ReviewData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.product.data.SuggestionDataList">
+		<property name="suggestions"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.SuggestionData>"/>
+	</bean>
+
+	<!-- user data -->
+
+	<bean class="uk.co.thebodyshop.core.user.data.TitleDataList">
+		<property name="titles" type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.TitleData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.user.data.CountryDataList">
+		<property name="countries" type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.CountryData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.user.data.RegionDataList">
+		<property name="regions"
+				  type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.RegionData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.user.data.AddressDataList">
+		<property name="addresses" type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.AddressData>"/>
+	</bean>
+
+	<!-- voucher data -->
+	<bean class="uk.co.thebodyshop.core.voucher.data.VoucherDataList">
+		<property name="vouchers"
+		          type="java.util.List&lt;de.hybris.platform.commercefacades.voucher.data.VoucherData>"/>
+	</bean>
+
+	<!-- validation data -->
+	<bean class="uk.co.thebodyshop.core.validation.data.AddressValidationData">
+		<property name="errors" type="de.hybris.platform.webservicescommons.dto.error.ErrorListWsDTO"/>
+		<property name="decision" type="String"/>
+		<property name="suggestedAddressesList"
+		          type="uk.co.thebodyshop.core.user.data.AddressDataList"/>
+	</bean>
+
+	<!-- Additional title property for CustomerData -->
+	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData"
+	      extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
+		<property name="title" type="String"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.user.data.LoginChangeResponse">
+		<property name="success" type="boolean"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.user.data.PasswordRestoreResponse">
+		<property name="success" type="boolean"/>
+	</bean>
+
+	<!-- update queues -->
+
+	<bean class="uk.co.thebodyshop.core.queues.data.ProductExpressUpdateElementData">
+		<property name="code" type="String"/>
+		<property name="catalogId" type="String"/>
+		<property name="catalogVersion" type="String"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.queues.data.ProductExpressUpdateElementDataList">
+		<property name="productExpressUpdateElements"
+		          type="java.util.List&lt;uk.co.thebodyshop.core.queues.data.ProductExpressUpdateElementData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.queues.data.OrderStatusUpdateElementData">
+		<property name="code" type="String"/>
+		<property name="status" type="String"/>
+		<property name="baseSiteId" type="String"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.queues.data.OrderStatusUpdateElementDataList">
+		<property name="orderStatusUpdateElements"
+		          type="java.util.List&lt;uk.co.thebodyshop.core.queues.data.OrderStatusUpdateElementData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.store.data.StoreCountListData">
+		<property name="countriesAndRegionsStoreCount"
+				  type="java.util.List&lt;de.hybris.platform.commercefacades.store.data.StoreCountData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.store.data.PointOfServiceListData">
+		<property name="pointOfServices"
+				  type="java.util.List&lt;de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData>"/>
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData">
+		<property name="distance" type="Double"/>
+		<property name="distanceUnit" type="String"/>
+		<property name="available" type="boolean" />
+		<property name="sourceLatitude" type="double"/>
+		<property name="sourceLongitude" type="double" />
+		<property name="imageUrl" type="String"/>
+		<property name="amplienceSlotId" type="String"/>
+		<property name="temporaryClosedFromDate" type="String"/>
+		<property name="temporaryClosedToDate" type="String"/>
+	</bean>
+
+	<!-- Consent management -->
+	<bean class="uk.co.thebodyshop.core.consent.data.ConsentTemplateDataList">
+		<property name="consentTemplates"
+				  type="java.util.List&lt;de.hybris.platform.commercefacades.consent.data.ConsentTemplateData>"/>
+	</bean>
+
+	<!-- Base Sites -->
+	<bean class="uk.co.thebodyshop.core.basesite.data.BaseSiteDataList">
+		<property name="baseSites"
+				  type="java.util.List&lt;de.hybris.platform.commercefacades.basesite.data.BaseSiteData>"/>
+	</bean>
+	
+	<!-- Product Visibility -->
+	<bean class="uk.co.thebodyshop.core.product.visibility.data.ProductVisibilityData">
+		<property name="code" type="String"/>
+		<property name="visible" type="boolean"/>
+		<property name="redirectUrl" type="String"/>
+		<property name="message" type="String"/>
+	</bean>
+	
+	<!-- WS DTOs -->
+	<bean class="uk.co.thebodyshop.core.product.ws.data.ProductVisibilityWsDTO">
+        <description>Representation of a Product Visibility</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ProductVisibility</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>Product code</description>
+        </property>
+        <property name="visible" type="String">
+            <description>Product visibility flag</description>
+        </property>
+        <property name="redirectUrl" type="String">
+            <description>Redirect URL</description>
+        </property>
+        <property name="message" type="String">
+            <description>Visibility message</description>
+        </property>
+    </bean>
+    
+    <!-- Email When InStock -->
+    
+    <bean class="uk.co.thebodyshop.core.emailWhenInStock.ws.data.EmailWhenInStockData">
+    	<property name="emailId" type="String"/>
+		<property name="productCode" type="String"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.core.emailWhenInStock.ws.data.EmailWhenInStockResultData">
+		<property name="success" type="boolean"/>
+	</bean>
+	
+	 <bean class="uk.co.thebodyshop.core.emailWhenInStock.ws.data.EmailWhenInStockWsDTO">
+		<property name="success" type="boolean"/>
+	</bean>
+    
+    <bean class="uk.co.thebodyshop.core.emailWhenInStock.ws.data.EmailWhenInStockWsDTOForm">
+    	<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">EmailWhenInStock</hint>
+        </hints>
+    	<property name="emailId" type="String">
+    		<hints>
+                <hint name="required">true</hint>
+            </hints>
+    	</property>
+		<property name="productCode" type="String">
+			<hints>
+                <hint name="required">true</hint>
+            </hints>
+		</property>
+	</bean>
+    
+    
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.search.facetdata.ProductCategorySearchPageWsDTO">
+        <property name="amplienceIdForThirdSlot" type="String" />
+        <property name="amplienceIdForSixthSlot" type="String" />
+        <property name="breadcrumbCategories" type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.product.CategoryWsDTO>">
+            <description>Category structure for current category</description>
+        </property>
+    </bean>
+    
+    <bean class="de.hybris.platform.commerceservices.search.facetdata.ProductCategorySearchPageData&lt;STATE, RESULT, CATEGORY>" extends="de.hybris.platform.commerceservices.search.facetdata.ProductSearchPageData&lt;STATE, RESULT>">
+        <property name="amplienceIdForThirdSlot" type="String" />
+        <property name="amplienceIdForSixthSlot" type="String" />
+        <property name="breadcrumbCategories" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.CategoryData>"/>
+    </bean>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.PriceData">
+		<property name="pricePerMetric" type="String"/>
+		<property name="loyaltyPoints" type="java.lang.Integer"/>
+	</bean>
+
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+		<property name="pricePerMetric" type="String">
+			<description>Calculated Price Per Metric Value</description>
+		</property>
+		<property name="loyaltyPoints" type="java.lang.Integer"/>
+	</bean>
+	
+	<!-- Product Ingredients -->
+	<bean class="uk.co.thebodyshop.core.product.data.ProductIngredientData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="description" type="String"/>
+		<property name="pageLink" type="String"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.core.product.ws.dto.ProductIngredientWsDTO">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="description" type="String"/>
+		<property name="pageLink" type="String"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.product.data.SwatchColourData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="hexCode" type="String"/>
+		<property name="swatchImage" type="de.hybris.platform.commercefacades.product.data.ImageData"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="isVariant" type="boolean"/>
+		<property name="variantSize" type="String" />
+        <property name="previewDescription" type="String" />
+        <property name="variants" type="String" />
+        <property name="keyIngredients" type="java.util.List&lt;uk.co.thebodyshop.core.product.data.ProductIngredientData>"/>
+        <property name="straplines" type="java.util.List&lt;String>"/>
+        <property name="breadcrumbCategories" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.CategoryData>"/>
+		<property name="size" type="String" />
+		<property name="colour" type="uk.co.thebodyshop.core.product.data.SwatchColourData" />
+		<property name="emailMeWhenInStockToggle" type="boolean"/>
+		<property name="multiVariant" type="boolean"/>
+		<property name="findInStoreEnabled" type="boolean"/>
+		<property name="wishlistCreationDate" type="java.util.Date"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.product.ws.dto.SwatchColourWSData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="hexCode" type="String"/>
+		<property name="swatchImage" type="de.hybris.platform.commercewebservicescommons.dto.product.ImageWsDTO"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO">
+		<property name="isVariant" type="boolean"/>
+		<property name="variantSize" type="String" />
+        <property name="previewDescription" type="String" />
+        <property name="variants" type="String" />
+        <property name="keyIngredients" type="java.util.List&lt;uk.co.thebodyshop.core.product.ws.dto.ProductIngredientWsDTO>" />
+        <property name="straplines" type="java.util.List&lt;String>"/>
+        <property name="breadcrumbCategories" type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.product.CategoryWsDTO>"/>
+		<property name="size" type="String" />
+		<property name="colour" type="uk.co.thebodyshop.core.product.ws.dto.SwatchColourWSData" />
+		<property name="emailMeWhenInStockToggle" type="boolean"/>
+		<property name="multiVariant" type="boolean"/>
+		<property name="findInStoreEnabled" type="boolean"/>
+		<property name="wishlistCreationDate" type="java.util.Date"/>
+	</bean>
+	
+	<!-- Solr Variant Data -->
+	<bean class="uk.co.thebodyshop.core.variant.solr.data.StockData">
+		<property name="stockLevelStatus" type="String"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.core.variant.solr.data.VariantData">
+		<property name="name" type="String"/>
+		<property name="code" type="String" />
+        <property name="price" type="String" />
+        <property name="stock" type="uk.co.thebodyshop.core.variant.solr.data.StockData" />
+        <property name="pricePerMetric" type="String" />
+        <property name="size" type="String" />
+        <property name="colour" type="String" />
+        <property name="variantType" type="String" />
+        <property name="sizeForSort" type="java.lang.Double" />
+        <property name="colourPosition" type="java.lang.Integer" />
+        <property name="emailMeWhenInStockToggle" type="boolean"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.core.variant.solr.data.VariantDataList">
+		<property name="variants" type="java.util.List&lt;uk.co.thebodyshop.core.variant.solr.data.VariantData>"/>
+	</bean>
+	
+	<enum class="de.hybris.platform.commercefacades.product.ProductOption">
+		<value>PRODUCT_INGREDIENTS</value>
+	</enum>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.VariantOptionData">
+		<property name="name" type="String" />
+	    <property name="size" type="String" />
+        <property name="colour" type="String" />
+        <property name="colourName" type="String" />
+        <property name="variantType" type="String" />
+        <property name="sizeForSort" type="java.lang.Double" />
+        <property name="selectedFlag" type="boolean"/>
+        <property name="technicalIngredients" type="String" />
+        <property name="colourPosition" type="java.lang.Integer" />
+        <property name="images" type="java.util.Collection&lt;uk.co.thebodyshop.core.product.data.TbsGalleryImageData>"/>
+        <property name="maxOrderProductQuantity" type="Integer" />
+        <property name="emailMeWhenInStockToggle" type="boolean"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.product.VariantOptionWsDTO">
+        <description>Representation of a Variant Option</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">VariantOption</hint>
+        </hints>
+        <property name="name" type="String">
+        	<description>Name of the variant option</description>
+        </property>
+        <property name="size" type="String">
+            <description>Size of the variant option</description>
+        </property>
+        <property name="colour" type="String">
+            <description>Colour of the variant option</description>
+        </property>
+        <property name="colourName" type="String">
+            <description>Colour Name of the variant option</description>
+        </property>
+        <property name="variantType" type="String" >
+        	<description>Variant Type of the variant option</description>
+        </property>
+         <property name="selectedFlag" type="boolean" >
+        	<description>Flag to mark a current selected variant</description>
+        </property>
+        <property name="technicalIngredients" type="String" >
+        	<description>Technical Ingredients from variant</description>
+        </property>
+        <property name="images" type="java.util.Collection&lt;uk.co.thebodyshop.core.product.ws.dto.TbsGalleryImageWSDTO>" >
+        	<description>Images from variant</description>
+        </property>
+        <property name="maxOrderProductQuantity" type="Integer" >
+        	<description>Max Order Quantity for variant</description>
+        </property>
+        <property name="emailMeWhenInStockToggle" type="boolean">
+        	<description>Email Me When InStock Toggle</description>
+        </property>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.product.data.TbsGalleryImageData">
+    	<property name="zoom" type="uk.co.thebodyshop.core.product.data.TbsImageData"/>
+    	<property name="product" type="uk.co.thebodyshop.core.product.data.TbsImageData"/>
+    	<property name="thumbnail" type="uk.co.thebodyshop.core.product.data.TbsImageData"/>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.product.data.TbsImageData">
+    	<property name="url" type="String"/>
+		<property name="altText" type="String"/>
+		<property name="galleryIndex" type="Integer"/>
+		<property name="format" type="String"/>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.product.ws.dto.TbsGalleryImageWSDTO">
+    	<property name="zoom" type="uk.co.thebodyshop.core.product.ws.dto.TbsImageWSDTO"/>
+    	<property name="product" type="uk.co.thebodyshop.core.product.ws.dto.TbsImageWSDTO"/>
+    	<property name="thumbnail" type="uk.co.thebodyshop.core.product.ws.dto.TbsImageWSDTO"/>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.product.ws.dto.TbsImageWSDTO">
+    	<property name="url" type="String"/>
+		<property name="altText" type="String"/>
+		<property name="galleryIndex" type="Integer"/>
+    </bean>
+    
+    
+
+	<bean class="uk.co.thebodyshop.core.search.facetdata.ContentSearchPageData&lt;STATE, RESULT>" extends="de.hybris.platform.commerceservices.search.facetdata.FacetSearchPageData&lt;STATE, RESULT>">
+		<description>POJO containing the result page for content search.</description>
+		<property name="freeTextSearch" type="String"/>
+		<property name="keywordRedirectUrl" type="String"/>
+		<property name="spellingSuggestion" type="de.hybris.platform.commerceservices.search.facetdata.SpellingSuggestionData&lt;STATE>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.search.content.data.ContentPageData">
+		<property name="title" type="String"/>
+		<property name="summary" type="String"/>
+		<property name="imageUrl" type="String"/>
+		<property name="url" type="String"/>
+	</bean>
+
+    <bean class="uk.co.thebodyshop.core.search.content.ws.data.ContentSearchPageWsDTO">
+        <description>Representation of a Content Search Page</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ContentSearchPage</hint>
+        </hints>
+        <property name="freeTextSearch" type="String">
+            <description>Free text search</description>
+        </property>
+        <property name="keywordRedirectUrl" type="String">
+            <description>Redirect url address keyword</description>
+        </property>
+        <property name="spellingSuggestion"
+                  type="de.hybris.platform.commercewebservicescommons.dto.search.facetdata.SpellingSuggestionWsDTO">
+            <description>Spelling suggestion</description>
+        </property>
+        <property name="contents"
+                  type="java.util.List&lt;uk.co.thebodyshop.core.search.content.ws.data.ContentWsDTO>">
+            <description>List of content pages</description>
+        </property>
+        <property name="sorts"
+                  type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.search.pagedata.SortWsDTO>">
+            <description>List of sorts</description>
+        </property>
+        <property name="pagination"
+                  type="de.hybris.platform.commercewebservicescommons.dto.search.pagedata.PaginationWsDTO">
+            <description>Pagination number</description>
+        </property>
+        <property name="currentQuery" type="de.hybris.platform.commercewebservicescommons.dto.search.SearchStateWsDTO">
+            <description>Current query</description>
+        </property>
+        <property name="breadcrumbs"
+                  type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.search.facetdata.BreadcrumbWsDTO>">
+            <description>List of breadcrumbs info</description>
+        </property>
+        <property name="facets"
+                  type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.search.facetdata.FacetWsDTO>">
+            <description>List of facets</description>
+        </property>
+    </bean>
+
+    <bean class="uk.co.thebodyshop.core.search.content.ws.data.ContentWsDTO">
+        <description>Representation of a Content Page</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Content</hint>
+        </hints>
+        <property name="title" type="String">
+            <description>title of the page</description>
+        </property>
+        <property name="summary" type="String">
+            <description>summary of the page</description>
+        </property>
+        <property name="url" type="String">
+            <description>Url address of the page</description>
+        </property>
+        <property name="imageUrl" type="String">
+            <description>image url of the content page</description>
+        </property>
+    </bean>
+
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.order.OrderEntryWsDTO">
+		<property name="maxProductOrderQuantity" type="Integer">
+			<description>Max Order Product Quantity</description>
+		</property>
+	</bean>
+	<bean class="de.hybris.platform.commercefacades.order.data.OrderEntryData">
+		<property name="maxProductOrderQuantity" type="java.lang.Integer"/>
+	</bean>
+
+  <bean class="de.hybris.platform.commercewebservicescommons.dto.search.facetdata.FacetWsDTO">
+    <property name="code" type="String">
+      <description>Code of the facet</description>
+    </property>
+  </bean>
+  
+  <bean class="uk.co.thebodyshop.core.deliveryrestrictions.error.ProductDeliveryRestrictionError">
+    <property name="restrictedProducts" type="java.util.List&lt;String>" />
+  </bean>
+  
+  <bean class="uk.co.thebodyshop.core.deliveryrestrictions.error.ws.data.ProductDeliveryRestrictionErrorWsDTO">
+        <description>Product Delivery Restriction Error</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ProductDeliveryRestrictionError</hint>
+        </hints>
+        <property name="restrictedProducts" type="java.util.List&lt;String>" >
+            <description>Product Name List</description>
+        </property>
+   </bean>
+   
+   <bean class="de.hybris.platform.commercefacades.order.data.DeliveryModesData">
+		<property name="deliveryModeRestrictionError" type="uk.co.thebodyshop.core.deliveryrestrictions.error.DeliveryRestrictionError"/>
+	</bean>
+		  
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.order.DeliveryModeListWsDTO">
+        <property name="deliveryModeRestrictionError"
+                  type="uk.co.thebodyshop.core.deliveryrestrictions.error.DeliveryRestrictionError">
+            <description>DeliveryMode Delivery Restriction Error</description>
+        </property>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.deliveryrestrictions.error.DeliveryRestrictionError">
+    	<property name="errorList" type="java.util.List&lt;String>" />
+    </bean>
+    
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.CollectionPointResponseWsDTO">
+        <property name="collectionPoint"
+                  type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.order.CollectionPointWsDTO&gt;">
+            <description>List of Collection Point</description>
+        </property>
+        <property name="serviceType" type="String" >
+			<description>ServiceType</description>
+		</property>
+		<property name="sourceLatitude" type="double" >
+			<description>Source Latitude</description>
+		</property>
+		<property name="sourceLongitude" type="double" >
+			<description>Source Longitude</description>
+		</property>
+		<property name="noresults" type="java.lang.Boolean" >
+			<description>No results</description>
+		</property>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.collection.CollectionPointResponseDTO">
+        <property name="collectionPoint"
+                  type="java.util.List&lt;uk.co.thebodyshop.core.collection.CollectionPointData&gt;"/>
+        <property name="serviceType" type="String" />
+		<property name="sourceLatitude" type="double"/>
+		<property name="sourceLongitude" type="double" />
+		<property name="noresults" type="java.lang.Boolean" />
+    </bean>
+    
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.CollectionPointWsDTO" extends="de.hybris.platform.commercewebservicescommons.dto.store.PointOfServiceWsDTO">
+        <description>Request body fields to operate on Collection Point. The DTO is in XML or .json format</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">CollectionPoint</hint>
+        </hints>
+		<property name="serviceType" type="String" >
+			<description>ServiceType</description>
+		</property>
+    </bean>
+
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.store.PointOfServiceWsDTO">
+		<description>Representation of a Point of service</description>
+		<property name="distanceUnit" type="String">
+			<description>Distance unit to the point of service as text value</description>
+		</property>
+		<property name="distance" type="java.lang.Double">
+			<description>Distance to the point of service as double value</description>
+		</property>
+		<property name="available" type="boolean">
+			<description>Availability of Stores for Items in cart</description>
+		</property>
+		<property name="sourceLatitude" type="double">
+			<description>Source Latitude</description>
+		</property>
+		<property name="sourceLongitude" type="double">
+			<description>Source Longitude</description>
+		</property>
+		<property name="imageUrl" type="String">
+			<description>Image Url</description>
+		</property>
+		<property name="amplienceSlotId" type="String">
+			<description>Amplience SlotId</description>
+		</property>
+		<property name="temporaryClosedFromDate" type="String">
+			<description>Temporary Closed From Date</description>
+		</property>
+		<property name="temporaryClosedToDate" type="String">
+			<description>Temporary Closed To Date</description>
+		</property>
+	</bean>
+    
+       
+    <bean class="uk.co.thebodyshop.core.collection.CollectionPointData" extends="de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData">
+		<property name="serviceType" type="String" />
+    </bean>
+    
+    
+    
+    <bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+        <property name="collectionPoint" type="uk.co.thebodyshop.core.collection.CollectionPointData"/>
+        <property name="fulfillmentMethod" type="String" />
+        <property name="loyaltyPoints" type="java.lang.Integer"/>
+        <property name="deliveryPointOfService" type="de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData" />
+        <property name="eligibleForCollectInStore" type="boolean"/>
+        <property name="eligibleForCollectionPoint" type="boolean"/>
+        <property name="eligibleForLoyalty" type="boolean"/>
+        <property name="eligibleForGiftWrap" type="boolean"/>
+        <property name="giftWrapPrice" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+        <property name="eligibleForGiftMessage" type="boolean"/>
+        <property name="giftMessageName" type="String"/>
+        <property name="giftMessageSenderName" type="String"/>
+        <property name="giftMessage" type="String"/>
+        <property name="loyaltyVoucherDiscount" type="de.hybris.platform.commercefacades.product.data.PriceData" />
+        <property name="giftWrapApplied" type="boolean"/>
+		<property name="totalPriceWithOutDeliveryCost" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.giftMessage.GiftWrapMessageData">
+    	 <property name="giftMessageName" type="String"/>
+         <property name="giftMessageSenderName" type="String"/>
+         <property name="giftMessage" type="String"/>
+    </bean>
+    
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.AbstractOrderWsDTO">
+        <property name="collectionPoint"
+                  type="de.hybris.platform.commercewebservicescommons.dto.order.CollectionPointWsDTO">
+        	<description>Collection Point</description>
+        </property>
+        <property name="fulfillmentMethod" type="String">
+            <description>Fulfillment Method</description>
+        </property>
+        <property name="loyaltyPoints" type="java.lang.Integer">
+        	<description>Estimated Loyalty Points</description>
+        </property>
+        <property name="deliveryPointOfService" type="de.hybris.platform.commercewebservicescommons.dto.store.PointOfServiceWsDTO">
+            <description>Delivery Point Of Service </description>
+        </property>
+        <property name="eligibleForCollectInStore" type="boolean">
+            <description>Eligible For Collect In Store</description>
+        </property>
+        <property name="eligibleForCollectionPoint" type="boolean">
+            <description>Eligible for Collection Point </description>
+        </property>
+        <property name="eligibleForLoyalty" type="boolean">
+            <description>Eligible for loyalty or not</description>
+        </property>
+        <property name="eligibleForGiftWrap" type="boolean">
+        	<description>Eligible For Gift Wrap </description>
+        </property>
+        <property name="giftWrapPrice" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+        	<description>Gift Wrap Price</description>
+        </property>
+        <property name="eligibleForGiftMessage" type="boolean">
+        	<description>Eligible For Gift Wrap Messages </description>
+        </property>
+        <property name="giftMessageName" type="String">
+			<description>Gift Message Name</description>
+		</property>
+		<property name="giftMessageSenderName" type="String">
+			<description>Gift Message Sender Name</description>
+		</property>
+		<property name="giftMessage" type="String">
+			<description>Gift Message</description>
+		</property>
+		<property name="loyaltyVoucherDiscount" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+			<description>total loyalty Vouchers Discount</description>
+		</property>
+		<property name="giftWrapApplied" type="boolean">
+			<description>Gift Wrap Applied Flag</description>
+        </property>
+		<property name="totalPriceWithOutDeliveryCost" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+			<description>Total Price with out delivery cost</description>
+		</property>
+    </bean>
+    
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.status.StatusWsDTO">
+        <description>Request body fields to send status code</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Status</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>Status code</description>
+        </property>
+    </bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.WishlistData">
+		<property name="wishlistName" type="String"/>
+		<property name="wishlistId" type="String"/>
+		<property name="created" type="String"/>
+		<property name="products" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.ProductData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.WishlistCollectionData">
+		<property name="wishlists" type="java.util.List&lt;uk.co.thebodyshop.core.wishlist.WishlistData>"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.WishlistShareRequestData">
+		<property name="wishlistId" type="String"/>
+		<property name="recipientName" type="String"/>
+		<property name="recipientEmail" type="String"/>
+		<property name="senderName" type="String"/>
+		<property name="message" type="String"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.StatusResponseData">
+		<property name="status" type="java.lang.Boolean"/>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.ws.dto.WishlistRequestWSDTO">
+		<property name="wishlistName" type="String">
+			<description>Wishlist name</description>
+		</property>
+		<property name="wishlistId" type="String">
+			<description>Wishlist id</description>
+		</property>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.ws.dto.WishlistWSDTO">
+		<property name="wishlistName" type="String">
+			<description>Wishlist name</description>
+		</property>
+		<property name="wishlistId" type="String">
+			<description>Wishlist id</description>
+		</property>
+		<property name="products" type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO>">
+			<description>Wishlist products</description>
+		</property>
+		<property name="created" type="String">
+			<description>Created date</description>
+		</property>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.ws.dto.WishlistCollectionWSDTO">
+		<property name="wishlists" type="java.util.List&lt;uk.co.thebodyshop.core.wishlist.ws.dto.WishlistWSDTO>">
+			<description>Wishlist list</description>
+		</property>
+	</bean>
+
+    <bean class="uk.co.thebodyshop.core.wishlist.ws.dto.WishlistShareRequestWSDTO">
+        <property name="wishlistId" type="String">
+            <description>Wishlist id</description>
+        </property>
+        <property name="recipientName" type="String">
+            <description>Recipient name</description>
+        </property>
+        <property name="recipientEmail" type="String">
+            <description>Recipient email</description>
+        </property>
+        <property name="senderName" type="String">
+            <description>Sender name</description>
+        </property>
+        <property name="message" type="String">
+            <description>message</description>
+        </property>
+    </bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.ws.dto.WishlistSaveRequestWSDTO">
+		<property name="wishlistId" type="String">
+			<description>Wishlist id</description>
+		</property>
+	</bean>
+
+    <bean class="uk.co.thebodyshop.core.wishlist.ws.dto.StatusResponseWSDTO">
+        <property name="status" type="java.lang.Boolean">
+            <description>Status</description>
+        </property>
+    </bean>
+    
+    <bean class="uk.co.thebodyshop.core.giftwrap.ws.dto.GiftWrapMessageRequestWSDTO">
+    	<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">GiftWrapMessageRequest</hint>
+        </hints>
+		<property name="giftMessageName" type="String">
+			<description>Gift Message Name</description>
+			<hints>
+                <hint name="required">true</hint>
+            </hints>
+		</property>
+		<property name="giftMessageSenderName" type="String">
+			<description>Gift Message Sender Name</description>
+			<hints>
+                <hint name="required">true</hint>
+            </hints>
+		</property>
+		<property name="giftMessage" type="String">
+			<description>Gift Message</description>
+			<hints>
+                <hint name="required">true</hint>
+            </hints>
+		</property>
+	</bean>
+	<bean class="uk.co.thebodyshop.core.wishlist.ws.dto.GuestWishlistProductWSDTO">
+		<hints>
+			<hint name="wsRelated"/>
+			<hint name="alias">GuestWishlistProduct</hint>
+		</hints>
+		<property name="products" type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO>">
+			<description>products</description>
+		</property>
+		<property name="unavailableProductCodes" type="java.util.List&lt;java.lang.String>">
+			<description>unavailable Product Codes</description>
+		</property>
+	</bean>
+
+	<bean class="uk.co.thebodyshop.core.wishlist.GuestWishlistProductData">
+		<property name="products" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.ProductData>"/>
+		<property name="unavailableProductCodes" type="java.util.List&lt;java.lang.String>"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.product.data.PromotionResultData">
+		<property name="discountAmount" type="java.lang.Double"/>
+		<property name="appliedVoucher" type="java.lang.String"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.product.PromotionResultWsDTO">
+        <description>Representation of a Promotion result</description>
+        <property name="discountAmount" type="java.lang.Double">
+            <description>Discount amount of promotion result</description>
+        </property>
+        <property name="appliedVoucher" type="de.hybris.platform.commercewebservicescommons.dto.voucher.VoucherWsDTO">
+            <description>Applied voucher for promotion</description>
+        </property>
+    </bean>
+
+</beans>

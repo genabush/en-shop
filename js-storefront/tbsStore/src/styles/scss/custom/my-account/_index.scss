@@ -1,0 +1,60 @@
+@import 'side-navigation';
+@import 'wishlist';
+
+// Layout for my account wishlist
+app-wishlist,
+app-wishlist-detail,
+.my-account {
+  &,
+  & > .container,
+  &__col {
+    @include media-breakpoint-up(md) {
+      display: flex !important;
+      flex-direction: column;
+      align-items: stretch;
+      flex-grow: 1;
+    }
+  }
+  & > .container > .row {
+    flex-grow: 1;
+  }
+}
+
+.AccountPageTemplate {
+  &:before {
+    content: '';
+    @extend .bg-my-account;
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: -1;
+  }
+  @extend .container;
+  display: flex;
+  padding: 0 1.5rem 0 1.5rem;
+  margin: auto;
+  & > .SideContentSlot {
+    background: var(--cx-color-base-silver);
+    flex: 0 0 var(--cx-flex-basis, 100%);
+    @include media-breakpoint-up(md) {
+      flex: 0 0 var(--cx-flex-basis, 25%);
+    }
+  }
+  & > .BodyContent {
+    background: var(--cx-color-base-white);
+    flex: 0 0 var(--cx-flex-basis, 100%);
+    @include media-breakpoint-up(md) {
+      flex: 0 0 var(--cx-flex-basis, 75%);
+    }
+  }
+
+  & > .SideContentSlot,
+  & > .BodyContent {
+    max-width: none;
+    padding: 20px 0 0 0;
+    margin: 0;
+  }
+}

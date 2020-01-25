@@ -1,0 +1,179 @@
+<ng-container *ngIf="selectedVariant$ | async as selectedVariant">
+  <div class="add-to-bag-set">
+    <ng-container *ngIf="!wishlistOnlyForProduct">
+      <ng-container *ngIf="selectedVariant.code && showQuantity">
+        <span *ngIf="!showNotifyMe && !hasStock">{{ 'addToCart.quantity' | cxTranslate }}</span>
+        <cx-cart-quantity-selector
+          class="add-to-bag-set__counter counter btn-group"
+          [value]="quantity"
+          [isCart]="isCart"
+          isValueChangeable="true"
+          set="true"
+          [min]="1"
+          [max]="adjustedMaxQty <= selectedVariant.stock.stockLevel ? adjustedMaxQty : selectedVariant.stock.stockLevel"
+          *ngIf="
+            selectedVariant.stock &&
+            selectedVariant.stock.stockLevelStatus !== 'outOfStock' &&
+            selectedVariant.stock.stockLevel > 0
+          "
+          (update)="updateCount($event)"
+        ></cx-cart-quantity-selector>
+      </ng-container>
+      <button
+        *ngIf="
+          selectedVariant.stock &&
+          selectedVariant.stock.stockLevelStatus !== 'outOfStock' &&
+          selectedVariant.stock.stockLevel > 0
+        "
+        [ngClass]="{ 'add-to-bag-set__add btn btn--primary my-0': true, 'mx-0': variant }"
+        type="button"
+        tabIndex="0"
+        [attr.aria-label]="'addToCart.addToCart' | cxTranslate"
+        [disabled]="quantity <= 0 || quantity > selectedVariant.stock.stockLevel || quantity > maxQuantity"
+        (click)="addToCart()"
+      >
+        {{ 'addToCart.addToCart' | cxTranslate }}
+      </button>
+      <button
+        class="btn btn--secondary add-to-bag-set__out"
+        *ngIf="
+          !showNotifyMe &&
+          variant &&
+          selectedVariant.stock &&
+          selectedVariant.stock.stockLevelStatus == 'outOfStock' &&
+          selectedVariant.stock.stockLevel == 0
+        "
+      >
+        {{ 'product.outOfStock' | cxTranslate }}
+      </button>
+    </ng-container>
+
+    <button
+      *ngIf="!hideFav"
+      (click)="triggerAddToWishlist(addToWishlistModal)"
+      class="add-to-bag-set__fav btn btn--icon btn--none"
+      #tooltipFirstTimers="ngbTooltip"
+      ngbTooltip="Sign-in or register to save products to your account"
+    >
+      <span class="btn__icon icon icon--heart-dynamic icon--add-set"
+        ><span class="sr-only">{{ 'addToCart.addToFavourites' | cxTranslate }}</span></span
+      >
+    </button>
+  </div>
+
+  <app-messaging
+    role="alert"
+    class="app-messaging"
+    *ngIf="existingQtyInBasket >= maxQuantity && !wishlistOnlyForProduct"
+    type="warning"
+    content="{{ 'addToCart.maxReached' | cxTranslate }}"
+  ></app-messaging>
+
+  <ng-container *ngIf="!wishlistOnlyForProduct">
+    <app-back-in-stock *ngIf="showNotifyMe" [productCode]="selectedVariant.code"></app-back-in-stock>
+  </ng-container>
+</ng-container>
+
+<!-- TODO: move it to it's own slot ?-->
+<ng-container *ngIf="selectedVariant$ | async as selectedVariant">
+  <div class="product-actions mt-4 mb-4" *ngIf="isFindInStoreEnabled">
+    <app-find-in-store class="d-block mt-4 mb-4" [productCode]="selectedVariant.code"></app-find-in-store>
+  </div>
+</ng-container>
+
+<ng-template #addToWishlistModal let-c="close" let-d="dismiss">
+  <div *ngIf="selectedProdIsMultiVariant" class="modal__header modal__header--nav-back">
+    <div class="modal__header-back">
+      <button
+        tabindex="0"
+        class="btn modal__back"
+        type="button"
+        title="{{ 'common.closeBtn' | cxTranslate }}"
+        [attr.aria-label]="'common.closeBtn' | cxTranslate"
+        (click)="closeWishlistModalMulti()"
+      >
+        <span aria-hidden="true">
+          <cx-icon [type]="iconTypes.CHEVRON_LEFT" class="icon icon--chevron-left"></cx-icon>
+        </span>
+      </button>
+    </div>
+    <div class="modal__header-title">
+      {{ 'wishlists.listingModal.titleAdd' | cxTranslate }}
+      <span class="modal__header-highlight">{{ productName }}</span>
+      {{ 'wishlists.listingModal.titleTo' | cxTranslate }}
+    </div>
+    <div class="modal__header-close">
+      <button
+        type="button"
+        class="modal__close"
+        [attr.aria-label]="'common.closeBtn' | cxTranslate"
+        (click)="closeWishlistModalMulti()"
+      >
+        <span aria-hidden="true">
+          <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <button
+    *ngIf="!selectedProdIsMultiVariant"
+    type="button"
+    class="modal__close"
+    [attr.aria-label]="'common.closeBtn' | cxTranslate"
+    (click)="closeWishlistModalMulti()"
+  >
+    <span aria-hidden="true">
+      <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+    </span>
+  </button>
+  <div class="modal__body modal__body--wishlist">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h1 *ngIf="!selectedProdIsMultiVariant">{{ 'wishlists.listingModal.title' | cxTranslate }}</h1>
+        <button
+          class="btn btn--primary wishlists__cta mb-4 mt-4"
+          *ngIf="!isCreateFormVisible"
+          (click)="createNewWishlistInModal(productId)"
+        >
+          {{ 'wishlists.createCta' | cxTranslate }}
+        </button>
+        <app-wishlist-form
+          *ngIf="isCreateFormVisible"
+          [isEdit]="false"
+          [productId]="productId"
+          (triggerForm)="listAdded($event)"
+          (triggerClosingParentModal)="closeForm($event)"
+        ></app-wishlist-form>
+      </div>
+      <div class="col-12 col-md-6 mt-md-1">
+        <ng-container *ngIf="userWishlists$ | async as wishlists">
+          <ng-container *ngIf="wishlists.length > 0">
+            <p>{{ 'wishlists.listingModal.selectExisting' | cxTranslate }}</p>
+            <div class="wishlists wishlists--simple">
+              <ul class="wishlists__list list-unstyled">
+                <li class="wishlists__list-item" *ngFor="let list of wishlists">
+                  <span class="wishlists__link">
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-between">
+                        <span class="h4 wishlists__name"> {{ list.wishlistName }}</span>
+                        <ng-container *ngIf="list.hasProductInList; else hasNotProductInList">
+                          <span class="wishlists__add wishlists__add--added"></span>
+                        </ng-container>
+                        <ng-template #hasNotProductInList>
+                          <span
+                            class="wishlists__add"
+                            (click)="triggerAddToExistingList($event, list.wishlistId)"
+                          ></span>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>

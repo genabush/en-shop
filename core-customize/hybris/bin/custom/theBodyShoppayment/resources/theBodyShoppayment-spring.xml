@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+ 	<!-- Orika : DataMapper -->
+	<alias alias="dataMapper" name="defaultDataMapper"/>
+	<bean id="defaultDataMapper" class="de.hybris.platform.webservicescommons.mapping.impl.DefaultDataMapper">
+		<property name="fieldSetBuilder" ref="fieldSetBuilder"/>
+	</bean>
+	
+	<alias alias="fieldSetBuilder" name="defaultFieldSetBuilder"/>
+    <bean id="defaultFieldSetBuilder"
+          class="de.hybris.platform.webservicescommons.mapping.impl.DefaultFieldSetBuilder">
+        <property name="defaultRecurrencyLevel" value="4"/>
+        <property name="defaultMaxFieldSetSize" value="50000"/>
+        <property name="fieldSetLevelHelper" ref="fieldSetLevelHelper"/>
+    </bean>
+
+    <alias alias="fieldSetLevelHelper" name="defaultFieldSetLevelHelper"/>
+    <bean id="defaultFieldSetLevelHelper"
+          class="de.hybris.platform.webservicescommons.mapping.impl.DefaultFieldSetLevelHelper">
+    </bean>
+	
+	<bean id="InputDetailFieldMapper" parent="fieldMapper">
+		<property name="sourceClass" value="com.adyen.model.checkout.InputDetail"/>
+		<property name="destClass"   value="uk.co.thebodyshop.payment.data.InputDetailWSDTO"/>
+	</bean>
+	
+	<bean id="SubInputDetailFieldMapper" parent="fieldMapper">
+		<property name="sourceClass" value="com.adyen.model.checkout.SubInputDetail"/>
+		<property name="destClass"   value="uk.co.thebodyshop.payment.data.SubInputDetailWSDTO"/>
+	</bean>
+	
+	<bean id="ItemFieldMapper" parent="fieldMapper">
+		<property name="sourceClass" value="com.adyen.model.checkout.Item"/>
+		<property name="destClass"   value="uk.co.thebodyshop.payment.data.ItemWSDTO"/>
+	</bean>
+	
+	<alias name="defaultTbsPaymentFacade" alias="tbsPaymentFacade" />
+	<bean id="defaultTbsPaymentFacade" class="uk.co.thebodyshop.payment.facade.impl.DefaultTbsPaymentFacade">
+	 	<property name="baseStoreService" ref="baseStoreService"/>
+	 	<property name="adyenPaymentServiceFactory" ref="adyenPaymentServiceFactory"/>
+	 	<property name="cartService" ref="cartService"/>
+	 	<property name="configurationService" ref="configurationService"/>
+	</bean>
+	 
+	<alias name="defaultPaymentRedirectInfoDao" alias="paymentRedirectInfoDao" />
+	<bean id="defaultPaymentRedirectInfoDao" class="uk.co.thebodyshop.payment.daos.impl.DefaultPaymentRedirectInfoDao">
+		<constructor-arg ref="flexibleSearchService" />
+	</bean>
+	
+	<alias name="defaultPaymentRedirectInfoService" alias="paymentRedirectInfoService" />
+	<bean id="defaultPaymentRedirectInfoService" class="uk.co.thebodyshop.payment.services.impl.DefaultPaymentRedirectInfoService">
+		<constructor-arg ref="paymentRedirectInfoDao" />
+		<constructor-arg ref="modelService" />
+	</bean>
+	
+	<alias name="defaultCaptureAmountCalculationStrategy" alias="captureAmountCalculationStrategy" />
+	<bean id="defaultCaptureAmountCalculationStrategy" class="uk.co.thebodyshop.payment.strategies.impl.DefaultCaptureAmountCalculationStrategy"/>
+	
+	<alias name="defaultRecapturePrimaryPaymentStrategy" alias="recapturePrimaryPaymentStrategy"/>
+	<bean name="defaultRecapturePrimaryPaymentStrategy"  class="uk.co.thebodyshop.payment.strategies.impl.DefaultRecapturePrimaryPaymentStrategy" >
+		<constructor-arg ref="paymentService" />
+		<constructor-arg ref="modelService" />
+	</bean>
+	
+	<alias name="defaultTbsPaymentService" alias="paymentService"/>
+	<bean name="defaultTbsPaymentService" parent="defaultPaymentService"  class="uk.co.thebodyshop.payment.services.impl.DefaultTbsPaymentService" >
+		<property name="svsService" ref="svsService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+</beans>

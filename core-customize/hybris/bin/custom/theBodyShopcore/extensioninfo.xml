@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+	<extension abstractclassprefix="Generated" classprefix="TheBodyShopCore" managername="TheBodyShopCoreManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShopcore" jaloLogicFree="true">
+
+		<requires-extension name="acceleratorcms" />
+		<requires-extension name="solrserver" />
+		<requires-extension name="commercefacades" />
+		<requires-extension name="cmsfacades"/>
+		<requires-extension name="adaptivesearchsolr"/>
+		<requires-extension name="wishlist"/>
+		<coremodule generated="true" manager="uk.co.thebodyshop.core.jalo.TheBodyShopCoreManager" packageroot="uk.co.thebodyshop.core" />
+
+	</extension>
+</extensioninfo>

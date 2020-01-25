@@ -1,0 +1,27 @@
+<ng-container *ngIf="user$ | async as user; else login">
+  <div class="cx-login--greet d-none d-lg-flex">
+    {{ 'miniLogin.userGreeting' | cxTranslate: { name: user.name } }}
+  </div>
+
+  <cx-icon class="cx-login--icon d-flex d-md-none" [type]="'USER_CIRCLE'"></cx-icon>
+
+  <cx-page-slot position="SiteLinks"></cx-page-slot>
+</ng-container>
+
+<ng-template #login>
+  <!-- Desktop -->
+  <a role="link" class="d-none d-md-flex" [routerLink]="{ cxRoute: 'login' } | cxUrl">
+    {{ 'miniLogin.signInRegister' | cxTranslate }}
+  </a>
+  <!-- Mobile -->
+  <a
+    role="link"
+    class="cx-login--icon d-flex d-md-none"
+    [routerLink]="{ cxRoute: 'login' } | cxUrl"
+    (click)="toggleHamburgerMenu()"
+    (keyup.enter)="toggleHamburgerMenu()"
+  >
+    <cx-icon [type]="'USER_CIRCLE'"></cx-icon>
+    {{ 'hamburgerMenu.signin' | cxTranslate }}
+  </a>
+</ng-template>

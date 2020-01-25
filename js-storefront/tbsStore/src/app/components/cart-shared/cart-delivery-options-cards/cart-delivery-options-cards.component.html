@@ -1,0 +1,11 @@
+<div
+  class="cx-cart-delivery-mode position-relative border rounded p-3 my-2"
+  *ngFor="let deliveryMode of deliveryModes; index as d"
+>
+  <!-- <div class="cx-cart-delivery-mode-label">{{ deliveryMode.code }}</div> -->
+  <div class="cx-cart-delivery-mode-title">{{ deliveryMode.name }}</div>
+  <div class="cx-cart-delivery-mode-price">
+    {{ deliveryMode.deliveryCost.formattedValue }}
+  </div>
+  <div class="cx-cart-delivery-mode-details">{{ deliveryMode.description }}</div>
+</div>

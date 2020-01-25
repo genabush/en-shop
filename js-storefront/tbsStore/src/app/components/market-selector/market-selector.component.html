@@ -1,0 +1,25 @@
+<!-- TODO review this wrapper div -->
+<!-- https://stackoverflow.com/questions/54441304/getting-an-error-trying-to-use-native-select-with-angular-material -->
+<div
+  class="mat-native-form-field"
+  *ngIf="{
+    activeMarket: activeMarket$ | async,
+    marketData: marketData$ | async
+  } as activeComponentData"
+>
+  <select
+    matNativeControl
+    (change)="goToMarketEvent($event)"
+    class="custom-market-selector"
+    [attr.aria-label]="'common.chooseYourCountry' | cxTranslate"
+  >
+    <option
+      *ngFor="let market of activeComponentData.marketData; let i = index"
+      class="custom-market-selector-option"
+      [value]="market.url"
+      [selected]="market.url.indexOf(activeComponentData.activeMarket) !== -1"
+      >{{ market.name }}</option
+    >
+  </select>
+  <cx-icon [type]="'CHEVRON_DOWN'" class="small"></cx-icon>
+</div>

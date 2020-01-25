@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+	<collectiontypes>
+		<collectiontype code="loyaltyVouchers" elementtype="LoyaltyVoucher" autocreate="true" generate="true" type="set"/>
+	</collectiontypes>			
+	<enumtypes>
+		<enumtype code="LoyaltyMembershipStatus" autocreate="true" generate="true" dynamic="true">
+			<description>Status of the Loyalty Membership</description>
+			<value code="ACTIVE"/>
+			<value code="MIGRATED"/>
+		</enumtype>
+		
+		<enumtype code="LoyaltyCardStatus" autocreate="true" generate="true">
+			<value code="NEW"/>
+			<value code="USED"/>
+			<value code="DEACTIVATED"/>
+		</enumtype>
+		<enumtype code="BenefitStatus" autocreate="true" generate="true" dynamic="true">
+			<value code="ACTIVE"/>
+			<value code="APPLIED"/>
+			<value code="RESERVED"/>
+			<value code="CAPTURED"/>
+			<value code="EXPIRED"/>
+			<value code="DONATED"/>
+			<value code="CANCELLED"/>
+		</enumtype>
+	</enumtypes>
+	
+	<relations>
+		<relation code="LoyaltyMembershipLoyaltyCardRelation" autocreate="true" generate="true" localized="false">
+			<sourceElement qualifier="loyaltyMembership" type="LoyaltyMembership" cardinality="one">
+				<modifiers optional="false"/>
+			</sourceElement>
+			<targetElement qualifier="loyaltyCards" type="LoyaltyCard" cardinality="many" collectiontype="set"/>
+		</relation>
+		
+		<relation code="CustomerLoyaltyTransactionsRelation" localized="false" autocreate="true" generate="true">
+			<sourceElement qualifier="customer" type="Customer" cardinality="one"/>
+			<targetElement qualifier="loyaltyTransactions" type="LoyaltyTransaction" cardinality="many" collectiontype="list">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="CustomerLoyaltyCardRelation" autocreate="true" generate="true" localized="false">
+			<sourceElement qualifier="customer" type="Customer" cardinality="one"/>
+			<targetElement qualifier="loyaltyCards" type="LoyaltyCard" cardinality="many" collectiontype="set"/>
+		</relation>
+		
+		<relation code="CustomerLoyaltyVoucherRelation" autocreate="true" generate="true" localized="false">
+			<sourceElement qualifier="customer" type="Customer" cardinality="one"/>
+			<targetElement qualifier="loyaltyVouchers" type="LoyaltyVoucher" cardinality="many" collectiontype="set">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="Charity2CMSSiteRelation" autocreate="true" generate="true" localized="false">
+			<deployment table="tbs_charity2cmssite" typecode="	10312"/>
+			<sourceElement qualifier="websites" type="CMSSite" cardinality="many" ordered="false">
+				<modifiers read="true" write="true" search="true" optional="true"/>
+			</sourceElement>
+			<targetElement qualifier="loyaltyCharity" type="LoyaltyCharity" cardinality="many" collectiontype="set">
+				<modifiers read="true" write="true" search="true" optional="true"/>
+			</targetElement>
+		</relation>
+	</relations>
+	
+	<itemtypes>
+		<itemtype code="BaseStore" autocreate="false" generate="false">
+				<description>Extending BaseStore type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="lybcEnabled" type="java.lang.Boolean">
+						<description>enable/disable the display of the LYBC scheme in the respective market</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="loyaltyPointsRate " type="java.lang.Double">
+						<description>loyalty points rate for the respective market</description>
+						<persistence type="property"/>
+						<defaultvalue>new Double(1.00)</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="loyaltyCurrencyUnit " type="java.lang.Double">
+						<description>loyalty Currency Unit </description>
+						<persistence type="property"/>
+						<defaultvalue>new Double(1.00)</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="loyaltyPointsMultiplier" type="java.lang.Double">
+						<description>loyalty points multiplier</description>
+						<persistence type="property"/>
+						<defaultvalue>new Double(1.00)</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="maximumVouchersPerOrder" type="java.lang.Integer">
+						<description>maximum vouchers per Order</description>
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf(4)</defaultvalue>
+					</attribute>
+				</attributes>
+		</itemtype>
+		
+		<itemtype code="LoyaltyMembership" extends="GenericItem" autocreate="true" generate="true">
+				<description>Loyalty Membership represents a Loyalty Programme</description>
+				<deployment table="loyalty_membership" typecode="20012"/>
+				<attributes>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="programmeId" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers unique="false"/>
+					</attribute>
+					<attribute qualifier="status" type="LoyaltyMembershipStatus">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="type" type="java.lang.String">
+						<persistence type="property"/>
+						<defaultvalue>"individual"</defaultvalue>
+					</attribute>
+					<attribute qualifier="startDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="endDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="loyaltyCardsThreshold" type="int">
+						<defaultvalue>Integer.valueOf(100)</defaultvalue>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="loyaltyCardsPrefix" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="loyaltyCardsFetchQuantity" type="int">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="loyaltyProgramCode" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="loyaltyProgramMarketCode" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="cardsFetchInitiated" type="java.lang.Boolean">
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="programmeIDIdx" unique="false">
+						<key attribute="programmeId"/>
+					</index>
+				</indexes>
+			</itemtype>
+			
+			<itemtype code="LoyaltyCard" extends="GenericItem" autocreate="true" generate="true">
+				<description>Loyalty Card</description>
+				<deployment table="loyalty_card" typecode="20014"/>
+				<attributes>
+					<attribute qualifier="cardNumber" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers optional="false" unique="true"/>
+					</attribute>
+					<attribute qualifier="cardStatus" type="LoyaltyCardStatus">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="cardType" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="cardIssueStore" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="issueDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="expiryDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="cardNumberIdx" unique="true">
+						<key attribute="cardNumber"/>
+					</index>
+					<index name="loyalty_card_status_idx" unique="false">
+						<key attribute="cardStatus"/>
+					</index>
+				</indexes>
+			</itemtype>
+			
+			<itemtype code="LYBLoyaltyCard" extends="LoyaltyCard" autocreate="true" generate="true"/>
+			
+			<itemtype code="LYBMembershipArchive" extends="GenericItem" autocreate="true" generate="true">
+				<description>Loyalty membership archive</description>
+				<deployment table="lyb_archive" typecode="20071"/>
+				<attributes>
+					<attribute qualifier="migrationDate" type="java.util.Date">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="points" type="int">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="customerID" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="lybCardNumber" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="loyaltyMemberGroup" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="membershipStatus" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="lybJoinDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="tAndCAcceptedDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="source" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="expiryDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="LoyaltyTransaction" extends="GenericItem" autocreate="true" generate="true">
+				<description>Loyalty Transaction representing how many points accured or redeemed</description>
+				<deployment table="loyalty_points" typecode="20059"/>
+				<attributes>
+					<attribute qualifier="date" type="java.util.Date">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="points" type="int">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="type" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="subType" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="Customer" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="loyaltyTransactionsLastUpdate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="loyaltyTransactionsLoading" type="boolean">
+						<persistence type="property"/>
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute qualifier="pointsBalance" type="java.lang.Integer">
+						<persistence type="property"/>
+						<defaultvalue>0</defaultvalue>
+					</attribute>
+					<attribute qualifier="memberLastUpdateDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="memberStatus" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="memberTier" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="memberExpiryDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="LoyaltyCard" qualifier="defaultLoyaltyCard">
+		         		<description>default loyalty card for customer</description>
+		         			<persistence type="property"></persistence>
+		      		</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="BaseSite" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="loyaltyMembership" type="LoyaltyMembership">
+						<persistence type="property"/>
+						<modifiers partof="true"/>
+					</attribute>
+                </attributes>
+			</itemtype>
+			
+			<itemtype code="LoyaltyVoucher" extends="GenericItem" autocreate="true" generate="true">
+				<deployment table="loyalty_voucher" typecode="20060"/>
+				<attributes>
+					<attribute qualifier="currency" type="Currency">
+                    	<persistence type="property"/>
+                    	<modifiers read="true" write="true" search="true" optional="true"/>
+               		</attribute>
+               		<attribute qualifier="code" type="java.lang.String">
+                    	<persistence type="property"/>
+                    	<modifiers read="true" write="true" search="true" initial="true" optional="false" unique="true"/>
+                	</attribute>
+                	<attribute qualifier="customer" type="Customer">
+					    <persistence type="property"/>
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<description>the description of the voucher.</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" search="true" optional="true" />
+					</attribute>
+					<attribute qualifier="expiryDate" type="java.util.Date">
+						<persistence type="property"/>
+						<modifiers optional="false"/>
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+                    	<modifiers read="true" write="true" search="true" optional="true"/>
+                    	<persistence type="property"/>
+                	</attribute>
+                	<attribute qualifier="value" type="java.lang.Double">
+                    	<persistence type="property"/>
+                    	<modifiers read="true" write="true" search="true" optional="true"/>
+                   		<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+                    	<model>
+                        	<getter default="true" name="value">
+                            	<nullDecorator>Double.valueOf(0.0d)</nullDecorator>
+                        	</getter>
+                    	</model>
+               		 </attribute>
+               		 <attribute qualifier="voucherCode" type="java.lang.String">
+						<description>the voucher code.</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="status" type="BenefitStatus">
+						<persistence type="property"/>
+						<defaultvalue>em().getEnumerationValue("BenefitStatus","ACTIVE")</defaultvalue>
+					</attribute>
+					<attribute qualifier="donatedDate" type="java.util.Date">
+						<persistence type="property"/>
+						<modifiers optional="true"/>
+					</attribute>
+					<attribute qualifier="refundAmount" type="java.lang.Double">
+						<persistence type="property"/>
+						<defaultvalue>Double.valueOf(0.0)</defaultvalue>
+					</attribute>
+					<attribute qualifier="sentEmptyStatusToResponsys" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="lybVoucher" type="boolean">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+					<attribute qualifier="archived" type="boolean">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>false</defaultvalue>
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="discounts_voucher_idx" unique="false">
+						<key attribute="voucherCode"/>
+					</index>
+				</indexes>
+			</itemtype>
+
+		<itemtype code="LoyaltyCharity" extends="GenericItem" generate="true" autocreate="true">
+			<deployment table="tbs_loyalty_charity" typecode="10311"/>
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<modifiers read="true" write="true" optional="false" unique="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="name" type="localized:java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="url" type="java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="description" type="localized:java.lang.String">
+					<modifiers read="true" write="true" optional="true"/>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="AbstractOrder" autocreate="false" generate="false">
+				<description>Extending AbstractOrder type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="appliedLoyaltyVouchers" type="loyaltyVouchers">
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="loyaltyVoucherDiscount" type="java.lang.Double">
+						<persistence type="dynamic" attributeHandler="loyaltyVoucherDiscountForOrderAttributeHandler"/>
+						<modifiers write="false"/>
+					</attribute>
+				</attributes>
+		</itemtype>
+		
+		<itemtype code="AbstractOrderEntry" autocreate="false" generate="false">
+				<description>Extending AbstractOrderEntry type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="loyaltyDiscount " type="java.lang.Double">
+						<description>loyalty Discount </description>
+						<persistence type="property"/>
+						<defaultvalue>new Double( 0.0 )</defaultvalue>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+				
+	</itemtypes>
+</items>

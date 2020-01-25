@@ -1,0 +1,547 @@
+@mixin hideWrapperDesktop {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  margin-left: -10px;
+  border: 1px solid #ccc;
+}
+
+@mixin showWrapperDesktop {
+  opacity: 1;
+  visibility: visible;
+}
+
+%nav-wrapper {
+  // create width of wrapper
+  .wrapper[attr='1'] {
+    width: 200px;
+  }
+
+  .wrapper[attr='2'] {
+    width: 400px;
+  }
+
+  &.flyout {
+    .wrapper {
+      @include media-breakpoint-down(md) {
+        height: 0;
+        overflow: hidden;
+      }
+
+      color: $black;
+    }
+
+    @include media-breakpoint-up(lg) {
+      .wrapper {
+        // we add a z-index since some of the elements on the page have (surprisingly) a z-index rule
+        // we cannot make the z-index too high as it would conflict with the searchbox flyout.
+        z-index: 20;
+      }
+
+      > nav > .wrapper {
+        padding: 50px 0;
+        background: $white;
+      }
+    }
+  }
+}
+
+%nav-back-button {
+  &.flyout {
+    .back {
+      display: none;
+    }
+
+    @include media-breakpoint-down(md) {
+      .back {
+        display: initial;
+
+        h5 {
+          text-transform: capitalize;
+          -webkit-box-pack: start;
+          -ms-flex-pack: start;
+          justify-content: flex-start;
+
+          cx-icon {
+            padding-right: 10px;
+          }
+        }
+      }
+
+      &:not(.is-open) {
+        .back {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+%nav-heading {
+  nav {
+    &:focus {
+      color: var(--cx-g-color-primary);
+    }
+  }
+
+  h5 {
+    text-transform: $nav-heading-text-transform;
+    font-family: $nav-heading-header-font-family;
+    margin: 0;
+  }
+
+  &.flyout {
+    h5,
+    cx-generic-link,
+    app-custom-link a {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      white-space: nowrap;
+
+      color: currentColor;
+
+      &:hover {
+        color: var(--cx-color-primary);
+      }
+    }
+
+    h5 {
+      .node-icon {
+        &--open,
+        &--closed {
+          font-size: 12px;
+          margin-right: 1.35rem;
+          display: none;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      // make all first level hedings uppercase in mobile view
+      > nav {
+        > h5,
+        > cx-generic-link,
+        > app-custom-link a {
+          text-transform: uppercase;
+          font-weight: 600;
+          border-left: 5px solid var(--cx-color-primary);
+          text-indent: 1rem;
+        }
+      }
+
+      h5,
+      cx-generic-link,
+      app-custom-link a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+
+        cursor: pointer;
+
+        a {
+          display: block;
+          width: 100%;
+        }
+      }
+
+      h5,
+      cx-generic-link a,
+      app-custom-link a {
+        padding: 1rem 0;
+      }
+
+      h5 {
+        color: var(--cx-color-primary);
+        border-top: 1px solid var(--cx-color-primary);
+        border-left: 5px solid var(--cx-color-primary);
+
+        .node-icon {
+          &--open {
+            display: block;
+          }
+
+          &--closed {
+            display: none;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      > nav {
+        cursor: pointer;
+
+        // top level headings
+        > h5 {
+          margin-top: 3px;
+          padding: 20px 15px 25px 0;
+        }
+
+        // first level headings will be bold in desktop
+        nav > h5 {
+          @include type('5');
+          cursor: default;
+
+          &:hover {
+            color: currentColor;
+          }
+        }
+      }
+    }
+  }
+
+  cx-generic-link.all {
+    text-decoration: underline;
+  }
+}
+
+cx-navigation-ui.flyout > nav > h5 {
+  &:hover {
+    color: var(--cx-color-quaternary);
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  cx-navigation-ui > nav > cx-generic-link > a {
+    padding: 20px 15px 22px 0;
+  }
+
+  nav > div > cx-generic-link {
+    padding: 10px 0;
+  }
+
+  div.childs > nav > cx-generic-link > a {
+    padding: 5px 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+%nav-icon {
+  cx-icon {
+    &:before {
+      font-size: 1.5rem;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    cx-icon {
+      padding: 0 0 0 7px;
+
+      &:before {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+%nav-childs {
+  &.flyout {
+    // the last level of navigations is tyically displayed in a column
+    .childs[depth='1'] {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+
+    .childs {
+      @include media-breakpoint-up(lg) {
+        .childs {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+%nav-links {
+  a {
+    color: currentColor;
+  }
+
+  &.flyout {
+    a {
+      display: block;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+  }
+}
+
+%nav-wrap {
+  &.flyout .childs {
+    &[wrap-after] {
+      display: grid;
+      grid-column-gap: 10px;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(15, auto);
+    }
+
+    // support wrapAfter from up to 15
+    @for $i from 5 through 15 {
+      &[wrap-after='#{$i}'] {
+        grid-template-rows: repeat(#{$i}, auto);
+      }
+    }
+  }
+}
+
+%cx-navigation-ui {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  @extend %nav-heading;
+  @extend %nav-icon;
+  @extend %nav-wrapper;
+  @extend %nav-childs;
+  @extend %nav-links;
+  @extend %nav-back-button;
+  @extend %nav-wrap;
+
+  nav {
+    outline: none;
+  }
+
+  &.flyout {
+    @include media-breakpoint-down(md) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      color: var(--cx-color-primary);
+
+      > nav {
+        > .wrapper .childs nav {
+          > h5 {
+            background-color: var(--cx-color-base-grey-med);
+            text-transform: capitalize;
+            text-indent: 1.5rem;
+          }
+
+          > .wrapper .childs nav {
+            cx-generic-link {
+              background-color: var(--cx-color-base-grey-med);
+              font-family: $work-sans;
+              color: var(--cx-color-primary);
+              text-transform: capitalize;
+              text-indent: 2.75rem;
+            }
+
+            h5 {
+              text-transform: capitalize;
+            }
+          }
+        }
+      }
+
+      &.is-open {
+        nav.is-open {
+          display: initial;
+
+          cx-generic-link.all {
+            display: initial;
+          }
+
+          > .wrapper {
+            height: auto;
+          }
+        }
+
+        nav.is-open {
+          > h5 {
+            .node-icon {
+              &--open {
+                display: none;
+              }
+
+              &--closed {
+                display: block;
+              }
+            }
+          }
+        }
+
+        nav.is-opened {
+          display: initial;
+
+          > .wrapper > .childs > nav {
+            display: none;
+
+            &.is-open {
+              display: initial;
+
+              h5 {
+                color: var(--cx-color-core-secondary);
+                background-color: var(--cx-color-base-grey-med);
+                border: 1px solid var(--cx-color-core-secondary);
+                border-left: 5px solid var(--cx-color-core-secondary);
+              }
+            }
+          }
+
+          > .wrapper {
+            height: auto;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      // Show dropdowns via hover when no nav is focused
+      > nav {
+        > .wrapper {
+          @include hideWrapperDesktop();
+        }
+
+        /* we only treat the first wrapper as a collapsible container */
+        &:hover,
+        &:focus,
+        &:focus-within {
+          > .wrapper {
+            @include showWrapperDesktop();
+          }
+        }
+      }
+
+      // Show dropdowns via focus only once a nav is clicked
+      &:focus-within {
+        > nav {
+          &:focus {
+            > .wrapper {
+              @include showWrapperDesktop();
+            }
+          }
+        }
+      }
+
+      .childs {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+
+        nav:not(:last-child) {
+          padding-right: 30px;
+        }
+      }
+
+      .wrapper cx-icon {
+        display: none;
+      }
+
+      > nav {
+        > .wrapper {
+          -webkit-transition: opacity 0.4s;
+          transition: opacity 0.4s;
+        }
+      }
+
+      > nav:last-child {
+        overflow: hidden;
+      }
+    }
+  }
+
+  &.footer-nav {
+    h5 {
+      .node-icon {
+        &--open,
+        &--closed {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.hide-navigation-node {
+  display: none;
+}
+
+.large-down {
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}
+
+.large-up {
+  @include media-breakpoint-up(lg) {
+    display: none;
+  }
+}
+
+.header {
+  nav {
+    &.large-down,
+    &.large-up {
+      h5 {
+        padding-bottom: 14px;
+      }
+
+      &:hover,
+      &:focus {
+        color: $core-tertiary;
+
+        ~ .header__overlay {
+          @include media-breakpoint-up(lg) {
+            background: var(--cx-color-core-secondary);
+            top: $header-max-height-large;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            position: absolute;
+            opacity: 0.3;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-wrapper {
+    margin: 0 !important;
+    top: $header-max-height-large;
+    left: 0;
+    right: 0;
+    z-index: 200;
+
+    .large-down,
+    .large-up {
+      color: var(--cx-color-primary);
+
+      &:hover {
+        color: var(--cx-color-primary);
+      }
+
+      h5 {
+        font-size: 20px;
+        font-family: $recoleta-semi-bold;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--cx-color-primary);
+        text-transform: lowercase;
+        display: block;
+
+        &:first-letter {
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    .childs {
+      max-width: map-get($container-max-widths, lg);
+      margin: auto;
+      padding: 0 10px;
+    }
+  }
+}

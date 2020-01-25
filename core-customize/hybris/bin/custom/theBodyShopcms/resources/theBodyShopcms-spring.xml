@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-4.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Amplience Component -->
+	<alias name="defaultAmplienceCMSComponentTypePredicate" alias="cmsAmplienceCMSComponentTypePredicate" />
+	<bean id="defaultAmplienceCMSComponentTypePredicate" class="uk.co.thebodyshop.cms.types.predicates.AmplienceCMSComponentTypePredicate">
+		<constructor-arg name="typeService" ref="typeService" />
+	</bean>
+
+	<alias name="defaultAmplienceCMSComponentModelToDataPopulator" alias="cmsAmplienceCMSComponentModelToDataPopulator" />
+	<bean id="defaultAmplienceCMSComponentModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.AmplienceCMSComponentModelToDataPopulator">
+		<constructor-arg name="cmsAmplienceCMSComponentTypePredicate" ref="cmsAmplienceCMSComponentTypePredicate" />
+		<constructor-arg name="sessionService" ref="sessionService" />
+		<constructor-arg name="configurationService" ref="configurationService" />
+	</bean>
+
+	<bean depends-on="cmsRenderingCmsItemConverterCustomPopulators" parent="listMergeDirective">
+		<property name="add" ref="cmsAmplienceCMSComponentModelToDataPopulator" />
+	</bean>
+
+	<alias alias="dynamicAttributesMarketSelectorHandler" name="defaultDynamicAttributesMarketSelectorHandler" />
+	<bean id="defaultDynamicAttributesMarketSelectorHandler" class="uk.co.thebodyshop.cms.attribute.handlers.DefaultDynamicAttributesMarketSelectorHandler">
+		<constructor-arg name="tbsMarketSelectorDao" ref="tbsMarketSelectorDao" />
+	</bean>
+
+	<!-- Market Selector -->
+	<alias name="defaultCmsMarketSelectorSiteCollectionPredicate" alias="cmsMarketSelectorSiteCollectionPredicate" />
+	<bean id="defaultCmsMarketSelectorSiteCollectionPredicate" class="uk.co.thebodyshop.cms.attributes.predicates.CmsMarketSelectorSiteCollectionPredicate" />
+
+	<alias name="defaultCmsRenderingMarketSelectorSiteCollectionToDataContentConverter" alias="cmsRenderingMarketSelectorSiteCollectionToDataContentConverter" />
+	<bean id="defaultCmsRenderingMarketSelectorSiteCollectionToDataContentConverter" class="uk.co.thebodyshop.cms.rendering.converters.DefaultCmsRenderingMarketSelectorSiteCollectionToDataContentConverter" />
+
+	<alias name="defaultCmsRenderingMarketSelectorSiteCollectionContentConverter" alias="cmsRenderingMarketSelectorSiteCollectionContentConverter" />
+	<bean name="defaultCmsRenderingMarketSelectorSiteCollectionContentConverter" parent="cmsAbstractContentConverter" p:modelToDataConverter-ref="cmsRenderingMarketSelectorSiteCollectionToDataContentConverter" p:constrainedBy-ref="cmsMarketSelectorSiteCollectionPredicate"></bean>
+
+	<bean depends-on="cmsRenderingAttributeContentConverterList" parent="listMergeDirective">
+		<property name="add" ref="cmsRenderingMarketSelectorSiteCollectionContentConverter" />
+	</bean>
+
+
+	<!-- CMS Navigation Node Component -->
+	<alias name="tbsCMSNavigationNodeModelToDataRenderingPopulator" alias="cmsNavigationNodeModelToDataRenderingPopulator" />
+	<bean id="tbsCMSNavigationNodeModelToDataRenderingPopulator" parent="defaultCMSNavigationNodeModelToDataRenderingPopulator" class="uk.co.thebodyshop.cms.rendering.populators.TbsNavigationNodeModelToDataRenderingPopulator">
+	  <constructor-arg name="cmsLinkComponentModelToDataRenderingConverter" ref="cmsLinkComponentModelToDataRenderingConverter"/>
+	</bean>
+
+	<!-- Navigation Component -->
+	<alias name="defaulNavigationComponentTypePredicate" alias="cmsNavigationComponentTypePredicate" />
+	<bean id="defaulNavigationComponentTypePredicate" class="uk.co.thebodyshop.cms.types.predicates.NavigationComponentTypePredicate">
+		<constructor-arg name="typeService" ref="typeService" />
+	</bean>
+
+	<alias name="defaultNavigationComponentModelToDataPopulator" alias="cmsNavigationComponentModelToDataPopulator" />
+	<bean id="defaultNavigationComponentModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.NavigationComponentModelToDataPopulator">
+		<constructor-arg name="cmsNavigationComponentTypePredicate" ref="cmsNavigationComponentTypePredicate" />
+	</bean>
+
+	<bean depends-on="cmsRenderingCmsItemConverterCustomPopulators" parent="listMergeDirective">
+		<property name="add" ref="cmsNavigationComponentModelToDataPopulator" />
+	</bean>
+
+
+    <!-- CMSLinkComponent populator-->
+	<alias name="defaultCMSLinkComponentModelToDataPopulator" alias="cmsLinkComponentModelToDataPopulator" />
+	<bean id="defaultCMSLinkComponentModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.CMSLinkComponentModelToDataPopulator">
+	</bean>
+
+	<alias name="defaultCMSLinkComponentModelToDataRenderingConverter" alias="cmsLinkComponentModelToDataRenderingConverter" />
+	<bean id="defaultCMSLinkComponentModelToDataRenderingConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.cms.data.LinkComponentData" />
+		<property name="populators">
+			<list merge="true">
+				<ref bean="cmsLinkComponentModelToDataPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Content Page Service -->
+	<alias name="defaultTbsCMSContentPageService" alias="cmsContentPageService"/>
+	<bean id="defaultTbsCMSContentPageService" parent="defaultCMSContentPageService" class="uk.co.thebodyshop.cms.services.impl.DefaultTbsCMSContentPageService">
+		<constructor-arg name="pageNotFoundLabel" value="#{configurationService.configuration.getProperty('tbs.page.not.found.label')}"/>
+		<constructor-arg name="tbsCatalogVersionService" ref="tbsCatalogVersionService"/>
+		<constructor-arg name="tbsCMSContentPageDao" ref="tbsCMSContentPageDao"/>
+	</bean>
+
+    <alias name="defaultTbsCMSContentPageDao" alias="tbsCMSContentPageDao"/>
+    <bean id="defaultTbsCMSContentPageDao" class="uk.co.thebodyshop.cms.daos.impl.DefaultTbsCMSContentPageDao">
+    	<constructor-arg ref="flexibleSearchService"/>
+    </bean>
+	
+	<bean id="cmsContentPageRemoveInterceptor" class="uk.co.thebodyshop.cms.interceptors.CmsContentPageRemoveInterceptor" >
+		<constructor-arg name="tbsCMSContentPageService" ref="cmsContentPageService"/>
+    </bean>
+
+    <bean class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="cmsContentPageRemoveInterceptor" />
+        <property name="typeCode" value="ContentPage" />
+    </bean>
+    
+    <alias name="defaultCmsContentPageActiveLinkPopulator" alias="cmsContentPageActiveLinkPopulator"/>
+    <bean id="defaultCmsContentPageActiveLinkPopulator" class="uk.co.thebodyshop.cms.rendering.populators.CmsContentPageActiveLinkPopulator">
+		<property name="tbsCMSContentPageService" ref="cmsContentPageService"/>
+	</bean>
+  
+  	<alias name="tbsCmsAttributeDataPredicatePopulatorListMap" alias="cmsAttributeDataPredicatePopulatorListMap" />
+	<bean id="tbsCmsAttributeDataPredicatePopulatorListMap" class="org.springframework.beans.factory.config.MapFactoryBean" scope="singleton">
+		<property name="sourceMap">
+			<util:map key-type="java.util.function.Predicate" value-type="java.util.List" map-class="java.util.LinkedHashMap">
+				<entry>
+					<key>
+						<ref bean="cmsModelContainsLinkTogglePredicate" />
+					</key>
+					<list>
+						<ref bean="cmsItemLinkToggleModelToDataAttributePopulator" />
+					</list>
+				</entry>
+				<entry>
+					<key>
+						<ref bean="cmsComponentPredicate" />
+					</key>
+					<list>
+						<ref bean="cmsItemCloneableModelToDataAttributePopulator" />
+					</list>
+				</entry>
+				<entry>
+					<key>
+						<bean class="uk.co.thebodyshop.cms.types.predicates.CmsContentPagePredicate" />
+					</key>
+					<list>
+						<ref bean="cmsContentPageActiveLinkPopulator" />
+					</list>
+				</entry>
+			</util:map>
+		</property>
+	</bean>
+
+  	<alias name="defaultCmsSearchKeywordTypeAttributePredicate" alias="cmsSearchKeywordTypeAttributePredicate" />
+	<bean id="defaultCmsSearchKeywordTypeAttributePredicate" parent="abstractDefaultClassTypeAttributePredicate" p:typeClass="uk.co.thebodyshop.cms.model.SearchKeywordModel"/>
+
+	<alias name="defaultCmsSearchKeywordDataToAttributeContentConverter" alias="cmsSearchKeywordDataToAttributeContentConverter"/>
+	<bean id="defaultCmsSearchKeywordDataToAttributeContentConverter" parent="cmsUniqueIdentifierDataToAttributeContentConverter">
+		<property name="modelClass" value="uk.co.thebodyshop.cms.model.SearchKeywordModel" />
+	</bean>
+
+	<alias name="defaultCmsSearchKeywordContentConverter" alias="cmsSearchKeywordContentConverter"/>
+	<bean name="defaultCmsSearchKeywordContentConverter" parent="cmsAbstractContentConverter"
+		  p:modelToDataConverter-ref="cmsUniqueIdentifierAttributeToDataContentConverter"
+		  p:dataToModelConverter-ref="cmsSearchKeywordDataToAttributeContentConverter"
+		  p:constrainedBy-ref="cmsSearchKeywordTypeAttributePredicate">
+	</bean>
+
+	<alias name="defaultSearchKeywordUniqueIdentifierConverter" alias="searchKeywordUniqueIdentifierConverter"/>
+	<bean id="defaultSearchKeywordUniqueIdentifierConverter" class="uk.co.thebodyshop.cms.uniqueidentifier.DefaultSearchKeywordUniqueIdentifierConverter">
+		<constructor-arg ref="tbsSearchKeywordDao"/>
+	</bean>
+
+	<bean depends-on="cmsAttributeContentConverterList" parent="listMergeDirective">
+		<property name="add" ref="cmsSearchKeywordContentConverter"/>
+	</bean>
+
+	<bean depends-on="cmsExtendedAttributeContentValidatorMap" parent="mapMergeDirective">
+		<property name="key" ref="cmsSearchKeywordTypeAttributePredicate"/>
+		<property name="value" ref="cmsUniqueIdentifierAttributeContentValidator"/>
+	</bean>
+
+	<alias name="defaultSearchKeywordIdTypeAttributePopulator" alias="searchKeywordIdTypeAttributePopulator"/>
+	<bean id="defaultSearchKeywordIdTypeAttributePopulator" class="de.hybris.platform.cmsfacades.types.populator.IdComponentTypeAttributePopulator">
+		<property name="idAttribute" value="code" />
+	</bean>
+	<bean id="searchKeywordLabelTypeAttributePopulator" class="de.hybris.platform.cmsfacades.types.populator.LabelComponentTypeAttributePopulator">
+		<property name="labelAttributes">
+			<list>
+				<value>code</value>
+				<value>name</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultSearchKeywordsComponentTypePopulator" alias="searchKeywordsComponentTypePopulator"/>
+	<bean id="defaultSearchKeywordsComponentTypePopulator" class="de.hybris.platform.cmsfacades.types.populator.CmsStructureTypeComponentTypeAttributePopulator">
+		<property name="cmsStructureType" value="EditableDropdown" />
+	</bean>
+
+	<alias name="defaultSearchKeywordsUriPopulator" alias="searchKeywordsUriPopulator"/>
+	<bean id="defaultSearchKeywordsUriPopulator" class="de.hybris.platform.cmsfacades.types.populator.UriComponentTypeAttributePopulator">
+		<property name="uri" value="/theBodyShopsewebservices/searchKeywords" />
+	</bean>
+
+	<bean class="de.hybris.platform.cmsfacades.types.service.impl.DefaultComponentTypeAttributeStructure" p:typecode="ContentPage" p:qualifier="searchKeywords">
+		<property name="populators">
+			<set>
+				<ref bean="searchKeywordIdTypeAttributePopulator" />
+				<ref bean="searchKeywordLabelTypeAttributePopulator" />
+				<ref bean="searchKeywordsComponentTypePopulator" />
+				<ref bean="searchKeywordsUriPopulator" />
+			</set>
+		</property>
+	</bean>
+	
+	<!-- Category Banner CMS Component  -->
+	
+	<alias name="defaultCategoryBannerCMSComponentTypePredicate" alias="cmsCategoryBannerCMSComponentTypePredicate" />
+	<bean id="defaultCategoryBannerCMSComponentTypePredicate" class="uk.co.thebodyshop.cms.types.predicates.CategoryBannerCMSComponentTypePredicate">
+		<constructor-arg name="typeService" ref="typeService" />
+	</bean>
+	
+	<alias name="defaultCategoryBannerCMSComponentModelToDataPopulator" alias="cmsCategoryBannerCMSComponentModelToDataPopulator" />
+	<bean id="defaultCategoryBannerCMSComponentModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.CategoryBannerCMSComponentModelToDataPopulator">
+		<constructor-arg name="cmsCategoryBannerCMSComponentTypePredicate" ref="cmsCategoryBannerCMSComponentTypePredicate" />
+		<constructor-arg name="restrictionContextProvider" ref="cmsRestrictionContextProvider"/>
+	</bean>
+	
+	<bean depends-on="cmsRenderingCmsItemConverterCustomPopulators" parent="listMergeDirective">
+		<property name="add" ref="cmsCategoryBannerCMSComponentModelToDataPopulator" />
+	</bean>
+
+	<!-- Store Finder CMS Component  -->
+
+	<alias name="defaultTbsStoreFinderComponentTypePredicate" alias="cmsTbsStoreFinderComponentTypePredicate" />
+	<bean id="defaultTbsStoreFinderComponentTypePredicate" class="uk.co.thebodyshop.cms.types.predicates.TbsStoreFinderComponentTypePredicate">
+		<constructor-arg name="typeService" ref="typeService" />
+	</bean>
+
+	<alias name="defaultdefaultTbsStoreFinderComponentModelToDataPopulator" alias="cmsTbsStoreFinderComponentModelToDataPopulator" />
+	<bean id="defaultdefaultTbsStoreFinderComponentModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.TbsStoreFinderComponentModelToDataPopulator">
+		<constructor-arg name="cmsTbsStoreFinderComponentTypePredicate" ref="cmsTbsStoreFinderComponentTypePredicate" />
+		<constructor-arg name="i18NService" ref="i18NService"/>
+	</bean>
+
+	<bean depends-on="cmsRenderingCmsItemConverterCustomPopulators" parent="listMergeDirective">
+		<property name="add" ref="cmsTbsStoreFinderComponentModelToDataPopulator" />
+	</bean>
+	
+	<!-- Gift Wrap Banner CMS Component  -->
+	
+	<alias name="defaultGiftWrapBannerCMSComponentTypePredicate" alias="cmsGiftWrapBannerCMSComponentTypePredicate" />
+	<bean id="defaultGiftWrapBannerCMSComponentTypePredicate" class="uk.co.thebodyshop.cms.types.predicates.GiftWrapBannerCMSComponentTypePredicate">
+		<constructor-arg name="typeService" ref="typeService" />
+	</bean>
+	
+	<alias name="defaultGiftWrapBannerCMSComponentModelToDataPopulator" alias="cmsGiftWrapBannerCMSComponentModelToDataPopulator" />
+	<bean id="defaultGiftWrapBannerCMSComponentModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.GiftWrapBannerCMSComponentModelToDataPopulator">
+		<constructor-arg name="cmsGiftWrapBannerCMSComponentTypePredicate" ref="cmsGiftWrapBannerCMSComponentTypePredicate" />
+	</bean>
+	
+	<bean depends-on="cmsRenderingCmsItemConverterCustomPopulators" parent="listMergeDirective">
+		<property name="add" ref="cmsGiftWrapBannerCMSComponentModelToDataPopulator" />
+	</bean>
+
+	<!--  CMS Navigation Node -->
+	<alias name="defaultCMSNavigationNodeModelToDataPopulator" alias="cmsCMSNavigationNodeModelToDataPopulator" />
+	<bean id="defaultCMSNavigationNodeModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.CMSNavigationNodeModelToDataPopulator"/>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="cmsNavigationNodeModelToDataRenderingConverter"/>
+		<property name="add" ref="cmsCMSNavigationNodeModelToDataPopulator"/>
+	</bean>
+
+	<!-- Abstract Page  -->
+	<alias name="defaultTbsAbstractPageModelToDataPopulator" alias="cmsTbsAbstractPageModelToDataPopulator" />
+	<bean id="defaultTbsAbstractPageModelToDataPopulator" class="uk.co.thebodyshop.cms.rendering.populators.TbsAbstractPageModelToDataPopulator"/>
+
+	<bean depends-on="cmsPageOtherPropertiesPopulators" parent="listMergeDirective">
+		<property name="add" ref="cmsTbsAbstractPageModelToDataPopulator" />
+	</bean>
+
+</beans>

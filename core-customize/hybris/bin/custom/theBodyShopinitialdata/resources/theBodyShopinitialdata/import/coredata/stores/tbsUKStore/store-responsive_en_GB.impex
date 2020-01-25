@@ -1,0 +1,16 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the BaseStore
+#
+
+# Language
+$lang=en_GB
+
+# Create Base Store
+UPDATE BaseStore;uid[unique=true];name[lang=$lang]
+;tbsUKStore;"UK Store"
+
+UPDATE BaseStore;uid[unique=true];currencySymbolPositionMap(key(code),value(code))[map-delimiter=?][key2value-delimiter=->]
+;tbsUKStore;en_GB->BEFORE_PRICE

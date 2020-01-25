@@ -1,0 +1,71 @@
+app-accordion-navigation-ui {
+  .accordion {
+    .card-header {
+      padding: 0 0;
+      margin-bottom: 0;
+      &:focus-within {
+        outline: inherit;
+      }
+    }
+    .card {
+      background: transparent;
+      border-bottom: 1px solid $border-colour-2 !important;
+      margin-bottom: 0;
+      &:first-child {
+        border-top: 1px solid $border-colour-2;
+      }
+    }
+    .card-header {
+      background: transparent;
+    }
+
+    .btn-link {
+      width: 100%;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-family: $nav-heading-footer-font-family;
+      color: white;
+      text-decoration: none;
+      text-align: left;
+      justify-content: flex-start;
+      padding-left: 0;
+      position: relative;
+      max-height: unset;
+      height: unset;
+      padding: 15px 15px 15px 0;
+      line-height: initial;
+      &:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+      }
+      &:after {
+        font-family: '${icomoon-font-family}';
+        content: $icon--minus;
+        position: absolute;
+        right: 16px;
+        font-size: 24px;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+      &.collapsed {
+        &:after {
+          content: $icon--plus;
+          margin: 0;
+          padding: 0;
+          font-size: 20px;
+        }
+      }
+      @include media-breakpoint-down(sm) {
+        line-height: 1;
+      }
+    }
+    .card-body {
+      padding-top: 0;
+      a {
+        color: white;
+      }
+    }
+  }
+}

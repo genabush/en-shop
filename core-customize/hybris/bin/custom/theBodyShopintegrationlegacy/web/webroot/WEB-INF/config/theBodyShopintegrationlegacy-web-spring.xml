@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:sws="http://www.springframework.org/schema/web-services"
+	   xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/web-services  
+		   http://www.springframework.org/schema/web-services/web-services-2.0.xsd 
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-4.1.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-4.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+
+	<!-- HYBRIS .... Spring managed FilterChain for hybris Filter stack -->
+	<bean id="theBodyShopintegrationlegacyPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
+		<constructor-arg>
+			<list>
+				<ref bean="log4jFilter" />
+				<ref bean="dynamicTenantActivationFilter" />
+				<ref bean="sessionFilter" />
+				<ref bean="tbsdataprocessingSecureMediaFilter" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="tbsdataprocessingSecureMediaFilter" class="de.hybris.platform.servicelayer.web.SecureMediaFilter">
+		<property name="mediaPermissionService" ref="mediaPermissionService" />
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+		<property name="mediaService" ref="mediaService" />
+		<!-- <property name="secureMediaToken" value="securemedias"/> securemedias is default but you may overwrite it -->
+	</bean>
+
+	<bean id="exceptionResolver" class="org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver">
+		<property name="warnLogCategory" value="uk.co.portaltech" />
+		<property name="defaultFault" value="SERVER" />
+		<property name="exceptionMappings">
+			<value>
+				org.springframework.oxm.ValidationFailureException=CLIENT,Invalid request
+			</value>
+		</property>
+	</bean>
+
+
+	<context:component-scan base-package="uk.co.thebodyshop.integration.endpoints" />
+
+	<sws:annotation-driven />
+
+	<sws:interceptors>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/productSchema">
+			<bean id="productValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/Product.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/priceSchema">
+			<bean id="priceValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/Price.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/communicationPreferenceSchema">
+			<bean id="communicationPreferenceValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/CommunicationPreference.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/orderShipmentConfirmationSchema">
+			<bean id="shipmentConfirmationValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/OrderShipmentConfirmation.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/orderSearchSchema">
+			<bean id="orderSearchValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/OrderSearch.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/posOrderSchema">
+			<bean id="posOrderValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/PosOrder.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/posRefundSchema">
+			<bean id="posRefundValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/PosRefund.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/posBenefitSchema">
+			<bean id="posBenefitValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/PosBenefitUpdate.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/orderFetchSchema">
+			<bean id="orderFetchValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/OrderFetch.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/customerRegistrationSchema">
+			<bean id="customerRegistrationValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/CustomerRegistration.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/customerSearchSchema">
+			<bean id="customerSearchValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/CustomerSearch.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+		<sws:payloadRoot namespaceUri="http://thebodyshop/customerDetailSchema">
+			<bean id="customerDetailValidatingInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+				<property name="schema" value="classpath:/schema/CustomerDetail.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="true" />
+			</bean>
+		</sws:payloadRoot>
+
+
+        <sws:payloadRoot namespaceUri="http://thebodyshop/orderStatusUpdateSchema">
+            <bean id="orderStatusUpdateInterceptor" class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+                <property name="schema" value="classpath:/schema/OrderUpdate.xsd" />
+                <property name="validateRequest" value="true" />
+                <property name="validateResponse" value="true" />
+            </bean>
+        </sws:payloadRoot>
+
+	</sws:interceptors>
+
+	<bean id="PriceService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/Price.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="PriceService" />
+		<property name="serviceName" value="PriceService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="ProductService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/Product.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="ProductService" />
+		<property name="serviceName" value="ProductService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="CommunicationPreferenceService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/CommunicationPreference.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="CommunicationPreferenceService" />
+		<property name="serviceName" value="CommunicationPreferenceService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="OrderShipmentConfirmationService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/OrderShipmentConfirmation.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="OrderShipmentConfirmationService" />
+		<property name="serviceName" value="OrderShipmentConfirmationService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="OrderSearchService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/OrderSearch.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="OrderSearchService" />
+		<property name="serviceName" value="OrderSearchService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="OrderFetchService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/OrderFetch.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="OrderFetchService" />
+		<property name="serviceName" value="OrderFetchService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="CustomerSearchService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/CustomerSearch.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="CustomerSearchService" />
+		<property name="serviceName" value="CustomerSearchService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="CustomerDetailService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/CustomerDetail.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="CustomerDetailService" />
+		<property name="serviceName" value="CustomerDetailService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="PlacePosOrderService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/PosOrder.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="PlacePosOrderService" />
+		<property name="serviceName" value="PlacePosOrderService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="PosRefundService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/PosRefund.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="PosRefundService" />
+		<property name="serviceName" value="PosRefundService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="PosBenefitService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/PosBenefitUpdate.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="PosBenefitService" />
+		<property name="serviceName" value="PosBenefitService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+	<bean id="CustomerRegistrationService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/CustomerRegistration.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="CustomerRegistrationService" />
+		<property name="serviceName" value="CustomerRegistrationService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+	
+	<bean id="CustomerIdentifierUpdateService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+		<property name="schemaCollection">
+			<bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>classpath:/schema/CustomerIdentifierUpdate.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="CustomerIdentifierUpdateService" />
+		<property name="serviceName" value="CustomerIdentifierUpdateService" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+    
+    <bean id="OrderStatusUpdateService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="false">
+        <property name="schemaCollection">
+            <bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+                <property name="inline" value="true" />
+                <property name="xsds">
+                    <list>
+                        <value>classpath:/schema/OrderUpdate.xsd</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+        <property name="portTypeName" value="OrderStatusUpdateService" />
+        <property name="serviceName" value="OrderStatusUpdateService" />
+        <property name="locationUri" value="/endpoints" />
+    </bean>
+
+	<util:map id="orderStatusConsignmentStatusMapping" key-type="de.hybris.platform.core.enums.OrderStatus" value-type="de.hybris.platform.basecommerce.enums.ConsignmentStatus">
+		<entry key="READY_FOR_PICKING" value="READY_FOR_PICKING"/>
+		<entry key="AWAIT_FOR_COLLECTION" value="AWAIT_FOR_COLLECTION"/>
+		<entry key="READY_FOR_COLLECTION" value="READY_FOR_COLLECTION"/>
+		<entry key="COLLECTED" value="COLLECTED"/>
+		<entry key="NOT_COLLECTED" value="NOT_COLLECTED"/>
+		<entry key="REFUNDED" value="CANCELLED"/>
+	</util:map>
+
+	<util:map id="posHybrisOrderStatusMapping" key-type="java.lang.String" value-type="java.lang.String">
+		<entry key="READY_FOR_PICKING" value="READY_FOR_PICKING"/>
+		<entry key="READY_FOR_COLLECTION" value="READY_FOR_COLLECTION"/>
+		<entry key="COLLECTED" value="COLLECTED"/>
+		<entry key="CANCELLED" value="NOT_COLLECTED"/>
+	</util:map>
+</beans>

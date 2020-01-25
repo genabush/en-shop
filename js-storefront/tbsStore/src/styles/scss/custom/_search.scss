@@ -1,0 +1,41 @@
+.search {
+  &__input {
+    border-radius: 0;
+    width: 100%;
+    height: 60px;
+  }
+  &__msg {
+    display: inline-block;
+  }
+  &__col {
+    &-header {
+      margin: 15px 0px;
+      font-family: $search-col-header-font-family;
+    }
+    &-link {
+      @extend %defaultLinks;
+      &-wrapper {
+        text-align: right;
+      }
+    }
+  }
+  &__msg {
+    margin-top: 10px;
+    width: 100%;
+    display: inline-block;
+    color: $validation-negative-text-color;
+    background-color: $validation-negative-text-bg;
+    padding: $validation-text-spacing;
+    border: 1px solid $validation-negative-text-color;
+  }
+}
+
+.search-suggestion {
+  &__link {
+    width: 100%;
+    display: block;
+    padding: 15px 0px;
+    border-bottom: 1px solid var(--cx-color-core-primary);
+    background: $search-suggestions-link-bg;
+  }
+}

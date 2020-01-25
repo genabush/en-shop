@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://thebodyshop/NewsLetterSignupSchema" version="1.0">
+	<xs:element name="NewsLetterSignupRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element form="unqualified" minOccurs="0" name="firstName" type="xs:string" />
+				<xs:element form="unqualified" minOccurs="0" name="lastName" type="xs:string" />
+				<xs:element form="unqualified" name="emailAddress" type="xs:string" />
+				<xs:element form="unqualified" name="optInStatus" type="xs:boolean" />
+				<xs:element form="unqualified" name="registrationDateTime" type="xs:dateTime" />
+				<xs:element form="unqualified" name="channel" type="xs:string" />
+				<xs:element form="unqualified" name="storeId" type="xs:string" />
+				<xs:element form="unqualified" name="market" type="xs:string" />
+				<xs:element form="unqualified" minOccurs="0" name="preferredLanguage" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NewsLetterSignupResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" name="messageId" type="xs:string" />
+				<xs:element minOccurs="0" name="requestId" type="xs:string" />
+				<xs:element minOccurs="0" name="status" type="xs:string" />
+				<xs:element minOccurs="0" name="statusMessage" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

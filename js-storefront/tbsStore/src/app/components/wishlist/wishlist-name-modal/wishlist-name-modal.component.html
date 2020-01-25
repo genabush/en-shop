@@ -1,0 +1,29 @@
+<ng-template #wishlistModal let-c="close" let-d="dismiss">
+  <ng-container>
+    <button
+      type="button"
+      class="btn modal__close"
+      [attr.aria-label]="'common.closeBtn' | cxTranslate"
+      (click)="closeModal()"
+    >
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+    <div class="modal__body modal__body--create-wishlist">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="modal__title" *ngIf="isEditing">{{ 'wishlists.editModal.title' | cxTranslate }}</h1>
+          <h1 class="modal__title" *ngIf="!isEditing">{{ 'wishlists.createModal.title' | cxTranslate }}</h1>
+        </div>
+        <div class="col-12">
+          <app-wishlist-form
+            [isEdit]="isEditing"
+            [nameFormModal]="nameFormModal"
+            (triggerClosingParentModal)="closeModal()"
+          ></app-wishlist-form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

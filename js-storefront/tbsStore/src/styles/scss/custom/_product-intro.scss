@@ -1,0 +1,30 @@
+.product-intro {
+  &__name {
+    font-family: $headings-product-intro-font-family;
+    font-size: $product-heading-size;
+    color: var(--cx-color-core-primary);
+    @include media-breakpoint-up(lg) {
+      font-size: $product-heading-size-lg;
+    }
+  }
+  &__strapline {
+    &-item {
+      font-family: $product-strapline-font-family;
+      text-transform: $product-strapline-text-transform;
+      &:after {
+        content: '·';
+        display: inline-block;
+        margin: $product-strapline-separator-hor-spacing;
+        font-size: $product-strapline-separator-font-size;
+        line-height: $font-size-base;
+        transform: translateY(25%);
+      }
+      &:last-child {
+        &:after {
+          content: '';
+          display: none;
+        }
+      }
+    }
+  }
+}

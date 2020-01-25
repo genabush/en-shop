@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="waitBeforeTransmission" name="consignment-process" processClass="de.hybris.platform.ordersplitting.model.ConsignmentProcessModel">
+
+	<action id="waitBeforeTransmission" bean="waitBeforeTransmissionAction">
+		<transition name="NOK" to="waitBeforeTransmission"/>
+		<transition name="OK" to="sendConsignmentToWarehouse"/>
+	</action>
+
+	<action id="sendConsignmentToWarehouse" bean="sendConsignmentToEccAction">
+		<transition name="OK" to="waitForShipment"/>
+		<transition name="ERROR" to="errorSending"/>
+	</action>
+
+	<wait id="waitForShipment" prependProcessCode="false" then="checkConsignmentStatus">
+		<event>${process.consignment.code}_ConsignmentShippedEvent</event>
+	</wait>
+
+  	<action id="checkConsignmentStatus" bean="checkConsignmentStatusAction">
+    	<transition name="SHIPPED" to="takePayment"/>
+    	<transition name="CANCELLED" to="subprocessEnd"/>
+    	<transition name="WAIT" to="waitForShipment"/>
+  	</action>
+
+	<action id="takePayment" bean="takePaymentAction">
+		<transition name="OK" to="checkOrderCapture"/>
+	    <transition name="NOK" to="sendPaymentFailedNotification"/>
+	    <transition name="WAIT" to="waitForCaptureReattempt"/>
+	</action>
+	
+	<action id="checkOrderCapture" bean="checkCaptureAction">
+		<transition name="OK" to="sendCaptureToErpSystem"/>
+	    <transition name="NOK" to="sendPaymentFailedNotification"/>
+	    <transition name="WAIT" to="waitForAdyenCapture"/>
+	    <transition name="VOID" to="waitForAdyenVoid"/>
+	</action>
+	
+	<wait id="waitForAdyenCapture" then="checkOrderCapture" prependProcessCode="false">
+		<event>${process.consignment.code}_AdyenCaptured</event>
+	</wait>
+	
+	<wait id="waitForAdyenVoid" then="checkOrderCapture" prependProcessCode="false">
+        <event>${process.consignment.code}_AdyenCancelled</event>
+    </wait>
+		
+	<wait id="waitForCaptureReattempt" prependProcessCode="false" then="recapturePayment">
+		<event>${process.consignment.code}_ReAttemptCaptureEvent</event>
+	</wait>
+
+	<action id="recapturePayment" bean="recapturePaymentAction">
+    	<transition name="OK" to="checkOrderCapture"/>
+    	<transition name="NOK" to="sendPaymentFailedNotification"/>
+  	</action>
+
+	<action id="sendCaptureToErpSystem" bean="sendCaptureToErpAction">
+		<transition name="OK" to="fulfillStock"/>
+		<transition name="ERROR" to="errorSendingToErp"/>
+	</action>
+	
+	<action id="fulfillStock" bean="fulfillStockAction">
+		<transition name="OK" to="subprocessEnd"/>
+	</action>
+
+	<action id="subprocessEnd" bean="subprocessEndAction">
+		<transition name="OK" to="success"/>
+	</action>
+
+	<action id="sendPaymentFailedNotification" bean="sendPaymentFailedNotificationAction">
+		<transition name="OK" to="failed"/>
+	</action>
+
+	<end id="errorSendingToErp" state="ERROR">Could not send order payment info to ERP</end>
+	<end id="errorSending" state="ERROR">Could not send order to SAP</end>
+	<end id="error" state="ERROR">All went wrong.</end>
+	<end id="failed" state="FAILED">Order not placed.</end>
+	<end id="success" state="SUCCEEDED">Order placed.</end>
+</process>

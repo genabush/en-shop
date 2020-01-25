@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/posRefundSchema" xmlns:tns="http://thebodyshop/posRefundSchema" elementFormDefault="qualified">
+
+    <xs:element name="RefundRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ExecuteRefund" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                <xs:element name="AgentID" minOccurs="1" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="255" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="StoreID" minOccurs="1" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="255" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Order" type="tns:Order" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="StatusTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUCCESS" />
+            <xs:enumeration value="FAILURE" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ResponseStatus">
+        <xs:sequence>
+            <xs:element name="status" type="tns:StatusTypeEnum" />
+            <xs:element name="messageId" type="xs:string" />
+            <xs:element name="messageDescription" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="RefundResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />
+                <xs:element name="Order" type="tns:Order" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Order">
+        <xs:sequence>
+            <xs:element name="Code" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Payments" type="tns:Payments" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Entries" type="tns:Entries" minOccurs="1" maxOccurs="1" />
+            <xs:element name="DeliveryRefund" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+            <xs:element name="ReturnReason" type="xs:string" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Entries">
+        <xs:sequence>
+            <xs:element name="Entry" type="tns:Entry" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Entry">
+        <xs:sequence>
+            <xs:element name="EntryNumber" type="xs:int" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Quantity" type="xs:int" minOccurs="1" maxOccurs="1" />
+            <xs:element name="ReturnReason" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="StockMovement" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Payments">
+        <xs:sequence>
+            <xs:element name="Payment" type="tns:Payment" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Payment">
+        <xs:sequence>
+            <xs:element name="ID" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Type" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Amount" type="xs:double" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Status" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="PaymentInfo" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

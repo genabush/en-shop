@@ -1,0 +1,109 @@
+<ng-container *ngIf="searchResult$ | async as searchResult" class="search-listing-refine">
+  <div class="container">
+    <div class="row" *ngIf="searchResult.freeTextSearch">
+      <div class="col-12">
+        <h1 class="search-listing-refine__heading">
+          {{ 'listing.search.title' | cxTranslate }} &#39;{{ searchResult.freeTextSearch }}&#39;
+        </h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="product-listing-options px-sm-4 px-md-0"
+          [ngClass]="{ 'product-listing-options--search': searchResult.freeTextSearch }"
+        >
+          <button
+            [attr.aria-label]="'listing.productList.filterBy.action' | cxTranslate"
+            type="button"
+            class="btn btn--primary btn--icon product-listing-options__filter"
+            [ngClass]="{ 'product-listing-options__filter--focus': isFacetPopupOpened }"
+            placement="bottom"
+            [ngbPopover]="facetsContent"
+            [autoClose]="false"
+            (click)="toggleBackdrop('show')"
+            (keyup.enter)="toggleBackdrop('show')"
+            #popover="ngbPopover"
+          >
+            <span class="btn__icon icon icon--filter"></span>
+            {{ 'listing.productList.filterBy.action' | cxTranslate }}
+          </button>
+
+          <div
+            class="form-group app-sort-dropdown product-listing-options__sort"
+            *ngIf="!!(searchResult$ | async)?.products.length"
+          >
+            <cx-sorting
+              [sortOptions]="searchResult.sorts"
+              (sortListEvent)="sortList($event)"
+              [selectedOption]="searchResult.pagination.sort"
+              placeholder="{{ 'productList.sortByRelevance' | cxTranslate }}"
+            ></cx-sorting>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #facetsContent let-c="close" let-d="dismiss">
+      <div class="facets-popover">
+        <div class="popover-header">
+          <button
+            tabindex="0"
+            type="button"
+            class="close app-facet__popover-close"
+            [attr.aria-label]="'common.closeBtn' | cxTranslate"
+            (click)="popover.close(); toggleBackdrop('hide')"
+          >
+            <span aria-hidden="true">
+              <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+            </span>
+          </button>
+        </div>
+        <div class="popover-body app-facet__popover-body">
+          <form>
+            <div class="row app-facet__row">
+              <div
+                class="left-col app-facet__section--left col-12 col-md-6 col-lg-8"
+                [ngClass]="{ 'col-12 col-lg-12': !isFacetsRight }"
+              >
+                <app-facet-node
+                  [facet]="facet"
+                  [ngClass]="{ 'app-facet__node-last': last }"
+                  *ngFor="let facet of facetsLeft; let last = last"
+                >
+                </app-facet-node>
+              </div>
+              <div
+                class="right-col col-12 col-md-6 col-lg-4 app-facet__section app-facet__section--right"
+                *ngIf="isFacetsRight"
+              >
+                <app-facet-node
+                  [facet]="facet"
+                  *ngFor="let facet of facetsRight; let i = index"
+                  [ngClass]="{ 'app-facet__node-last': i + 1 == facetsRight.length }"
+                ></app-facet-node>
+              </div>
+            </div>
+            <div class="app-facet__btn-wrapper">
+              <button
+                class="btn btn--primary app-facet__btn"
+                (click)="popover.close(); toggleBackdrop('hide')"
+                (keyup.enter)="popover.close(); toggleBackdrop('hide')"
+              >
+                {{ 'common.apply' | cxTranslate }}
+              </button>
+              <button
+                class="btn btn--secondary app-facet__btn"
+                (click)="popover.close(); toggleBackdrop('hide')"
+                (keyup.enter)="popover.close(); toggleBackdrop('hide')"
+              >
+                {{ 'common.cancel' | cxTranslate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>

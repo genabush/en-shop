@@ -1,0 +1,10 @@
+$lang=ES
+
+$globalContentCatalog=tbsGlobalContentCatalog
+$globalContentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$globalContentCatalog]),CatalogVersion.version[default=Staged])[default=$globalContentCatalog:Staged]
+
+$contentCatalog=tbs$langContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+INSERT_UPDATE CategoryPage ; $contentCV[unique=true] ; uid[unique=true]           ; name                            ; masterTemplate(uid,$globalContentCV) ; defaultPage ; approvalStatus(code)[default='approved']
+                           ;                         ; defaultCategoryContentPage ; Category Content Page for $lang ; CategoryPageTemplate                 ; true        ;                                         

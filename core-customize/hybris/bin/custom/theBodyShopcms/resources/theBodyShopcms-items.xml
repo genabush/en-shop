@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.-->
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="AllowedContentCatalogsCodes" elementtype="ContentCatalogCode" autocreate="true" generate="true" type="list"/>
+	</collectiontypes>
+
+	<enumtypes>
+        <enumtype code="ContentCatalogCode" generate="true" autocreate="true" dynamic="true"/>
+    </enumtypes>
+    
+    <maptypes>
+        <maptype code="SiteNavigationNodeMap" argumenttype="CMSSite" returntype="CMSNavigationNode" autocreate="true" generate="true"/>
+    </maptypes>
+
+	<relations>
+		<relation code="ContentPage2SearchKeyword" autocreate="true" generate="true" localized="false">
+			<deployment table="Content2KeywordRel" typecode="10310"/>
+			<sourceElement qualifier="pages" type="ContentPage" cardinality="many">
+				<modifiers read="true" write="true" search="true" optional="true"/>
+			</sourceElement>
+			<targetElement qualifier="searchKeywords" type="SearchKeyword" cardinality="many">
+				<modifiers read="true" write="true" search="true" optional="true"/>
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<typegroup name="Amplience">
+			<itemtype code="AmplienceCMSComponent" extends="SimpleCMSComponent" jaloclass="uk.co.thebodyshop.cms.jalo.components.AmplienceCMSComponent" autocreate="true" generate="true" >
+				<description>Amplience abstract Component.</description>
+				<attributes>
+					<attribute qualifier="setName" type="localized:java.lang.String">
+						<description>The name of the media set</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="MarketSelector">
+			<itemtype code="MarketSelectorCMSComponent" extends="SimpleCMSComponent" jaloclass="uk.co.thebodyshop.cms.jalo.components.MarketSelectorCMSComponent" autocreate="true" generate="true" >
+				<description>Market Selector Component.</description>
+				<attributes>
+					<attribute type="MarketSelectorSiteMap" qualifier="markets">
+						<persistence type="dynamic" attributeHandler="dynamicAttributesMarketSelectorHandler" />
+						<modifiers write="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Olapic">
+		    <itemtype code="OlapicCMSComponent" extends="SimpleCMSComponent" jaloclass="uk.co.thebodyshop.cms.jalo.components.OlapicCMSComponent" autocreate="true" generate="true">
+		     <description>Olapic CMS Component</description>
+		     <attributes>
+				 <attribute type="java.lang.String" qualifier="dataTags">
+					 <persistence type="property"/>
+				 </attribute>
+				 <attribute type="java.lang.String" qualifier="dataOlapicTagId">
+					 <modifiers optional="false" read="true"/>
+					 <persistence type="property"/>
+					 <defaultvalue>olapic_specific_widget</defaultvalue>
+				 </attribute>
+				 <attribute type="java.lang.String" qualifier="dataInstance">
+					 <modifiers optional="false" read="true" write="true"/>
+					 <persistence type="property"/>
+				 </attribute>
+				 <attribute type="java.lang.String" qualifier="dataApi">
+					 <modifiers optional="false" read="true"/>
+					 <persistence type="property"/>
+				 </attribute>
+				 <attribute type="boolean" qualifier="forProductPage">
+					 <persistence type="property"/>
+					 <defaultvalue>false</defaultvalue>
+				 </attribute>
+				 <attribute type="java.lang.String" qualifier="olapicSrc">
+					 <modifiers optional="false" read="true"/>
+					 <persistence type="property"/>
+				 </attribute>
+		     </attributes>
+		    </itemtype>
+		</typegroup>
+
+		<typegroup name="CmsPages">
+			<itemtype code="SearchKeyword" extends="GenericItem" generate="true" autocreate="true">
+				<deployment table="tbs_search_keyword" typecode="10309"/>
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<description>code of the keyword</description>
+						<persistence type="property"/>
+						<modifiers unique="true"/>
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<description>name of the keyword to be used for search</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="searchKeywordIdx">
+						<key attribute="code"/>
+					</index>
+				</indexes>
+			</itemtype>
+
+			<itemtype code="ContentPage" autocreate="false" generate="false">
+				<description>Extends existing type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="allowedForAllMarkets" type="boolean">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<description>Enables content page for all markets content catalogs</description>
+					</attribute>
+					<attribute qualifier="allowedForContentCatalogs" type="AllowedContentCatalogsCodes">
+						<persistence type="property" />
+						<description>Allowed content catalogs codes for this page</description>
+					</attribute>
+					<attribute qualifier="summary" type="java.lang.String">
+						<description>summary of the content page</description>
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="imageUrl" type="java.lang.String">
+						<description>url of the page image</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractPage" autocreate="false" generate="false">
+				<description>Extends existing type with additional attributes.</description>
+				<attributes>
+					<attribute qualifier="pageType" type="java.lang.String">
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<defaultvalue>"editorial"</defaultvalue>
+
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+        <typegroup name="Navigation">
+            <itemtype code="NavigationComponent" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="siteNavigationNodeMapping" type="SiteNavigationNodeMap">
+                        <description>Mapping for market site navigation nodes</description>
+                        <persistence type="property"/>
+                        <modifiers read="true" write="true" optional="true"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+			<itemtype code="HtmlSiteMapComponent" extends="NavigationComponent" autocreate="true" generate="true">
+				<description>Html SiteMap Configuration Component</description>
+			</itemtype>
+
+			<itemtype code="CMSNavigationNode" autocreate="false" generate="false" >
+				<attributes>
+					<attribute qualifier="enabledForMegaNav" type="boolean">
+						<description>Flag to enable the navigation node for Mega menu</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="enabledForMobileNav" type="boolean">
+						<description>Flag to enable the navigation node for Mobile menu</description>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers read="true" write="true" optional="false"/>
+					</attribute>
+					<attribute qualifier="amplienceId" type="java.lang.String">
+            			<description>Add image or video content in the mega navigation bar using amplianceID</description>
+						<persistence type="property"/>
+            			<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="columnBreak" type="boolean">
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="viewAllLink" type="CMSLinkComponent">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="icon" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+			<itemtype code="GiftCardBalanceCMSComponent" extends="SimpleCMSComponent" jaloclass="uk.co.thebodyshop.cms.jalo.components.GiftCardBalanceCMSComponent" autocreate="true" generate="true">
+				<description>GiftCard Balance CMS Component</description>
+			</itemtype>
+
+		</typegroup>
+		
+		<typegroup name="Categorybanner">
+			<itemtype code="CategoryBannerCMSComponent" extends="SimpleCMSComponent" jaloclass="uk.co.thebodyshop.cms.jalo.components.CategoryBannerCMSComponent" autocreate="true" generate="true" >
+				<description>Category Banner CMS Component.</description>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="StoreFinder">
+			<itemtype code="TbsStoreFinderComponent" extends="StoreFinderComponent" jaloclass="uk.co.thebodyshop.cms.jalo.components.TbsStoreFinderComponent" autocreate="true" generate="true" >
+				<description>Tbs Store Finder CMS Component.</description>
+				<attributes>
+					<attribute qualifier="imageUrl" type="localized:java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		
+		<typegroup name="GiftWrapBanner">
+			<itemtype code="GiftWrapBannerCMSComponent" extends="SimpleCMSComponent" jaloclass="uk.co.thebodyshop.cms.jalo.components.GiftWrapBannerCMSComponent" autocreate="true" generate="true" >
+				<description>Gift Wrap Banner CMS Component.</description>
+				<attributes>
+					<attribute qualifier="giftImage" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="giftWrapServiceImage" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="giftWrapServiceMessage" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+
+</items>

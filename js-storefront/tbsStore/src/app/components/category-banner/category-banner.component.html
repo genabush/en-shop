@@ -1,0 +1,19 @@
+<ng-container *ngIf="cmsComponent$ | async as cms">
+  <div class="app-category-banner">
+    <div class="amp-dc-splitBlock" [ngClass]="{ ' amp-dc-splitBlock--50-50': !!cms.categoryImageUrl }">
+      <div class="amp-dc-split-part amp-dc-split-part--0">
+        <div class="amp-dc-split-part-wrap">
+          <div class="amp-dc-text">
+            <h1>{{ cms.categoryName }}</h1>
+            <div [innerHTML]="cms.categoryDescription"></div>
+          </div>
+        </div>
+      </div>
+      <div class="amp-dc-split-part amp-dc-split-part--1" *ngIf="cms.categoryImageUrl">
+        <div class="amp-dc-split-part-wrap">
+          <div class="amp-dc-image" [ngStyle]="{ 'background-image': 'url(' + cms.categoryImageUrl + ')' }"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

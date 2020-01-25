@@ -1,0 +1,8 @@
+$siteUid=thebodyshop-se
+
+$productCatalog=tbsSEProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+# Set a default product and category for SmartEdit preview
+INSERT_UPDATE CMSSite ; uid[unique=true] ; defaultPreviewCategory(code, $catalogVersion) ; defaultPreviewProduct(code, $catalogVersion) ;  
+                      ; $siteUid         ; c00014                                        ; p000247                                      ;  

@@ -1,0 +1,37 @@
+ngb-popover-window {
+  width: calc(100% - 30px);
+  left: 15px !important;
+  background: white;
+  border: 1px solid var(--cx-color-core-primary);
+  transform: initial !important;
+  z-index: 100;
+
+  &.bs-popover-bottom {
+    top: 60px !important;
+
+    .arrow {
+      display: block;
+      width: 30px;
+      height: 30px;
+      top: 0;
+      margin-top: -16px;
+      margin-left: 40px !important;
+      background: white;
+      border-left: 1px solid var(--cx-color-core-primary);
+      border-top: 1px solid var(--cx-color-core-primary);
+      transform: rotate(45deg);
+      z-index: 99;
+    }
+  }
+}
+
+.app-facet-popover-body {
+  padding: 20px;
+}
+
+.app-facet__popover-close,
+.app-facet__btn {
+  &:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+}

@@ -1,0 +1,43 @@
+.store-finder {
+  padding: 2rem 4rem;
+  margin-top: -2rem;
+  margin-bottom: 2rem;
+  background-color: var(--cx-color-core-primary);
+}
+.store-finder-form {
+  float: left;
+  width: 100%;
+  .mat-form-field-wrapper {
+    .mat-form-field-flex {
+      border-radius: 0;
+    }
+  }
+
+  &__input {
+    &.mat-form-field {
+      @include media-breakpoint-up(md) {
+        width: 80%;
+        float: left;
+      }
+    }
+  }
+  &__submit-btn {
+    &.btn {
+      @include media-breakpoint-up(md) {
+        width: 20%;
+        float: left;
+      }
+    }
+  }
+  .mat-form-field-type-mat-input.mat-input-primary .mat-form-field-underline .mat-form-field-ripple {
+    background-color: transparent;
+  }
+  &__geo-btn {
+    @include media-breakpoint-down(md) {
+      margin-top: 1rem;
+      text-align: center;
+      display: inline-block;
+      width: 100%;
+    }
+  }
+}

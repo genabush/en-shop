@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util 
+           http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:annotation-config />
+
+	<!--
+	The hybris platform provides one single Spring application context for beans located at the jalo layer.
+	Each extension can add beans to this context by specifying them at this configuration file.
+
+	You can use and/or redefine beans defined at configuration files of other extensions as well as
+	adding new one.
+
+	If you want to locate this file at a different location or want to use several files for better,
+	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
+	There you can specify a comma separated list of files where first is tried to find a file per classpath and
+	then per file system.
+
+
+	If you want to configure beans for your web module please have a look at
+	your web/webroot/WEB-INF/<extname>-web-spring.xml.
+	-->
+
+	<!--  Example how to override a manager -->
+	<!--
+	<bean id="core.productManager"   class="com.hybris.backoffice.jalo.YbackofficeProductManager" 	init-method="init"	destroy-method="destroy" />
+	-->
+
+
+ 	<!--  Example how to configure the class to use for jalo session creation -->
+	<!--
+	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
+		<property name="targetClassName" value="com.hybris.backoffice.jalo.YbackofficeJaloSession"/>
+	</bean>
+	-->
+
+
+	<!--  Example how to override an item  -->
+	<!--
+	<bean id="de.hybris.platform.jalo.product.Product" class="com.hybris.backoffice.jalo.YbackofficeProduct" scope="prototype" />
+ 	-->
+
+	<!--
+	 Example how to register and use an AOP aspect
+     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html
+     -->
+
+	<!--
+	<bean id="theBodyShopbackofficeProfBean" class="com.hybris.backoffice.aop.YbackofficeProfilingAspect"/>
+	<aop:config proxy-target-class="true">
+  		<aop:aspect id="theBodyShopbackofficeProfAspect" ref="theBodyShopbackofficeProfBean" >
+    	  <aop:pointcut id="profiledMethods"
+	      	expression="execution(* getModificationTime(..))" />
+	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
+  		</aop:aspect>
+	</aop:config>
+	 -->
+
+
+	<!-- some other examples of a pointcut that matches everything:
+
+    	  <aop:pointcut id="profiledMethods"
+	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp;
+	      	            !execution(* getPK(..))" />
+	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />
+	  -->
+
+    <alias name="defaultExcelMarkDownPriceValidator" alias="excelMarkDownPriceValidator"/>
+    <bean id="defaultExcelMarkDownPriceValidator" class="uk.co.thebodyshop.backoffice.excel.validators.ExcelMarkDownPriceValidator" >
+    	<constructor-arg name="productService" ref="productService" />
+    	<constructor-arg name="excelDateUtils" ref="excelDateUtils" />
+    	<constructor-arg name="catalogVersionService" ref="catalogVersionService" />
+    	<constructor-arg name="i18nService" ref="i18nService" />
+    	<constructor-arg name="markDownPriceValidationHelper" ref="markDownPriceValidationHelper" />
+    </bean>
+
+    <alias name="defaultExcelMarkDownPriceCollectionImportValidators" alias="excelMarkDownPriceCollectionImportValidators"/>
+    <util:list id="defaultExcelMarkDownPriceCollectionImportValidators"
+               value-type="com.hybris.backoffice.excel.validators.ExcelValidator">
+        <ref bean="excelMarkDownPriceValidator"/>
+    </util:list>
+
+    <alias name="defaultExcelMarkDownPricesTypeTranslator" alias="excelMarkDownPricesTypeTranslator"/>
+    <bean id="defaultExcelMarkDownPricesTypeTranslator"
+          class="uk.co.thebodyshop.backoffice.excel.translators.ExcelMarkDownPricesTypeTranslator"
+          parent="abstractCatalogVersionAwareTranslator">
+        <property name="order" value="3000"/>
+        <property name="excelDateUtils" ref="excelDateUtils"/>
+        <property name="excelUniqueFilter" ref="uniqueCheckingFilter"/>
+        <property name="mandatoryFilter" ref="mandatoryCheckingFilter" />
+        <property name="validators" ref="excelMarkDownPriceCollectionImportValidators"/>
+    </bean>
+
+
+    <alias name="tbsExcelTranslators" alias="excelTranslators"/>
+    <util:list id="tbsExcelTranslators" value-type="com.hybris.backoffice.excel.translators.ExcelValueTranslator">
+        <ref bean="excelEurope1PricesTypeTranslator"/>
+        <ref bean="excelCatalogVersionTypeTranslator"/>
+        <ref bean="excelBaseProductTypeTranslator"/>
+        <ref bean="excelProductSupercategoriesTypeTranslator"/>
+        <ref bean="excelEnumTypeTranslator"/>
+        <ref bean="excelJavaTypeTranslator"/>
+        <ref bean="excelMediaImportTranslator"/>
+        <ref bean="excelMediaCollectionImportTranslator"/>
+        <ref bean="excelGenericReferenceTranslator"/>
+        <ref bean="excelMarkDownPricesTypeTranslator"/>
+    </util:list>
+    
+    <alias name="defaultExcelReadonlyAttributeImportValidator" alias="excelReadonlyAttributeImportValidator"/>
+	<bean id="defaultExcelReadonlyAttributeImportValidator" class="uk.co.thebodyshop.backoffice.validators.ExcelImportExcludeAttributeValidator">
+	 <constructor-arg name="excelHeaderService" ref="excelHeaderService"/>
+	 <constructor-arg name="excelSheetService" ref="excelSheetService"/>
+	 <constructor-arg name="listOfExcludeHeaders" ref="listOfExcludeHeaders"/>
+	</bean>
+	
+    <util:list id="listOfExcludeHeaders" value-type="java.lang.String">
+        <value>Persisted Average Rating</value>
+        <value>Persisted Total Reviews</value>
+    </util:list>
+    
+	<alias name="tbsExcelHelper" alias="excelHelper"/>
+	<bean id="tbsExcelHelper" class="uk.co.thebodyshop.backoffice.excel.export.helpers.impl.DefaultExcelHelper">
+		<constructor-arg name="configurationService" ref="configurationService"/>
+		<constructor-arg name="userService" ref="userService"/>
+		<constructor-arg name="userGroupTypePermissionsMap" ref="userGroupTypePermissionsMap"/>
+	</bean>
+	
+	 <util:map id="userGroupTypePermissionsMap">
+    	<entry key="globalproductmarketgroup" value-ref="globalUserTypes"></entry>
+    	<entry key="productmarketgroup" value-ref="marketUserTypes"></entry>
+	</util:map>
+	
+    <util:list id="globalUserTypes" value-type="java.lang.String">
+        <value>TbsVariantProduct</value>
+    </util:list>
+    
+    <util:list id="marketUserTypes" value-type="java.lang.String">
+    	<value>TbsBaseProduct</value>
+        <value>TbsVariantProduct</value>
+    </util:list>
+	
+	<alias name="tbsExcelExportService" alias="excelExportService"/>
+	<bean id="tbsExcelExportService" parent="defaultExcelExportService" class="uk.co.thebodyshop.backoffice.excel.export.services.TbsExcelExportService">
+	    <property name="excelHelper" ref="excelHelper"/>
+	</bean>
+	
+	<alias name="tbsWorkbookMandatoryColumnsValidator" alias="tbsWorkbookMandatoryColumnsValidator"/>
+	<bean id="tbsWorkbookMandatoryColumnsValidator" parent="defaultWorkbookMandatoryColumnsValidator" class="uk.co.thebodyshop.backoffice.excel.imp.validators.TbsWorkbookMandatoryColumnsValidator">
+		<property name="userService" ref="userService"/>
+		<property name="excelHelper" ref="excelHelper"/>
+	</bean>
+	
+	<alias name="tbsWorkbookTypeCodeAndAttributesValidator" alias="tbsWorkbookTypeCodeAndAttributesValidator"/>
+	<bean id="tbsWorkbookTypeCodeAndAttributesValidator"
+		  class="uk.co.thebodyshop.backoffice.excel.imp.validators.TbsWorkbookTypeCodeAndAttributesValidator"
+		  parent="defaultWorkbookTypeCodeAndAttributesValidator">
+		<property name="excelHelper" ref="excelHelper"/>
+	</bean>
+
+	<alias name="tbsExcelWorkbookValidators" alias="tbsExcelWorkbookValidators"/>
+	<util:list id="tbsExcelWorkbookValidators" value-type="com.hybris.backoffice.excel.validators.WorkbookValidator" >
+		<ref bean="tbsWorkbookTypeCodeAndAttributesValidator"/>
+		<ref bean="tbsWorkbookMandatoryColumnsValidator"/>
+		<ref bean="excelWorkbookMaxRowsValidator"/>
+		<ref bean="excelReadonlyAttributeImportValidator"/>
+	</util:list>
+
+    <bean id="tbsExcelJavaTypeValidatorsMergeDirective" depends-on="defaultExcelJavaTypeValidators" parent="listMergeDirective">
+        <property name="add" ref="excelImportMandatoryAttributeValidator"/>
+    </bean>
+    
+    <bean id="tbsProductValidatorsMergeDirective" depends-on="defaultExcelJavaTypeValidators" parent="listMergeDirective">
+        <property name="add" ref="excelProductConstraintsValidator"/>
+    </bean>
+
+    <alias name="defaultExcelImportMandatoryAttributeValidator" alias="excelImportMandatoryAttributeValidator"/>
+    <bean id="defaultExcelImportMandatoryAttributeValidator" class="uk.co.thebodyshop.backoffice.excel.validators.ExcelImportMandatoryAttributeValidator">
+     <constructor-arg name="listOfMandatoryAttributes" ref="listOfMandatoryAttributes"/>
+     <constructor-arg name="commonI18NService" ref="commonI18NService"/>
+    </bean>
+
+    <util:list id="listOfMandatoryAttributes" value-type="java.lang.String">
+        <value>technicalIngredients</value>
+        <value>description</value>
+    </util:list>
+    
+    <alias name="defaultExcelProductConstraintsValidator" alias="excelProductConstraintsValidator"/>
+    <bean id="defaultExcelProductConstraintsValidator" class="uk.co.thebodyshop.backoffice.excel.validators.ExcelProductConstraintsValidator">
+    	<constructor-arg name="constraintAttributes" ref="constraintAttributesMap"/>
+    </bean>
+    
+    <util:map id="constraintAttributesMap">
+    	<entry key="codeTbsBaseProduct" value-ref="codeAttrValidatorsMap"></entry>
+    	<entry key="nameTbsBaseProduct" value-ref="nameAttrValidatorsMap"></entry>
+        <entry key="descriptionTbsBaseProduct" value-ref="descriptionAttrValidatorsMap"></entry>
+        <entry key="codeTbsVariantProduct" value-ref="codeAttrValidatorsMap"></entry>
+    	<entry key="nameTbsVariantProduct" value-ref="nameAttrValidatorsMap"></entry>
+	</util:map>
+	
+	<util:map id="codeAttrValidatorsMap">
+    	<entry key="min" value="5"></entry>
+    	<entry key="max" value="255"></entry>
+	</util:map>
+	
+	<util:map id="nameAttrValidatorsMap">
+    	<entry key="min" value="3"></entry>
+    	<entry key="max" value="255"></entry>
+	</util:map>
+	
+	<util:map id="descriptionAttrValidatorsMap">
+    	<entry key="min" value="20"></entry>
+    	<entry key="max" value="10000"></entry>
+	</util:map>
+	
+	<alias name="tbsExcelImpexConverter" alias="excelImpexConverter"/>
+	<bean id="tbsExcelImpexConverter" class="uk.co.thebodyshop.backoffice.excel.converters.TbsImpexConverter">
+	    	<constructor-arg name="excelHelper" ref="excelHelper"/>
+	</bean>
+    
+</beans>

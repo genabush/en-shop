@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+	<extension abstractclassprefix="Generated" classprefix="TheBodyShopintegrationmocks" jaloLogicFree="true" managername="TheBodyShopintegrationmocksManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShopintegrationmocks" usemaven="false">
+		<requires-extension name="theBodyShopintegrationlegacy" />
+		<requires-extension name="theBodyShopintegrationsvs"/>
+		<coremodule generated="true" manager="uk.co.thebodyshop.integration.mocks.jalo.TheBodyShopintegrationmocksManager" packageroot="uk.co.thebodyshop.integration.mocks" />
+		<webmodule jspcompile="false" webroot="/theBodyShopintegrationmocks" />
+	</extension>
+</extensioninfo>

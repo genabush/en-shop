@@ -1,0 +1,20 @@
+$lang=en
+
+INSERT_UPDATE DynamicConstraint;active[allownull=true];id[unique=true,allownull=true];message[lang=$lang];language(code);expression;severity(code,itemtype(code));target;type(code);annotation
+;true;posTemporaryOpeningDateConstraint;"Please correct the Temporary From Date and Temporary To Date.";BEANSHELL;"return (getTemporaryClosedFromDate() == null && getTemporaryClosedToDate() == null) || (getTemporaryClosedFromDate() != null && getTemporaryClosedToDate() != null && getTemporaryClosedToDate().after(getTemporaryClosedFromDate()));";ERROR:Severity;de.hybris.platform.storelocator.model.PointOfServiceModel;PointOfService;de.hybris.platform.validation.annotations.Dynamic
+
+INSERT_UPDATE NotNullConstraint ; descriptor(enclosingType(code),qualifier) ; id[unique=true,allownull=true]                      ; qualifier[allownull=true] ; severity(code,itemtype(code)) ; target[allownull=true]                              ; type(code)        ; constraintGroups(id)                 
+                                ; BaseStore:maximumCouponsAllowed           ; MaximumCouponsAllowedNotNullConstraint              ; maximumCouponsAllowed     ; ERROR:Severity                ; de.hybris.platform.store.BaseStoreModel    			; BaseStore    		; 
+
+INSERT_UPDATE MinConstraint;id[unique=true];severity(code,itemtype(code));active;annotation;descriptor(enclosingType(code),qualifier);message[lang=$lang];value
+;storeStockProductBufferConstraint;ERROR:Severity;true;javax.validation.constraints.Min;BaseStore:storeStockProductBuffer;Store Stock Product Buffer must be greater than zero;1
+
+INSERT_UPDATE DecimalMinConstraint ; descriptor(enclosingType(code),qualifier) ; id[unique=true,allownull=true]           ; message[lang=en]          ; qualifier ; severity(code,itemtype(code)) ; target                                              ; type(code)        ; value[allownull=false] ; constraintGroups(id)
+								   ; BaseStore        :maxProductOrderQuantity ; BaseStoreMaxProductOrderQuantityMinimumValueContraint; must be greater than zero ; maxProductOrderQuantity ; ERROR:Severity ; de.hybris.platform.store.BaseStoreModel  ; BaseStore         ; 1                      ;
+                                   ; BaseStore        :loyaltyPointsRate       ; BaseStoreLoyaltyPointsRateMinimumValueContraint; must be greater than zero ; loyaltyPointsRate ; ERROR:Severity ; de.hybris.platform.store.BaseStoreModel  ; BaseStore         ; 1                      ;
+                                   ; BaseStore        :loyaltyCurrencyUnit     ; BaseStoreLoyaltyCurrencyUnitMinimumValueContraint; must be greater than zero ; loyaltyCurrencyUnit ; ERROR:Severity ; de.hybris.platform.store.BaseStoreModel  ; BaseStore         ; 1                      ;
+                                   ; BaseStore        :loyaltyPointsMultiplier ; BaseStoreLoyaltyPointsMultiplierMinimumValueContraint; must be greater than zero ; loyaltyPointsMultiplier ; ERROR:Severity ; de.hybris.platform.store.BaseStoreModel  ; BaseStore         ; 1                      ;
+                                   ; BaseStore        :maximumCouponsAllowed   ; BaseStoreMaximumCouponConstraint          ; must be greater than zero ; maximumCouponsAllowed ; ERROR:Severity ; de.hybris.platform.store.BaseStoreModel  ; BaseStore         ; 1                      ;
+
+# Reload validation engine
+$de.hybris.platform.core.Registry.getApplicationContext().getBean(de.hybris.platform.validation.services.ValidationService.class).reloadValidationEngine()

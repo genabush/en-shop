@@ -1,0 +1,77 @@
+/*
+  FROM PATTERN LAB
+*/
+
+@mixin h1 {
+  color: var(--cx-color-core-primary);
+  font-family: $recoleta-medium;
+  font-size: 34px;
+  line-height: 42px;
+  text-transform: initial;
+  &--alt {
+    font-family: $work-sans-medium;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 30px;
+    line-height: 38px;
+  }
+}
+
+@mixin h2 {
+  color: var(--cx-color-core-primary);
+  font-family: $recoleta-regular;
+  font-size: 28px;
+  line-height: 36px;
+  text-transform: initial;
+
+  &--alt {
+    font-family: $work-sans-semibold;
+  }
+
+  &--dense {
+    font-family: $druk-bold;
+    font-size: 2.5rem;
+    letter-spacing: 0.5;
+    line-height: 44px;
+    text-transform: uppercase;
+  }
+
+  @include media-breakpoint-down(sm) {
+    &,
+    &--alt {
+      font-size: 24px;
+      line-height: 32px;
+    }
+    &--dense {
+      font-size: 36px;
+      line-height: 40px;
+    }
+  }
+}
+
+@mixin h3 {
+  color: var(--cx-color-core-primary);
+  font-family: $work-sans-semibold;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 16px;
+  text-transform: uppercase;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+h1,
+.h1 {
+  @include h1;
+}
+h2,
+.h2 {
+  @include h2;
+}
+h3,
+.h3 {
+  @include h3;
+}

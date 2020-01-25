@@ -1,0 +1,98 @@
+defaultTasks 'addOnInstall', 'copyDbDriver'
+
+repositories {
+    ivy {
+        url 'https://repo.envoydigital.com'
+        patternLayout {
+            artifact '[organisation]/[revision]/[module]/[artifact]-[revision](.[ext])'
+            ivy '[organisation]/[revision]/[module]/ivy-[revision].xml'
+        }
+        credentials {
+            username "envoy"
+            password ENVOY_REPO_PASS
+        }
+    }
+    mavenCentral()
+}
+
+configurations {
+    hybris
+}
+
+dependencies {
+    hybris group: 'mysql', name: 'mysql-connector-java', version: '5.1.47'
+    
+    Map customExtensions = fileTree('../core-customize/hybris/bin/custom') { include '**/extensioninfo.xml' }.collectEntries {[ it.parentFile.name, it ]}
+    //println customExtensions
+    
+    def localExtensions = new XmlSlurper().parseText(file('../core-customize/hybris/config/localextensions.xml').text).extensions['extension'].collect { it.@name.toString() }
+    def (customLocalExtensions, dependencyExtensions) = localExtensions.split { customExtensions.containsKey(it) }
+    
+    dependencyExtensions.each {
+        hybris group: 'hybris', name: it, version: hybrisVersion
+    }
+    //println customLocalExtensions
+    Iterator iter = customLocalExtensions.listIterator()
+    while (iter.hasNext()) {
+        String extensionName = iter.next()
+        //println extensionName
+        new XmlSlurper().parseText(file(customExtensions[extensionName]).text).extension['requires-extension'].each { requiredExt ->
+            if (customExtensions.containsKey(requiredExt.@name.toString())) {
+                if (!customLocalExtensions.contains(requiredExt.@name.toString())) {
+                    iter.add(requiredExt.@name.toString())
+                    iter.previous()
+                }
+            } else {
+                //println "\t${requiredExt.@name}"
+                hybris group: 'hybris', name: requiredExt.@name, version: hybrisVersion
+            }
+        }
+    }
+    //println customLocalExtensions
+}
+
+task addOnInstall(dependsOn: 'unpack') {
+    onlyIf {
+        project.addons?.trim()
+    }
+    outputs.upToDateWhen {
+        def result = true
+        project.addons.tokenize(',').each { addon ->
+            result &= file("../core-customize/hybris/bin/modules/web-content-management-system/$addon/project.properties").exists()
+            result &= file("../core-customize/hybris/bin/modules/core-accelerator/$addon/project.properties").exists()
+        }
+        return result
+    }
+
+    doLast {
+       if (System.properties['os.name'] ==~ /(?i).*windows.*/) {
+           project.exec {
+               commandLine = [ 'cmd', '/c', "cd ..\\core-customize\\hybris\\bin\\platform && setantenv.bat && ant addoninstall -Daddonnames=${project.addons} -DaddonStorefront.ycommercewebservices=${project.addonStorefrontTemplate}" ]
+           }
+       } else {
+           project.exec {
+               commandLine = [ 'bash', '-c', "cd ../core-customize/hybris/bin/platform; . ./setantenv.sh; ant addoninstall -Daddonnames=${project.addons} -DaddonStorefront.ycommercewebservices=${project.addonStorefrontTemplate}" ]
+           }
+       }
+   }    
+}
+
+
+task copyDbDriver(type:Copy, dependsOn: 'unpack')  {
+  from(configurations.hybris)
+  into '../core-customize/hybris/bin/platform/lib/dbdriver'
+  include 'mysql-connector-java*.jar'
+}
+
+task unpack(type: Copy) {
+    into (file('../core-customize/hybris/bin'))
+    configurations.hybris.resolvedConfiguration.resolvedArtifacts.findAll {it.extension == 'zip'}.each { artifact ->
+        from zipTree(artifact.file)
+    }
+    doLast {
+        // touch the .lastupdate so that Hybris mvn build doesn't run
+        // required because Gradle unzip doesn't support preserving modification time
+        // https://github.com/gradle/gradle/issues/1252
+        file('../core-customize/hybris/bin/platform/lib/dbdriver/.lastupdate').lastModified = System.currentTimeMillis()
+    }
+}

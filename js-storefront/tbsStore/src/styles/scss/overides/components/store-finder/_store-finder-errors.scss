@@ -1,0 +1,10 @@
+.store-finder-error {
+  text-align: center;
+  &__searched-query {
+    font-family: 'WorkSansSemibold';
+    color: var(--cx-color-core-secondary);
+  }
+  &__secondary {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,26 @@
+@mixin custom-grid($min-width, $max-width, $offset, $gutter) {
+  @media (min-width: $min-width) and (max-width: $max-width) {
+    .container {
+      padding-right: $offset/2 !important;
+      padding-left: $offset/2 !important;
+      & > .row {
+        margin-right: -$offset/2 !important;
+        margin-left: -$offset/2 !important;
+      }
+      & > .row > .col,
+      & > .row > [class*='col-'] {
+        padding-right: $offset/2;
+        padding-left: $offset/2;
+      }
+    }
+    .row {
+      margin-right: -$gutter/2 !important;
+      margin-left: -$gutter/2 !important;
+    }
+    .row > .col,
+    .row > [class*='col-'] {
+      padding-right: $gutter/2;
+      padding-left: $gutter/2;
+    }
+  }
+}

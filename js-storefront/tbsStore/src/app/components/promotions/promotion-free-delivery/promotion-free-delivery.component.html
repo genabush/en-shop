@@ -1,0 +1,57 @@
+<ng-container *ngIf="promotions">
+  <ng-container *ngFor="let promotion of promotions">
+    <ng-container *ngIf="promotion">
+      <!-- BASKET > Order totals -->
+      <ng-container *ngIf="totals">
+        <div class="promotions promotions--totals">
+          <span class="icon icon--truck"></span>
+          <p class="m-0 promotions__desc">
+            <span *ngFor="let desc of freeDeliveryPromotionDesc; let i = index"
+              >{{ desc
+              }}<ng-container *ngIf="i != freeDeliveryPromotionDesc.length - 1"
+                ><span class="mx-1">-</span></ng-container
+              >
+            </span>
+          </p>
+        </div>
+      </ng-container>
+
+      <!-- MINI BASKET -->
+      <ng-container *ngIf="minibasket">
+        <div class="promotions">
+          <div class="promotions__inner promotions__inner--wrap">
+            <span class="p-1 promotions__desc" *ngFor="let desc of freeDeliveryPromotionDesc; let i = index">
+              <ng-container *ngIf="i == 0; else notFirst">
+                <span class="promotions__highlight">{{ desc }}</span>
+                <ng-container *ngIf="i != freeDeliveryPromotionDesc.length - 1"><br /></ng-container>
+              </ng-container>
+              <ng-template #notFirst
+                >{{ desc }}<ng-container *ngIf="i != freeDeliveryPromotionDesc.length - 1"><br /></ng-container>
+              </ng-template>
+            </span>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- BASKET PAGE -->
+      <ng-container *ngIf="!minibasket && !totals && visible">
+        <div class="promotions">
+          <div class="promotions__inner mb-5">
+            <span class="icon icon--truck mr-2"></span>
+            <span class="promotions__desc">
+              <span *ngFor="let desc of freeDeliveryPromotionDesc; let i = index"
+                >{{ desc
+                }}<ng-container *ngIf="i != freeDeliveryPromotionDesc.length - 1"
+                  ><span class="mx-1">-</span></ng-container
+                >
+              </span>
+            </span>
+            <span (click)="dismissFreeDelPromo()" class="promotions__dismiss link">
+              <span class="icon icon--close"></span>
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

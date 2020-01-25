@@ -1,0 +1,42 @@
+<div class="amp-dc-content-block {{#unless media}}amp-dc-content-block--{{textPosition}}{{/unless}} txt--center {{#if backgroundPalette}}bg--{{backgroundPalette}}{{/if}}"
+    style="{{#if backgroundColour}} background-color:{{backgroundColour}}!important{{/if}}">
+    {{#if media}}
+        <div class="amp-dc-content-block__media">
+            {{#each media}}
+                {{#if (test this.[@type] (toRegex ".*/image")) }}
+                    <img class="amp-dc-content-block__bg-image"
+                        src="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}"
+                        alt="{{this.image.name}}" />
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+
+    <div class="amp-dc-content-block__content-inner">
+        {{#if heading2}}
+            <h2 class="amp-dc-content-block__h2 font--{{heading2Font}} txt--{{heading2Colour}}">{{heading2}}</h2>
+        {{/if}}
+
+        {{#if bodyCopyDesktop}}
+            <div
+                class="amp-dc-content-block__body amp-dc-content-block__body--desktop font--{{bodyCopyFontDesktop}} {{#with bodyCopyColourDesktop}}txt--{{colour}}{{/with}}">
+                <p>{{bodyCopyDesktop}}</p>
+            </div>
+        {{/if}}
+
+        {{#if bodyCopyMobile}}
+            <div
+                class="amp-dc-content-block__body amp-dc-content-block__body--mobile font--{{bodyCopyFontMobile}} {{#with bodyCopyColourMobile}}txt--{{colour}}{{/with}}">
+                <p>{{bodyCopyMobile}}</p>
+            </div>
+        {{/if}}
+
+        <div class="amp-dc-conten-block__cta-section">
+            {{#if ctaUrl}}
+                <a href="{{ctaUrl}}" {{#is ctaBehaviour 'new-tab'}} target="_blank" {{/is}}
+                    class="btn {{#contains ctaStyle "secondary"}} btn--secondary{{else}}btn--primary{{/contains}}{{#contains ctaStyle "light"}} btn--invert{{/contains}}">{{ctaCopy}}</a>
+            {{/if}}
+        </div>
+    </div>
+
+</div>

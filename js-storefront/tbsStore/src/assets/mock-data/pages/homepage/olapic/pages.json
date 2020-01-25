@@ -1,0 +1,850 @@
+{
+    "uid" : "homepage",
+    "uuid" : "eyJpdGVtSWQiOiJob21lcGFnZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+    "title" : "Homepage",
+    "template" : "LandingPage2Template",
+    "typeCode" : "ContentPage",
+    "name" : "Homepage",
+    "contentSlots" : {
+       "contentSlot" : [ {
+          "slotId" : "Section1Slot-Homepage",
+          "slotUuid" : "eyJpdGVtSWQiOiJTZWN0aW9uMVNsb3QtSG9tZXBhZ2UiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+          "position" : "Section1",
+          "name" : "Section1 Slot for Homepage",
+          "slotShared" : false,
+          "components" : {
+             "component" : [ 
+                 {
+                "uid" : "EN_GB_HompageSplashBannerComponent",
+                "uuid" : "eyJpdGVtSWQiOiJFTl9HQl9Ib21wYWdlU3BsYXNoQmFubmVyQ29tcG9uZW50IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                "typeCode" : "SimpleResponsiveBannerComponent",
+                "modifiedTime" : "2019-07-08T15:00:34.24+01:00",
+                "name" : "EN_GB Hompage Splash Banner Component",
+                "container" : "false",
+                "media" : {
+                   "tablet" : {
+                      "code" : "tablethomepagebanner.jpg",
+                      "mime" : "image/jpeg",
+                      "altText" : "Special Edition Body Care",
+                      "url" : "/medias/tablethomepagebanner.jpg?context=bWFzdGVyfGltYWdlc3wzNDA0OTN8aW1hZ2UvanBlZ3xpbWFnZXMvaGRiL2hhZC84Nzk2MTE5MDA3MjYyLmpwZ3w3NTJjZWUwYjcxMzgwY2ExM2M0YzJkNjUyYWYwMmIyMWJkYjgyYTBkYmIxOTdmNTUxYTI1ZjIyNzk5ZGNmNGMz"
+                   },
+                   "desktop" : {
+                      "code" : "desktophomepagebanner.jpg",
+                      "mime" : "image/jpeg",
+                      "altText" : "Special Edition Body Care",
+                      "url" : "/medias/desktophomepagebanner.jpg?context=bWFzdGVyfGltYWdlc3wzNDA0OTN8aW1hZ2UvanBlZ3xpbWFnZXMvaDA0L2g4NS84Nzk2MTE5MDcyNzk4LmpwZ3w0MzRkZDU3MDY0OTIzOGIyZDQ2OTJlNTY3NTU4YTI1ZTY1YTgwN2RiZTFjOTExNzU2ZjBiYzJhNWVjMDU5YzEz"
+                   },
+                   "mobile" : {
+                      "code" : "mobilehomepagebanner.jpg",
+                      "mime" : "image/jpeg",
+                      "altText" : "Special Edition Body Care",
+                      "url" : "/medias/mobilehomepagebanner.jpg?context=bWFzdGVyfGltYWdlc3wxMzE4NTF8aW1hZ2UvanBlZ3xpbWFnZXMvaDFkL2hlMy84Nzk2MTE4OTQxNzI2LmpwZ3w4NjhkN2YyN2RjYjQyODNkOTEzYmUyNTY3YzhlNzE1ZWMwOWU3NmUwMDJiMDE3ZThjM2QxNzRmNDNiZmU0NGIy"
+                   }
+                },
+                "urlLink" : "/c/c00001"
+             },
+             {
+                "uid" : "AmplienceCMSComponent",
+                "uuid" : "123eyJpdGVtSWQiOiJDb250YWN0VXNQYXJhZ3JhcGhDb21wb25lbnQiLCJjYXRhbG9nSWQiOiJlbGVjdHJvbmljcy1zcGFDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "AmplienceCMSComponent",
+                "modifiedTime" : "2019-06-05T16:04:04.643+01:00",
+                "name" : "Amplience Component",
+                "container" : "false",
+                "setName" : "a0efd295-825e-4015-b0d3-7a2462056a33",
+                "contentId" : "a0efd295-825e-4015-b0d3-7a2462056a33"
+             },
+             {
+                "uid" : "OlapicCMSComponent",
+                "uuid" : "666eyJpdGVtSWQiOiJDb250YWN0VXNQYXJhZ3JhcGhDb21wb25lbnQiLCJjYXRhbG9nSWQiOiJlbGVjdHJvbmljcy1zcGFDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "OlapicCMSComponent",
+                "modifiedTime" : "2019-06-05T16:04:04.643+01:00",
+                "name" : "Olapic Component",
+                "container" : "false",
+                "contentId" : "randomContentId",
+                "instance" : "35ee5967e476f5a6a2d6df84d4415444",
+                "widgetType" : "olapic_specific_widget",
+                "tags" : "p003257"
+             }
+            ]
+          }
+       }, {
+          "slotId" : "SiteLogoSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJTaXRlTG9nb1Nsb3QiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+          "position" : "SiteLogo",
+          "name" : "Default Site Logo Slot",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "SiteLogoComponent",
+                "uuid" : "eyJpdGVtSWQiOiJTaXRlTG9nb0NvbXBvbmVudCIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                "typeCode" : "SimpleBannerComponent",
+                "modifiedTime" : "2019-07-08T15:00:31.26+01:00",
+                "name" : "Site Logo Component",
+                "container" : "false",
+                "external" : "false",
+                "media" : {
+                   "code" : "/images/theme/tbs-logo.svg",
+                   "mime" : "image/svg+xml",
+                   "altText" : "TBS logo",
+                   "url" : "/medias/tbs-logo.svg?context=bWFzdGVyfGltYWdlc3w1NzQ0fGltYWdlL3N2Zyt4bWx8aW1hZ2VzL2hkZi9oMjcvODc5NjExODY0NjgxNC5zdmd8NjQ1NzQ3N2VjOTQ4ODZmYzMzMzAyMWU3MGU5MzA2YWY1NjYyZTRmYzk2NDZmNTU2NTc3ZmY1ZWVmYzljMDU3Yg"
+                },
+                "urlLink" : "/"
+             } ]
+          }
+       }, {
+          "slotId" : "HomepageNavLinkSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJIb21lcGFnZU5hdkxpbmtTbG90IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+          "position" : "HomepageNavLink",
+          "name" : "Default Homepage Link",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "HomepageNavLink",
+                "uuid" : "eyJpdGVtSWQiOiJIb21lcGFnZU5hdkxpbmsiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "CMSLinkComponent",
+                "modifiedTime" : "2019-07-08T15:00:32.378+01:00",
+                "name" : "Home Page Nav Link",
+                "container" : "false",
+                "external" : "false",
+                "contentPage" : "homepage",
+                "contentPageLabelOrId" : "homepage",
+                "url" : "/",
+                "linkName" : "Home",
+                "target" : "false"
+             } ]
+          }
+       }, {
+          "slotId" : "NavigationBarSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJOYXZpZ2F0aW9uQmFyU2xvdCIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+          "position" : "NavigationBar",
+          "name" : "Navigation Bar",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "en-gb-NavComponent",
+                "uuid" : "eyJpdGVtSWQiOiJlbi1nYi1OYXZDb21wb25lbnQiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "CategoryNavigationComponent",
+                "modifiedTime" : "2019-07-08T15:00:31.969+01:00",
+                "name" : "Navigation Component",
+                "container" : "false",
+                "wrapAfter" : "10",
+                "navigationNode" : {
+                   "uid" : "enGbCategoryNavNode",
+                   "uuid" : "eyJpdGVtSWQiOiJlbkdiQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                   "entries" : [ ],
+                   "children" : [ {
+                      "uid" : "BodyCategoryNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJCb2R5Q2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "BodyAllCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCb2R5QWxsQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "BodyCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BodyTreatsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCb2R5VHJlYXRzQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "BodyTreatsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BodyButtersCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCb2R5QnV0dGVyc0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "BodyButtersCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BodyYogurtsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCb2R5WW9ndXJ0c0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "BodyYogurtsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BodyMassageOilsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCb2R5TWFzc2FnZU9pbHNDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "BodyMassageOilsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BodyBronzingCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCb2R5QnJvbnppbmdDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "BodyBronzingCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "DeodorantCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJEZW9kb3JhbnRDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "DeodorantCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "FootCareCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJGb290Q2FyZUNhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "FootCareCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      } ],
+                      "title" : "Body"
+                   }, {
+                      "uid" : "FaceCategoryNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJGYWNlQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "FaceAllCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJGYWNlQWxsQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "FaceCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "FaceMasksCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJGYWNlTWFza3NDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "FaceMasksCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "MakeUpRemoversCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJNYWtlVXBSZW1vdmVyc0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "MakeUpRemoversCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "EyeCareCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJFeWVDYXJlQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "EyeCareCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "NightTimeTreatmentsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJOaWdodFRpbWVUcmVhdG1lbnRzQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "NightTimeTreatmentsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "MenShavingCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJNZW5TaGF2aW5nQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "MenShavingCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "LipBalmCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJMaXBCYWxtQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "LipBalmCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "CleansersAndTonersNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJDbGVhbnNlcnNBbmRUb25lcnNOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "CleansersAndTonersCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "MoisturisersCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJNb2lzdHVyaXNlcnNDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "MoisturisersCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "AccessoriesCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJBY2Nlc3Nvcmllc0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "AccessoriesCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "FaceScrubsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJGYWNlU2NydWJzQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "FaceScrubsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      } ],
+                      "title" : "Face"
+                   }, {
+                      "uid" : "HandsCategoryNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJIYW5kc0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "HandsAllCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJIYW5kc0FsbENhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "HandsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "HandsMoisturisersCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJIYW5kc01vaXN0dXJpc2Vyc0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "HandsMoisturisersCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "HandWashCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJIYW5kV2FzaENhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "HandWashCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "TargetedTreatmentCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJUYXJnZXRlZFRyZWF0bWVudENhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "TargetedTreatmentCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      } ],
+                      "title" : "Hands"
+                   }, {
+                      "uid" : "HairCategoryNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJIYWlyQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "HairAllCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJIYWlyQWxsQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "HairCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BrushesAndCombsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCcnVzaGVzQW5kQ29tYnNDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "BrushesAndCombsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "ConditionerCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJDb25kaXRpb25lckNhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "ConditionerCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "ShampooCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJTaGFtcG9vQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "ShampooCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "TreatmentCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJUcmVhdG1lbnRDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "TreatmentCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "StylingCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJTdHlsaW5nQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "StylingCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      } ],
+                      "title" : "Hair"
+                   }, {
+                      "uid" : "MakeUpCategoryNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJNYWtlVXBDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "MakeUpAllCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJNYWtlVXBBbGxDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "MakeUpCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "FoundationsConcealersCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJGb3VuZGF0aW9uc0NvbmNlYWxlcnNDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "FoundationsConcealersCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BrushesAndToolsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCcnVzaGVzQW5kVG9vbHNDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "BrushesAndToolsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BBCreamsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCQkNyZWFtc0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "BBCreamsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "BronzingCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJCcm9uemluZ0NhdGVnb3J5TmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "BronzingCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "CheeksCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJDaGVla3NDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "CheeksCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "EyeLinersCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJFeWVMaW5lcnNDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "EyeLinersCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "EyeShadowCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJFeWVTaGFkb3dDYXRlZ29yeU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "EyeShadowCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "LipsCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJMaXBzQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "LipsCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "MascaraCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJNYXNjYXJhQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "MascaraCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      }, {
+                         "uid" : "PrimersCategoryNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJQcmltZXJzQ2F0ZWdvcnlOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "PrimersCategoryLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ]
+                      } ],
+                      "title" : "Make-up"
+                   } ]
+                }
+             }, {
+                "uid" : "breadcrumbComponent",
+                "uuid" : "eyJpdGVtSWQiOiJicmVhZGNydW1iQ29tcG9uZW50IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                "typeCode" : "BreadcrumbComponent",
+                "modifiedTime" : "2019-07-08T15:00:31.979+01:00",
+                "name" : "Breadcrumb CMS Component",
+                "container" : "false"
+             } ]
+          }
+       }, {
+          "slotId" : "MiniCartSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJNaW5pQ2FydFNsb3QiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+          "position" : "MiniCart",
+          "name" : "Mini Cart",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "MiniCart",
+                "uuid" : "eyJpdGVtSWQiOiJNaW5pQ2FydCIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                "typeCode" : "MiniCartComponent",
+                "modifiedTime" : "2019-07-08T15:00:37.145+01:00",
+                "name" : "Mini Cart",
+                "container" : "false",
+                "shownProductCount" : "3",
+                "totalDisplay" : "SUBTOTAL",
+                "title" : "YOUR SHOPPING CART",
+                "lightboxBannerComponent" : {
+                   "container" : "false",
+                   "uid" : "LightboxHomeDeliveryBannerComponent",
+                   "external" : "false",
+                   "name" : "Lightbox Home Delivery Banner Component",
+                   "uuid" : "eyJpdGVtSWQiOiJMaWdodGJveEhvbWVEZWxpdmVyeUJhbm5lckNvbXBvbmVudCIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                   "typeCode" : "SimpleBannerComponent"
+                }
+             } ]
+          }
+       }, {
+          "slotId" : "FooterSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJGb290ZXJTbG90IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+          "position" : "Footer",
+          "name" : "Footer",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ 
+                 {
+                "uid" : "FooterNavigationComponent",
+                "uuid" : "eyJpdGVtSWQiOiJGb290ZXJOYXZpZ2F0aW9uQ29tcG9uZW50IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                "typeCode" : "FooterNavigationComponent",
+                "modifiedTime" : "2019-07-08T15:00:32.086+01:00",
+                "name" : "Footer Navigation Component",
+                "container" : "false",
+                "showLanguageCurrency" : "true",
+                "wrapAfter" : "4",
+                "notice" : "Copyright © 2019 SAP SE or an SAP affiliate company. All rights reserved.",
+                "navigationNode" : {
+                   "uid" : "FooterNavNode",
+                   "uuid" : "eyJpdGVtSWQiOiJGb290ZXJOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                   "entries" : [ ],
+                   "children" : [ {
+                      "uid" : "SAPCommerceNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJTQVBDb21tZXJjZU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "AboutSAPCommerceNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJBYm91dFNBUENvbW1lcmNlTmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "AboutSAPCommerceLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "About SAP"
+                      }, {
+                         "uid" : "FAQNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJGQVFOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "FAQLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "FAQ"
+                      } ],
+                      "title" : "SAP Commerce"
+                   }, {
+                      "uid" : "SAPCustomerExperienceNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJTQVBDdXN0b21lckV4cGVyaWVuY2VOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "AboutSAPCustomerExperienceNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJBYm91dFNBUEN1c3RvbWVyRXhwZXJpZW5jZU5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "VisitSAPLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "About SAP Customer Experience"
+                      }, {
+                         "uid" : "ContactUsNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJDb250YWN0VXNOYXZOb2RlIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                         "entries" : [ {
+                            "itemId" : "ContactUsLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "Contact Us"
+                      } ],
+                      "title" : "SAP Customer Experience"
+                   }, {
+                      "uid" : "FollowUsNavNode",
+                      "uuid" : "eyJpdGVtSWQiOiJGb2xsb3dVc05hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                      "entries" : [ ],
+                      "children" : [ {
+                         "uid" : "AgileCommerceBlogNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJBZ2lsZUNvbW1lcmNlQmxvZ05hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "AgileCommerceBlogLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "Agile Commerce Blog"
+                      }, {
+                         "uid" : "LinkedInNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJMaW5rZWRJbk5hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "LinkedInLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "Linked In"
+                      }, {
+                         "uid" : "FacebookNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJGYWNlYm9va05hdk5vZGUiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                         "entries" : [ {
+                            "itemId" : "FacebookLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "Facebook"
+                      }, {
+                         "uid" : "TwitterNavNode",
+                         "uuid" : "eyJpdGVtSWQiOiJUd2l0dGVyTmF2Tm9kZSIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                         "entries" : [ {
+                            "itemId" : "TwitterLink",
+                            "itemSuperType" : "AbstractCMSComponent",
+                            "itemType" : "CMSLinkComponent"
+                         } ],
+                         "children" : [ ],
+                         "title" : "Twitter"
+                      } ],
+                      "title" : "Follow Us"
+                   } ]
+                }
+             } ]
+          }
+       }, {
+          "slotId" : "HeaderLinksSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJIZWFkZXJMaW5rc1Nsb3QiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+          "position" : "HeaderLinks",
+          "name" : "Header links",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ ]
+          }
+       }, {
+          "slotId" : "SearchBoxSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJTZWFyY2hCb3hTbG90IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+          "position" : "SearchBox",
+          "name" : "Search Box",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "SearchBox",
+                "uuid" : "eyJpdGVtSWQiOiJTZWFyY2hCb3giLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "SearchBoxComponent",
+                "modifiedTime" : "2019-07-08T15:00:32.133+01:00",
+                "name" : "Search Box",
+                "container" : "false",
+                "maxSuggestions" : "5",
+                "maxProducts" : "5",
+                "displaySuggestions" : "true",
+                "displayProducts" : "true",
+                "displayProductImages" : "true",
+                "waitTimeBeforeRequest" : "0",
+                "minCharactersBeforeRequest" : "0"
+             }, {
+                "uid" : "LangCurrencyComponent",
+                "uuid" : "eyJpdGVtSWQiOiJMYW5nQ3VycmVuY3lDb21wb25lbnQiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "LanguageCurrencyComponent",
+                "modifiedTime" : "2019-07-08T15:00:32.144+01:00",
+                "name" : "Language and Currency Component",
+                "container" : "false"
+             } ]
+          }
+       }, {
+          "slotId" : "TopHeaderSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJUb3BIZWFkZXJTbG90IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+          "position" : "TopHeaderSlot",
+          "name" : "Top Header",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "CookieNotificationComponent",
+                "uuid" : "eyJpdGVtSWQiOiJDb29raWVOb3RpZmljYXRpb25Db21wb25lbnQiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "CMSFlexComponent",
+                "modifiedTime" : "2019-07-08T15:00:32.22+01:00",
+                "name" : "Cookie Notification Component",
+                "container" : "false",
+                "flexType" : "CookieNotificationComponent"
+             }, {
+                "uid" : "AnonymousConsentManagementComponent",
+                "uuid" : "eyJpdGVtSWQiOiJBbm9ueW1vdXNDb25zZW50TWFuYWdlbWVudENvbXBvbmVudCIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                "typeCode" : "CMSFlexComponent",
+                "modifiedTime" : "2019-07-08T15:00:32.226+01:00",
+                "name" : "Anonymous Consent Management Component",
+                "container" : "false",
+                "flexType" : "AnonymousConsentManagementComponent"
+             } ]
+          }
+       }, {
+          "slotId" : "BottomHeaderSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJCb3R0b21IZWFkZXJTbG90IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+          "position" : "BottomHeaderSlot",
+          "name" : "Bottom Header",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ ]
+          }
+       }, {
+          "slotId" : "PlaceholderContentSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJQbGFjZWhvbGRlckNvbnRlbnRTbG90IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+          "position" : "PlaceholderContentSlot",
+          "name" : "Placeholder for Addon tag files",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ ]
+          }
+       }, {
+          "slotId" : "SiteContextSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJTaXRlQ29udGV4dFNsb3QiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+          "position" : "SiteContext",
+          "name" : "Site Context Slot",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "LanguageComponent",
+                "uuid" : "eyJpdGVtSWQiOiJMYW5ndWFnZUNvbXBvbmVudCIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                "typeCode" : "CMSSiteContextComponent",
+                "modifiedTime" : "2019-07-08T15:00:35.115+01:00",
+                "name" : "Site Languages",
+                "container" : "false",
+                "context" : "LANGUAGE"
+             }, {
+                "uid" : "CurrencyComponent",
+                "uuid" : "eyJpdGVtSWQiOiJDdXJyZW5jeUNvbXBvbmVudCIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                "typeCode" : "CMSSiteContextComponent",
+                "modifiedTime" : "2019-07-08T15:00:35.112+01:00",
+                "name" : "Site Currencies",
+                "container" : "false",
+                "context" : "CURRENCY"
+             } ]
+          }
+       }, {
+          "slotId" : "SiteLinksSlot",
+          "slotUuid" : "eyJpdGVtSWQiOiJTaXRlTGlua3NTbG90IiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+          "position" : "SiteLinks",
+          "name" : "Slot contains some links",
+          "slotShared" : true,
+          "components" : {
+             "component" : [ {
+                "uid" : "StoreFinderLink",
+                "uuid" : "eyJpdGVtSWQiOiJTdG9yZUZpbmRlckxpbmsiLCJjYXRhbG9nSWQiOiJ0YnNHbG9iYWxDb250ZW50Q2F0YWxvZyIsImNhdGFsb2dWZXJzaW9uIjoiT25saW5lIn0=",
+                "typeCode" : "CMSLinkComponent",
+                "modifiedTime" : "2019-07-08T15:00:33.607+01:00",
+                "name" : "Store Finder Link",
+                "container" : "false",
+                "external" : "false",
+                "url" : "/store-finder",
+                "linkName" : "Store Finder",
+                "target" : "false"
+             }, {
+                "uid" : "SaleLink",
+                "uuid" : "eyJpdGVtSWQiOiJTYWxlTGluayIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                "typeCode" : "CMSLinkComponent",
+                "modifiedTime" : "2019-07-08T15:00:33.592+01:00",
+                "name" : "Sale Link",
+                "container" : "false",
+                "external" : "false",
+                "url" : "/sale",
+                "linkName" : "Sale",
+                "target" : "false"
+             }, {
+                "uid" : "ContactUsLink",
+                "uuid" : "eyJpdGVtSWQiOiJDb250YWN0VXNMaW5rIiwiY2F0YWxvZ0lkIjoidGJzR2xvYmFsQ29udGVudENhdGFsb2ciLCJjYXRhbG9nVmVyc2lvbiI6Ik9ubGluZSJ9",
+                "typeCode" : "CMSLinkComponent",
+                "modifiedTime" : "2019-07-08T15:00:33.599+01:00",
+                "name" : "Contact Us Link",
+                "container" : "false",
+                "external" : "false",
+                "url" : "/contact",
+                "linkName" : "Contact Us",
+                "target" : "false"
+             }, {
+                "uid" : "HelpLink",
+                "uuid" : "eyJpdGVtSWQiOiJIZWxwTGluayIsImNhdGFsb2dJZCI6InRic0dsb2JhbENvbnRlbnRDYXRhbG9nIiwiY2F0YWxvZ1ZlcnNpb24iOiJPbmxpbmUifQ==",
+                "typeCode" : "CMSLinkComponent",
+                "modifiedTime" : "2019-07-08T15:00:33.605+01:00",
+                "name" : "Help Link",
+                "container" : "false",
+                "external" : "false",
+                "url" : "/faq",
+                "linkName" : "Help",
+                "target" : "false"
+             } ]
+          }
+       } ]
+    },
+    "label" : "homepage"
+ }

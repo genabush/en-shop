@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="checkOrder" name="order-process" processClass="de.hybris.platform.orderprocessing.model.OrderProcessModel">
+
+	<action id="checkOrder" bean="checkOrderAction">
+		<transition name="OK" to="sendOrderPlacedNotification"/>
+		<transition name="NOK" to="error"/>
+	</action>
+
+	<action id="sendOrderPlacedNotification" bean="sendOrderPlacedNotificationAction">
+		<transition name="OK" to="checkOrderHold"/>
+	</action>
+
+	<action id="checkOrderHold" bean="checkOrderHoldAction">
+		<transition name="OK" to="checkAuthorizeOrderPayment"/>
+		<transition name="HOLD" to="waitForOrderRelease"/>
+		<transition name="CANCELLED" to="cancelWholeOrderAction"/>
+	</action>
+
+	<action id="checkAuthorizeOrderPayment" bean="checkAuthorizeOrderPaymentAction">
+		<transition name="OK" to="reserveAmount"/>
+		<transition name="NOK" to="authorizationFailedNotification"/>
+		<transition name="PENDING" to="waitForAuthorizationNotification"/>
+	</action>
+	
+	<wait id="waitForAuthorizationNotification" then="checkAuthorizeOrderPayment" prependProcessCode="false">
+		<event>${process.order.code}_AdyenAuthorized</event>
+	</wait>
+
+	<action id="reserveAmount" bean="reserveOrderAmountAction">
+		<transition name="OK" to="checkTransactionReviewStatus"/>
+		<transition name="NOK" to="sendPaymentFailedNotification"/>
+	</action>
+
+	<action id="checkTransactionReviewStatus" bean="checkTransactionReviewStatusAction">
+		<transition name="OK" to="splitOrder"/>
+		<transition name="NOK" to="failed"/>
+		<!-- fail the wait node for now TODO visit this later-->
+		<transition name="WAIT" to="failed"/>
+	</action>
+
+	<wait id="waitForReviewDecision" then="checkTransactionReviewStatus" prependProcessCode="false">
+		<event>${process.order.code}_ReviewDecision</event>
+	</wait>
+
+	<action id="authorizationFailedNotification" bean="sendAuthorizationFailedNotificationAction">
+		<transition name="OK" to="failed"/>
+	</action>
+
+	<action id="cancelWholeOrderAction" bean="cancelWholeOrderAction">
+		<transition name="OK" to="voidAuthorisationAndRefundAction"/>
+		<transition name="NOK" to="failed"/>
+	</action>
+	
+	<action id="voidAuthorisationAndRefundAction" bean="voidAuthorisationAndRefundAction">
+		<transition name="OK" to="cancel"/>
+		<transition name="NOK" to="error"/>
+		<transition name="WAIT" to="waitForAdyenVoidConfirmation"/>
+	</action>
+	
+	<wait id="waitForAdyenVoidConfirmation" then="voidAuthorisationAndRefundAction" prependProcessCode="false">
+        <event>${process.order.code}_AdyenCancelled</event>
+    </wait>
+	
+	<wait id="waitForOrderRelease" then="checkOrderHold" prependProcessCode="false">
+		<event>${process.order.code}_ReleasedEvent</event>
+	</wait>
+
+	<action id="sendPaymentFailedNotification" bean="sendPaymentFailedNotificationAction">
+		<transition name="OK" to="failed"/>
+	</action>
+
+	<action id="splitOrder" bean="splitOrderAction">
+		<transition name="OK" to="waitForWarehouseSubprocessEnd"/>
+	</action>
+
+	<wait id="waitForWarehouseSubprocessEnd" then="isProcessCompleted" prependProcessCode="false" >
+		<event>${process.code}_ConsignmentSubprocessEnd</event>
+	</wait>
+
+	<action id="isProcessCompleted" bean="subprocessesCompletedAction">
+		<transition name="OK" to="checkConsignmentShipped"/>
+		<transition name="NOK" to="waitForWarehouseSubprocessEnd"/>
+	</action>
+
+	<action id="checkConsignmentShipped" bean="checkConsignmentShippedAction">
+		<transition name="OK" to="setOrderExpirationTime"/>
+		<transition name="CANCELLED" to="voidAuthorisationAndRefundAction"/>
+		<transition name="REFUNDED" to="success"/>
+	</action>
+	
+	<action id="setOrderExpirationTime" bean="setOrderExpirationTimeAction">
+		<transition name="OK" to="sendOrderCompletedNotification"/>
+		<transition name="NOK" to="error"/>
+	</action>
+
+	<action id="sendOrderCompletedNotification" bean="sendOrderCompletedNotificationAction">
+		<transition name="OK" to="success"/>
+	</action>
+
+	<end id="cancel" state="SUCCEEDED">Order cancelled.</end>
+	<end id="error" state="ERROR">All went wrong.</end>
+	<end id="failed" state="FAILED">Order not placed.</end>
+	<end id="success" state="SUCCEEDED">Order placed.</end>
+
+</process>

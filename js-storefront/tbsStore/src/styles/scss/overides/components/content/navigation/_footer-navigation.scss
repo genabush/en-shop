@@ -1,0 +1,46 @@
+%app-footer-navigation {
+  a {
+    font-size: $font-size-base;
+    &:hover {
+      color: var(--cx-color-inverse);
+      text-decoration: underline;
+    }
+  }
+
+  cx-navigation-ui {
+    // first level heading / links
+    h5 {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-family: $druk-wide-bold;
+      margin-bottom: 15px;
+    }
+  }
+
+  .nav-wrapper {
+    cx-generic-link {
+      a {
+        line-height: 28px;
+      }
+    }
+  }
+
+  cx-navigation-ui {
+    justify-content: center;
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+
+    > nav {
+      margin: 3vw;
+    }
+  }
+
+  .notice {
+    padding: 32px 0;
+    text-align: center;
+    @include type();
+    color: var(--cx-color-dark);
+    background-color: var(--cx-color-inverse);
+  }
+}

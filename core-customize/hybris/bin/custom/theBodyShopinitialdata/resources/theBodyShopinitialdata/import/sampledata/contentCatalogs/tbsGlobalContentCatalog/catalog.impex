@@ -1,0 +1,6 @@
+$contentCatalog=tbsGlobalContentCatalog
+$languages=en
+$lang=en
+
+UPDATE CatalogVersionSyncJob; code[unique = true];synclanguages(isoCode);
+;"sync tbsGlobalContentCatalog:Staged->Online";"en,en_GB,de,fr,en_AU,en_CA,fr_CA,da,es,nl,sv,en_US,de_AT,en_HK,en_SG";

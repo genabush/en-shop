@@ -1,0 +1,271 @@
+/*!
+  THEME TBS - Variables
+  customised version of @spartacus/styles/scss/cxbase/_variables.scss
+*/
+@import '~@spartacus/styles/scss/functions';
+@import '~@spartacus/styles/scss/mixins';
+@import '~bootstrap/scss/variables';
+
+$background: $white !default;
+$inverse: $white !default;
+$text: $black !default;
+$transparent: transparent !default;
+
+$core-primary: #004236 !default;
+$core-secondary: #3a857e !default;
+$core-tertiary: #d6ce4b !default;
+
+$base-natural-warmth: #d2ad93 !default;
+$base-nourishing-white: #f8f3e8 !default;
+$base-terracotta: #a7674c !default;
+$base-white: #ffffff !default;
+$base-black: #000000 !default;
+$base-natural-warmth30: #f5ece6 !default;
+$base-natural-warmth40: #e8d6c9 !default;
+$base-grey: #aaaaaa !default;
+$base-grey-med: #e5e5e5 !default;
+$base-metal: #626262 !default;
+$base-silver: #f4f4f4 !default;
+$base-silver-light: #f5f5f5 !default;
+$base-tbs20: #00352b !default;
+
+$accent-green: #00ab00;
+$accent-orange: #ff4233;
+$accent-yellow: #ffcf00;
+$accent-blue: #0077d5;
+$accent-pink: #c644a1;
+
+$holistic-dark-olive: #66703a !default;
+$holistic-dollar-bill: #8bb057 !default;
+$holistic-dark-khaki: #b7c072 !default;
+$holistic-cadet-blue: #569294 !default;
+$holistic-ucla-blue: #626b95 !default;
+$holistic-redwood: #b14a4f !default;
+$holistic-chestnut: #dc5c60 !default;
+$holistic-light-coral: #df8281 !default;
+$holistic-deep-chestnut: #b35e42 !default;
+$holistic-earth-yellow: #d7a269 !default;
+$holistic-gamboge: #e39a1c !default;
+$holistic-indian-yellow: #e4b150 !default;
+
+$info: #f5ece6; // as per https://salmon.invisionapp.com/d/#/console/16404606/340230419/preview
+$success: #8bb057;
+$warning: #e4b150;
+$danger: #ee5340;
+$danger-content: #9c0008;
+
+$misc-ticker: #3a857e !default;
+$misc-field-bg: #00352b !default;
+$misc-field-hint: #c5ccc1 !default;
+
+$border-colour: rgba(0, 66, 54, 0.4);
+$border-colour-2: rgba(248, 243, 232, 0.4);
+$border-colour-3: #588a7c;
+
+$theme-colors: map-merge(
+  (
+    'background': $background,
+    'text': $text,
+    'inverse': $inverse,
+    'transparent': $transparent,
+    'core-primary': $core-primary,
+    'core-secondary': $core-secondary,
+    'core-tertiary': $core-tertiary,
+    'base-natural-warmth': $base-natural-warmth,
+    'base-nourishing-white': $base-nourishing-white,
+    'base-terracotta': $base-terracotta,
+    'base-white': $base-white,
+    'base-black': $base-black,
+    'base-natural-warmth30': $base-natural-warmth30,
+    'base-natural-warmth40': $base-natural-warmth40,
+    'base-grey': $base-grey,
+    'base-grey-med': $base-grey-med,
+    'base-metal': $base-metal,
+    'base-silver': $base-silver,
+    'base-tbs20': $base-tbs20,
+    'accent-green': $accent-green,
+    'accent-orange': $accent-orange,
+    'accent-yellow': $accent-yellow,
+    'accent-blue': $accent-blue,
+    'accent-pink': $accent-pink,
+    'holistic-dark-olive': $holistic-dark-olive,
+    'holistic-dollar-bill': $holistic-dollar-bill,
+    'holistic-dark-khaki': $holistic-dark-khaki,
+    'holistic-cadet-blue': $holistic-cadet-blue,
+    'holistic-ucla-blue': $holistic-ucla-blue,
+    'holistic-redwood': $holistic-redwood,
+    'holistic-chestnut': $holistic-chestnut,
+    'holistic-light-coral': $holistic-light-coral,
+    'holistic-deep-chestnut': $holistic-deep-chestnut,
+    'holistic-earth-yellow': $holistic-earth-yellow,
+    'holistic-gamboge': $holistic-gamboge,
+    'holistic-indian-yellow': $holistic-indian-yellow,
+    'misc-ticker': $misc-ticker,
+    'misc-field-bg': $misc-field-bg,
+    'misc-field-hint': $misc-field-hint,
+    'info': $info,
+    'success': $success,
+    'warning': $warning,
+    'danger': $danger
+  ),
+  $theme-colors
+);
+
+$font-weight-semi: 600 !default;
+$btn-text-transform: capitalize !default;
+$direction: ltr !default;
+
+$h1-font-size: $font-size-base * 2.15; // 34px
+$h2-font-size: $font-size-base * 1.8; // 28px
+$h3-font-size: $font-size-base * 0.9; // 14px
+
+$headings-font-weight: 700;
+
+//set defaults for type size and weights
+$type: () !default;
+$type: map-merge(
+  (
+    '1': $h1-font-size $headings-font-weight,
+    '2': $h2-font-size $headings-font-weight,
+    '3': $h3-font-size $headings-font-weight,
+    '4': $h4-font-size $headings-font-weight,
+    '5': $h5-font-size $headings-font-weight,
+    '6': $h6-font-size $headings-font-weight,
+    '7': $small-font-size $font-weight-normal
+  ),
+  $type
+);
+
+// GLOBAL
+$links-font-size: $font-size-base;
+$links-text-decoration: underline;
+$links-hover-text-decoration: none;
+
+$links-default-color: var(--cx-color-core-primary);
+$links-default-hover-color: var(--cx-color-core-secondary);
+$links-default-active-color: var(--cx-color-base-tbs20);
+
+$links-inverse-color: var(--cx-color-core-tertiary);
+$links-inverse-hover-color: $links-inverse-color;
+$links-inverse-active-color: var(--cx-color-base-white);
+
+// HEADER
+$header-max-height: 70px;
+$header-max-height-large: 112px;
+$spacing-icons-header: 7px;
+$spacing-icons-header-large: 15px 13px;
+$header-width-icon-small-screens: 20px;
+$hamburger-padding-x: $spacing-icons-header;
+$hamburger-padding-y: $spacing-icons-header;
+$hamburger-layer-width: 20px;
+$hamburger-layer-height: 2px;
+$hamburger-layer-spacing: 6px;
+$hamburger-layer-color: white;
+$hamburger-layer-border-radius: 4px;
+$hamburger-hover-opacity: 0.7;
+$header-link-color-hover: var(--cx-color-core-tertiary);
+
+// FORMS
+$form-field-input-dim: 22px;
+$mat-form-field-height: 3rem;
+$mat-select-height: 3rem;
+$mat-select-address-height: 5.5rem;
+$mat-quanity-selector-height: 2.5rem;
+$mat-select-overlay-z-index: 1100;
+
+// PRODUCTS
+$products-add-to-fav-dim: 27px;
+$product-listing-thumbs-height: 226px;
+$product-listing-thumbs-height-lg: 399px;
+
+// VALIDATION
+$validation-negative-text-color: $accent-orange;
+$validation-negative-text-bg: rgba($accent-orange, 0.4);
+$validation-text-spacing: 10px;
+
+// PRODUCT INTRO
+$product-heading-size-lg: var(--cx-font-size, 32px);
+$product-heading-size: var(--cx-font-size, 24px);
+$product-intro-padding-lg: 20px 0 10px 0;
+$product-strapline-text-transform: uppercase;
+$product-strapline-separator-font-size: 30px;
+$product-strapline-separator-hor-spacing: auto 10px;
+
+// PRODUCT SUMMARY
+$product-summary-lg: 10px 0 0 0;
+$product-variant-swatch-dim: 48px;
+$product-variant-swatch-preview-dim: 64px;
+$product-variant-swatch-border-size: 1px;
+
+// ADD TO CART
+$add-to-cart-padding: 0 0 20px 0;
+
+// ACCORDIONS
+$accordions-heading-colour: var(--cx-color-core-primary);
+$accordions-heading-unactive-colour: var(--cx-color-core-primary);
+$accordions-text-align: left;
+$accordions-heading-padding-hor: 13px;
+$accordions-heading-padding: $accordions-heading-padding-hor 0 $accordions-heading-padding-hor 0%;
+$accordions-content-bg: var(--cx-color-transparent);
+$accordions-border-width: 1px;
+
+// PRICES
+$price-font-size: $font-size-base;
+$price-color: var(--cx-color-core-primary);
+
+$price-unit-font-size: $price-font-size;
+$price-unit-font-size-lg: $price-unit-font-size;
+
+$price-formatted-font-size: var(--cx-font-size, 32px);
+$price-formatted-font-size-lg: $price-formatted-font-size;
+
+$price-metric-font-size: 14px;
+$price-metric-font-size-lg: $price-metric-font-size;
+
+$price-rewards-font-size: 14px;
+$price-rewards-font-size-lg: $price-rewards-font-size;
+$price-rewards-text-decoration: underline;
+$price-rewards-colour: var(--cx-color-core-secondary);
+
+$price-block-border-color: var(--cx-color-core-primary);
+$price-block-loop-border-color: rgba($core-primary, 0.5);
+
+// COLOURS VARIANTS
+$colour-variants-swatch-size: 36px;
+$colour-variants-swatch-radius: 50%;
+
+// MODALS
+$modal-body-color: var(--cx-color-text);
+$modal-heading-color: var(--cx-color-core-primary);
+$modal-backdrop-opacity: 0.7;
+$modal-md: 705px;
+
+// Search
+$search-suggestions-item-border-width: 1px;
+$search-suggestions-item-border-color: var(--cx-color-core-primary);
+$search-suggestions-link-bg: var(--cx-color-base-silver);
+
+// Articles
+$articles-heading-font-size: 18px;
+$search-listing-articles-heading-text-align: left;
+$articles-heading-text-align: center;
+$articles-summary-text-align: $articles-heading-text-align;
+$articles-bg-spacing: 60px 0;
+$articles-inner-spacing: 20px 0 0 0;
+$articles-bg-default: var(--cx-color-base-natural-warmth30);
+$articles-thumbnail-spacing: 0 0 30px 0;
+
+// SLIDER
+$slider-scrollbar-drag-bg: var(--cx-color-core-primary);
+$slider-scrollbar-bg: rgba($core-primary, 0.3);
+
+// PAGINATIONS
+$pagination-border-color: transparent;
+$pagination-border-width: 0;
+
+// FACETS
+$facet-check-dim: 24px;
+$facet-check-label-space-left: 10px;
+
+// MODALS
+$modal-gutter: 20px;

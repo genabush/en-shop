@@ -1,0 +1,113 @@
+<ng-container *ngIf="cart">
+  <!-- EXISTING GIFT MESSAGE -->
+  <ng-container *ngIf="giftWrapMessage$ | async as giftWrapMessage; else emptyGiftMessage">
+    <div class="cart-gift-wrap__row-message d-flex flex-row flex-wrap px-3 pl-lg-4 flex-grow-1 text-left mb-2">
+      <div class="w-100">{{ 'cart.giftWrap.personalMessage' | cxTranslate }}</div>
+      <div class="cart-gift-wrap__row-message-sub d-block pt-1 showing">
+        {{ giftWrapMessage.giftMessage }}
+      </div>
+      <button
+        class="cart-gift-wrap__row-message-link ml-3 p-0 pt-1"
+        tabIndex="0"
+        role="button"
+        type="button"
+        title="{{ 'common.edit' | cxTranslate }}"
+        [attr.aria-label]="'common.editBtn' | cxTranslate"
+        (click)="openMessageModal()"
+      >
+        {{ 'common.editBtn' | cxTranslate }}
+      </button>
+    </div>
+    <button
+      *ngIf="giftWrapMessage?.giftMessage && giftWrapMessage?.giftMessageName && giftWrapMessage?.giftMessageSenderName"
+      tabIndex="0"
+      role="button"
+      type="button"
+      class="btn btn--warning btn--icon btn--invert justify-content-center m-0"
+      title="{{ 'common.removeBtn' | cxTranslate }}"
+      [attr.aria-label]="'common.removeBtn' | cxTranslate"
+      (click)="openRemoveMessageModal()"
+    >
+      <span class="btn__icon icon icon--close"></span>
+      {{ 'common.removeBtn' | cxTranslate }}
+    </button>
+  </ng-container>
+</ng-container>
+<!-- NO GIFT MESSAGE -->
+<ng-template #emptyGiftMessage>
+  <div class="cart-gift-wrap__row-message px-3 pl-lg-4 pr-lg-0 col-lg-6 text-center text-lg-left mb-2">
+    {{ 'cart.giftWrap.personalMessageAdd' | cxTranslate }}
+    <span class="cart-gift-wrap__row-message-sub d-block">{{ 'cart.giftWrap.addForFree' | cxTranslate }}</span>
+  </div>
+  <button
+    role="button"
+    type="button"
+    class="btn btn--primary border col-lg-6 ml-0"
+    title="{{ 'cart.giftWrap.addForFree' | cxTranslate }}"
+    [attr.aria-label]="'cart.giftWrap.addForFree' | cxTranslate"
+    (click)="openMessageModal()"
+  >
+    {{ 'cart.giftWrap.messageButton' | cxTranslate }}
+  </button>
+</ng-template>
+
+<!-- GIFT MESSGAGE MODAL -->
+<ng-template #giftMessageModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <ng-container *ngIf="!isRemoval; else removeGiftMessageHeader">
+      <ng-container *ngIf="giftWrapMessage$ | async as giftWrapMessage; else noGiftMessageHeader">
+        <h2
+          class="modal-title mt-3"
+          role="heading"
+          aria-level="2"
+          [attr.aria-label]="'cart.giftWrap.personalMessageModal.modalTitleEdit' | cxTranslate"
+        >
+          {{ 'cart.giftWrap.personalMessageModal.modalTitleEdit' | cxTranslate }}
+        </h2>
+      </ng-container>
+      <ng-template #noGiftMessageHeader>
+        <h2
+          class="modal-title mt-3"
+          role="heading"
+          aria-level="2"
+          [attr.aria-label]="'cart.giftWrap.personalMessageModal.modalTitleAdd' | cxTranslate"
+        >
+          {{ 'cart.giftWrap.personalMessageModal.modalTitleAdd' | cxTranslate }}
+        </h2>
+      </ng-template>
+    </ng-container>
+    <ng-template #removeGiftMessageHeader>
+      <h2
+        class="modal-title mt-3"
+        role="heading"
+        aria-level="2"
+        [attr.aria-label]="'cart.giftWrap.personalMessageModal.modalTitleRemove' | cxTranslate"
+      >
+        {{ 'cart.giftWrap.personalMessageModal.modalTitleRemove' | cxTranslate }}
+      </h2>
+    </ng-template>
+    <button
+      type="button"
+      class="btn close"
+      [attr.aria-label]="'common.closeBtn' | cxTranslate"
+      (click)="closeMessageModal()"
+    >
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12 px-0">
+        <cx-cart-personal-message-form
+          [isRemoval]="isRemoval"
+          [messageValue]="giftWrapMessage$ | async"
+          (closeEmit)="closeMessageModal()"
+          (submitEmit)="handleSubmit($event)"
+        >
+        </cx-cart-personal-message-form>
+      </div>
+    </div>
+  </div>
+</ng-template>

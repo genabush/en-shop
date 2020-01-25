@@ -1,0 +1,26 @@
+<ng-container *ngIf="variantMainImage$ | async as main">
+  <cx-media [container]="main" format="zoom"> </cx-media>
+</ng-container>
+
+<ng-container *ngIf="variantThumbs$ | async as variantThumbs">
+  <cx-carousel
+    class="thumbs"
+    [items]="variantThumbs"
+    itemWidth="120px"
+    itemHeight="105px"
+    [hideIndicators]="false"
+    [template]="thumb"
+    [isProductCarousel]="true"
+  ></cx-carousel>
+
+  <ng-template #thumb let-item="item">
+    <cx-media
+      [container]="item.container"
+      tabindex="0"
+      format="thumbnail"
+      (focus)="openImage(item.container['thumbnail'].galleryIndex)"
+      [class.is-active]="isActiveVariant(item.container['thumbnail'].galleryIndex)"
+    >
+    </cx-media>
+  </ng-template>
+</ng-container>

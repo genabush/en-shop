@@ -1,0 +1,116 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products Stock Levels and Warehouses
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsDEProductCatalog
+$productCatalogName=DE Product Catalog
+$vendor=default
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+
+INSERT_UPDATE Vendor;code[unique=true]
+#;$vendor
+
+INSERT_UPDATE Warehouse;code[unique=true];vendor(code);default[default=true]
+
+INSERT_UPDATE StockLevel;available;warehouse(code)[unique=true];inStockStatus(code);maxPreOrder;maxStockLevelHistoryCount;overSelling;preOrder;productCode[unique=true];reserved
+;10;DC11;notSpecified;0;0;0;0;p003257v;0;
+;10;DC11;notSpecified;0;0;0;0;p000341v;0;
+;10;DC11;notSpecified;0;0;0;0;p002002v;0;
+;10;DC11;notSpecified;0;0;0;0;p002445v;0;
+;10;DC11;notSpecified;0;0;0;0;p003101v;0;
+;10;DC11;notSpecified;0;0;0;0;p001102v;0;
+;10;DC11;notSpecified;0;0;0;0;p002457v;0;
+;10;DC11;notSpecified;0;0;0;0;p000971v;0;
+;10;DC11;notSpecified;0;0;0;0;p003255v;0;
+;10;DC11;notSpecified;0;0;0;0;p003254v;0;
+;10;DC11;notSpecified;0;0;0;0;p003173v;0;
+;10;DC11;notSpecified;0;0;0;0;p000694v;0;
+;10;DC11;notSpecified;0;0;0;0;p002003v;0;
+;10;DC11;notSpecified;0;0;0;0;p000936v;0;
+;10;DC11;notSpecified;0;0;0;0;p002013v;0;
+;0;DC11;notSpecified;0;0;0;0;p000810v;0;
+;0;DC11;notSpecified;0;0;0;0;p002833v;0;
+;0;DC11;notSpecified;0;0;0;0;p003268v;0;
+;0;DC11;notSpecified;0;0;0;0;p002835v;0;
+;0;DC11;notSpecified;0;0;0;0;p000664v;0;
+;0;DC11;notSpecified;0;0;0;0;p003259v;0;
+;0;DC11;notSpecified;0;0;0;0;p000067v;0;
+;10;DC11;notSpecified;0;0;0;0;p000056v;0;
+;10;DC11;notSpecified;0;0;0;0;p002017v;0;
+;10;DC11;notSpecified;0;0;0;0;p000499v;0;
+;10;DC11;notSpecified;0;0;0;0;p000253v;0;
+;10;DC11;notSpecified;0;0;0;0;p002347v;0;
+;10;DC11;notSpecified;0;0;0;0;p002812v;0;
+;10;DC11;notSpecified;0;0;0;0;p002419v;0;
+;10;DC11;notSpecified;0;0;0;0;p000480v;0;
+;10;DC11;notSpecified;0;0;0;0;p002863v;0;
+;10;DC11;notSpecified;0;0;0;0;p000466v;0;
+;10;DC11;notSpecified;0;0;0;0;p000644v;0;
+;10;DC11;notSpecified;0;0;0;0;p000787v;0;
+;10;DC11;notSpecified;0;0;0;0;p000676v;0;
+;10;DC11;notSpecified;0;0;0;0;p000461v;0;
+;10;DC11;notSpecified;0;0;0;0;p000111v;0;
+;10;DC11;notSpecified;0;0;0;0;p000106v;0;
+;10;DC11;notSpecified;0;0;0;0;p000795v;0;
+;10;DC11;notSpecified;0;0;0;0;p000797v;0;
+;10;DC11;notSpecified;0;0;0;0;p003200v;0;
+;10;DC11;notSpecified;0;0;0;0;p000789v;0;
+;10;DC11;notSpecified;0;0;0;0;p000063v;0;
+;10;DC11;notSpecified;0;0;0;0;p003090v;0;
+;10;DC11;notSpecified;0;0;0;0;p002733v;0;
+;10;DC11;notSpecified;0;0;0;0;p000142v;0;
+;10;DC11;notSpecified;0;0;0;0;p000120v;0;
+;10;DC11;notSpecified;0;0;0;0;p002449v;0;
+;10;DC11;notSpecified;0;0;0;0;p003091v;0;
+;10;DC11;notSpecified;0;0;0;0;p000767v;0;
+;10;DC11;notSpecified;0;0;0;0;p002453v;0;
+;10;DC11;notSpecified;0;0;0;0;p000767v;0;
+;10;DC11;notSpecified;0;0;0;0;p002144v;0;
+;10;DC11;notSpecified;0;0;0;0;p002448v;0;
+;10;DC11;notSpecified;0;0;0;0;p002145v;0;
+;10;DC11;notSpecified;0;0;0;0;p003111v;0;
+;10;DC11;notSpecified;0;0;0;0;p001081v;0;
+;10;DC11;notSpecified;0;0;0;0;p002819v;0;
+;10;DC11;notSpecified;0;0;0;0;p000467v;0;
+;10;DC11;notSpecified;0;0;0;0;p000851v;0;
+;10;DC11;notSpecified;0;0;0;0;p000436v;0;
+;10;DC11;notSpecified;0;0;0;0;p000435v;0;
+;10;DC11;notSpecified;0;0;0;0;p002668v;0;
+;10;DC11;notSpecified;0;0;0;0;p000362v;0;
+;10;DC11;notSpecified;0;0;0;0;p000726v;0;
+;10;DC11;notSpecified;0;0;0;0;p002817v;0;
+;10;DC11;notSpecified;0;0;0;0;p003237v;0;
+;10;DC11;notSpecified;0;0;0;0;p002001v;0;
+;10;DC11;notSpecified;0;0;0;0;p000048v;0;
+;10;DC11;notSpecified;0;0;0;0;p002867v;0;
+;10;DC11;notSpecified;0;0;0;0;p000042v;0;
+;10;DC11;notSpecified;0;0;0;0;p002171v;0;
+;10;DC11;notSpecified;0;0;0;0;p000069v;0;
+;10;DC11;notSpecified;0;0;0;0;p000621v;0;
+;10;DC11;notSpecified;0;0;0;0;p003235v;0;
+;10;DC11;notSpecified;0;0;0;0;p000184v;0;
+;10;DC11;notSpecified;0;0;0;0;p002818v;0;
+;10;DC11;notSpecified;0;0;0;0;p000222v;0;
+;10;DC11;notSpecified;0;0;0;0;p002437v;0;
+;10;DC11;forceInStock;0;0;0;0;p001050v;0;
+;10;DC11;forceOutOfStock;0;0;0;0;p000269v;0;
+;10;DC11;notSpecified;0;0;0;0;1030196;0;
+;10;DC11;notSpecified;0;0;0;0;1030226;0;
+;10;DC11;notSpecified;0;0;0;0;1030227;0;
+;10;DC11;notSpecified;0;0;0;0;1032512;0;
+;10;DC11;notSpecified;0;0;0;0;1059021;0;
+;10;DC11;notSpecified;0;0;0;0;1055790;0;
+;10;DC11;notSpecified;0;0;0;0;1076327;0;
+;10;DC11;notSpecified;0;0;0;0;1055311;0;
+;10;DC11;notSpecified;0;0;0;0;1062021;0;
+;10;DC11;notSpecified;0;0;0;0;1094138;0;
+;10;DC11;notSpecified;0;0;0;0;1094188;0;
+;10;DC11;notSpecified;0;0;0;0;1096109;0;
+;10;DC11;notSpecified;0;0;0;0;1096148;0;
+;10;DC11;notSpecified;0;0;0;0;1096261;0;
+
+UPDATE Product;code[unique=true];$catalogVersion;stockLevels(productCode,warehouse(code));vendors(code)

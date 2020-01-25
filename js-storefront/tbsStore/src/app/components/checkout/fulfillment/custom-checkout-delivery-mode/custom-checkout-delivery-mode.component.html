@@ -1,0 +1,92 @@
+<div [formGroup]="mode" class="checkout-content my-0 col-12 px-0">
+  <div class="row">
+    <div class="col-md-12 col-lg-9">
+      <h3 class="cx-checkout-title d-flex mb-3">
+        {{ 'delivery.deliveryOptionsHeader' | cxTranslate }}
+      </h3>
+    </div>
+  </div>
+
+  <cx-checkout-delivery-modes-cards
+    *ngIf="!isLoading; else isLoadingModes"
+    class="d-flex flex-row position-relative"
+    [isLoading]="isLoading"
+    [supportedDeliveryModes]="supportedDeliveryModes$.value"
+    [selectedDeliveryMode]="selectedDeliveryMode"
+    (deliveryModesChooseEmit)="chooseDeliveryMode()"
+  ></cx-checkout-delivery-modes-cards>
+
+  <ng-template #isLoadingModes>
+    <div class="cx-spinner">
+      <cx-spinner></cx-spinner>
+    </div>
+  </ng-template>
+
+  <!-- MODAL -->
+  <ng-template #deliveryModesModal let-c="close" let-d="dismiss" id="checkout-delivery-modes-modal">
+    <div class="modal-header flex-column">
+      <div class="row justify-content-between w-100 pl-4 pr-0 m-0">
+        <h2 class="modal-title">{{ 'delivery.deliveryOptionsHeader' | cxTranslate }}</h2>
+        <button
+          type="button"
+          class="close"
+          [attr.aria-label]="'common.closeBtn' | cxTranslate"
+          (click)="closeModesModal()"
+        >
+          <span aria-hidden="true">
+            <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body d-flex flex-row flex-wrap pt-3">
+      <ng-container *ngIf="(supportedDeliveryModes$ | async)?.length && !isLoading">
+        <div class="d-flex flex-column w-100">
+          <div
+            class="form-check cx-delivery-form-check w-100 border rounded py-2 pl-2 pr-2 pr-lg-4 my-2"
+            *ngFor="let mode of supportedDeliveryModes$ | async; index as mi"
+          >
+            <input
+              class="form-check-input cx-delivery-form-check-input"
+              role="radio"
+              type="radio"
+              id="deliveryMode-{{ mode.code }}"
+              aria-checked="true"
+              (change)="changeMode({ modeIndex: mi + 1, deliveryMode: mode })"
+              [value]="mode.code"
+              formControlName="deliveryModeId"
+            />
+            <label
+              class="cx-delivery-form-check-label form-check-label form-radio-label mb-0"
+              for="deliveryMode-{{ mode.code }}"
+            >
+              <div class="cx-delivery-form-check-mode">{{ mode.name }}</div>
+              <div class="cx-delivery-form-check-price">
+                {{ mode.deliveryCost.formattedValue }}
+              </div>
+              <div class="cx-delivery-form-check-details">{{ mode.description }}</div>
+            </label>
+          </div>
+        </div>
+      </ng-container>
+      <hr class="cx-address-hr my-4 w-100" />
+      <!-- BUTTONS -->
+      <div class="cx-checkout-btns row w-100 mt-3 mt-lg-0 mx-0 justify-content-end">
+        <div class="col-12 col-lg-3 mt-2 mt-lg-0 order-2 order-lg-1">
+          <button class="btn btn-block btn-action w-100" (click)="closeModesModal()">
+            {{ 'common.cancel' | cxTranslate }}
+          </button>
+        </div>
+        <div class="col-12 col-lg-3 order-1 order-lg-2">
+          <button
+            class="btn btn-block btn-primary w-100"
+            [disabled]="!currentDeliveryModeId"
+            (click)="changeDeliveryMode()"
+          >
+            {{ 'common.continue' | cxTranslate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

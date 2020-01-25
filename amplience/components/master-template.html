@@ -1,0 +1,46 @@
+{{#with this}}
+    {{#each chooser}}
+        {{#if (test this.[@type] (toRegex ".*/component-test")) }}
+            {{> test-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/splitblock")) }}
+            {{> splitblock-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/cardlist")) }}
+            {{> cardlist-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/slider")) }}
+            {{> slider-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/banner")) }}
+            {{> banner-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/video")) }}
+            {{> video-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/text")) }}
+            {{> text-partial }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex "https://thebodyshop.com/image")) }}
+            {{> image-partial }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/homepage-hero")) }}
+            {{> homepage-hero-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/quote-editorial")) }}
+            {{> quote-editorial-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/component-image-and-text")) }}
+            {{> banner-divided-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/content-block")) }}
+            {{> content-block-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/simple-banner")) }}
+            {{> simple-banner-template }}
+        {{/if}}
+        {{#if (test this.[@type] (toRegex ".*/component-banner-with-background")) }}
+            {{> banner-with-bg-template }}
+        {{/if}}
+    {{/each}}
+{{/with}}

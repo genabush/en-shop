@@ -1,0 +1,46 @@
+%cx-card-address {
+  .card {
+    margin: 0 0 1.25rem 0;
+    height: 100%;
+  }
+
+  .card-actions {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 1.25rem 0 0 0;
+  }
+
+  .cx-card-address-delete {
+    padding: 1.25rem 0 0 0;
+  }
+
+  .cx-card-address-label-bold {
+    @include weight('bold');
+  }
+
+  .cx-card-address-delete-msg {
+    color: var(--cx-color-danger);
+    padding: 0 0 1.25rem 0;
+  }
+
+  .cx-card-address-delete-mode {
+    background-color: var(--cx-color-background);
+  }
+
+  .cx-card-body {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}

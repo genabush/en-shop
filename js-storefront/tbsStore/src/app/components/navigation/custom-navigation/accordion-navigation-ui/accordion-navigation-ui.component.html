@@ -1,0 +1,69 @@
+<ngb-accordion>
+  <ngb-panel
+    *ngFor="let node of node?.children; let index = index"
+    id="footer-accordion-{{ index }}"
+    title="{{ node.title }}"
+  >
+    <ng-template ngbPanelContent>
+      <nav tabindex="0">
+        <!-- we add a wrapper to allow for better layout handling in CSS -->
+        <div
+          class="wrapper nav-wrapper"
+          *ngIf="node.children?.length > 0"
+          [ngClass]="{ 'has-amplience': node.amplienceId }"
+        >
+          <div>
+            <ng-container *ngFor="let child of node.children">
+              <ng-container *ngTemplateOutlet="nav; context: { node: child }"> </ng-container>
+            </ng-container>
+          </div>
+
+          <div class="amplience" *ngIf="node.amplienceId">
+            <div class="amplience-content">
+              <app-amplience [amplienceInput]="node.amplienceId"></app-amplience>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+
+<!-- we generate links in a recursive manner -->
+<ng-template #nav let-node="node">
+  <nav tabindex="0">
+    <cx-generic-link *ngIf="node.url && (!node.children || node.children?.length === 0); else heading" [url]="node.url">
+      {{ node.title }}
+    </cx-generic-link>
+
+    <ng-template #heading>
+      <h5 [attr.aria-label]="node.title">
+        {{ node.title }}
+        <!-- <cx-icon *ngIf="flyout && node.children?.length > 0" [type]="iconType.CARET_DOWN"></cx-icon> -->
+      </h5>
+    </ng-template>
+
+    <!-- we add a wrapper to allow for better layout handling in CSS -->
+    <div
+      class="wrapper nav-wrapper"
+      *ngIf="node.children?.length > 0"
+      [ngClass]="{ 'has-amplience': node.amplienceId }"
+    >
+      <cx-generic-link *ngIf="node.url" [url]="node.url" class="all">
+        {{ 'navigation.shopAll' | cxTranslate: { navNode: node.title } }}
+      </cx-generic-link>
+
+      <div class="childs column">
+        <ng-container *ngFor="let child of node.children">
+          <ng-container *ngTemplateOutlet="nav; context: { node: child }"> </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="column column--content-slot column--content-slot-amplience" *ngIf="node.amplienceId">
+        <div class="amplience-content">
+          <app-amplience [amplienceInput]="node.amplienceId"></app-amplience>
+        </div>
+      </div>
+    </div>
+  </nav>
+</ng-template>

@@ -1,0 +1,130 @@
+.amp-dc {
+  &__hero {
+    position: relative;
+    background-color: $base-nourishing-white;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: center;
+    height: 600px;
+
+    @media (max-width: $breakpoint-md-max) {
+      height: 538px;
+    }
+
+    &-banner-link {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__hero-content {
+    max-width: map-get($container-max-widths, lg);
+    margin: 9rem 1rem;
+    padding: 4rem;
+    position: relative;
+    z-index: 2;
+
+    @media (max-width: $breakpoint-md-max) {
+      margin: 1em 1em 1em;
+      padding: 1rem;
+    }
+  }
+
+  &__hero-bg-image {
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: cover;
+
+    &--mobile {
+      min-height: 538px;
+
+      @media (min-width: $breakpoint-lg) {
+        display: none;
+        min-height: auto;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @media (min-width: $breakpoint-lg) {
+        display: block;
+      }
+    }
+  }
+
+  &__hero-bg-video {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    video {
+      width: 100%;
+      object-fit: cover;
+      height: 100%;
+    }
+
+    &--mobile {
+      min-height: 500px;
+
+      @media (min-width: $breakpoint-lg) {
+        display: none;
+        min-height: auto;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @media (min-width: $breakpoint-lg) {
+        display: block;
+      }
+    }
+  }
+
+  &__body {
+    &--mobile {
+      @media (min-width: $breakpoint-lg) {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      @media (max-width: $breakpoint-md-max) {
+        display: none;
+      }
+    }
+  }
+
+  &__hero-cta-section {
+    margin-top: 1rem;
+
+    &.has-two-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4em;
+
+      .btn + .btn {
+        margin-left: 1.5em;
+      }
+
+      @media (max-width: $breakpoint-sm-max) {
+        flex-direction: column;
+
+        .btn + .btn {
+          margin: 1em 0 0;
+        }
+      }
+    }
+  }
+}

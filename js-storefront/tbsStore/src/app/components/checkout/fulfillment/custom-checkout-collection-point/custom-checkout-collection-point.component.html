@@ -1,0 +1,16 @@
+<div class="mb-4 collection-point-tab">
+  <h3 class="cx-checkout-title d-flex mb-3">{{ 'collectionPoint.title' | cxTranslate }}</h3>
+  <app-custom-address-finder
+    [ngClass]="{ 'd-none': storeInfo$ | async }"
+    [events]="eventsSubject"
+  ></app-custom-address-finder>
+
+  <app-collection-point-item
+    *ngIf="storeInfo$ | async as storeInfo"
+    [data]="storeInfo"
+    [showInfoModalBtn]="true"
+    [showInfoBtn]="false"
+    [showChangeBtn]="true"
+    (changeCollectionPointEmit)="onChangeCollectionPoint()"
+  ></app-collection-point-item>
+</div>

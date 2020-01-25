@@ -1,0 +1,15 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import CMS content for the site
+#
+
+$contentCatalog=tbsNLContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Language
+$lang=en
+
+# Content Pages
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]

@@ -1,0 +1,42 @@
+body {
+  color: var(--cx-color-core-primary);
+
+  &.popover-open {
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: var(--cx-color-core-primary);
+      display: block;
+      opacity: 0.5;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+a {
+  color: var(--cx-color-core-primary);
+
+  &:hover {
+    color: var(--cx-color-core-primary);
+    filter: brightness(calc(88 / 100));
+  }
+}
+
+.no-padding-desktop {
+  @media screen and (min-width: 1024px) {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

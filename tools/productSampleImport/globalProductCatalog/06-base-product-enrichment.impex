@@ -1,0 +1,129 @@
+$productCatalog=tbsGlobalProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+#Accepted Values are CREAMY,GLOSSY, MATTE, NATURAL, SHIMMER
+$finish=CREAMY
+
+#Accepted Values are AREA_BODY, AREA_EYES, AREA_FACE, AREA_FEET, AREA_HAIR, AREA_HANDS, AREA_LIPS, AREA_NAILS
+$targetArea=AREA_FACE
+
+#Accepted Values are AGING_SKIN, ANTI_POLLUTION, BLEMISHES_IMPERFECTIONS, COMBINATION_SKIN, DEHYDRATED_SKIN,
+# DRY_HAIR, DRY_SKIN, DULL_HAIR, DULL_SKIN, FINE_HAIR, NORMAL_SKIN, OILY_HAIR, OILY_SKIN, SCALP_CARE, SENSITIVE_SKIN, SUN_PROTECTION, THICK_HAIR
+$concern=AGING_SKIN
+
+#Accepted Values are CITRUS, FLORAL, FRESH, FRUITY, GOURMAND, GREEN, ORIENTAL, WOODY
+$scent=FLORAL
+
+#Accepted Values are HIGH_TO_FULL, LIGHT, MEDIUM
+$coverage=MEDIUM
+
+#Accepted Values are ABSINTHE, ACTIVIST, ALMOND, ALMOND_MILK_HONEY, ALOE, ARBER, ARGAN_OIL, TLAS_MOUNTAIN_ROSE,
+# BANANA, BERRY_BONBON, BLACK_MUSK, Black_Musk_Night_Bloom, BRITISH_ROSE, CAMOMILE, CEDAR_SAGE, COCONUT, DROPS_OF_LIGHT,
+# DROPS_OF_YOUTH, EARLY_HARVEST_RASPBERRY, ELIXIRS_OF_NATURE, ENGLISH_DAWN_GARDENIA , EXPERT_FACIAL_MASKS, FIJIAN_WATER_LOTUS,
+# FROSTED_BERRIES, FROSTED_CRANBERRY, FROSTED_PLUM, FUJI_GREEN_TEA, GINGER, GUARANA_COFFEE, HEMP, HONEY_BRONZE, HONEYMANIA,
+# INDIAN_NIGHT_JASMINE, JAPANESE_CHERRY_BLOSSOM, JAPANESE_CHERRY_BLOSSOM_STRAWBERRY_KISS, KISTNA, MACA_ROOT, MANGO, MORINGA,
+# NUTRIGANICS, OILS_OF_LIFE, OLIVE, PEPPERMINT, PEPPERMINT_CANDY_CANE, PIÑITA_COLADA, PINK_GRAPEFRUIT, POMEGRANATE, RAINFOREST,
+# RED_MUSK, ROOTS_OF_STRENGTH, SATSUMA, SEAWEED , SECRETS_OF_THE_WORLD, SHEA, SPA_OF_THE_WORLD, SPA_WISDOM, STRAWBERRY, TEA_TREE,
+# VANILLA_CHAI, VANILLA_MARSHMALLOW, VANILLA_PUMPKIN, VINEYARD_PEACH, VIRGIN_MOJITO, VITAMIN_C, VITAMIN_E, WHITE_MUSK, WHITE_MUSK_LEAU,
+# WHITE_MUSK_FOR_MEN, WHITE_MUSK_SPORT, WHITE_MUSK_SMOKY_ROSE, WILD_ARGAN_OIL
+$range=OILS_OF_LIFE
+
+#Accepted Values are PRODUCT_TYPE_ADVENT_CALENDARS, BAGS, BAGS_BOXES, BATH_BODY_GIFTS, BATH_ACCESSORIES, BATH_TREATS,
+# BB_CC_CREAMS, BLUSHERS, BODY_MASSAGE_OILS, BODY_ACCESSORIES, BODY_BUTTERS, BODY_CLAYS, BODY_CREAMS, BODY_LOTIONS, BODY_MISTS,
+# BODY_MOISTURISERS, BODY_SCRUBS, BODY_SORBETS, BODY_WASHES, BODY_YOGURTS, BRONZERS, BRUSHES_COMBS, CANDLES, CONCEALERS, CONDITIONERS,
+# DAY_MOISTURISERS, DEODORANTS, EAU_DE_COLOGNES, EAU_DE_PARFUMS, EAU_DE_TOILETTES, EYE_BRUSHES, EYE_CREAMS_TREATMENTS, EYE_GELS_SERUMS,
+# EYE_LINERS, EYE_SHADOWS, EYEBROWS, FACE_ACCESSORIES, FACE_BRUSHES, FACE_CLEANSERS, FACE_MASKS, FACE_MISTS, FACE_OILS_SERUMS,
+# FACE_SCRUBS_EXFOLIATORS, FACE_MOISTURISER_DAY, FACE_MOISTURISER_NIGHT, FACE_TONER, FACE_WASHES, FACE_WIPES, FOOT_CREAMS, FOOT_SCRUBS,
+# FOOT_TREATMENTS, FOUNDATIONS, FRAGRANCE_GIFTS, GIFT_BAGS_BOXES, GIFT_SETS, HAIR_STYLING, HAIR_TREATMENTS, HAND_CREAMS, HAND_GELS, HAND_WASHES,
+# HANDCARE_GIFTS, HIGHLIGHTERS, HOME_FRAGRANCE_OILS, LIMITED_EDITION_GIFTS, LIP_CHEEK_STAINS, LIP_BALMS, LIP_BRUSHES, LIP_BUTTERS, LIP_LINERS,
+# LIPSTICKS, LIQUID_LIPSTICKS, MAKE_UP_GIFTS, MAKE_UP_REMOVERS, MAKE_UP_TOOLS, MASCARAS, NAIL_POLISHES, NIGHT_MOISTURISERS, PERFUME_OIL, POWDERS,
+# PRIMERS, REED_DIFUSERS, ROOM_SPRAYS, SETTING_SPRAY, SHAMPOOS, SHAVING, SHOWER_GELS_CREAMS, SKINCARE_GIFTS, SOAPS, SPA_PAMPER_GIFTS, TRAVEL_KITS, WAX_MELTS
+$productType=FACE_CLEANSERS
+
+#Accepted Values are ACCESSORIES, BATH_SHOWER, BODY_CARE, EYE_CARE, EYE_MAKE_UP, FACE_MAKE_UP, FOOT_CARE, FRAGRANCE, GIFTS, HAIR_CARE,
+# HAND_CARE, HOME_FRAGRANCE, LIP_CARE, LIP_MAKE_UP, NAIL_MAKE_UP, SKIN_CARE
+$categoryType=SKIN_CARE
+
+#Accepted Values are GLUTEN, SOY, SILICONE, SULFATES, FRAGRANCE, NUTS, OIL
+$freeFrom=GLUTEN,SILICONE,SULFATES,NUTS
+
+#Accepted Values are YES, NO
+$vegan=YES
+
+# Facet Data For Products
+UPDATE TBSBaseProduct ; $catalogVersion ; code[unique=true] ; finish(code) ; targetArea(code) ; concern(code) ; scent(code) ; coverage(code) ; range(code) ; productType(code) ; categoryType(code) ; freeFrom(code) ; vegan(code) ;
+						;			;p000019			;				;AREA_BODY			;				;			;				;SHEA			;BODY_BUTTERS		;BODY_CARE			;				;				;
+						;;p000551;;AREA_BODY;;;;SPA_OF_THE_WORLD;BODY_CREAMS;SKIN_CARE;;;
+						;;p002347;;;;;;ALMOND_MILK_HONEY;BODY_MOISTURISERS;BODY_CARE;;;
+						;;p000014;;AREA_BODY;DRY_SKIN;GOURMAND;;;;;;;
+						;;p001113;;;;;;HEMP;;;;;
+						;;p000873;;AREA_BODY;DRY_SKIN;FLORAL;;VITAMIN_E;BODY_BUTTERS;BODY_CARE;;;
+						;;p000016;;AREA_BODY;DRY_SKIN;GREEN;;OLIVE;BODY_BUTTERS;BODY_CARE;;;
+						;;p000087;;AREA_BODY;DRY_SKIN;CITRUS;;SATSUMA;BODY_BUTTERS;BODY_CARE;;;
+						;;p000015;;AREA_BODY;DRY_SKIN;FRUITY;;MANGO;BODY_BUTTERS;BODY_CARE;;;
+						;;p000247;;AREA_BODY;DRY_SKIN;ORIENTAL;;ARGAN_OIL;BODY_BUTTERS;BODY_CARE;;;
+						;;p002421;;AREA_BODY;;;;SPA_OF_THE_WORLD;BODY_CREAMS;BATH_SHOWER;;;
+						;;p000018;;AREA_BODY;DRY_SKIN;FRUITY;;STRAWBERRY;BODY_BUTTERS;SKIN_CARE;;;
+						;;p000626;;AREA_BODY;DRY_SKIN;FLORAL;;;BODY_BUTTERS;;;;
+						;;p000874;;;;;;ALOE;BODY_BUTTERS;BODY_CARE;;;
+						;;p000379;;AREA_BODY;DRY_SKIN;FLORAL;;MORINGA;BODY_BUTTERS;;;;
+						;;p000698;;AREA_BODY;;;;SPA_OF_THE_WORLD;BODY_CREAMS;BODY_CARE;;;
+						;;p000017;;AREA_BODY;DRY_SKIN;CITRUS;;PINK_GRAPEFRUIT;BODY_MOISTURISERS;BODY_CARE;;;
+						;;p002727;;;;FRUITY;;JAPANESE_CHERRY_BLOSSOM_STRAWBERRY_KISS;BODY_CREAMS;;;;
+						;;p002811;;AREA_BODY;;GOURMAND;;BANANA;BODY_BUTTERS;BODY_CARE;;;
+						;;p000274;;;;FLORAL;;JAPANESE_CHERRY_BLOSSOM;;BODY_CARE;;;
+						;;p000297;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;DAY_MOISTURISERS;SKIN_CARE;;;
+						;;p000206;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;NIGHT_MOISTURISERS;SKIN_CARE;;;
+						;;p000810;;;;;;;;;;;
+						;;p000090;;AREA_LIPS;;;;VITAMIN_E;LIP_BALMS;SKIN_CARE;;;
+						;;p000207;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;DAY_MOISTURISERS;SKIN_CARE;;;
+						;;p001070;;;;;;;;;;;
+						;;p001065;;;;;;;;;;;
+						;;p002826;;AREA_FACE;;;;VITAMIN_E;;SKIN_CARE;;;
+						;;p000177;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;FACE_MOISTURISER_DAY;SKIN_CARE;;;
+						;;p000456;;AREA_EYES;;;;VITAMIN_E;EYE_CREAMS_TREATMENTS;SKIN_CARE;;;
+						;;p000150;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;NIGHT_MOISTURISERS;SKIN_CARE;;;
+						;;p003255;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;FACE_MASKS;SKIN_CARE;;;
+						;;p000149;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;FACE_MISTS;SKIN_CARE;;;
+						;;p000147;;AREA_FACE;DRY_SKIN;;;VITAMIN_E;FACE_CLEANSERS;SKIN_CARE;;;
+						;;p000148;;AREA_FACE;DEHYDRATED_SKIN;;;VITAMIN_E;FACE_TONER;SKIN_CARE;;;
+
+
+
+UPDATE TBSBaseProduct ; $catalogVersion ; code[unique=true] ; name[lang=en] ; description[lang=en]                                                                                                                                                                                                                                                                         
+						;			;p000019			;Shea Nourishing Body Butter	;"Our Shea Nourishing Body Butter is enriched with Community Trade shea butter from Ghana, handcrafted by women who have used shea butter to intensely nourish dry skin for generations. This iconic Body Butter is now even richer, with the butter of 36 shea nuts in every tub. Enjoy the warming, nutty scent and indulgently rich texture, that melts into skin for 72 hours of ultra-rich moisture.";
+						;;p000551;Spa Of The World™ Hawaiian Kukui Cream;"Hawaiian women, exposed to the relentless sun for generations, have held the secret of kukui oil to nurture their skin. Bursting with luscious moisture, kukui oil helps restore skin’s natural suppleness, leaving it feeling nourished and soft. Use this skin cherishing cream as part of our blissful ritual when your body is in need of luxury.";
+						;;p002347;Almond Milk & Honey Soothing & Restoring Body Butter;"This heavenly, rich body butter has been specially formulated to soothe, restore and protect dry, sensitive skin. With 48 hours of intense moisture, help calm tight, itchy dry skin. Enriched with organic almond milk from Spain and Community Trade honey from Ethiopia, Almond Milk & Honey is specially formulated for sensitive, dry skin.";
+						;;p000014;Coconut Nourishing Body Butter;"Give your skin a dose of ultra-rich hydration when you apply this nourishing coconut body butter. With 48hr moisturising properties, your skin will stay softer for longer.";
+						;;p001113;Hemp Body Butter;"Our solid cream instantly melts onto the skin, for intense hydration and increased protection. Infused with rich hemp seed oil, packed with essential fatty acids, this nourishing formula will leave your skin beautifully soft and supple.";
+						;;p000873;Vitamin E Body Butter;"Our vitamin E enriched body moisturiser nourishes and hydrates for 24hrs. Formulated with protective vitamin E and moisturising wheatgerm oil. Leaves the skin feeling softer and smoother to the touch, with a neutral delicate scent. Use as part of your personalised skincare programme.";
+						;;p000016;Olive Nourishing Body Butter;"Give your skin a dose of ultra-rich hydration, when you apply our Meditteranean inspired, nourishing olive body butter. With 48hr moisturising properties, your skin will stay softer for longer.";
+						;;p000087;Satsuma Energising Body Butter;"Our deliciously fresh and fruity body butter will melt into your skin, for around-the-clock moisture. Reveal silkier-softer skin after every use.";
+						;;p000015;Mango Softening Body Butter;"Escape to the tropics with our Mango Softening Body Butter, perfect for round the clock hydration. Reveal silky-soft, hydrated skin after every use.";
+						;;p000247;Wild Argan Oil Sublime Nourishing Body Butter;"Transport the hammam environment to your bathroom and give your skin a dose of ultra-rich hydration, when you apply this nourishing wild argan oil body butter. With 48hr moisturising properties, your skin will stay softer for longer.";
+						;;p002421;Spa of the World™ Ethiopian Green Coffee Cream;"Our new firming body cream is enriched with organic Ethiopian green coffee and helps skin feel firmer and smoother. It is hand-harvested from the beautiful Kaffa region, known around the world as ‘the home of coffee’, where coffee drinking plays a huge part in traditional Ethiopian culture. Our silky soft cream, enriched with caffeine, known for its stimulating properties, effortlessly melts into the skin when massaged, leaving skin feeling firmer and smoother. Use as part of our Spa of the World™ Firming Ritual.";
+						;;p000018;Strawberry Softening Body Butter;"Our deliciously fruity body butter will melt into your skin, for an intensely moisturising experience. Reveal silkier-softer, strawberry scented skin after every use.";
+						;;p000626;British Rose Instant Glow Body Butter;"Indulge in dewy hydration with our first Body Butter with glow enhancing rose essence. Beautifully pearlescent, this velvety-soft moisturiser is light to the touch but rich on moisture. Non-sticky and perfect for normal to dry skin, it transforms instantly on skin to give you an instant all-over healthy look.";
+						;;p000874;Aloe Soothing Body Butter;"Our intensely soothing aloe butter will melt into your skin, for a richly hydrating experience. Reveal softer, fresher skin and round the clock moisture after each use.";
+						;;p000379;Moringa Softening Body Butter;"Dip into Moringa Body Butter for a sublimely nourishing treat. Enriched with handpicked moringa seed oil, your skin will feel more soft and supple after every use.";
+						;;p000698;Spa of the World™ Japanese Camellia Cream;"Camellia oil has been used by Japanese women since the 8th century to gently soften and moisturise skin. The exquisite scent of this pure and elegant flower allows mind and body to reconnect with a moment of profound peace. Use this rich body cream with a light, velvety texture as part of our relaxing ritual when you’re in need of a fast-track to tranquillity.";
+						;;p000017;Pink Grapefruit Energising Body Butter;"Our deliciously zesty body butter will melt into your skin, for round the clock moisture. Reveal a more silky-soft skin after every use.";
+						;;p002727;Japanese Cherry Blossom Strawberry Kiss Body Cream;"Treat your skin to our addictively sweet, silky-soft body cream. Infused with the extract of hand-harvested, cold-pressed Japanese cherry blossoms and juicy notes of strawberries, pink peony and amber, this rich moisturiser leaves skin seriously hydrated and irresistibly fresh and fruity.";
+						;;p002811;Special Edition Banana Nourishing Body Butter;"Nourish skin with our richly textured, fabulously fragrant Special Edition Banana Nourishing Body Butter. Enriched with Community Trade organic banana puree made from bananas that won’t sell to the food industry (we don’t care if they’re the ‘wrong’ shape or size!), our fruity vegan formula provides 72hr moisture and leaves skin feeling softer and smoother.";
+						;;p000274;Japanese Cherry Blossom Body Cream;"This rich moisturiser leaves your skin feeling silky-soft and scented with a delicate blend of sweet magnolia, blooming cherry blossom and hinoki wood accords.";
+						;;p000297;Vitamin E Moisture Cream;"Our lightweight, easily absorbed facial moisturiser protects and locks in moisture for all-day hydration, to leave skin feeling fresh, silky-soft and looking more radiant. Now formulated with vitamin E, plumping hyaluronic acid and wheatgerm oil, its moisturising effects can help ward off dryness. Use after cleansing and toning, as part of your personalised skincare programme.";
+						;;p000206;Vitamin E Night Cream;"A rich yet easily absorbed night cream protects, replenishes and helps to prevent moisture-loss overnight - when the skin is at its most receptive. Intensely hydrating, leaving it feeling softer and smoother. Now formulated with vitamin E, plumping hyaluronic acid and wheatgerm oil. Use as part of your evening personalised skincare programme.";
+						;;p000810;Vitamin E Eye Cream;"Our Vitamin E Eye Cream helps to reduce the appearance of fine lines and dark circles. This formula hydrates, smoothes and protects the delicate skin around the eye. Use as part of your personalised skincare programme.";
+						;;p000090;Vitamin E Lip Care SPF15;"Our vitamin E lip balm moisturises and protects the delicate lip area against harsh weather conditions which cause dry, chapped lips. Formulated with vitamin E, coconut and olive oils. Use as part of your skincare programme.";
+						;;p000207;Vitamin E Intense Moisture Cream;"This rich, non-greasy facial moisturiser protects, nourishes and locks in moisture for long-lasting hydration. Helping to restore skin’s natural moisture barrier. Now formulated with vitamin E, plumping hyaluronic acid and wheatgerm oil. Especially suitable for very dry skin. Leaves skin feeling fresh, silky-soft and looking more radiant. Use as part of your evening personalised programme.";
+						;;p001070;Vitamin E Aqua Boost Essence Lotion;"The first essential skincare step after cleansing, this lightweight, gellified formula instantly feels non-greasy and comfortable on the skin, whilst providing 48 hours of moisturisation.";
+						;;p001065;Vitamin E Day Lotion SPF30;"A lightweight, milky formula to moisturise and protect your skin against UVA and UVB damage.";
+						;;p002826;Vitamin E Gel Moisture Cream;"Help protect your skin from external aggressors and lock in moisture for 48-hour hydration with our new Vitamin E Gel Moisture Cream. This oil-free, lightweight and fast absorbing daily moisturiser is formulated with natural origin hyaluronic acid, from bio-fermented wheat-germ from Pomacle, France and raspberry extract, containing Vitamin E, to refresh and re-plump with moisture.";
+						;;p000177;Vitamin E Gentle Facial Wash;"A gentle, non-drying cleansing facial wash that leaves skin feeling clean, soft and refreshed. Formulated with protective vitamin E and moisturising wheatgerm oil. Use with Vitamin E toner, as part of your personalised skincare programme.";
+						;;p000456;Vitamin E Eyes Cube;"A refreshing anti-fatigue eye stick with protective vitamin E and wheatgerm oil. A gentle, easy-glide application that moisturises, cools and instantly revives the appearance of tired eyes. Formulated with protective vitamin E and moisturising wheatgerm oil. Use as part of your personalised skincare programme.";
+						;;p000150;Vitamin E Overnight Serum-In-Oil;"Awaken to restored and nourished skin with this innovative, lightweight, non-greasy serum-in-oil, that combines the power of a serum and an oil, to replenish and recharge skin with moisture overnight. The morning after, skin looks fresher, more radiant and rested. Follow with chosen moisturiser as part of your personalised skincare programme.";
+						;;p003255;Vitamin E Quench Sheet Mask;"Hydrate thirsty skin in just 15 minutes with our Vitamin E Quench Sheet Mask. Enriched with Community Trade organic aloe vera, natural-origin hyaluronic acid and wheatgerm oil, this mask locks in 24hr hydration and leaves skin feeling instantly softer, smoother and re-plumped with moisture.";
+						;;p000149;Vitamin E Hydrating Face Mist;"Our facial mist with rosewater instantly refreshes and helps to boost hydration on skin, and set make-up. A great skincare product for an instant ‘pick-me up’. Formulated with protective vitamin E and moisturising wheatgerm oil. Use as part of your personalised skincare programme.";
+						;;p000147;Vitamin E Cream Cleanser;"A light, creamy cleanser with protective vitamin E and moisturising wheatgerm oil that effectively removes impurities and make-up. Leaves skin feeling clean, softer and more supple. Follow with Vitamin E Hydrating Toner, as part of your personalised skincare programme.";
+						;;p000148;Vitamin E Hydrating Toner;"A refreshing, hydrating alcohol-free toner with protective vitamin E and moisturising wheatgerm oil, removes traces of make-up and remaining cleanser. Leaving skin feeling clean, supple and hydrated. Helps to maximise absorption of follow on products. Use as part of your personalised skincare programme.";
+						;;p000694;Vitamin E Sink In Moisture Sleeping Mask;"Our light, gel-cream mask helps to infuse optimum moisture levels into the skin with intense hydration. Formulated with protective vitamin E and moisturising wheatgerm oil. Use as part of your personalised skincare programme.";

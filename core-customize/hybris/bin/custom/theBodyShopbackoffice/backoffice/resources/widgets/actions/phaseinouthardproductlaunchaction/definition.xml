@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2017 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<action-definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   id="uk.co.thebodyshop.backoffice.actions.phaseinouthardproductlaunchaction"
+                   xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+
+    <name>Phase In and Phase Out Hard Product Launch Action</name>
+    <description>Hard Product Lunch from phase out to Phase in action</description>
+    <author>EnvoyDigital</author>
+    <version>1.0</version>
+
+    <inputType>java.lang.Object</inputType>
+    <outputType>java.util.List</outputType>
+
+    <iconUri>icons/icon_action_product_hard_launch_default.png</iconUri>
+    <iconHoverUri>icons/icon_action_product_hard_launch_hover.png</iconHoverUri>
+    <iconDisabledUri>icons/icon_action_product_hard_launch_disabled.png</iconDisabledUri>
+    <actionClassName>uk.co.thebodyshop.backoffice.actions.PhaseInOutHardProductLaunchAction</actionClassName>
+</action-definition>

@@ -1,0 +1,39 @@
+<form [formGroup]="giftWrapServiceForm" (ngSubmit)="submitGiftService($event)">
+  <!-- ADD SERVICE -->
+  <ng-container *ngIf="!isRemoving; else giftServiceRemove">
+    <!-- GIFT WRAP IMAGE -->
+    <div class="form-group cart-gift-wrap-form-group__image">
+      <cx-cart-gift-wrap-image
+        [giftWrapImageUrl]="cmsData.giftWrapServiceImage"
+        [altText]="cmsData.name"
+        class="cart-gift-wrap__image d-flex flex-grow-1 align-items-center justify-content-center m-0"
+      ></cx-cart-gift-wrap-image>
+    </div>
+    <!-- MESSAGE BODY -->
+    <p>{{ cmsData.giftWrapServiceMessage }}</p>
+  </ng-container>
+  <!-- REMOVE SERVICE-->
+  <ng-template #giftServiceRemove>
+    <p class="pt-3">{{ 'cart.giftWrap.personalMessageModal.removalMessage' | cxTranslate }}</p>
+  </ng-template>
+  <!-- CTA BUTTONS -->
+  <div class="d-flex flex-column flex-lg-row flex-wrap">
+    <div class="col-12 col-lg-6 pl-lg-0">
+      <button
+        role="button"
+        type="button"
+        class="btn btn--secondary w-100"
+        [attr.aria-label]="'common.cancel' | cxTranslate"
+        (click)="closeEmit.emit()"
+      >
+        {{ 'common.cancelBtn' | cxTranslate }}
+      </button>
+    </div>
+    <div class="mt-2 mt-lg-0 col-12 col-lg-6 pr-lg-0">
+      <button role="button" type="submit" class="btn btn--primary w-100">
+        <span *ngIf="!isRemoving">{{ 'common.addBtn' | cxTranslate }}</span>
+        <span *ngIf="isRemoving">{{ 'common.removeBtn' | cxTranslate }}</span>
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,24 @@
+.articles {
+  margin: $articles-inner-spacing;
+  &__bg {
+    background: $articles-bg-default;
+    padding: $articles-bg-spacing;
+  }
+  &__thumbnail {
+    margin: $articles-thumbnail-spacing;
+  }
+  &__heading {
+    font-family: $articles-heading-font-family;
+    font-size: $articles-heading-font-size;
+    text-align: $articles-heading-text-align;
+    &--search {
+      font-family: $search-listing-articles-heading-font-family;
+      margin-bottom: 40px;
+      text-align: $search-listing-articles-heading-text-align;
+    }
+  }
+  &__summary {
+    text-align: $articles-summary-text-align;
+    margin-bottom: 40px;
+  }
+}

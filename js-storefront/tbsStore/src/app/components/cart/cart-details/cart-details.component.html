@@ -1,0 +1,43 @@
+<ng-container *ngIf="cart$ | async as cart">
+  <ng-container *ngIf="entries$ | async as entries">
+    <!-- Cart Details -->
+    <div class="cart-details-wrapper cart-details mt-5">
+      <div class="cart-details__top-section d-flex flex-row flex-wrap">
+        <app-promotion-free-delivery [promotions]="getAllPromotionsForCart(cart)"></app-promotion-free-delivery>
+
+        <h1 class="col-9 px-0 h1 h1--alt">{{ 'cart.title' | cxTranslate }}</h1>
+        <h3 class="cart-details__total d-flex col-3 justify-content-end align-items-end pb-1">
+          <!-- SPARTACUS BUG  {{count}} does not work-->
+          <!-- {{ 'cart.items' | cxTranslate: { count: cartTotalItems } }} -->
+          <span *ngIf="cartTotalItems == 1">{{ 'cart.items' | cxTranslate: { count: cartTotalItems } }}</span>
+          <span *ngIf="cartTotalItems != 1">{{ 'cart.items_plural' | cxTranslate: { count: cartTotalItems } }}</span>
+        </h3>
+        <div class="cart-details__info d-flex col-12 px-0">
+          {{ 'cart.info' | cxTranslate }}
+        </div>
+      </div>
+      <cx-cart-item-list
+        [items]="entries"
+        [potentialProductPromotions]="cart.potentialProductPromotions"
+        [cartIsLoading]="!(cartLoaded$ | async)"
+      ></cx-cart-item-list>
+
+      <ng-container *ngIf="entries.length > 0">
+        <div class="shopping-bag-wish-list">
+          <a (click)="shoppingBagToWishlist()">
+            <cx-icon
+              class="icon"
+              role="img"
+              [type]="'WISH_LIST'"
+              [attr.aria-label]="'common.wishlist' | cxTranslate"
+            ></cx-icon>
+            <span class="to-wish-list-text">{{ 'cart.saveToWishList' | cxTranslate }}</span>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+    <div class="cart-gift-wrap__wrapper"></div>
+  </ng-container>
+</ng-container>
+
+<app-save-to-wishlist-modal></app-save-to-wishlist-modal>

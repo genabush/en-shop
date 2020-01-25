@@ -1,0 +1,192 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Promotions
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsUSProductCatalog
+$defaultPromoGrp=tbsUSPromoGroup
+$storeUid=tbsUSStore
+
+$favCustomers=favoriteCustomers
+$bigSpenders=bigSpenders
+$catalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]),CatalogVersion.version[default=Online])[default=$productCatalog:Online]
+
+INSERT PromotionPriceRow;&tresholdId;Currency(isocode);price
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+INSERT_UPDATE OrderThresholdDiscountPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true,unique=true];code[unique=true];title;description;messageFired[lang=en];messageFired[lang=de];messageFired[lang=ja];messageFired[lang=zh];priority;thresholdTotals(&tresholdId);discountPrices(&priceId)
+
+INSERT_UPDATE PromotionUserRestriction;positive;promotion(code)[unique=true];users(uid)
+
+INSERT PromotionPriceRow;&tresholdId;Currency(isocode);price
+
+INSERT_UPDATE ProductPercentageDiscountPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;percentageDiscount;priority;products(code,$catalogVersion)
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+INSERT_UPDATE AcceleratorProductMultiBuyPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;priority;categories(code,$catalogVersion);qualifyingCount;bundlePrices(&priceId)
+
+INSERT_UPDATE AcceleratorProductBOGOFPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;priority;categories(code,$catalogVersion);qualifyingCount;freeCount
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+INSERT_UPDATE ProductPerfectPartnerPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;priority;products(code,$catalogVersion);partnerProducts(code,$catalogVersion);partnerPrices(&priceId)
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+INSERT_UPDATE ProductBundlePromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true,unique=true];code[unique=true];title;description;priority;products(code,$catalogVersion);bundlePrices(&priceId)
+
+INSERT_UPDATE BaseStore;uid[unique=true];giftWrapProduct(code,$catalogVersion);giftWrapEnabled;eligibleForGiftMessage[default=true]
+;$storeUid;S003412;true
+
+
+INSERT_UPDATE DroolsKIEModule;name[unique=true];mvnGroupId;mvnArtifactId;mvnVersion;ruleType(code);active;version;
+;promotions-us-module;hybris-rules;promotions-us;1.0.0;PROMOTION;true;-1;
+
+INSERT_UPDATE DroolsKIEBase;name[unique=true];kieModule(name)[unique=true];equalityBehavior(code);eventProcessingMode(code)
+;promotions-us-base;promotions-us-module;EQUALITY;STREAM
+
+INSERT_UPDATE DroolsKIESession;name[unique=true];kieBase(name)[unique=true];sessionType(code)
+;promotions-us-usssion;promotions-us-base;STATEFUL
+
+INSERT_UPDATE DroolsRuleEngineContext;name[unique=true];kieSession(name);ruleFiringLimit
+;promotions-us-context;promotions-us-usssion;200;
+
+UPDATE DroolsKIEBase;name[unique=true];defaultKIESession(name)
+;promotions-us-base;promotions-us-usssion
+
+INSERT_UPDATE CatalogVersionToRuleEngineContextMapping;context(name)[unique=true];catalogVersion(catalog(id),version)[unique=true]
+;promotions-us-context;$productCatalog:Online
+
+UPDATE DroolsKIEModule;name[unique=true];defaultKIEBase(name)
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").initializeModule(impex.getLastImportedItem());"
+;promotions-us-module;promotions-us-base
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];name[default=Product fixed discount]
+;us_tbs_product_percentage_discount;0;1;productPromotionRuleGroup;"[{""definitionId"":""y_group"",""parameters"":{""operator"":{""uuid"":""0fdc6312-aa55-46c1-9c44-c2e9589f69a2"",""type"":""Enum(de.hybris.platform.ruleengineservices.definitions.conditions.RuleGroupOperator)"",""value"":""OR""}},""children"":[{""definitionId"":""y_qualifying_products"",""parameters"":{""products_operator"":{""uuid"":""ff07643a-659e-4d0c-8e43-05bcb83dd018"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""quantity"":{""uuid"":""430c2963-51c5-408c-9b13-b36d29d9c436"",""type"":""java.lang.Integer"",""value"":1},""catalog"":{""uuid"":""4afdb668-fb28-4bcc-8ec1-23ea8da04d09"",""type"":""ItemType(Catalog)""},""operator"":{""uuid"":""581f98cc-ab45-48fd-a7b3-7c7367cec248"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""},""products"":{""uuid"":""b78e8cb3-c6d8-41c5-a312-8d717e3c3b5a"",""type"":""List(ItemType(Product))"",""value"":[""p000657::tbsUSProductCatalog""]}},""children"":[]},{""definitionId"":""y_qualifying_categories"",""parameters"":{""quantity"":{""uuid"":""1d21ebc3-865e-4575-b394-002f242fff4d"",""type"":""java.lang.Integer"",""value"":1},""catalog"":{""uuid"":""ac6a86c8-a733-4b0a-b46b-eb6a60fe4876"",""type"":""ItemType(Catalog)""},""categories_operator"":{""uuid"":""d6413ba4-d607-462e-b115-93ee3b6a4950"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""excluded_categories"":{""uuid"":""e8348cfa-c314-4afc-8859-c3fd05f36bb4"",""type"":""List(ItemType(Category))""},""categories"":{""uuid"":""f2e87e37-c043-46a2-a89e-b2a94f5b7b1f"",""type"":""List(ItemType(Category))"",""value"":[""c00066::tbsUSProductCatalog""]},""excluded_products"":{""uuid"":""33faf84d-f2dc-4e05-bf00-574006e95c49"",""type"":""List(ItemType(Product))"",""value"":[]},""operator"":{""uuid"":""3a3ee87b-82cf-470f-b063-29b2f84ec83e"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]}]";"[{""definitionId"":""y_order_entry_percentage_discount"",""parameters"":{""value"":{""uuid"":""a1a5d598-c351-43a4-92bf-eb63d877496a"",""type"":""java.math.BigDecimal"",""value"":10}}}]";
+;main_us_ptf_order_threshold_percentage_discount;400;1;orderPromotionRuleGroup;"[
+ {
+  ""definitionId"": ""y_cart_total"",
+  ""parameters"": {
+    ""value"": {
+      ""uuid"": ""0472c08a-3a9a-4696-aba1-9e044d540a49"",
+      ""type"": ""Map(ItemType(Currency),java.math.BigDecimal)"",
+      ""value"": {
+        ""GBP"": 30
+      }
+    },
+    ""operator"": {
+      ""uuid"": ""ff8d6f47-d08b-41a4-8eac-86168d132da3"",
+      ""type"": ""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",
+      ""value"": ""GREATER_THAN_OR_EQUAL""
+    }
+  },
+  ""children"": [
+  ]
+}]";"[
+ {
+  ""definitionId"": ""y_order_fixed_discount"",
+  ""parameters"": {
+    ""value"": {
+      ""uuid"": ""4b288e21-125e-4e1e-82b8-7342baf68ba8"",
+      ""type"": ""Map(ItemType(Currency),java.math.BigDecimal)"",
+      ""value"": {
+        ""GBP"": 1
+      }
+    }
+  }
+}]";;US Main free delivery promotion
+
+############################# POTENTIAL PROMOTION RULES ##########################
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;name;ruleGroup(code);messageFired;conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=true];status(code)[unique=true,default=UNPUBLISHED]
+                                 ;us-free-delivery_PTF-DELIVERY-MESSAGE;150;1;US Free delivery Potential Promotion;orderPromotionRuleGroup;"Free delivery on orders over {b68a662d-67ef-4173-af67-44955614da48} _SEP_ Spend {b30a7f2a-d367-4a88-a6e6-cf15a741d9d6} more to qualify";"[
+{
+  ""definitionId"": ""y_cart_total"",
+  ""parameters"": {
+    ""value"": {
+      ""uuid"": ""165ee0f8-d323-4c89-9746-5b0491ec659e"",
+      ""type"": ""Map(ItemType(Currency),java.math.BigDecimal)"",
+      ""value"": {
+        ""GBP"": 20
+      }
+    },
+    ""operator"": {
+      ""uuid"": ""0b685836-3227-4412-9303-6f48815931e7"",
+      ""type"": ""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",
+      ""value"": ""GREATER_THAN_OR_EQUAL""
+    }
+  },
+  ""children"": []
+},
+{
+  ""definitionId"": ""y_group"",
+  ""parameters"": {
+    ""operator"": {
+      ""uuid"": ""cb69ef74-0059-4b52-be6b-3090ccccc0ff"",
+      ""type"": ""Enum(de.hybris.platform.ruleengineservices.definitions.conditions.RuleGroupOperator)"",
+      ""value"": ""AND""
+    }
+  },
+  ""children"": [
+    {
+      ""definitionId"": ""y_cart_total"",
+      ""parameters"": {
+        ""value"": {
+          ""uuid"": ""b68a662d-67ef-4173-af67-44955614da48"",
+          ""type"": ""Map(ItemType(Currency),java.math.BigDecimal)"",
+          ""value"": {
+            ""GBP"": 30
+          }
+        },
+        ""operator"": {
+          ""uuid"": ""6128f375-671e-4e93-9139-bb4ed2e76b04"",
+          ""type"": ""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",
+          ""value"": ""LESS_THAN_OR_EQUAL""
+        }
+      },
+      ""children"": []
+    }
+  ]
+},
+{
+  ""definitionId"": ""y_rule_executed"",
+  ""parameters"": {
+    ""allowed"": {
+      ""uuid"": ""c4c75f1a-d35c-4286-803f-615cab0c0037"",
+      ""type"": ""java.lang.Boolean"",
+      ""value"": false
+    },
+    ""rule"": {
+      ""uuid"": ""00c3ece1-b118-4ff2-bddb-2f1425eec883"",
+      ""type"": ""ItemType(AbstractRule)"",
+      ""value"": ""main_us_ptf_order_threshold_percentage_discount""
+    }
+  },
+  ""children"": []
+ }
+]";"[
+{
+  ""definitionId"": ""y_trigger_message_parameterized_cart_total_threshold"",
+  ""parameters"": {
+    ""cart_total_threshold_parameter"": {
+      ""uuid"": ""b30a7f2a-d367-4a88-a6e6-cf15a741d9d6"",
+      ""type"": ""Map(ItemType(Currency),java.math.BigDecimal)"",
+      ""value"": {
+        ""GBP"": 30
+      }
+    }
+  }
+}]";;;
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp];name[default=Coupon percentage discount];status(code)[default=PUBLISHED]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleCompilerService"").compile( de.hybris.platform.core.Registry.getApplicationContext().getBean(""modelService"").get(impex.getLastImportedItem()),""promotions-us-module"");  de.hybris.platform.core.Registry.getApplicationContext().getBean(""platformRuleEngineService"").initializeAllRulesModules();"
+;us_single_coupon_code_percentage_discount_on_products;0;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""baa9d67e-66ec-4989-b3c4-7589346d4bb2"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""us_single-coupon""]}},""children"":[]},{""definitionId"":""y_qualifying_categories"",""parameters"":{""quantity"":{""uuid"":""20fd1aab-396d-4f36-a397-7d11d4542009"",""type"":""java.lang.Integer"",""value"":1},""categories_operator"":{""uuid"":""504c05f5-9092-4827-9950-29b60dd03f3d"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""excluded_categories"":{""uuid"":""671ae763-e0c7-4fb9-bb34-c6367f683511"",""type"":""List(ItemType(Category))""},""excluded_products"":{""uuid"":""7f1a0063-0625-437c-90c4-ec00b5e6a4d3"",""type"":""List(ItemType(Product))""},""categories"":{""uuid"":""fe873025-b08c-452c-a649-906cde3fab60"",""type"":""List(ItemType(Category))"",""value"":[""c00014::tbsUSProductCatalog""]},""operator"":{""uuid"":""6a1f11ef-8bc0-490d-aa69-6e9b70d26e4c"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_entry_percentage_discount"",""parameters"":{""value"":{""uuid"":""7850ea3a-cd43-4a94-b12d-c2ef6b82942a"",""type"":""java.math.BigDecimal"",""value"":25}}}]";
+;us_multiple_coupon_code_percentage_discount_on_products;0;1;couponPromotionRuleGroup;"[{""definitionId"":""y_qualifying_coupons"",""parameters"":{""coupons"":{""uuid"":""baa9d67e-66ec-4989-b3c4-7589346d4bb2"",""type"":""List(ItemType(AbstractCoupon))"",""value"":[""usmulticoupon""]}},""children"":[]},{""definitionId"":""y_qualifying_categories"",""parameters"":{""quantity"":{""uuid"":""20fd1aab-396d-4f36-a397-7d11d4542009"",""type"":""java.lang.Integer"",""value"":1},""categories_operator"":{""uuid"":""504c05f5-9092-4827-9950-29b60dd03f3d"",""type"":""Enum(de.hybris.platform.ruledefinitions.CollectionOperator)"",""value"":""CONTAINS_ANY""},""excluded_categories"":{""uuid"":""671ae763-e0c7-4fb9-bb34-c6367f683511"",""type"":""List(ItemType(Category))""},""excluded_products"":{""uuid"":""7f1a0063-0625-437c-90c4-ec00b5e6a4d3"",""type"":""List(ItemType(Product))""},""categories"":{""uuid"":""fe873025-b08c-452c-a649-906cde3fab60"",""type"":""List(ItemType(Category))"",""value"":[""c00066::tbsUKProductCatalog""]},""operator"":{""uuid"":""6a1f11ef-8bc0-490d-aa69-6e9b70d26e4c"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_order_entry_percentage_discount"",""parameters"":{""value"":{""uuid"":""7850ea3a-cd43-4a94-b12d-c2ef6b82942a"",""type"":""java.math.BigDecimal"",""value"":25}}}]";
+
+INSERT_UPDATE SingleCodeCoupon;couponId(id)[unique=true];maxRedemptionsPerCustomer;maxTotalRedemptions;active[default=true]
+;us_single-coupon;1;;
+
+INSERT_UPDATE MultiCodeCoupon;couponId(id)[unique=true];codeGenerationConfiguration(name);name[lang=en];active[default=true]
+;usmulticoupon;default-configuration;US Multi Coupon Code

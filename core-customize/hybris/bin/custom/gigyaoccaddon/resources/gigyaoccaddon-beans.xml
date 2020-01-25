@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+
+	<bean class="com.envoydigital.occ.gigya.data.GigyaRaasData">
+		<property name="id" type="String"/>
+		<property name="show" type="boolean"/>
+		<property name="profileEdit" type="boolean"/>
+		<property name="raasConfig" type="String"/>
+		<property name="authenticated" type="boolean"/>
+	</bean>
+
+	<bean class="com.envoydigital.occ.gigya.data.GigyaLoginResponseWsDTO">
+		<hints>
+			<hint name="wsRelated"/>
+			<hint name="alias">GigyaLoginResponse</hint>
+		</hints>
+		<property name="code" type="int"/>
+		<property name="success" type="boolean"/>
+		<property name="message" type="String"/>
+		<property name="oauthToken" type="String"/>
+	</bean>
+
+	<bean class="com.envoydigital.occ.gigya.data.GigyaResponseWsDTO">
+		<property name="eventName" type="String"/>
+		<property name="remember" type="boolean"/>
+		<property name="provider" type="String"/>
+		<property name="loginMode" type="String"/>
+		<property name="newUser" type="boolean"/>
+		<property name="UIDSignature" type="String"/>
+		<property name="signatureTimestamp" type="String"/>
+		<property name="UID" type="String"/>
+		<property name="profile" type="com.envoydigital.occ.gigya.data.GigyaProfileWsDTO"/>
+	</bean>
+
+	<bean class="com.envoydigital.occ.gigya.data.GigyaProfileWsDTO">
+		<property name="firstName" type="String"/>
+		<property name="lastName" type="String"/>
+		<property name="email" type="String"/>
+		<property name="photoURL" type="String"/>
+		<property name="thumbnailURL" type="String"/>
+	</bean>
+</beans>

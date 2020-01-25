@@ -1,0 +1,9 @@
+@import '~@spartacus/styles/scss/theme/sparta/variables';
+
+%cx-shipping-address,
+cx-delivery-address {
+  @include checkout-media-style();
+  @include media-breakpoint-up(md) {
+    padding-right: 3rem; // TODO remove when template is adjusted (Jase)
+  }
+}

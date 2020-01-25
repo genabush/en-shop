@@ -1,0 +1,18 @@
+$productCatalog=tbsUKProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+
+#Define Category Code
+INSERT_UPDATE Category ; code[unique=true] ; name[lang=en]          ; allowedPrincipals(uid)[default='customergroup'] ; $catalogVersion ;  
+                       ; c00014            ; Body Butters ;                                                 ;                 ;  
+					   ; c00001				; Body ;
+					   ; c00117				; Vitamin E ;
+					   ; c00008				; Range ;
+					   ; c00142            ; Correctors & Blemishes ; 
+
+#Define the super category of respective category
+INSERT_UPDATE CategoryCategoryRelation ; $categories ; $supercategories ;  
+                                       ; c00014      ; c00001           ;  
+									   ; c00117		 ; c00008	;
+									   ; c00142      ; c00010           ;

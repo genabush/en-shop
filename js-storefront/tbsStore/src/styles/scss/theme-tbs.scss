@@ -1,0 +1,201 @@
+// SPARTACUS SHARED
+// @import '~@spartacus/styles/scss/theme/sparta/fonts.scss'; dont need spartacus OOTB fonts
+// Custom Grid
+@import './themes/tbs/grid-settings';
+
+@import '~@spartacus/styles/scss/theme/sparta/variables';
+
+// -----------------------------------------------------------------------------------
+// @import '~@spartacus/styles/scss/app';
+// -------
+//Functions and mixins
+@import '~@spartacus/styles/scss/functions';
+@import '~@spartacus/styles/scss/mixins';
+//Bring in the theme
+@import '~@spartacus/styles/scss/theme';
+//Fonts must be added separate from the theme
+// @import '~@spartacus/styles/scss/fonts'; // not needed
+@import './themes/tbs/vars';
+@import './themes/tbs/typography';
+@import './themes/tbs/icons';
+//Bootsrap modules (these are things we are NOT changing at all)
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/type';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/utilities';
+@import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/card';
+@import '~bootstrap/scss/nav';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import './themes/tbs/headings';
+//bootsrap enhancements (these are things we ARE changing)
+@import './overides/cxbase/blocks/buttons';
+@import './overides/cxbase/blocks/forms';
+@import './overides/cxbase/blocks/modal.scss';
+@import './overides/cxbase/blocks/alert';
+@import './overides/cxbase/blocks/tooltip';
+@import './overides/cxbase/blocks/pagination';
+@import './overides/cxbase/blocks/tables';
+@import './overides/cxbase/blocks/card';
+@import './overides/cxbase/blocks/accordion';
+@import './overides/cxbase/blocks/tabs';
+@import './overides/cxbase/blocks/carousel';
+@import './overides/cxbase/blocks/link';
+@import './overides/cxbase/blocks/dropdown';
+//layout
+@import '~@spartacus/styles/scss/cxbase/layout/app';
+@import '~@spartacus/styles/scss/cxbase/layout/page';
+@import '~@spartacus/styles/scss/cxbase/layout/section';
+@import '~@spartacus/styles/scss/cxbase/layout/container';
+//non-bootstrap blocks and components here below
+
+// effects & animations
+@import '~@spartacus/styles/scss/cxbase/animations';
+
+@import '~@spartacus/styles/scss/misc/hamburger';
+
+// components
+// Replaced by custom content of sparta theme:
+// @import '~@spartacus/styles/scss/_sparta-theme';
+
+// the $skipComponentStyles is used as a list of component styles that can be ignore
+// during the sass compilation. Whenever the list contains a component selector, the
+// selector is not used.
+$skipComponentStyles: () !default;
+
+// major version standard
+$selectors: header, cx-storefront, cx-site-context-selector, cx-breadcrumb, cx-banner, cx-login, cx-register, cx-link,
+  cx-navigation-ui, app-footer-navigation, cx-category-navigation, cx-mini-cart, cx-searchbox, cx-carousel,
+  cx-product-carousel, cx-product-references, cx-product-images, cx-product-summary, cx-product-attributes,
+  cx-product-reviews, cx-product-list, cx-product-list-item, cx-product-grid, cx-product-grid-item,
+  cx-product-facet-navigation, cx-pagination, cx-order-history, cx-address-book, cx-address-card,
+  cx-added-to-cart-dialog, cx-cart-details, cx-cart-item, cx-cart-item-list, cx-order-summary, cx-cart-totals,
+  cx-checkout-progress, cx-checkout-progress-mobile-top, cx-checkout-progress-mobile-bottom, cx-delivery-mode,
+  cx-shipping-address, cx-billing-address-form, cx-payment-form, cx-review-submit, cx-address-form,
+  cx-suggested-addresses-dialog, cx-order-confirmation-items, cx-order-confirmation-totals,
+  cx-order-confirmation-overview, cx-order-confirmation-thank-you-message, cx-promotions, cx-order-detail-headline,
+  cx-order-detail-items, cx-order-detail-shipping, cx-order-detail-totals, cx-product-view, cx-payment-method,
+  cx-payment-methods, cx-close-account, cx-close-account-modal, cx-store-finder-list-item, cx-store-finder-grid,
+  cx-store-finder, cx-store-finder-store-description, cx-store-finder-stores-count, cx-store-finder-search-result,
+  cx-store-finder-list, cx-store-finder-search, cx-store-finder-schedule, cx-store-finder-map,
+  cx-add-to-home-screen-banner, cx-item-counter, cx-star-rating, cx-spinner, cx-icon, cx-media,
+  cx-tab-paragraph-container, cx-add-to-cart, cx-global-message, cx-product-intro, cx-card, cx-forgot-password,
+  cx-banner-carousel !default;
+
+// future theme's, can be introduced during minors
+$theme: ''; // conconut
+
+// sampe of theme specific
+%cx-mini-cart-conconut a svg {
+  fill: blue;
+}
+
+@each $selector in $selectors {
+  #{$selector} {
+    // skip selectors if they're added to the $skipComponentStyles list
+    @if (index($skipComponentStyles, $selector) == null) {
+      @extend %#{$selector} !optional;
+      // optional theme specific placeholder
+      @extend %#{$selector}-#{$theme} !optional;
+    }
+  }
+}
+
+// add body specific selectors
+body {
+  @each $selector in $selectors {
+    @if (index($skipComponentStyles, $selector) == null) {
+      @extend %#{$selector}__body !optional;
+    }
+  }
+}
+
+// TBS SPECIFIC
+@import './themes/tbs/vars';
+@import './themes/tbs/icons';
+@import './custom/utilities';
+// end TBS SPECIFIC
+
+:root {
+  @each $color, $value in $theme-colors {
+    --cx-color-#{$color}: #{$value};
+  }
+
+  --cx-font-weight-light: 300;
+  --cx-font-weight-normal: 400;
+  --cx-font-weight-semi: 600;
+  --cx-font-weight-bold: 700;
+
+  --cx-direction: #{$direction};
+
+  --cx-transition-duration: 0.5s;
+  --cx-animation-duration: 1s;
+
+  --cx-border-radius: 1em;
+  --cx-buttons-border-radius: 0.25rem;
+
+  --cx-border-style: solid;
+
+  --cx-color-dark: #004236;
+  --cx-color-primary: #004236;
+  --cx-color-inverse: #f8f3e8;
+  --cx-color-background: #f8f3e8;
+}
+
+// Custom Grid
+@import './themes/tbs/grid-settings';
+
+// SPARTACUS SHARED
+// @import '~@spartacus/styles/scss/theme/sparta/fonts.scss'; dont need spartacus OOTB fonts
+@import '~@spartacus/styles/scss/theme/sparta/variables';
+
+// Layout
+@import './overides/layout/index';
+
+// overides/components
+@import './overides/components/layout/_header';
+@import './overides/components/checkout/index';
+@import './overides/components/content/index';
+@import './overides/components/product/index';
+@import './overides/components/misc/index';
+@import './overides/components/user/index';
+@import './overides/components/myaccount/index';
+@import './overides/components/layout/index';
+@import './overides/components/store-finder/index';
+@import './overides/components/pwa/index';
+@import './overides/components/form-components/index';
+@import './overides/components/spinner/index';
+@import './overides/components/icons';
+@import './overides/components/icons';
+@import './overides/components/global';
+
+// Custom
+@import './custom/material/index';
+@import './custom/third-party/swiper.scss';
+@import './custom/config';
+@import './custom/amplience';
+@import './custom/hero';
+@import './custom/product-key-ingredients';
+@import './custom/product-intro';
+@import './custom/colour-variants';
+@import './custom/product-actions';
+@import './custom/prices';
+@import './custom/buttons';
+@import './custom/modal';
+@import './custom/popover';
+@import './custom/facets';
+@import './custom/search';
+@import './custom/promotions';
+@import './custom/footer';
+@import './custom/social-icons';
+@import './custom/amplience/all';
+@import './custom/articles';
+@import './custom/accordions';
+@import './custom/site-map';
+@import './custom/product-labels';
+@import './custom/my-account/index';
+@import './custom/quantity-selector';
+@import './custom/collection-point/index';
+@import './custom/address-finder/index';
+@import './custom/lybc-message/index';

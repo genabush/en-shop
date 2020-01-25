@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+	<extension abstractclassprefix="Generated" classprefix="TheBodyShops4integration" jaloLogicFree="true" managername="TheBodyShops4integrationManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShops4integration" usemaven="false">
+
+		<requires-extension name="odata2services" />
+
+		<requires-extension name="theBodyShopcore" />
+
+		<coremodule generated="true" manager="uk.co.thebodyshop.integration.s4.jalo.TheBodyShops4integrationManager" packageroot="uk.co.thebodyshop.integration.s4" />
+
+	</extension>
+</extensioninfo>

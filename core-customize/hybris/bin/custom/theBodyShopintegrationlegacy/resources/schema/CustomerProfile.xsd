@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/customerProfileSchema" xmlns:tns="http://thebodyshop/customerProfileSchema" elementFormDefault="qualified">
+
+    <xs:element name="CustomerProfileRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="CustomerProfile" type="tns:CustomerProfileType" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CustomerProfileResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="messageId" type="xs:string"/>
+                <xs:element minOccurs="0" name="requestId" type="xs:string"/>
+                <xs:element minOccurs="0" name="status" type="xs:string"/>
+                <xs:element minOccurs="0" name="statusMessage" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="CustomerProfileType">
+        <xs:sequence>
+            <xs:element name="CustomerID" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="AccountStatus" type="xs:string" />
+            <xs:element name="CustomerType" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="NationalID" minOccurs="0"  type="tns:NotNullStringMaxLength256" />
+            <xs:element name="PreferredLanguage" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Market" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="RegistrationChannel" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="RegistrationStore" type="tns:NotNullStringMaxLength256" minOccurs="0"/>
+            <xs:element name="RegistrationDate" type="xs:dateTime" />
+            <xs:element name="Title" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="FirstName" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="MiddleName" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="LastName" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="DateOfBirth" minOccurs="0" type="xs:date" />
+            <xs:element name="Gender" type="tns:NotNullStringMaxLength256" minOccurs="0" />
+            <xs:element name="EmailAddress" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Address" type="tns:AddressType" maxOccurs="unbounded" minOccurs="1"/>
+            <xs:element name="LoyaltyMembership" type="tns:LoyaltyMembershipType" minOccurs="0"/>
+            <xs:element name="CommunicationPreference" type="tns:CommunicationPreferenceType" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LoyaltyMembershipType">
+        <xs:sequence>
+            <xs:element name="ProgrammeID" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Type" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="JoinDate" type="xs:dateTime" />
+            <xs:element name="MembershipExpiryDate" type="xs:dateTime" />
+            <xs:element name="MembershipGroup" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="MembershipStatus" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="DateTermsAccepted" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="LoyaltyCard" type="tns:LoyaltyCardType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LoyaltyCardType">
+        <xs:sequence>
+            <xs:element name="CardType" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="CardNumber" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="IssueDate" type="xs:dateTime" />
+            <xs:element name="CardIssuingStore" type="tns:NotNullStringMaxLength256" minOccurs="0"/>
+            <xs:element name="CardStatus" type="tns:NotNullStringMaxLength256" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AddressType">
+        <xs:sequence>
+            <xs:element name="AddressID" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="AddressType" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="AddressLine1" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="AddressLine2" minOccurs="0" type="tns:NullStringMaxLength256" />
+            <xs:element name="AddressLine3" minOccurs="0" type="tns:NullStringMaxLength256" />
+            <xs:element name="City" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Province" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Country" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="PostCode" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CommunicationAddressType">
+        <xs:sequence>
+            <xs:element name="AddressID" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="AddressLine1" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="AddressLine2" minOccurs="0" type="tns:NullStringMaxLength256" />
+            <xs:element name="AddressLine3" minOccurs="0" type="tns:NullStringMaxLength256" />
+            <xs:element name="City" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Province" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Country" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="PostCode" minOccurs="0" type="tns:NotNullStringMaxLength256" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CommunicationPreferenceType">
+        <xs:sequence>
+            <xs:element name="CommCategory" type="xs:string" />
+            <xs:element name="CommunicationChannel" type="tns:CommunicationChannelType" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CommunicationChannelType">
+        <xs:sequence>
+            <xs:element name="ChannelID" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Value" type="tns:NullStringMaxLength256" minOccurs="0"/>
+            <xs:element name="CapturedDateTime" type="xs:dateTime" />
+            <xs:element name="CapturedChannel" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="OptInStatus" minOccurs="0" type="xs:boolean" />
+            <xs:element name="CapturedLocation" type="tns:NotNullStringMaxLength256" />
+            <xs:element name="Address" type="tns:CommunicationAddressType" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="NotNullStringMaxLength256">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".*\S.*"/>
+            <xs:minLength value="1"/>
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="NullStringMaxLength256">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".*\S.*"/>
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

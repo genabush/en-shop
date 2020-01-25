@@ -1,0 +1,20 @@
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+
+<ng-container *ngIf="!isLoading; else loadingPaypal">
+  <div class="d-flex flex-column">
+    <p>{{ 'payment.paypalMessage' | cxTranslate }}</p>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+  </div>
+</ng-container>
+
+<ng-template #loadingPaypal>
+  <div class="cx-spinner cx-spinner--relative">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="hasError"> {{ 'payment.paypalErrorMessage' | cxTranslate }} - {{ errorMsg }} </ng-container>

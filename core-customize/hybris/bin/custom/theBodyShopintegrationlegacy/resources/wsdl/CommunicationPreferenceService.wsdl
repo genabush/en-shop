@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/communicationPreferenceSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/communicationPreferenceSchema" targetNamespace="http://thebodyshop/communicationPreferenceSchema">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/communicationPreferenceSchema" xmlns:tns="http://thebodyshop/communicationPreferenceSchema">
+            <xs:element name="CommunicationPreferenceRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="CustomerProfile" type="tns:CustomerProfile" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="CustomerProfile">
+                <xs:sequence>
+                    <xs:element name="CustomerID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" name="CommunicationPreference" type="tns:CommunicationPreference" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CommunicationPreference">
+                <xs:sequence>
+                    <xs:element name="CommCategory">
+                        <xs:simpleType>
+                            <xs:restriction base="tns:CommCategoryTypeEnum" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" name="CommunicationChannel" type="tns:CommunicationChannel" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CommunicationChannel">
+                <xs:sequence>
+                    <xs:element name="ChannelID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Value">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="CapturedDateTime">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:dateTime" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="OptInStatus">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:boolean" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="CapturedLocation">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="Address" type="tns:Address" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="AddressID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="AddressLine1">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="AddressLine2">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="AddressLine3">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Town">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Postcode">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Region">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string" />
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Country">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value="[A-Z]{2}" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="CommCategoryTypeEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Offers" />
+                    <xs:enumeration value="Events" />
+                    <xs:enumeration value="Updates" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="status" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The response of Communication Preference Request</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="Response">
+        <wsdl:part element="tns:Response" name="Response">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CommunicationPreferenceRequest">
+        <wsdl:part element="tns:CommunicationPreferenceRequest" name="CommunicationPreferenceRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CommunicationPreferenceService">
+        <wsdl:operation name="CommunicationPreference">
+            <wsdl:input message="tns:CommunicationPreferenceRequest" name="CommunicationPreferenceRequest">
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CommunicationPreferenceServiceSoap11" type="tns:CommunicationPreferenceService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="CommunicationPreference">
+            <soap:operation soapAction="" />
+            <wsdl:input name="CommunicationPreferenceRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CommunicationPreferenceService">
+        <wsdl:port binding="tns:CommunicationPreferenceServiceSoap11" name="CommunicationPreferenceServiceSoap11">
+            <soap:address location="https://thebodyshop.dev:9002/tbsdataprocessing/endpoints" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

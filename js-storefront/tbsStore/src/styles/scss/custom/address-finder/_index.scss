@@ -1,0 +1,39 @@
+@import './info-window';
+@import './map';
+
+app-custom-address-finder,
+app-custom-cis-finder {
+  width: 100%;
+}
+
+.address-finder {
+  position: relative;
+
+  &__submit-btn {
+    background-color: var(--cx-color-core-secondary);
+  }
+
+  &__geo-btn,
+  &__submit-btn {
+    position: absolute;
+    width: $mat-form-field-height;
+    height: $mat-form-field-height;
+    cursor: pointer;
+  }
+
+  &__geo-btn {
+    top: 0;
+    right: calc(#{$mat-form-field-height} + 0.75rem);
+    font-size: 40px;
+    .icon--locator {
+      padding-top: 2px;
+    }
+  }
+
+  &__submit-btn {
+    top: 0;
+    right: 0;
+    max-height: unset;
+    font-size: 20px;
+  }
+}

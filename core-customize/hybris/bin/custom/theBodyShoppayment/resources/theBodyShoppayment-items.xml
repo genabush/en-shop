@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+	<enumtypes>
+		<enumtype code="PaymentTransactionType" autocreate="false" generate="false">
+			<value code="PAYMENT_REDIRECT" />
+		</enumtype>
+		<enumtype code="ConsignmentStatus" autocreate="false" generate="true" dynamic="true">
+			<value code="PAYMENT_PARTIALLY_CAPTURED" />
+		</enumtype>
+	</enumtypes>
+	
+	<relations>
+		<relation generate="true" localized="false" code="Order2PaymentRedirectTransaction" autocreate="true">
+			<sourceElement qualifier="paymentRedirectOrder" type="AbstractOrder" cardinality="one"></sourceElement>
+			<targetElement qualifier="paymentRedirectTransactions" type="PaymentTransaction" cardinality="many" collectiontype="list">
+				<modifiers read="true" write="true" optional="true" partof="true"/>
+			</targetElement>
+		</relation>
+	</relations>
+	
+	<itemtypes>
+		<typegroup name="PaymentTransaction">
+			<itemtype code="PaymentTransaction" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="adyenPaymentData" type="java.lang.String" generate="true" autocreate="true">
+						<description>PaymentData object returned by Adyen for Payment Redirect scenarios</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="sqlserver">
+								<value>nvarchar(max)</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>varchar(4000)</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true"/>
+					</attribute>
+					<attribute qualifier="adyenPaymentMD" type="java.lang.String" generate="true" autocreate="true">
+						<description>PaymentMD value returned by Adyen for Payment Redirect scenarios</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="sqlserver">
+								<value>nvarchar(max)</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>varchar(4000)</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true"/>
+					</attribute>
+				</attributes>
+				<indexes>
+					<index name="transUniqueIdx" unique="true" replace="true">
+						<key attribute="code"/>
+						<key attribute="order"/>
+						<key attribute="paymentRedirectOrder"/>
+						<key attribute="versionID"/>
+					</index>
+				</indexes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup name="PaymentRedirectInfo">
+			<itemtype code="PaymentRedirectInfo" extends="GenericItem" autocreate="true" generate="true">
+                <description>Payment Redirect Information</description>
+                <deployment table="tbs_pay_red_info" typecode="10317"/>
+				<attributes>
+				     <attribute qualifier="userId" type="java.lang.String" >
+                        <description>Unique user identifier</description>
+                        <modifiers read="true" write="true" optional="false"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="cartId" type="java.lang.String" >
+                        <description>Unique cart identifier</description>
+                        <modifiers read="true" write="true" optional="false"/>
+                        <persistence type="property"/>
+                    </attribute>
+					<attribute qualifier="adyenPaReq" type="java.lang.String" generate="true" autocreate="true">
+						<description>PaReq object returned by Adyen for 3d secure scenarios</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="sqlserver">
+								<value>nvarchar(max)</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>varchar(4000)</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true"/>
+					</attribute>
+					<attribute qualifier="adyenPaymentMD" type="java.lang.String" generate="true" autocreate="true">
+						<description>PaymentMD value returned by Adyen for Payment Redirect scenarios</description>
+						<persistence type="property">
+							<columntype database="oracle">
+								<value>CLOB</value>
+							</columntype>
+							<columntype database="sqlserver">
+								<value>nvarchar(max)</value>
+							</columntype>
+							<columntype database="mysql">
+								<value>text</value>
+							</columntype>
+							<columntype>
+								<value>varchar(4000)</value>
+							</columntype>
+						</persistence>
+						<modifiers read="true" write="true" search="true"/>
+					</attribute>
+					<attribute qualifier="paymentDetails" type="String2StringMapType">
+						<description>Map of Additional Properties</description>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+				<indexes>
+	                <index name="paymentRedirectInfoIdx" >
+	                    <key attribute="userId" />
+	                    <key attribute="cartId" />
+	                </index>
+	            </indexes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+
+</items>

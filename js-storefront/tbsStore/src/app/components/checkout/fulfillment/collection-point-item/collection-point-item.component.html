@@ -1,0 +1,188 @@
+<div class="collection-point">
+  <div class="collection-point__header " [ngClass]="showStockStatus ? '' : 'collection-point__header--has-border'">
+    <img
+      *ngIf="data?.serviceType"
+      src="/assets/images/collection-point-logos/{{ data.serviceType | lowercase }}.svg"
+      alt="{{ data.address.companyName }}"
+      class="collection-point__logo"
+    />
+    <img
+      *ngIf="!data?.serviceType"
+      src="/assets/images/collection-point-logos/tbs.svg"
+      alt="{{ data?.displayName }}"
+      class="collection-point__logo"
+    />
+    <div class="collection-point__distance">
+      <div *ngIf="data?.distance !== ''" class="collection-point__distance-value">{{ data?.distance }}</div>
+      <div *ngIf="data?.distanceUnit" class="collection-point__distance-units">{{ data.distanceUnit }}</div>
+    </div>
+  </div>
+  <div
+    [ngClass]="
+      data.stockInfo.stockLevelStatus === 'inStock' && data.available
+        ? 'collection-point__stock-status collection-point__stock-status--instock'
+        : 'collection-point__stock-status collection-point__stock-status--outofstock'
+    "
+    *ngIf="showStockStatus"
+  >
+    <ng-container *ngIf="data.stockInfo.stockLevelStatus === 'inStock' && data.available">
+      <span class="icon icon--tick"></span> {{ 'collectionPoint.stockLevelStatus.inStock' | cxTranslate }}
+    </ng-container>
+    <ng-container *ngIf="data.stockInfo.stockLevelStatus === 'outOfStock' || !data.available">
+      {{ 'collectionPoint.stockLevelStatus.outOfStock' | cxTranslate }}
+    </ng-container>
+  </div>
+  <div *ngIf="data?.address" class="collection-point__body">
+    <h3 class="collection-point__name" *ngIf="data.displayName">{{ data.displayName }}</h3>
+    <div class="collection-point__address">
+      {{ data.address.line1 }} {{ data.address.line2 }} {{ data.address.town }} {{ data.address.postalCode }}
+    </div>
+    <a href="tel:{{ data.address.phone }}" class="collection-point__phone" *ngIf="data.address.phone">{{
+      data.address.phone
+    }}</a>
+  </div>
+  <div class="collection-point__opening-hrs opening-hrs" *ngIf="showOpeningHrs">
+    <h4 class="opening-hrs__title">{{ 'collectionPoint.openingHrs.title' | cxTranslate }}</h4>
+    <ul *ngIf="data.openingHours.weekDayOpeningList" class="opening-hrs__list list-unstyled">
+      <li *ngFor="let weekday of data.openingHours.weekDayOpeningList" class="opening-hrs__item">
+        <span class="opening-hrs__day">{{ weekday.weekDay }}:</span>
+        <span class="opening-hrs__times" *ngIf="!weekday.closed"
+          >{{ weekday.openingTime.formattedHour }} - {{ weekday.closingTime.formattedHour }}</span
+        >
+        <span class="opening-hrs__times" *ngIf="weekday.closed">{{
+          'collectionPoint.openingHrs.closed' | cxTranslate
+        }}</span>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="collection-point__footer "
+    [ngClass]="{
+      'has-info-btn': (showInfoBtn && showSelectBtn) || (!showDirectionsBtn && showInfoModalBtn),
+      'btns-spacing': showStoreDetailsBtn && showDirectionsBtn
+    }"
+  >
+    <a [routerLink]="['store', data.name]" *ngIf="showStoreDetailsBtn" class="btn btn--secondary">
+      {{ 'collectionPoint.info' | cxTranslate }}
+    </a>
+    <a
+      href="https://maps.google.com?saddr={{ searchedLocation?.lat }}, {{ searchedLocation?.lng }}&daddr={{
+        data.geoPoint.latitude
+      }},{{ data.geoPoint.longitude }}"
+      target="_blank"
+      *ngIf="showDirectionsBtn"
+      class="btn btn--primary"
+    >
+      {{ 'collectionPoint.directions' | cxTranslate }}
+    </a>
+    <button class="btn btn--secondary" (click)="displayInfoModal(data)" *ngIf="!showDirectionsBtn && showInfoModalBtn">
+      {{ 'collectionPoint.info' | cxTranslate }}
+    </button>
+    <button
+      class="btn"
+      [ngClass]="!showDirectionsBtn && showInfoBtn && !showSelectBtn ? 'btn--primary w-100' : 'btn--secondary'"
+      (click)="displayInfo(data)"
+      *ngIf="showInfoBtn"
+    >
+      {{ 'collectionPoint.info' | cxTranslate }}
+    </button>
+    <button
+      class="btn btn--primary mt-2 mt-lg-0"
+      *ngIf="
+        showSelectBtn &&
+        ((!showChangeBtn && !showUnavailableBtn) || (!showChangeBtn && showUnavailableBtn && data.available))
+      "
+      (click)="selectPoint(data, dataType)"
+    >
+      {{ 'collectionPoint.select' | cxTranslate }}
+    </button>
+    <button
+      class="btn btn--primary mt-2 mt-lg-0"
+      *ngIf="showChangeBtn && !showDirectionsBtn"
+      (click)="changePoint(data)"
+    >
+      {{ 'collectionPoint.change' | cxTranslate }}
+    </button>
+    <button
+      disabled
+      class="btn btn--primary btn--disabled mt-2 mt-lg-0"
+      *ngIf="!showDirectionsBtn && !showChangeBtn && showUnavailableBtn && !data.available"
+    >
+      {{ 'collectionPoint.unavailable' | cxTranslate }}
+    </button>
+  </div>
+</div>
+
+<!-- Collect Point Info MODAL -->
+<ng-template #collectPointInfoModal let-c="close" let-d="dismiss" id="collect-point-info-modal">
+  <div class="modal-header flex-column">
+    <div class="row justify-content-between w-100 pl-4 pr-0 m-0">
+      <h2 class="modal-title h2--alt">{{ 'collectionPoint.modal.storeInfoTitle' | cxTranslate }}</h2>
+      <button
+        type="button"
+        class="close"
+        [attr.aria-label]="'common.closeBtn' | cxTranslate"
+        (click)="closeCollectPointInfoModal()"
+      >
+        <span aria-hidden="true">
+          <cx-icon [type]="iconTypes.CLOSE" class="icon icon--close"></cx-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body d-flex flex-row flex-wrap pt-3">
+    <div *ngIf="collectionPoint$ | async as collectionPoint" class="collection-point__search-results">
+      <div class="collection-point__list-view-map">
+        <agm-map
+          [latitude]="collectionPoint.geoPoint.latitude"
+          [longitude]="collectionPoint.geoPoint.longitude"
+          [usePanning]="true"
+          [zoom]="12"
+          [disableDefaultUI]="false"
+        >
+          <agm-marker
+            [latitude]="collectionPoint.geoPoint.latitude"
+            [longitude]="collectionPoint.geoPoint.longitude"
+            [iconUrl]="mapIcons.secondary"
+          >
+          </agm-marker>
+        </agm-map>
+        <app-map-info-alt-window [storeInfo]="collectionPoint"></app-map-info-alt-window>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Collect in Store  Info MODAL -->
+<ng-template #collectInStoreInfoModal let-c="close" let-d="dismiss" id="collect-in-store-info-modal">
+  <div class="modal-header flex-column">
+    <div class="row justify-content-between w-100 pl-4 pr-0 m-0">
+      <h2 class="modal-title h2--alt">{{ 'collectionPoint.modal.storeInfoTitle' | cxTranslate }}</h2>
+      <button type="button" class="close" aria-label="Close" (click)="closeCollectInStoreInfoModal()">
+        <span aria-hidden="true">
+          <cx-icon [type]="iconTypes.CLOSE" class="icon icon--close"></cx-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body d-flex flex-row flex-wrap pt-3">
+    <div *ngIf="collectInStore$ | async as collectInStore" class="collection-point__search-results">
+      <div class="collection-point__list-view-map">
+        <agm-map
+          [latitude]="collectInStore.geoPoint.latitude"
+          [longitude]="collectInStore.geoPoint.longitude"
+          [usePanning]="true"
+          [zoom]="12"
+          [disableDefaultUI]="false"
+        >
+          <agm-marker
+            [latitude]="collectInStore.geoPoint.latitude"
+            [longitude]="collectInStore.geoPoint.longitude"
+            [iconUrl]="mapIcons.secondary"
+          >
+          </agm-marker>
+        </agm-map>
+        <app-map-info-alt-window [storeInfo]="collectInStore"></app-map-info-alt-window>
+      </div>
+    </div>
+  </div>
+</ng-template>

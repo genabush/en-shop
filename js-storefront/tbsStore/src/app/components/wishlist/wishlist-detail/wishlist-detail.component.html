@@ -1,0 +1,97 @@
+<div class="my-account bg-my-account">
+  <div class="container">
+    <div class="row">
+      <div class="my-account__col col-12 col-md-3 pt-5 pr-0 pl-0 bg-base-silver d-none d-md-block">
+        <nav class="account-nav"></nav>
+      </div>
+
+      <div class="my-account__col col-12 col-md-9 pt-5 bg-white">
+        <ng-container *ngIf="currentWishlistProducts$ as currentWishlistProduct; else emptyWishlist">
+          <ng-container *ngIf="currentWishlistProduct.length > 0">
+            <div class="wishlists__header">
+              <a [routerLink]="'/my-account/wishlist'" class="wishlists__header-back">
+                <span class="sr-only">
+                  {{ 'common.back' | cxTranslate }}
+                </span>
+                <span class="icon icon--chevron-left"></span>
+              </a>
+              <h1 class="wishlists__header-title h1 h1--alt mb-md-4 mx-md-3">
+                {{ wishlistName }}
+              </h1>
+              <a (click)="openWishlistNameModal()" class="link wishlists__header-change mb-4">
+                {{ 'wishlists.change.name' | cxTranslate }}
+              </a>
+            </div>
+            <div class="wishlists__actions">
+              <div class="wishlists__actions-col p-0 col-12 col-md-6 justify-content-md-start">
+                <a href="/" class="btn btn--primary">
+                  {{ 'wishlists.actions.addAllToBag' | cxTranslate }}
+                </a>
+              </div>
+              <div class="wishlists__actions-col p-0 mt-3 mt-md-0 col-12 col-md-6 justify-content-md-end">
+                <a href="/" class="btn btn--secondary">
+                  {{ 'wishlists.actions.share' | cxTranslate }}
+                </a>
+                <a (click)="deleteWishlist()" class="btn btn--warning btn--icon ml-2 mb-2">
+                  <span class="btn__icon icon icon--close"></span>{{ 'wishlists.actions.delete' | cxTranslate }}
+                </a>
+              </div>
+            </div>
+
+            <div *ngIf="showDeletionMessage" role="alert" class="alert-success p-2 mb-3 text-center">
+              <span>{{ 'wishlists.deletedConfirmation' | cxTranslate }}</span>
+              <button
+                type="button"
+                class="btn btn--link"
+                [attr.aria-label]="'common.closeBtn' | cxTranslate"
+                (click)="closeDeletionMessage()"
+              >
+                <span aria-hidden="true">
+                  <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+                </span>
+              </button>
+            </div>
+
+            <app-wishlist-products-listing
+              (productListingEmit)="removeProductFromList($event)"
+              [products]="currentWishlistProduct"
+              [columnClass]="'col-6 col-md-4 col-lg-4'"
+            ></app-wishlist-products-listing>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #emptyWishlist>
+          <div class="wishlists__header">
+            <a [routerLink]="'/my-account/wishlist'" class="wishlists__header-back">
+              <span class="sr-only">
+                {{ 'common.back' | cxTranslate }}
+              </span>
+              <span class="icon icon--chevron-left"></span>
+            </a>
+
+            <h1 class="wishlists__header-title h1 h1--alt mb-md-4 mx-md-3">
+              {{ wishlistName }}
+            </h1>
+
+            <a (click)="openWishlistNameModal()" class="link wishlists__header-change mb-4">
+              {{ 'wishlists.change.name' | cxTranslate }}
+            </a>
+
+            <div class="justify-content-md-end">
+              <a (click)="deleteWishlist()" class="btn btn--warning btn--icon ml-2 mb-2">
+                <span class="btn__icon icon icon--close"></span>{{ 'wishlists.actions.delete' | cxTranslate }}
+              </a>
+            </div>
+          </div>
+
+          <p>
+            No products in wishlist.
+          </p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-wishlist-name-modal></app-wishlist-name-modal>
+<app-delete-wishlist-modal></app-delete-wishlist-modal>

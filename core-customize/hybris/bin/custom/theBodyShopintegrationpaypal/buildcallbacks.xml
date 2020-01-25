@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="theBodyShopintegrationpaypal_buildcallbacks">
+    <macrodef name="theBodyShopintegrationpaypal_before_ear">
+        <sequential>
+            <!-- you can do anything before the EAR file is being packed -->
+        </sequential>
+    </macrodef>
+</project>

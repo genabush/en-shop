@@ -1,0 +1,22 @@
+<!-- DELIVERY ADDRESS -->
+<cx-checkout-delivery-address
+  *ngIf="checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY"
+  class="d-flex col-12 px-0 checkout-address__content"
+  (shippingAddressStateEmit)="stateEmit($event)"
+  (deliveryRestrictedEmit)="setDeliveryRestricted($event)"
+></cx-checkout-delivery-address>
+
+<!-- COLLECT IN STORE -->
+<cx-checkout-collect-in-store
+  *ngIf="checkoutJourneyType === checkoutFulfillmentTabs.COLLECT_IN_STORE"
+  class="d-flex flex-column col-12 collection-point-container m-0"
+  (shippingAddressStateEmit)="stateEmit($event)"
+>
+</cx-checkout-collect-in-store>
+
+<!-- COLLECTION POINT -->
+<cx-checkout-collection-point
+  *ngIf="checkoutJourneyType === checkoutFulfillmentTabs.COLLECTION_POINT"
+  class="d-flex flex-column col-12 collection-point-container m-0"
+  (shippingAddressStateEmit)="stateEmit($event)"
+></cx-checkout-collection-point>

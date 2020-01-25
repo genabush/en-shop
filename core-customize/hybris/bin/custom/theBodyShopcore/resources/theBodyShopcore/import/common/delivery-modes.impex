@@ -1,0 +1,315 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import Delivery Modes / Zones
+#
+# Delivery Zones
+INSERT_UPDATE Zone                  ; code[unique=true]               ; countries(isocode)
+                                    ; uk                              ; GB
+									; au                              ; AU
+									; ca							  ; CA
+									; de							  ; DE 
+									; dk							  ; DK
+									; es							  ; ES
+									; fr							  ; FR
+									; mx							  ; MX
+									; nl							  ; NL
+									; se							  ; SE
+									; us							  ; US
+									; at							  ; AT
+# Zone Delivery Modes
+INSERT_UPDATE ZoneDeliveryMode; code[unique = true]                  ; net   ; active[default = true]; collectionPoint; sapCarrierShippingCode; forCollectInStore[default=false]
+							  ; premium-net                          ; true
+							  ; standard-net                         ; true
+							  ; premium-gross                        ; false
+							  ; standard-gross                       ; false
+							  ; free-standard-shipping               ; true  ; false                 ;
+#AT Zones
+							  ; AT-freestandard Delivery             ; false ; true                  ; false          ; STANDARD
+							  ; AT-REGULAR                           ; false ; true                  ; false          ; REGULAR
+							  ; AT-EXPRESS                           ; false ; true                  ; false          ; XPRESS
+							  ; AT-REGULAR-PROMO                     ; false ; true                  ; false          ; REGULAR
+							  ; at-click-and-collect                 ; false ; true                  ; false          ;						; true
+							  ; at-collection-point                  ; false ; true                  ; true           ;
+							  ; AT REGULARCOLLECTION                 ; false ; true                  ; true           ; COLLREG
+							  ; AT-DPD-EXPRESS-HOME                  ; false ; false                 ; false          ; XPRESS
+#AU Zones
+							  ; au-standard                          ; false ; true                  ; false          ; STANDARD
+							  ; au-express                           ; false ; true                  ; false          ; EXPRESS
+							  ; ausp                                 ; false ; true                  ; true           ; STANDARD
+							  ; au-click-and-collect                 ; false ; true                  ; false          ;						; true
+							  ; Australia Standard Delivery - Free   ; false ; true                  ; false          ; STANDARD
+							  ; aus-click-and-collect                ; false ; true                  ; false          ;						; true
+#CA Zones
+
+							  ; ca-ground-provinces                  ; true  ; true                  ; false          ; Y5
+							  ; ca-EXPEDITED-provinces               ; true  ; true                  ; false          ; Y7
+							  ; ca-ground-territories                ; true  ; true                  ; false          ; Y5
+							  ; ca-EXPEDITED-territories             ; true  ; true                  ; false          ; Y7
+							  ; CA_FREE_Ground_Province              ; true  ; true                  ; false          ; Y5
+							  ; CA-REGULAR                           ; true  ; true                  ; false          ; REGULAR
+							  ; CA-EXPRESS                           ; true  ; false                 ; false          ; XPRESS
+							  ; CA_50FREE_Ground_Province            ; true  ; true                  ; false          ; Y5
+							  ; CA-FREE-Ontario                      ; true  ; false                 ; false          ; Y5
+							  ; ca-click-and-collect                 ; true  ; true                  ; false          ;						; true
+							  ; CA - ground 7.95 DM                  ; true  ; true                  ; false          ; Y5
+							  ; CA - Ground free DM                  ; true  ; true                  ; false          ; Y5
+							  ; CA-FREESHIP-Quebec                   ; true  ; true                  ; false          ; Y5
+
+
+#DE Zone
+							  ; de-standard                          ; false ; false                 ; false          ; STANDARD
+							  ; DE-REGULAR                           ; false ; true                  ; false          ; REGULAR
+							  ; DE-EXPRESS                           ; false ; true                  ; false          ; XPRESS
+							  ; DE-REGULAR-COLLECTION                ; false ; true                  ; true           ; COLLREG	
+							  ; DE-REGULAR-PROMO                     ; false ; false                 ; false          ; REGULAR
+							  ; DE Regular collection point mode     ; false ; false                 ; false          ; COLLREG
+							  ; de-click-and-collect                 ; false ; true                  ; false          ;						; true
+							  ; DE-DHL-REGULAR-COLLECTION            ; false ; true                  ; true           ; COLLREG
+							  ; de-dhl-promo-collection              ; false ; true                  ; true           ; COLLREG
+
+#DK Zone
+							  ; dk-standard                          ; false ; false                 ; false          ; STANDARD
+							  ; DK-Fri                               ; false ; false                 ; false          ; STANDARD
+							  ; DK-REGULAR                           ; false ; true                  ; false          ; REGULAR
+							  ; DK-EXPRESS                           ; false ; true                  ; false          ; XPRESS
+							  ; DK-REGULAR-PROMO                     ; false ; false                 ; false          ; REGULAR
+							  ; dk-click-and-collect                 ; false ; false                 ; false          ;						; true
+							  ; dk-coll-point                        ; false ; false                 ; true           ;	
+							  ; DKREGULARCOLLECTION                  ; false ; false                 ; true           ; COLLREG				
+							  ; DK-DPD-EXPRESS-HOME                  ; false ; false                 ; false          ; XPRESS
+							  ; dk-postnord-regular-collection       ; false ; true                  ; true           ; COLLREG				
+							  ; dk-postnord-promo-collection         ; false ; true                  ; true           ; COLLREG				
+							  ; DK-REGULAR-CP Mode                   ; false ; true                  ; false          ; ECONOMY
+
+#ES Zone
+							  ; es-dpd-free-shipping                 ; false ; false                 ; false          ; COURIER
+							  ; ES-REGULAR                           ; false ; true                  ; false          ; REGULAR
+							  ; ES-EXPRESS                           ; false ; true                  ; false          ; XPRESS
+							  ; ES-REGULAR-PROMO                     ; false ; false                 ; false          ; REGULAR
+							  ; es-click-and-collect                 ; false ; true                  ; false          ;						; true
+							  ; ES REGULARCOLLECTION                 ; false ; true                  ; true           ; COLLREG				
+							  ; ES-UPS-COLLECTION                    ; false ; true                  ; true           ; COLLREG				
+
+#FR Zone
+							  ; FR-REGULAR                           ; false ; true                  ; false          ; REGULAR
+							  ; FR-EXPRESS                           ; false ; true                  ; false          ; XPRESS
+							  ; FR-REGULAR-COLLECTION-PROMO          ; false ; false                 ; true           ; COLLREG				
+							  ; FR-REGULAR-PROMO                     ; false ; true                  ; false          ; REGULAR
+							  ; fr-click-and-collect                 ; false ; true                  ; false          ;						; true
+							  ; FR REGULARCOLLECTION                 ; false ; true                  ; true           ; COLLREG				
+							  ; FR-UPS-COLLECTION                    ; false ; true                  ; true           ; COLLREG				
+
+#NL Zone
+
+							  ; nl-standard                          ; false ; false                 ; false          ; COURIER
+							  ; NL-REGULAR                           ; false ; true                  ; false          ; REGULAR
+							  ; NL-EXPRESS                           ; false ; true                  ; false          ; XPRESS
+							  ; NL-UPS-COLLECTION                    ; false ; true                  ; true           ; COLLREG
+							  ; NL-Regular-Promo                     ; false ; false                 ; false          ; REGULAR
+							  ; NL-Regular-Promotion                 ; false ; true                  ; false          ; REGULAR
+							  ; nl-click-and-collect                 ; false ; true                  ; false          ;						; true			
+							  ; NL REGULARCOLLECTION                 ; false ; true                  ; true           ; COLLREG
+
+#SE Zone
+							  ; se-standard                          ; false ; false                 ; false          ; STANDARD
+							  ; SE-FriFrakt                          ; false ; false                 ; false          ; STANDARD
+							  ; SE-REGULAR                           ; false ; true                  ; false          ; REGULAR
+							  ; SE-REGULAR-PROMO                     ; false ; true                  ; false          ; REGULAR
+							  ; se-click-and-collect                 ; false ; true                  ; false          ;						; true
+							  ; SE-HOME                              ; false ; false                 ; false          ; COLLREG				
+							  ; SE-collection-point                  ; false ; false                 ; true           ;
+							  ; SEREGULARCOLLECTION                  ; false ; true                  ; true           ; COLLREG				
+							  ; SE-DPD-EXPRESS-HOME                  ; false ; false                 ; false          ; XPRESS
+							  ; se-postnord-regular-collection       ; false ; true                  ; true           ; COLLREG				
+							  ; se-postnord-promo-collection         ; false ; true                  ; true           ; COLLREG				
+							  ; SE-REGULAR-CP Mode DM                ; false ; true                  ; false          ; ECONOMY
+#UK Zones
+							  ; UK-4-DPD-SATURDAY                    ; false ; true                  ; false          ; SATURDAY
+							  ; UK-1-ECONOMY                         ; false ; true                  ; false          ; ECONOMY
+							  ; UK-2-REGULAR                         ; false ; true                  ; false          ; REGULAR
+							  ; UK-ECONOMY-PROMO                     ; false ; true                  ; false          ; ECONOMY
+							  ; uk-click-and-collect                 ; false ; true                  ; false          ;						; true
+							  ; UK- Regular Collection Free Delivery ; false ; true                  ; true           ; COLLREG				
+							  ; UK-FreeRegularDelivery               ; false ; true                  ; false          ; REGULAR
+							  ; UK-3-EXPRESS                         ; false ; true                  ; false          ; XPRESS
+							  ; UK-5-REGULAR-COLLECTION              ; false ; true                  ; true           ; COLLREG				
+							  ; UK-6-EXPRESS-COLLECTION              ; false ; true                  ; true           ; COLLEXP
+							  ; UK_Free_Standard_Coll_Point          ; false ; false                 ; true           ; COLLREG		
+							  ; UK-STANDARD                          ; false ; false                 ; false          ; Regular
+
+#US Zone
+							  ; us-ground                            ; true  ; true                  ; false          ; REGULAR
+							  ; us-twoday                            ; true  ; true                  ; false          ; Y7
+							  ; us-overnight                         ; true  ; true                  ; false          ; Y6
+							  ; US_FREE_GROUND                       ; true  ; true                  ; false          ; Y5
+							  ; US-REGULAR                           ; true  ; false                 ; false          ; REGULAR
+							  ; US-EXPRESS                           ; true  ; true                  ; false          ; XPRESS
+							  ; US-2DAY                              ; true  ; false                 ; false          ; 2 DAY
+							  ; US-3DAY                              ; true  ; false                 ; false          ; 3 DAY
+							  ; US-2DAY-FREE                         ; true  ; false                 ; false          ; 2 DAY
+							  ; us-FREE-overnight-Shipping           ; true  ; false                 ; false          ; Y6
+							  ; us-click-and-collect                 ; true  ; false                 ; false          ;						; true
+
+
+
+#Austria
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'at'][unique = true]; currency(isocode)[unique = true]; value ; minimum[unique = true]
+								   ; AT-freestandard Delivery         ;                                          ; EUR                             ; 0,00  ; 0,00 ;
+								   ; AT-REGULAR                       ;                                          ; EUR                             ; 2.95  ; 0,00 ;
+								   ; AT-EXPRESS                       ;                                          ; EUR                             ; 15.17 ; 0,00 ;
+								   ; AT-REGULAR-PROMO                 ;                                          ; EUR                             ; 0,00  ; 0,00 ;
+								   ; at-click-and-collect             ;                                          ; EUR                             ; 0,00  ; 0,00 ;
+								   ; at-collection-point              ;                                          ; EUR                             ; 15    ; 0,00 ;
+								   ; AT REGULARCOLLECTION             ;                                          ; EUR                             ; 4.9   ; 0,00 ;
+								   ; AT-DPD-EXPRESS-HOME              ;                                          ; EUR                             ; 2.95  ; 0,00 ;
+# Australia
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]  ; zone(code)[default = 'au'][unique = true]; currency(isocode)[unique = true]; value ; minimum[unique = true]
+								   ; au-standard                        ;                                          ; AUD                             ; 8.95  ; 0,00 ;
+								   ; au-express                         ;                                          ; AUD                             ; 14.95 ; 0,00 ;
+								   ; ausp                               ;                                          ; AUD                             ; 0,00  ; 0,00 ;
+								   ; au-click-and-collect               ;                                          ; AUD                             ; 0,00  ; 0,00 ;
+								   ; Australia Standard Delivery - Free ;                                          ; AUD                             ; 0,00  ; 0,00 ;
+								   ; aus-click-and-collect              ;                                          ; AUD                             ; 0,00  ; 0,00 ;
+
+# Canada
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'ca'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; ca-ground-provinces              ;                                          ; CAD                             ; 9.95 ; 0,00 ;
+								   ; ca-EXPEDITED-provinces           ;                                          ; CAD                             ; 15.5 ; 0,00 ;
+								   ; ca-ground-territories            ;                                          ; CAD                             ; 30   ; 0,00 ;
+								   ; ca-EXPEDITED-territories         ;                                          ; CAD                             ; 50   ; 0,00 ;
+								   ; CA_FREE_Ground_Province          ;                                          ; CAD                             ; 0,00 ; 0,00 ;
+								   ; CA-REGULAR                       ;                                          ; CAD                             ; 20   ; 0,00 ;
+								   ; CA-REGULAR                       ;                                          ; CAD                             ; 0,00 ; 0,00 ;
+								   ; CA-EXPRESS                       ;                                          ; CAD                             ; 50   ; 0,00 ;
+								   ; CA_50FREE_Ground_Province        ;                                          ; CAD                             ; 0,00 ; 0,00 ;
+								   ; CA-FREE-Ontario                  ;                                          ; CAD                             ; 0,00 ; 0,00 ;
+								   ; ca-click-and-collect             ;                                          ; CAD                             ; 0,00 ; 0,00 ;
+								   ; CA - ground 7.95 DM              ;                                          ; CAD                             ; 7.95 ; 0,00 ;
+								   ; CA - Ground free DM              ;                                          ; CAD                             ; 0,00 ; 0,00 ;
+								   ; CA-FREESHIP-Quebec               ;                                          ; CAD                             ; 0,00 ; 0,00 ;
+
+# Germany
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'de'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; de-standard                      ;                                          ; EUR                             ; 2.95 ; 0,00 ;
+								   ; de-standard                      ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; DE-REGULAR                       ;                                          ; EUR                             ; 2.95 ; 0,00 ;
+								   ; DE-EXPRESS                       ;                                          ; EUR                             ; 15.1 ; 0,00 ;
+								   ; DE-REGULAR-COLLECTION            ;                                          ; EUR                             ; 4.95 ; 0,00 ;
+								   ; DE-REGULAR-PROMO                 ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; DE Regular collection point mode ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; de-click-and-collect             ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; DE-DHL-REGULAR-COLLECTION        ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; de-dhl-promo-collection          ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+#Denmark
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'dk'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; dk-standard                      ;                                          ; DKK                             ; 50   ; 0,00 ;
+								   ; dk-standard                      ;                                          ; DKK                             ; 0,00 ; 0,00 ;
+								   ; DK-Fri                           ;                                          ; DKK                             ; 0,00 ; 0,00 ;
+								   ; DK-REGULAR                       ;                                          ; DKK                             ; 50   ; 0,00 ;
+								   ; DK-REGULAR                       ;                                          ; DKK                             ; 0,00 ; 0,00 ;
+								   ; DK-EXPRESS                       ;                                          ; DKK                             ; 80   ; 0,00 ;
+								   ; DK-REGULAR-PROMO                 ;                                          ; DKK                             ; 0,00 ; 0,00 ;
+								   ; dk-click-and-collect             ;                                          ; DKK                             ; 0,00 ; 0,00 ;
+								   ; dk-coll-point                    ;                                          ; DKK                             ; 165  ; 0,00 ;
+								   ; DKREGULARCOLLECTION              ;                                          ; DKK                             ; 3.95 ; 0,00 ;
+								   ; DK-DPD-EXPRESS-HOME              ;                                          ; DKK                             ; 80   ; 0,00 ;
+								   ; dk-postnord-regular-collection   ;                                          ; DKK                             ; 50   ; 0,00 ;
+								   ; dk-postnord-promo-collection     ;                                          ; DKK                             ; 0,00 ; 0,00 ;
+								   ; DK-REGULAR-CP Mode               ;                                          ; DKK                             ; 60   ; 0,00 ;
+
+#Spain
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'es'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; es-dpd-free-shipping             ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; ES-REGULAR                       ;                                          ; EUR                             ; 5.95 ; 0,00 ;
+								   ; ES-REGULAR                       ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; ES-EXPRESS                       ;                                          ; EUR                             ; 1    ; 0,00 ;
+								   ; ES-REGULAR-PROMO                 ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; es-click-and-collect             ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; ES REGULARCOLLECTION             ;                                          ; EUR                             ; 2.95 ; 0,00 ;
+								   ; ES-UPS-COLLECTION                ;                                          ; EUR                             ; 4.95 ; 0,00 ;
+								   ; ES-UPS-COLLECTION                ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+
+#France
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'fr'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; FR-REGULAR                       ;                                          ; EUR                             ; 6    ; 0,00 ;
+								   ; FR-EXPRESS                       ;                                          ; EUR                             ; 9    ; 0,00 ;
+								   ; FR-REGULAR-COLLECTION-PROMO      ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; FR-REGULAR-PROMO                 ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; fr-click-and-collect             ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; FR REGULARCOLLECTION             ;                                          ; EUR                             ; 4.95 ; 0,00 ;
+								   ; FR-UPS-COLLECTION                ;                                          ; EUR                             ; 4    ; 0,00 ;
+
+#Netherlands
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'nl'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; nl-standard                      ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; NL-REGULAR                       ;                                          ; EUR                             ; 6    ; 0,00 ;
+								   ; NL-EXPRESS                       ;                                          ; EUR                             ; 1    ; 0,00 ;
+								   ; NL-UPS-COLLECTION                ;                                          ; EUR                             ; 4    ; 0,00 ;
+								   ; NL-UPS-COLLECTION                ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; NL-Regular-Promo                 ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; NL-Regular-Promotion             ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; nl-click-and-collect             ;                                          ; EUR                             ; 0,00 ; 0,00 ;
+								   ; NL REGULARCOLLECTION             ;                                          ; EUR                             ; 4    ; 0,00 ;
+#Sweden
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'se'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; se-standard                      ;                                          ; SEK                             ; 50   ; 0,00 ;
+								   ; se-standard                      ;                                          ; SEK                             ; 0,00 ; 0,00 ;
+								   ; SE-FriFrakt                      ;                                          ; SEK                             ; 0,00 ; 0,00 ;
+								   ; SE-REGULAR                       ;                                          ; SEK                             ; 50   ; 0,00 ;
+								   ; SE-REGULAR                       ;                                          ; SEK                             ; 0,00 ; 0,00 ;
+								   ; SE-REGULAR-PROMO                 ;                                          ; SEK                             ; 0,00 ; 0,00 ;
+								   ; se-click-and-collect             ;                                          ; SEK                             ; 0,00 ; 0,00 ;
+								   ; SE-HOME                          ;                                          ; SEK                             ; 50   ; 0,00 ;
+								   ; SE-collection-point             ;                                          ; SEK                             ; 15   ; 0,00 ;
+								   ; SEREGULARCOLLECTION              ;                                          ; SEK                             ; 4.95 ; 0,00 ;
+								   ; SE-DPD-EXPRESS-HOME              ;                                          ; SEK                             ; 80   ; 0,00 ;
+								   ; se-postnord-regular-collection   ;                                          ; SEK                             ; 50   ; 0,00 ;
+								   ; se-postnord-promo-collection     ;                                          ; SEK                             ; 0,00 ; 0,00 ;
+								   ; SE-REGULAR-CP Mode DM            ;                                          ; SEK                             ; 55   ; 0,00 ;
+
+# UK
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]    ; zone(code)[default = 'uk'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; UK-4-DPD-SATURDAY                    ;                                          ; GBP                             ; 7.25 ; 0,00 ;
+								   ; UK-1-ECONOMY                         ;                                          ; GBP                             ; 2.49 ; 0,00 ;
+								   ; UK-1-ECONOMY                         ;                                          ; GBP                             ; 1    ; 0,00 ;
+								   ; UK-2-REGULAR                         ;                                          ; GBP                             ; 2.99 ; 0,00 ;
+								   ; UK-2-REGULAR                         ;                                          ; GBP                             ; 0,00 ; 0,00 ;
+								   ; UK-ECONOMY-PROMO                     ;                                          ; GBP                             ; 0,00 ; 0,00 ;
+								   ; uk-click-and-collect                 ;                                          ; GBP                             ; 0,00 ; 0,00 ;
+								   ; UK- Regular Collection Free Delivery ;                                          ; GBP                             ; 0,00 ; 0,00 ;
+								   ; UK-FreeRegularDelivery               ;                                          ; GBP                             ; 0,00 ; 0,00 ;
+								   ; UK-3-EXPRESS                         ;                                          ; GBP                             ; 3.99 ; 0,00 ;
+								   ; UK-5-REGULAR-COLLECTION              ;                                          ; GBP                             ; 2.49 ; 0,00 ;
+								   ; UK-6-EXPRESS-COLLECTION              ;                                          ; GBP                             ; 3.99 ; 0,00 ;
+								   ; UK_Free_Standard_Coll_Point          ;                                          ; GBP                             ; 0,00 ; 0,00 ;
+								   ; UK-STANDARD                          ;                                          ; GBP                             ; 10   ; 0,00 ;
+
+
+#USA
+INSERT_UPDATE ZoneDeliveryModeValue; deliveryMode(code)[unique = true]; zone(code)[default = 'us'][unique = true]; currency(isocode)[unique = true]; value; minimum[unique = true]
+								   ; us-ground                        ;                                          ; USD                             ; 6    ; 0,00 ;
+								   ; us-twoday                        ;                                          ; USD                             ; 9.95 ; 0,00 ;
+								   ; us-twoday                        ;                                          ; USD                             ; 4.95 ; 0,00 ;
+								   ; us-overnight                     ;                                          ; USD                             ; 25   ; 0,00 ;
+								   ; US_FREE_GROUND                   ;                                          ; USD                             ; 0,00 ; 0,00 ;
+								   ; US-REGULAR                       ;                                          ; USD                             ; 6    ; 0,00 ;
+								   ; US-EXPRESS                       ;                                          ; USD                             ; 25   ; 0,00 ;
+								   ; US-2DAY                          ;                                          ; USD                             ; 20   ; 0,00 ;
+								   ; US-3DAY                          ;                                          ; USD                             ; 15   ; 0,00 ;
+								   ; US-2DAY-FREE                     ;                                          ; USD                             ; 0,00 ; 0,00 ;
+								   ; us-FREE-overnight-Shipping       ;                                          ; USD                             ; 0,00 ; 0,00 ;
+								   ; us-click-and-collect             ;                                          ; USD                             ; 0,00 ; 0,00 ;
+
+
+
+
+# Pickup Delivery Mode
+INSERT_UPDATE PickUpDeliveryMode    ; code[unique=true]               ; active[default=true] ; supportedMode(code)
+                                    ; pickup                          ;                      ; BUY_AND_COLLECT
+
+##############################
+# Insert DeliveryMode taxes
+##############################
+INSERT_UPDATE ProductTaxCode        ; productCode[unique=true]        ; taxCode   					; taxArea[unique=true]

@@ -1,0 +1,109 @@
+<div class="cx-page" *ngIf="model$ | async as model" appCustomProductListScroll>
+  <section class="cx-page-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 " *ngIf="viewMode$ | async as viewMode">
+          <div class="tools-bar tools-bar--top">
+            <div class="row">
+              <div class="col-12">
+                <app-results-count *ngIf="model.pagination" [paginationData]="model.pagination"> </app-results-count>
+              </div>
+            </div>
+          </div>
+          <div class="cx-product-container">
+            <ng-container *ngIf="viewMode === ViewModes.Grid">
+              <div class="row product-row">
+                <ng-container *ngFor="let product of model?.products; let i = index">
+                  <app-product-grid-item
+                    [guestFirst]="firstValue"
+                    [product]="product"
+                    class="col-6 col-md-4 col-lg-3"
+                  ></app-product-grid-item>
+                  <div
+                    *ngIf="i == 1 && model.amplienceIdForThirdSlot !== undefined"
+                    class="amplience amplience--third col-6 col-md-4 col-lg-3"
+                  >
+                    <app-amplience [amplienceInput]="model.amplienceIdForThirdSlot"></app-amplience>
+                  </div>
+
+                  <div
+                    *ngIf="
+                      i == 6 &&
+                      model.amplienceIdForThirdSlot !== undefined &&
+                      model.amplienceIdForSixthSlot !== undefined
+                    "
+                    class="amplience amplience--six col-6 col-md-4 col-lg-3"
+                  >
+                    <app-amplience [amplienceInput]="model.amplienceIdForSixthSlot"></app-amplience>
+                  </div>
+                  <div
+                    *ngIf="
+                      i == 7 &&
+                      model.amplienceIdForThirdSlot == undefined &&
+                      model.amplienceIdForSixthSlot !== undefined
+                    "
+                    class="amplience amplience--six col-6 col-md-4 col-lg-3"
+                  >
+                    <app-amplience [amplienceInput]="model.amplienceIdForSixthSlot"></app-amplience>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+          <div class="tools-bar tools-bar--bottom bottom">
+            <div class="row p-0">
+              <div class="col-12">
+                <app-results-count *ngIf="model.pagination" [paginationData]="model.pagination"> </app-results-count>
+              </div>
+
+              <div class="col-12" [attr.aria-label]="'product.panigation' | cxTranslate">
+                <div class="cx-pagination">
+                  <cx-pagination [pagination]="model.pagination" (viewPageEvent)="viewPage($event)"></cx-pagination>
+                </div>
+              </div>
+              <!-- 
+              <div class="col-auto ml-auto ml-lg-0">
+                <cx-product-view (modeChange)="setViewMode($event)" [mode]="viewMode"></cx-product-view>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="contentPages$ | async as contentPages">
+      <div class="articles" *ngIf="contentPages?.contents?.length > 0">
+        <div class="articles__bg">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-12">
+                    <h2 class="articles__heading--search">
+                      {{ 'listing.search.content.title' | cxTranslate }} &#39;{{ model.freeTextSearch }}&#39;
+                    </h2>
+
+                    <app-slider
+                      [slides]="contentPages.contents"
+                      [configs]="{
+                        slidesPerView: 3.5,
+                        scrollbar: {
+                          el: '.swiper-scrollbar',
+                          hide: false
+                        },
+                        breakpoints: {
+                          '992': {
+                            slidesPerView: 1.5
+                          }
+                        }
+                      }"
+                    ></app-slider>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+</div>

@@ -1,0 +1,49 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Create the BaseStore
+#
+
+$productCatalog=tbsDKProductCatalog
+$currencies=DKK
+$net=false
+$storeUid=tbsDKStore
+$storeName=Denmark Store
+$defaultCurrency=DKK
+$languages=da,en
+$defaultLanguage=da
+$deliveryCountries=DK
+$billingCountries=DK
+$orderProcessCode=order-process
+$pickupInStoreMode=BUY_AND_COLLECT
+$customerAllowedToIgnoreSuggestions=true
+$paymentProvider=Mockup
+$promoGrp=tbsDKPromoGroup
+$checkoutFlowGroup=defaultCheckoutGroup
+$expressCheckoutEnabled=true
+$returnProcessCode=return-process
+$lang=da
+$globalLang=en
+
+INSERT_UPDATE PromotionGroup;Identifier[unique=true];
+;$promoGrp;
+
+# Base Store
+INSERT_UPDATE BaseStore;uid[unique=true];name[lang=$lang];name[lang=$globalLang];catalogs(id);currencies(isocode);net;taxGroup(code);storelocatorDistanceUnit(code);defaultCurrency(isocode);languages(isocode);defaultLanguage(isocode);deliveryCountries(isocode);billingCountries(isocode);submitOrderProcessCode;pickupInStoreMode(code);customerAllowedToIgnoreSuggestions;paymentProvider;checkoutFlowGroup;expressCheckoutEnabled;maxRadiusForPoSSearch;createReturnProcessCode;defaultProductTaxGroup(code)
+;$storeUid;$storeName;$storeName;$productCatalog;$currencies;$net;dk-taxes;km;$defaultCurrency;$languages;$defaultLanguage;$deliveryCountries;$billingCountries;$orderProcessCode;$pickupInStoreMode;$customerAllowedToIgnoreSuggestions;$paymentProvider;$checkoutFlowGroup;$expressCheckoutEnabled;300;$returnProcessCode;dk-vat-standard
+
+
+INSERT_UPDATE BaseStore2DeliveryModeRel; source(uid)[unique = true]; target(code)[unique = true]
+                                       ; $storeUid                 ; dk-standard                    ;
+                                       ; $storeUid                 ; DK-Fri                         ;
+                                       ; $storeUid                 ; DK-REGULAR                     ;
+                                       ; $storeUid                 ; DK-EXPRESS                     ;
+                                       ; $storeUid                 ; DK-REGULAR-PROMO               ;
+                                       ; $storeUid                 ; dk-click-and-collect           ;
+                                       ; $storeUid                 ; dk-coll-point                 ;
+                                       ; $storeUid                 ; DKREGULARCOLLECTION            ;
+                                       ; $storeUid                 ; DK-DPD-EXPRESS-HOME            ;
+                                       ; $storeUid                 ; dk-postnord-regular-collection ;
+                                       ; $storeUid                 ; dk-postnord-promo-collection   ;
+                                       ; $storeUid                 ; DK-REGULAR-CP Mode             ;

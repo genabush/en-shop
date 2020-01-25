@@ -1,0 +1,14 @@
+.form-collection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &__field {
+        width: calc(50% - 10px);
+
+        @include media-breakpoint-down(md) {
+            width: 100%;
+        }
+    }
+}

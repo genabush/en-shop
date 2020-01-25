@@ -1,0 +1,68 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Points of Service
+ 
+# Macros / Replacement Parameter definitions
+$storeUid=tbsUKStore
+$productCatalog=tbsUKProductCatalog
+ 
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$storeImage=storeImage(qualifier, $catalogVersion)
+ 
+$standardHours=tbs-uk-store-standard-hours
+
+INSERT_UPDATE OpeningSchedule ; code[unique=true] ;  
+                              ; $standardHours    ;  
+
+INSERT_UPDATE TbsWeekdayOpeningDay ; openingSchedule(code)[unique=true] ; dayOfWeek(code)[unique=true] ; storeOpeningTime[dateformat=hh:mm] ; storeClosingTime[dateformat=hh:mm] ;  
+                                   ; $standardHours                     ; MONDAY                       ; 09:00                              ; 19:30                              
+                                   ; $standardHours                     ; TUESDAY                      ; 09:00                              ; 19:30                              
+                                   ; $standardHours                     ; WEDNESDAY                    ; 09:00                              ; 19:30                              
+                                   ; $standardHours                     ; THURSDAY                     ; 09:00                              ; 19:30                              
+                                   ; $standardHours                     ; FRIDAY                       ; 09:00                              ; 19:30                              
+                                   ; $standardHours                     ; SATURDAY                     ; 09:00                              ; 19:30                              
+
+INSERT_UPDATE Warehouse ; code[unique=true] ; name   ; vendor(code)[default=default,forceWrite=true] ; default[default=true]
+                        ; 2253-w            ; 2253-w ;                                               ;                      ;  
+                        ; 2348-w            ; 2348-w ;                                               ;                      ;  
+                        ; 2487-w            ; 2487-w ;                                               ;                      ;  
+                        ; 2559-w            ; 2559-w ;                                               ;                      ;  
+                        ; 2636-w            ; 2636-w ;                                               ;                      ;  
+                        ; 2745-w            ; 2745-w ;                                               ;                      ;  
+
+INSERT_UPDATE PointOfService ; name[unique=true] ; warehouses(code) ; type(code) ; address(&addrID) ; latitude  ; longitude ; geocodeTimestamp[dateformat=dd-MM-yyyy] ; $storeImage ; openingSchedule(code) ; basestore(uid)[default=$storeUid] ; enabledForCis[default=true] ; maxCapacity
+                             ; 2253              ; 2253-w           ; STORE      ; addr1            ; 51.516    ; -0.134    ; 29-04-2025                              ;             ; $standardHours        
+                             ; 2348              ; 2348-w           ; STORE      ; addr2            ; 51.593    ; -0.106    ; 29-04-2025                              ;             ; $standardHours        
+                             ; 2487              ; 2487-w           ; STORE      ; addr3            ; 51.517    ; -0.125    ; 29-04-2025                              ;             ; $standardHours        
+                             ; 2559              ; 2559-w           ; STORE      ; addr4            ; 51.507881 ; -0.219240 ; 29-04-2025                              ;             ; $standardHours        
+                             ; 2636              ; 2636-w           ; STORE      ; addr5            ; 51.515259 ; -0.142130 ; 29-04-2025                              ;             ; $standardHours        
+                             ; 2745              ; 2745-w           ; STORE      ; addr6            ; 51.534531 ; -0.10592  ; 29-04-2025                              ;             ; $standardHours        
+
+INSERT_UPDATE Address ; &addrID ; streetname                     ; streetnumber ; postalcode[unique=true] ; town[unique=true] ; country(isocode) ; region(isocode) ; phone1        ; owner(PointOfService.name)[unique=true]
+                      ; addr1   ; Oxford Street                  ; 66           ; W1D 1BL                 ; London            ; GB               ;                 ; 02073 232183  ; 2253                                   ;  
+                      ; addr2   ; High Road Wood Green           ; 85           ; N22 6BB                 ; London            ; GB               ;                 ; 0208 826 3173 ; 2348                                   ;  
+                      ; addr3   ; One New Change Shopping Centre ; UNIT 7       ; EC4M 9AF                ; London            ; GB               ;                 ; 0208 826 3173 ; 2487                                   ;  
+                      ; addr4   ; Westfield Shopping Centre      ; 1160B        ; W12 7GG                 ; London            ; GB               ;                 ; 0809 726 8765 ; 2559                                   ;  
+                      ; addr5   ; Oxford Street                  ; 374          ; W1C 1JR                 ; London            ; GB               ;                 ; 8765 879 3456 ; 2636                                   ;  
+                      ; addr6   ; Upper Street                   ; 7            ; N1 0PQ                  ; London            ; GB               ;                 ; 5684 898 8597 ; 2745                                   ;  
+
+INSERT_UPDATE StockLevel ; available ; warehouse(code)[unique=true] ; inStockStatus(code) ; maxPreOrder ; maxStockLevelHistoryCount ; overSelling ; preOrder ; productCode[unique=true] ; reserved ;  
+                         ; 9         ; 2253-w                       ; notSpecified        ; 0           ; -1                        ; 0           ; 0        ; 1096109                  ; 0        ;  
+                         ; 10        ; 2348-w                       ; notSpecified        ; 0           ; -1                        ; 0           ; 0        ; 1096109                  ; 0        ;  
+                         ; 10        ; 2487-w                       ; notSpecified        ; 0           ; -1                        ; 0           ; 0        ; 1096109                  ; 0        ;  
+                         ; 10        ; 2559-w                       ; notSpecified        ; 0           ; -1                        ; 0           ; 0        ; 1096109                  ; 0        ;  
+                         ; 10        ; 2636-w                       ; notSpecified        ; 0           ; -1                        ; 0           ; 0        ; 1096109                  ; 0        ;  
+                         ; 10        ; 2745-w                       ; notSpecified        ; 0           ; -1                        ; 0           ; 0        ; 1096109                  ; 0        ;  
+
+INSERT_UPDATE StoreLocatorFeature ; code[unique=true]     
+                                  ; buyOnlinePickupInStore
+
+UPDATE PointOfService ; name[unique=true] ; features(code)         ;  
+                      ; 2253              ; buyOnlinePickupInStore ;  
+                      ; 2348              ; buyOnlinePickupInStore ;  
+                      ; 2487              ; buyOnlinePickupInStore ;  
+                      ; 2559              ; buyOnlinePickupInStore ;  
+                      ; 2636              ; buyOnlinePickupInStore ;  
+                      ; 2745              ; buyOnlinePickupInStore ;  
+

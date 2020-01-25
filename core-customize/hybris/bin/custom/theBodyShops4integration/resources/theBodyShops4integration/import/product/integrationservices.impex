@@ -1,0 +1,54 @@
+$lang=en
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InBoundProduct; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InBoundProduct	; IntegrationS4Product	; IntegrationS4Product	; true	;  
+; InBoundProduct	; ProductBarCode      	; ProductBarCode      	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InBoundProduct:IntegrationS4Product	; seasonYear   	; IntegrationS4Product:seasonYear   	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; hazardous    	; IntegrationS4Product:hazardous    	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; mllVariant   	; IntegrationS4Product:mllVariant   	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; internalName 	; IntegrationS4Product:internalName 	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; code         	; IntegrationS4Product:code         	;                              	; true	;  
+; InBoundProduct:IntegrationS4Product	; barcodes     	; IntegrationS4Product:barcodes     	; InBoundProduct:ProductBarCode	; 	;  
+; InBoundProduct:IntegrationS4Product	; season       	; IntegrationS4Product:season       	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; colour       	; IntegrationS4Product:colour       	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; type         	; IntegrationS4Product:type         	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; unitOfMeasure	; IntegrationS4Product:unitOfMeasure	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; flavour      	; IntegrationS4Product:flavour      	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; measurement  	; IntegrationS4Product:measurement  	;                              	; 	;  
+; InBoundProduct:IntegrationS4Product	; collection   	; IntegrationS4Product:collection   	;                              	; 	;  
+; InBoundProduct:ProductBarCode      	; value        	; ProductBarCode:value              	;                              	; true	;  
+  
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InBoundPrice; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InBoundPrice	; IntegrationS4Price	; IntegrationS4Price	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InBoundPrice:IntegrationS4Price	; currency   	; IntegrationS4Price:currency   	;              	; 	;  
+; InBoundPrice:IntegrationS4Price	; priceValue 	; IntegrationS4Price:priceValue 	;              	; 	;  
+; InBoundPrice:IntegrationS4Price	; country    	; IntegrationS4Price:country    	;              	; true	;  
+; InBoundPrice:IntegrationS4Price	; productCode	; IntegrationS4Price:productCode	;              	; true	;  
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InBoundStock; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InBoundStock	; IntegrationS4Stock	; IntegrationS4Stock	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InBoundStock:IntegrationS4Stock	; warehouseCode	; IntegrationS4Stock:warehouseCode	;              	; true	;  
+; InBoundStock:IntegrationS4Stock	; activeEan    	; IntegrationS4Stock:activeEan    	;              	; 	;  
+; InBoundStock:IntegrationS4Stock	; available    	; IntegrationS4Stock:available    	;              	; 	;  
+; InBoundStock:IntegrationS4Stock	; productCode  	; IntegrationS4Stock:productCode  	;              	; true	;  
+
+
+INSERT_UPDATE DynamicConstraint;active[allownull=true];id[unique=true,allownull=true];message[lang=$lang];language(code);expression;severity(code,itemtype(code));target;type(code);annotation
+;true;integrationS4PriceConstraint;"Price greater than zero is only allowed.";BEANSHELL;"if(null != getPriceValue() && getPriceValue().doubleValue() <= 0){ return false;} return true;";ERROR:Severity;uk.co.thebodyshop.integration.s4.model.IntegrationS4PriceModel;IntegrationS4Price;de.hybris.platform.validation.annotations.Dynamic
+$de.hybris.platform.core.Registry.getApplicationContext().getBean(de.hybris.platform.validation.services.ValidationService.class).reloadValidationEngine()

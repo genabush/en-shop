@@ -1,0 +1,161 @@
+<!--
+{{#or cta1Url cta1Ur2}}
+<div class="{{#if textPositionDesktop}}block-desktop-pos--{{textPositionDesktop}} {{/if}}{{#if textPositionMobile}}block-mobile-pos--{{textPositionMobile}} {{/if}}
+amp-dc-content amp-dc__hero {{#each mediaMobile}}{{#if (test this.[@type] (toRegex ".*/video"))}}has-mobile-video {{/if}}{{/each}}{{#each mediaDesktop}}{{#if (test this.[@type] (toRegex ".*/video"))}}has-desktop-video {{/if}}{{/each}}
+{{#if backgroundPalette}}bg--{{backgroundPalette}} {{#if backgroundPaletteOpacity}} bg--{{backgroundPalette}}-{{backgroundPaletteOpacity.value}}{{/if}}{{/if}}" 
+style="{{#if backgroundColour}} background-color:{{backgroundColour}}!important{{/if}} ">
+      
+       {{#each mediaMobile}}
+        
+            {{#if (test this.[@type] (toRegex ".*/image")) }}
+                <img class="amp-dc__hero-bg-image amp-dc__hero-bg-image--mobile" src="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}" />
+            {{/if}}
+        
+            {{#if (test this.[@type] (toRegex ".*/video")) }}
+                <div class="amp-dc__hero-bg-video amp-dc__hero-bg-video--mobile">
+                    <video class="" {{#if controls}}{{#with videoThumbnail}}poster="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}')"{{/with}}{{/if}}" {{#if videoControls}} controls {{else}} autoplay loop {{/if}} src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{video.name}}/mp4_720p">
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_480p" data-res="Medium" data-bitrate="689" label="Medium" type="video/mpeg4" codecs="h264" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_240p" data-res="Low" data-bitrate="325" label="Low" type="video/mpeg4" codecs="h264" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_720p" data-res="High" data-bitrate="2000" label="High" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_480p" data-res="Medium" data-bitrate="624" label="Medium" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_240p" data-res="Low" data-bitrate="325" label="Low" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_720p?protocol=https" data-res="High" data-bitrate="2119" label="High" type="video/mpeg4" codecs="h264" />
+                           {{#if videoTranscription}}<track label="Subtitles" kind="subtitles" srclang="en" src="{{videoTranscription}}.vtt" default>{{/if}}
+                    </video>
+                </div>
+            {{/if}}
+        {{/each}}
+        
+        
+        {{#each mediaDesktop}}
+            {{#if (test this.[@type] (toRegex ".*/image")) }}
+                <img class="amp-dc__hero-bg-image amp-dc__hero-bg-image--desktop" src="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}"/>
+            {{/if}}
+            
+            {{#if (test this.[@type] (toRegex ".*/video")) }}
+                <div class="amp-dc__hero-bg-video amp-dc__hero-bg-video--desktop">
+                    <video class="" {{#if controls}}{{#with videoThumbnail}}poster="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}')"{{/with}}{{/if}}" {{#if videoControls}} controls {{else}} autoplay loop {{/if}} src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{video.name}}/mp4_720p">
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_480p" data-res="Medium" data-bitrate="689" label="Medium" type="video/mpeg4" codecs="h264" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_240p" data-res="Low" data-bitrate="325" label="Low" type="video/mpeg4" codecs="h264" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_720p" data-res="High" data-bitrate="2000" label="High" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_480p" data-res="Medium" data-bitrate="624" label="Medium" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_240p" data-res="Low" data-bitrate="325" label="Low" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_720p?protocol=https" data-res="High" data-bitrate="2119" label="High" type="video/mpeg4" codecs="h264" />
+                           {{#if videoTranscription}}<track label="Subtitles" kind="subtitles" srclang="en" src="{{videoTranscription}}.vtt" default>{{/if}}
+                    </video>
+                </div>
+            {{/if}}
+        {{/each}}
+
+        <div class="amp-dc__hero-content {{#if textBackgroundPalette}}bg--{{textBackgroundPalette}} {{#if textBackgroundPaletteOpacity}}bg--{{textBackgroundPalette}}-{{textBackgroundPaletteOpacity.value}}{{/if}}{{/if}}" style="{{#if textBackgroundPalette}}{{else}}background-color:{{textBackgroundColour}}!important; {{/if}}color:{{textColour}}!important">
+            
+            {{#if heading1}}
+                <h1 class="amp-dc__main__title font--{{heading1Font}} {{#with heading1Colour}}txt--{{colour}}{{/with}}">{{heading1}}</h1>
+            {{/if}}
+            
+            {{#if heading2}}
+                <h2 class="amp-dc__title font--{{heading2Font}} {{#with heading2Colour}}txt--{{colour}}{{/with}}">{{heading2}}</h2>
+            {{/if}}
+    
+            {{#if heading3}}
+                <h3 class="amp-dc__subtitle font--{{heading3Font}} {{#with heading3Colour}}txt--{{colour}}{{/with}}">{{heading3}}</h3>
+            {{/if}}
+    
+            {{#or bodyCopy1 bodyCopy2}}
+                <div class="amp-dc __body amp-dc__body--desktop">
+                  {{#if bodyCopy1}}<div class="amp-dc__body1 {{#with bodyCopy1Colour}}txt--{{colour}}{{/with}}">{{bodyCopy1}}</div>{{/if}}
+                   {{#if bodyCopy2}}<div class="amp-dc__body2 {{#with bodyCopy2Colour}}txt--{{colour}}{{/with}}">{{bodyCopy2}}</div>{{/if}}
+                </div>
+            {{/or}}
+    
+            {{#or bodyCopy1Mobile bodyCopy2Mobile}}
+              <div class="amp-dc__body amp-dc__body--mobile">
+               {{#if bodyCopy1Mobile}} <div class="{{#with bodyCopy1MobileColour}}txt--{{colour}}{{/with}}">{{bodyCopy1Mobile}}</div>{{/if}}
+              {{#if bodyCopy2Mobile}}  <div class="{{#with bodyCopy2MobileColour}}txt--{{colour}}{{/with}}">{{bodyCopy2Mobile}}</div>{{/if}}
+              </div>
+              {{/or}}
+    
+    
+            <div class="amp-dc__hero-cta-section {{#if cta2Url}}has-two-buttons{{/if}}">
+                {{#if cta1Url}}<a href="{{cta1Url}}" class="btn {{#contains cta1Style "secondary"}}btn--secondary{{else}}btn--primary {{/contains}} {{#contains cta1Style "light"}}btn--invert {{/contains}}" {{#is cta1Behaviour 'new-tab'}} target="_blank"{{/is}}>{{cta1Copy}}</a>{{/if}}
+                {{#if cta2Url}}<a href="{{cta2Url}}" class="btn {{#contains cta2Style "secondary"}}btn--secondary{{else}}btn--primary {{/contains}} {{#contains cta2Style "light"}}btn--invert {{/contains}}" {{#is cta2Behaviour 'new-tab'}} target="_blank"{{/is}}>{{cta2Copy}}</a>{{/if}}
+            </div>
+        </div>
+    </div>
+        
+    {{else}}
+    
+    <a href="{{desktopImageURL}}" class="amp-dc__hero-banner-link" {{#is cta1Behaviour 'new-tab'}} target="_blank"{{/is}}>
+    <div class="{{#if textPositionDesktop}}block-desktop-pos--{{textPositionDesktop}} {{/if}}{{#if textPositionMobile}}block-mobile-pos--{{textPositionMobile}}{{/if}} amp-dc-content amp-dc__hero {{#each mediaMobile}}{{#if (test this.[@type] (toRegex ".*/video"))}}has-mobile-video {{/if}}{{/each}}{{#each mediaDesktop}}{{#if (test this.[@type] (toRegex ".*/video"))}}
+    has-desktop-video {{/if}}{{/each}}{{#if backgroundPalette}}bg--{{backgroundPalette}} {{#if backgroundPaletteOpacity}}bg--{{backgroundPalette}}-{{backgroundPaletteOpacity.value}}{{/if}}{{/if}}" 
+    style="{{#if backgroundColour}}background-color:{{backgroundColour}}!important{{/if}}">
+            {{#each mediaMobile}}
+                
+                {{#if (test this.[@type] (toRegex ".*/image")) }} 
+                    <img class="amp-dc__hero-bg-image amp-dc__hero-bg-image--mobile" src="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}" alt="{{this.image.name}}"/>
+                {{/if}}
+                    
+                {{#if (test this.[@type] (toRegex ".*/video")) }}
+                    <div class="amp-dc__hero-bg-video amp-dc__hero-bg-video--mobile">
+                        <video class="" {{#if controls}}{{#with videoThumbnail}}poster="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}')"{{/with}}{{/if}}" {{#if videoControls}} controls {{else}} autoplay loop {{/if}} src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{video.name}}/mp4_720p">
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_480p" data-res="Medium" data-bitrate="689" label="Medium" type="video/mpeg4" codecs="h264" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_240p" data-res="Low" data-bitrate="325" label="Low" type="video/mpeg4" codecs="h264" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_720p" data-res="High" data-bitrate="2000" label="High" type="video/webm" codecs="vp8" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_480p" data-res="Medium" data-bitrate="624" label="Medium" type="video/webm" codecs="vp8" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_240p" data-res="Low" data-bitrate="325" label="Low" type="video/webm" codecs="vp8" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_720p?protocol=https" data-res="High" data-bitrate="2119" label="High" type="video/mpeg4" codecs="h264" />
+                               {{#if videoTranscription}}<track label="Subtitles" kind="subtitles" srclang="en" src="{{videoTranscription}}.vtt" default>{{/if}}
+                        </video>
+                    </div>
+                {{/if}}
+            {{/each}}
+
+            {{#each mediaDesktop}}
+                    
+                {{#if (test this.[@type] (toRegex ".*/image")) }}
+                       <img class="amp-dc__hero-bg-image amp-dc__hero-bg-image--desktop" src="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}" alt="{{this.image.name}}"/>
+                {{/if}}
+                    
+                {{#if (test this.[@type] (toRegex ".*/video")) }}
+                    <div class="amp-dc__hero-bg-video amp-dc__hero-bg-video--desktop">
+                           <video class="" {{#if controls}}{{#with videoThumbnail}}poster="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}')"{{/with}}{{/if}}" {{#if videoControls}} controls {{else}} autoplay loop {{/if}} src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{video.name}}/mp4_720p">
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_480p" data-res="Medium" data-bitrate="689" label="Medium" type="video/mpeg4" codecs="h264" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_240p" data-res="Low" data-bitrate="325" label="Low" type="video/mpeg4" codecs="h264" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_720p" data-res="High" data-bitrate="2000" label="High" type="video/webm" codecs="vp8" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_480p" data-res="Medium" data-bitrate="624" label="Medium" type="video/webm" codecs="vp8" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_240p" data-res="Low" data-bitrate="325" label="Low" type="video/webm" codecs="vp8" />
+                            <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_720p?protocol=https" data-res="High" data-bitrate="2119" label="High" type="video/mpeg4" codecs="h264" />
+                               {{#if videoTranscription}}<track label="Subtitles" kind="subtitles" srclang="en" src="{{videoTranscription}}.vtt" default>{{/if}}
+                        </video>
+                    </div>
+                {{/if}}
+            {{/each}}
+
+            <div class="amp-dc__hero-content {{#if textBackgroundPalette}}bg--{{textBackgroundPalette}} 
+            {{#if textBackgroundPaletteOpacity}}bg--{{textBackgroundPalette}}-{{textBackgroundPaletteOpacity.value}}{{/if}}{{/if}}" 
+            style="{{#if textBackgroundPalette}}{{else}}background-color:{{textBackgroundColour}}!important{{/if}}; color:{{textColour}}!important">
+                    {{#if heading2}}
+                        <h2 class="amp-dc__h2 font--{{heading2Font}} {{#with heading2Colour}}txt--{{colour}}{{/with}}">{{heading2}}</h2>
+                    {{/if}}
+                
+                    {{#if heading3}}
+                        <h3 class="amp-dc__h3 font--{{heading3Font}} {{#with heading3Colour}}txt--{{colour}}{{/with}}">{{heading3}}</h3>
+                    {{/if}}
+                
+                    {{#or bodyCopy1 bodyCopy2}}
+                        <div class="amp-dc__body amp-dc__body--desktop">
+                            {{#if bodyCopy1}}<div class="amp-dc__body1 {{#with bodyCopy1Colour}}txt--{{colour}}{{/with}}">{{bodyCopy1}}</div>{{/if}}
+                            {{#if bodyCopy2}}<div class="amp-dc__body2 {{#with bodyCopy2Colour}}txt--{{colour}}{{/with}}">{{bodyCopy2}}</div>{{/if}}
+                        </div>
+                    {{/or}}
+                    {{#or bodyCopy1Mobile bodyCopy2Mobile}}
+                         <div class="amp-dc__body amp-dc__body--mobile">
+                            {{#if bodyCopy1Mobile}} <div class="{{#with bodyCopy1MobileColour}}txt--{{colour}}{{/with}}">{{bodyCopy1Mobile}}</div>{{/if}}
+                            {{#if bodyCopy2Mobile}}  <div class="{{#with bodyCopy2MobileColour}}txt--{{colour}}{{/with}}">{{bodyCopy2Mobile}}</div>{{/if}}
+                       </div>
+                    {{/or}}
+                </div>
+         </div>
+     </a>
+{{/or}}
+-->

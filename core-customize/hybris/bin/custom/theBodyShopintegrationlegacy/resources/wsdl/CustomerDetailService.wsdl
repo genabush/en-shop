@@ -1,0 +1,175 @@
+
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/customerDetailSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/customerDetailSchema" targetNamespace="http://thebodyshop/customerDetailSchema">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://thebodyshop/customerDetailSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/customerDetailSchema">
+            <xs:element name="CustomerDetailRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="CustomerID" type="xs:string" />
+                        <xs:element minOccurs="0" name="LoyaltyCardNumber" type="xs:string" />
+                        <xs:element minOccurs="0" name="NationalID" type="xs:string" />
+                        <xs:element name="Market" type="tns:NotNullStringMaxLength256" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CustomerDetailResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="CustomerDetail" type="tns:CustomerDetail" />
+                        <xs:element name="ResponseStatus" type="tns:ResponseStatus" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:simpleType name="StatusTypeEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="SUCCESS" />
+                    <xs:enumeration value="FAILURE" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="MessageClassEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="LONG" />
+                    <xs:enumeration value="SHORT" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="BenefitTypeEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="AbsoluteMonetary" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="NotNullStringMaxLength256">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value=".*\S.*" />
+                    <xs:minLength value="1" />
+                    <xs:maxLength value="255" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="NotNullStringMaxLength512">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value=".*\S.*" />
+                    <xs:minLength value="1" />
+                    <xs:maxLength value="512" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element name="AddressLine1" type="xs:string" />
+                    <xs:element minOccurs="0" name="AddressLine2" type="xs:string" />
+                    <xs:element name="Town" type="xs:string" />
+                    <xs:element minOccurs="0" name="Region" type="xs:string" />
+                    <xs:element name="PostCode" type="xs:string" />
+                    <xs:element name="Country" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LoyaltyMembership">
+                <xs:sequence>
+                    <xs:element name="ProgrammeName" type="xs:string" />
+                    <xs:element name="ProgrammeID" type="xs:string" />
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="LoyaltyCard" type="tns:LoyaltyCard" />
+                    <xs:element name="PointsBalance" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LoyaltyCard">
+                <xs:sequence>
+                    <xs:element name="CardType" type="xs:string" />
+                    <xs:element name="CardNumber" type="xs:string" />
+                    <xs:element name="IssueDate" type="xs:string" />
+                    <xs:element name="CardIssuingStore" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Benefit">
+                <xs:sequence>
+                    <xs:element name="BenefitType" type="tns:BenefitTypeEnum" />
+                    <xs:element name="BenefitValue" type="xs:string" />
+                    <xs:element name="BenefitCode" type="xs:string" />
+                    <xs:element name="Reason" type="xs:string" />
+                    <xs:element name="Status" type="xs:string" />
+                    <xs:element name="ExpiryDate" type="xs:string" />
+                    <xs:element name="Currency" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Segments">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="SegmentID" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerDetail">
+                <xs:sequence>
+                    <xs:element name="CustomerID" type="xs:string" />
+                    <xs:element minOccurs="0" name="EmployeeID" type="xs:string" />
+                    <xs:element minOccurs="0" name="NationalID" type="xs:string" />
+                    <xs:element minOccurs="0" name="Title" type="xs:string" />
+                    <xs:element name="FirstName" type="xs:string" />
+                    <xs:element minOccurs="0" name="MiddleName" type="xs:string" />
+                    <xs:element name="LastName" type="xs:string" />
+                    <xs:element name="RegistrationDate" type="xs:string" />
+                    <xs:element name="Market" type="xs:string" />
+                    <xs:element minOccurs="0" name="DateOfBirth" type="xs:string" />
+                    <xs:element minOccurs="0" name="Gender" type="xs:string" />
+                    <xs:element name="EmailAddress" type="xs:string" />
+                    <xs:element minOccurs="0" name="PhoneNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="MobileNumber" type="xs:string" />
+                    <xs:element minOccurs="0" name="ContactAddress" type="tns:Address" />
+                    <xs:element minOccurs="0" name="LoyaltyMembership" type="tns:LoyaltyMembership" />
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Benefit" type="tns:Benefit" />
+                    <xs:element minOccurs="0" name="Segments" type="tns:Segments" />
+                    <xs:element minOccurs="0" name="DirectMailOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="EmailOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="MobileOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="PhoneOptIn" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="PreferredLanguage" type="xs:string" />
+                    <xs:element minOccurs="0" name="MarketingMessages">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="MarketingMessage" type="tns:MarketingMessage" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ResponseStatus">
+                <xs:sequence>
+                    <xs:element name="status" type="tns:StatusTypeEnum" />
+                    <xs:element minOccurs="0" name="statusMessage" type="xs:string" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MarketingMessage">
+                <xs:sequence>
+                    <xs:element name="MessageClass" type="tns:MessageClassEnum" />
+                    <xs:element name="MessageType" type="xs:string" />
+                    <xs:element name="MessageString" type="tns:NotNullStringMaxLength512" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="CustomerDetailRequest">
+        <wsdl:part element="tns:CustomerDetailRequest" name="CustomerDetailRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CustomerDetailResponse">
+        <wsdl:part element="tns:CustomerDetailResponse" name="CustomerDetailResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CustomerDetailService">
+        <wsdl:operation name="CustomerDetail">
+            <wsdl:input message="tns:CustomerDetailRequest" name="CustomerDetailRequest"></wsdl:input>
+            <wsdl:output message="tns:CustomerDetailResponse" name="CustomerDetailResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CustomerDetailServiceSoap11" type="tns:CustomerDetailService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="CustomerDetail">
+            <soap:operation soapAction="" />
+            <wsdl:input name="CustomerDetailRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="CustomerDetailResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CustomerDetailService">
+        <wsdl:port binding="tns:CustomerDetailServiceSoap11" name="CustomerDetailServiceSoap11">
+            <soap:address location="http://thebodyshop.local:9001/tbsdataprocessing/endpoints" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="productVisibilityContextExtractor" class="uk.co.thebodyshop.core.product.visibility.context.DefaultProductVisibilityContextExtractor">
+        <constructor-arg name="productDao" ref="productDao"/>
+        <constructor-arg name="userService" ref="userService" />
+        <constructor-arg name="searchRestrictionService" ref="searchRestrictionService"/>
+        <constructor-arg name="sessionService" ref="sessionService"/>
+    </bean>
+
+    <bean id="productMissingPredicate" class="uk.co.thebodyshop.core.product.visibility.predicates.ProductMissingPredicate"/>
+    <bean id="productNotApprovedPredicate" class="uk.co.thebodyshop.core.product.visibility.predicates.ProductNotApprovedPredicate"/>
+    <bean id="productNotOnlinePredicate" class="uk.co.thebodyshop.core.product.visibility.predicates.ProductNotOnlinePredicate">
+        <constructor-arg name="timeService" ref="timeService"/>
+    </bean>
+    <bean id="productHasNoPricePredicate" class="uk.co.thebodyshop.core.product.visibility.predicates.ProductHasNoPricePredicate">
+        <constructor-arg name="commercePriceService" ref="commercePriceService"/>
+        <constructor-arg name="tbsCatalogVersionService" ref="tbsCatalogVersionService"/>
+    </bean>
+    <bean id="productRestrictedPredicate" class="uk.co.thebodyshop.core.product.visibility.predicates.ProductRestrictedPredicate"/>
+    <bean id="productPhasedOutPredicate" class="uk.co.thebodyshop.core.product.visibility.predicates.ProductPhasedOutPredicate"/>
+
+    <bean id="abstractProductVisibilityFunction" class="uk.co.thebodyshop.core.product.visibility.functions.AbstractProductVisibilityFunction" abstract="true">
+        <property name="visible" value="false"/>
+        <property name="message" value="#{configurationService.configuration.getProperty('visibility.product.notfound')}"/>
+    </bean>
+
+    <bean id="homePageRedirectVisibilityFunction" class="uk.co.thebodyshop.core.product.visibility.functions.HomePageRedirectVisibilityFunction" parent="abstractProductVisibilityFunction"/>
+
+    <bean id="categoryRedirectProductVisibilityFunction" class="uk.co.thebodyshop.core.product.visibility.functions.CategoryRedirectProductVisibilityFunction" parent="abstractProductVisibilityFunction">
+        <constructor-arg name="categoryModelUrlResolver" ref="categoryModelUrlResolver"/>
+        <constructor-arg name="categoryService" ref="categoryService"/>
+    </bean>
+
+    <bean id="productRedirectVisibilityFunction" class="uk.co.thebodyshop.core.product.visibility.functions.ProductRedirectVisibilityFunction" parent="abstractProductVisibilityFunction">
+        <constructor-arg name="productModelUrlResolver" ref="productModelUrlResolver"/>
+        <property name="message" value="#{configurationService.configuration.getProperty('visibility.product.phasedout')}"/>
+    </bean>
+
+    <bean id="productMissingFunctionMap" class="uk.co.thebodyshop.core.product.visibility.functions.DefaultPredicatedFunction">
+        <constructor-arg name="predicate" ref="productMissingPredicate"/>
+        <constructor-arg name="function" ref="homePageRedirectVisibilityFunction"/>
+    </bean>
+
+    <bean id="productNotApprovedFunction" parent="categoryRedirectProductVisibilityFunction">
+        <property name="message" value="#{configurationService.configuration.getProperty('visibility.product.notapproved')}"/>
+    </bean>
+
+    <bean id="productNotApprovedFunctionMap" class="uk.co.thebodyshop.core.product.visibility.functions.DefaultPredicatedFunction">
+        <constructor-arg name="predicate" ref="productNotApprovedPredicate"/>
+        <constructor-arg name="function" ref="productNotApprovedFunction"/>
+    </bean>
+
+    <bean id="productNotOnlineFunction" parent="categoryRedirectProductVisibilityFunction">
+        <property name="message" value="#{configurationService.configuration.getProperty('visibility.product.notonline')}"/>
+    </bean>
+
+    <bean id="productNotOnlineFunctionMap" class="uk.co.thebodyshop.core.product.visibility.functions.DefaultPredicatedFunction">
+        <constructor-arg name="predicate" ref="productNotOnlinePredicate"/>
+        <constructor-arg name="function" ref="productNotOnlineFunction"/>
+    </bean>
+
+    <bean id="productNoPriceFunction" parent="categoryRedirectProductVisibilityFunction">
+        <property name="message" value="#{configurationService.configuration.getProperty('visibility.product.noprice')}"/>
+    </bean>
+
+    <bean id="productNoPriceFunctionMap" class="uk.co.thebodyshop.core.product.visibility.functions.DefaultPredicatedFunction">
+        <constructor-arg name="predicate" ref="productHasNoPricePredicate"/>
+        <constructor-arg name="function" ref="productNoPriceFunction"/>
+    </bean>
+
+    <bean id="productRestrictedFunction" parent="categoryRedirectProductVisibilityFunction">
+        <property name="message" value="#{configurationService.configuration.getProperty('visibility.product.restricted')}"/>
+    </bean>
+
+    <bean id="productRestrictedFunctionMap" class="uk.co.thebodyshop.core.product.visibility.functions.DefaultPredicatedFunction">
+        <constructor-arg name="predicate" ref="productRestrictedPredicate"/>
+        <constructor-arg name="function" ref="productRestrictedFunction"/>
+    </bean>
+
+
+    <bean id="productVisibilityStrategy" class="uk.co.thebodyshop.core.product.visibility.strategy.DefaultProductVisibilityStrategy">
+        <constructor-arg name="predicatedFunctions">
+            <list>
+                <ref bean="productMissingFunctionMap"/>
+                <ref bean="productNotApprovedFunctionMap"/>
+                <ref bean="productNotOnlineFunctionMap"/>
+                <ref bean="productNoPriceFunctionMap"/>
+                <ref bean="productRestrictedFunctionMap"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="baseProductVisibilityFunction" parent="categoryRedirectProductVisibilityFunction">
+        <property name="message" value="#{configurationService.configuration.getProperty('visibility.baseproduct.novariantvisible')}"/>
+    </bean>
+
+    <bean id="baseProductVisiblityStrategy" class="uk.co.thebodyshop.core.product.visibility.strategy.BaseProductVisiblityStrategy">
+        <constructor-arg name="productVisibilityStrategy" ref="productVisibilityStrategy"/>
+        <constructor-arg name="categoryRedirectFunction" ref="baseProductVisibilityFunction"/>
+    </bean>
+
+    <bean id="phaseInProductVisibilityStrategy" class="uk.co.thebodyshop.core.product.visibility.strategy.PhaseInProductVisibilityStrategy">
+        <constructor-arg name="homePageRedirectFunction" ref="homePageRedirectVisibilityFunction"/>
+        <constructor-arg name="phaseInProductPredicate" ref="productPhasedOutPredicate"/>
+        <constructor-arg name="productVisibilityStrategy" ref="productVisibilityStrategy"/>
+        <constructor-arg name="productRedirectFunction" ref="productRedirectVisibilityFunction"/>
+        <constructor-arg name="categoryRedirectFunction" ref="categoryRedirectProductVisibilityFunction"/>
+    </bean>
+
+    <bean id="productVisibilityStrategyFactory" class="uk.co.thebodyshop.core.product.visibility.strategy.factory.DefaultProductVisibilityStrategyFactory">
+        <constructor-arg name="visibilityStrategies">
+            <list>
+                <ref bean="baseProductVisiblityStrategy"/>
+                <ref bean="phaseInProductVisibilityStrategy"/>
+                <ref bean="productVisibilityStrategy"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <alias name="defaultProductVisibilityService" alias="productVisibilityService" />
+    <bean name="defaultProductVisibilityService" class="uk.co.thebodyshop.core.product.visibility.services.DefaultProductVisibilityService">
+        <constructor-arg name="productVisibilityContextExtractor" ref="productVisibilityContextExtractor"/>
+        <constructor-arg name="productVisibilityStrategyFactory" ref="productVisibilityStrategyFactory"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,201 @@
+# ----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS Site configuration for the store
+#
+$productCatalog=tbsUKProductCatalog
+$contentCatalog=tbsUKContentCatalog
+$globalContentCatalog=tbsGlobalContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$globalContentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$globalContentCatalog]),CatalogVersion.version[default=Staged])[default=$globalContentCatalog:Staged]
+$defaultLanguage=en_GB
+$storeUid=tbsUKStore
+$siteUid=thebodyshop-uk
+$promoGrp=tbsUKPromoGroup
+$siteMapUrlLimitPerFile=50000
+$webServiceSiteUid=$siteUidWS
+$siteMapLangCur=en_GBGBP
+$siteMapPage=Homepage,Product,CategoryLanding,Category,Store,Content,Custom
+$customSiteMapUrls=
+$lang=en_GB
+$globalLang=en
+$startDate=startDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-11-2019 06:30:00']
+$endDate=endDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-11-2020 06:30:00']
+$issueDate=issueDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-11-2019 06:30:00']
+$expiryDate=expiryDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-11-2020 06:30:00']
+
+# Import config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+# Module gen config
+$jarResource=$config-jarResource
+# Load the storefront context root config param
+$storefrontContextRoot=$config-storefrontContextRoot
+
+INSERT_UPDATE PromotionGroup;Identifier[unique=true];
+;$promoGrp;
+
+# SiteMap Configuration
+INSERT_UPDATE SiteMapLanguageCurrency;&siteMapLanguageCurrency;language(isoCode)[unique=true];currency(isocode)[unique=true];
+;en_GBGBP;en_GB;GBP
+
+INSERT_UPDATE CatalogUnawareMedia;&siteMapMediaId;code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='text/plain']
+;$siteUid-siteMapMedia;$siteUid-siteMapMedia;siteMapTemplate.vm;$jarResource/site-siteMapTemplate.vm;
+
+INSERT_UPDATE RendererTemplate;&siteMapRenderer;code[unique=true];content(&siteMapMediaId);contextClass;rendererType(code)[default='velocity'];
+;$siteUid-siteMapTemplate;$siteUid-siteMapTemplate;$siteUid-siteMapMedia;de.hybris.platform.acceleratorservices.sitemap.renderer.SiteMapContext;
+
+INSERT_UPDATE SiteMapPage;&siteMapPage;code(code)[unique=true];frequency(code)[unique=true];priority[unique=true];active[default=true]
+;Homepage;Homepage;daily;1.0;;
+;Product;Product;weekly;0.6;;
+;CategoryLanding;CategoryLanding;daily;0.9;;
+;Category;Category;daily;0.8;;
+;Store;Store;weekly;0.6;;
+;Content;Content;monthly;0.4;;
+;Custom;Custom;daily;1.0;;
+
+ 
+INSERT_UPDATE SiteMapConfig;&siteMapConfigId;configId[unique=true];siteMapLanguageCurrencies(&siteMapLanguageCurrency);siteMapPages(&siteMapPage);siteMapTemplate(&siteMapRenderer)[unique=true];customUrls;
+;$storeUidSiteMapConfig;$storeUidSiteMapConfig;$siteMapLangCur;$siteMapPage;$siteUid-siteMapTemplate;$customSiteMapUrls;
+
+# CMS Site
+INSERT_UPDATE CMSSite;uid[unique=true];name[lang=$lang];name[lang=$globalLang];locale[lang=$lang];locale[lang=$globalLang];theme(code);channel(code);stores(uid);contentCatalogs(id);defaultCatalog(id);defaultLanguage(isoCode);siteMapConfig(&siteMapConfigId);urlPatterns;active;previewURL;startingPage(uid,$globalContentCV);urlEncodingAttributes;defaultPromotionGroup(Identifier)[default=$promoGrp]
+;$siteUid;UK Site;UK Site;en_GB;en_GB;alpha;B2C;$storeUid;$globalContentCatalog,$contentCatalog;$productCatalog;$defaultLanguage;$storeUidSiteMapConfig;(?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=$siteUid)(|\&.*)$,(?i)^https?://$siteUid\.[^/]+(|/.*|\?.*)$,(?i)^https?://api\.hybrisdev\.com(:[\d]+)?/rest/.*$,(?i)^https?://localhost(:[\d]+)?/rest/.*$;true;"https://localhost:4200/thebodyshop-uk/en/GBP/";homepage;storefront,language
+
+# Remove black and blue themes for responsive
+REMOVE SiteTheme;code[unique=true]
+;black
+;blue
+
+# Cart Cleanup CronJobs
+INSERT_UPDATE CartRemovalCronJob;code[unique=true];job(code)[default=cartRemovalJob];sites(uid)[default=$siteUid];sessionLanguage(isoCode)[default=en]
+;$siteUid-CartRemovalJob
+
+# Uncollected orders cronjob
+INSERT_UPDATE UncollectedOrdersCronJob;code[unique=true];job(code)[default=uncollectedOrdersJob];sites(uid)[default=$siteUid];sessionLanguage(isoCode)[default=en]
+;$siteUid-UncollectedOrdersJob
+
+# Sitemap Generation CronJobs
+INSERT_UPDATE SiteMapMediaCronJob;code[unique=true];job(code)[default=siteMapMediaJob];contentSite(uid)[default=$siteUid];sessionLanguage(isoCode)[default=en]
+;$siteUid-SiteMapMediaJob;;;;$siteMapUrlLimitPerFile
+
+INSERT_UPDATE Trigger;cronJob(code)[unique=true];second;minute;hour;day;month;year;relative;active;maxAcceptableDelay
+;$siteUid-CartRemovalJob;0;5;4;-1;-1;-1;false;true;-1
+;$siteUid-UncollectedOrdersJob;0;0;6;-1;-1;-1;true;false;-1
+;$siteUid-SiteMapMediaJob;0;0;6;-1;-1;-1;true;false;-1
+
+UPDATE CatalogVersionSyncJob; code[unique = true];  rootTypes(code[collection-delimiter = , ])[mode=append];
+;"sync tbsUKProductCatalog:Staged->Online" ;MarkDownPriceRow;
+
+INSERT_UPDATE LoyaltyMembership;name;programmeId[unique=true];status(code);type;$startDate;$endDate;loyaltyCardsThreshold;loyaltyCardsPrefix;loyaltyCardsFetchQuantity;loyaltyProgramCode;loyaltyProgramMarketCode;cardsFetchInitiated
+;LYBC UK;LYBC UNITED KINGDOM;ACTIVE;individual;;;200;277;1000;294;826;false;
+
+UPDATE BaseSite;uid[unique=true];loyaltyMembership(programmeId)
+;$siteUid;LYBC UNITED KINGDOM
+
+INSERT_UPDATE LoyaltyCard;cardNumber[unique=true];cardStatus(code)[default=NEW];loyaltyMembership(programmeId)[default=LYBC UNITED KINGDOM];$issueDate;$expiryDate;cardIssueStore[default=tbsUKStore]
+;12300;
+;12301;
+;12302;
+;12303;
+;12304;
+;12305;
+;12306;
+;12307;
+;12308;
+;12309;
+;12310;
+;12311;
+;12312;
+;12313;
+;12314;
+;12315;
+;12316;
+;12317;
+;12318;
+;12319;
+;12320;
+;12321;
+;12322;
+;12323;
+;12324;
+;12325;
+;12326;
+;12327;
+;12328;
+;12329;
+;12330;
+;12331;
+;12332;
+;12333;
+;12334;
+;12335;
+;12336;
+;12337;
+;12338;
+;12339;
+;12340;
+;12341;
+;12342;
+;12343;
+;12344;
+;12345;
+;12346;
+;12347;
+;12348;
+;12349;
+;12350;
+;12351;
+;12352;
+;12353;
+;12354;
+;12355;
+;12356;
+;12357;
+;12358;
+;12359;
+;12360;
+;12361;
+;12362;
+;12363;
+;12364;
+;12365;
+;12366;
+;12367;
+;12368;
+;12369;
+;12370;
+;12371;
+;12372;
+;12373;
+;12374;
+;12375;
+;12376;
+;12377;
+;12378;
+;12379;
+;12380;
+;12381;
+;12382;
+;12383;
+;12384;
+;12385;
+;12386;
+;12387;
+;12388;
+;12389;
+;12390;
+;12391;
+;12392;
+;12393;
+;12394;
+;12395;
+;12396;
+;12397;
+;12398;
+;12399;
+
+INSERT_UPDATE SyncAttributeDescriptorConfig;syncJob(code)[unique=true,path-delimiter=!];attributeDescriptor(enclosingType(code),qualifier)[unique=true];includedInSync;copyByValue
+;"sync tbsUKProductCatalog:Staged->Online";Product:europe1Prices;false;false;
+;"sync tbsUKProductCatalog:Staged->Online";Product:ownEurope1Prices;false;false;
+

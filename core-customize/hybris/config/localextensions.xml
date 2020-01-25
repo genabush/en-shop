@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hybrisconfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="resources/schemas/extensions.xsd">
+	<extensions>
+		<!-- All extensions located in ${HYBRIS_BIN_DIR}/platform/ext are automatically loaded. More information about how to configure available extensions can be found here : https://wiki.hybris.com/x/nZVzC -->
+
+		<path dir="${HYBRIS_BIN_DIR}" />
+
+		<!-- Add-ons -->
+		<extension name="addonsupport" />
+		<extension name="cmsoccaddon" />
+		<extension name="acceleratorwebservicesaddon" />
+
+		<!-- Backoffice -->
+		<extension name="backofficesolrsearch" />
+		<extension name="solrfacetsearchbackoffice" />
+		<extension name="commerceservicesbackoffice" />
+		<extension name="cmsbackoffice" />
+		<extension name="promotionenginebackoffice" />
+		<extension name="promotionsbackoffice" />
+		<extension name="rulebuilderbackoffice" />
+		<extension name="integrationbackoffice" />
+		<extension name="couponbackoffice" />
+
+		<!-- Smart Edit -->
+		<extension name="cmswebservices" />
+		<extension name="smarteditwebservices" />
+		<extension name="cmssmarteditwebservices" />
+		<extension name="permissionswebservices" />
+		<extension name="previewwebservices" />
+		<extension name="smartedit" />
+		<extension name="cmssmartedit" />
+
+		<!-- Promotions -->
+		<extension name="promotionengineservices" />
+
+		<!-- Integrations -->
+		<extension name="odata2webservices" />
+
+		<!-- Adyen -->
+		<extension name="adyenv6core" />
+		<extension name="adyenv6backoffice" />
+		<extension name="adyenv6notification" />
+		<extension name="adyenv6fulfilmentprocess" />
+
+		<!-- Custom -->
+		<extension name="theBodyShop" />
+
+		<extension name="theBodyShopcore" />
+		<extension name="theBodyShopcms" />
+		<extension name="theBodyShopfulfilmentprocess" />
+		<extension name="theBodyShoppayment" />
+
+		<extension name="theBodyShopinitialdata" />
+
+		<extension name="theBodyShopbackoffice" />
+		<extension name="theBodyShopsmartedit" />
+		<extension name="theBodyShopsewebservices" />
+
+		<extension name="theBodyShopintegrationadyen" />
+		<extension name="theBodyShops4integration" />
+		<extension name="theBodyShopintegrationlegacy" />
+		<extension name="theBodyShopintegrationsvs" />
+		<extension name="theBodyShopintegrationmocks"/>
+		<extension name="theBodyShopintegrationcollectionpoints" />
+		<extension name="theBodyShopintegrationpaypal"/>
+		<extension name="theBodyShoployalty"/>
+
+		<!-- Gigya -->
+		<extension name="gigyabackoffice"/>
+		<extension name="gigyafacades"/>
+		<extension name="gigyaservices"/>
+		<extension name="outboundservices"/>
+		<extension name="gigyaoccaddon"/>
+
+	</extensions>
+</hybrisconfig>

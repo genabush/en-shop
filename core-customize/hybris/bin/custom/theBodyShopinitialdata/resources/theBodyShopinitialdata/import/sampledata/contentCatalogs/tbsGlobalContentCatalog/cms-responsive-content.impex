@@ -1,0 +1,1360 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsGlobalContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:uk.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsGlobalProductCatalog
+$productCatalogName=Global Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+$pages=pages(uid,$contentCV)[unique=true]
+$categories=categories(code,$productCV)[unique=true]
+
+UPDATE CatalogVersionSyncJob; code[unique = true];synclanguages(isoCode);
+;"sync tbsGlobalContentCatalog:Staged->Online";"en,en_GB,de,fr,en_AU,en_CA,fr_CA,da,es,nl,sv,en_US,de_AT,en_HK,en_SG";
+
+INSERT_UPDATE ComponentTypeGroups2ComponentType ; source(code)[unique=true] ; target(code)[unique=true]
+                                                ; wide                      ; AmplienceCMSComponent
+                                                ; narrow                    ; AmplienceCMSComponent
+                                                ; wide 						; OlapicCMSComponent
+                                                ; narrow					; OlapicCMSComponent
+                                                
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-global;c00001;p003257;$productCatalog
+
+INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/jpeg'];altText;folder(qualifier)[default='images']
+;;/images/theme/logo-tbs.png;logo-tbs.png;$siteResource/images/theme/logo-tbs.png;image/png;TBS logo;
+
+# Site Logo Component
+INSERT_UPDATE SimpleBannerComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink
+;;SiteLogoComponent;Site Logo Component;SiteLogoComponent;"/"
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;root;;root;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;ICON_StoreFinderLink;Store Finder Link;/store-finder;StoreFinderLink;StoreFinderLink;;;;
+;;ICON_WishListLink;Wishlist Link;/my-account/wishlist;WishlistLink;WishlistLink;;;;
+;;ICON_Login;Login Link;/login;LoginLink;LoginLink;;;;
+;;MyAccountLink;My Account Link;/my-account;MyAccountLink;MyAccountLink;;;;
+;;GuestWishlistLink;Wishlist Link;/wishlist;GuestWishlistLink;GuestWishlistLink;;;;
+;;AboutSAPCommerceLink;About SAP Commerce Cloud Link;"https://www.cx.sap.com/products/commerce";AboutSAPCommerceLink;AboutSAPCommerceLink;newWindow;;;
+;;FAQLink;FAQ Link;/faq;FAQLink;FAQLink;;;;
+;;VisitSAPLink;Visit SAP Link;"https://www.hcx.sap.com";VisitSAPLink;VisitSAPLink;newWindow;;;
+;;ContactUsLink;Contact Us Link;"https://www.cx.sap.com/contact";ContactUsLink;ContactUsLink;newWindow;;;
+;;FacebookLink;Facebook Link;"http://www.facebook.com/sapcx/";FacebookLink;FacebookLink;newWindow;;;
+;;TwitterLink;Twitter Link;"http://www.twitter.com/SAP_CX";TwitterLink;TwitterLink;newWindow;;;
+;;AgileCommerceBlogLink;Agile Commerce Blog Link;"https://www.agile-commerce.com/";AgileCommerceBlogLink;AgileCommerceBlogLink;newWindow;;;
+;;LinkedInLink;Linked In Link;"http://www.linkedin.com/groups/5063400";LinkedInLink;LinkedInLink;newWindow;;;
+;;BodyCategoryLink; Body Category Link;/Body/c/c00001;BodyCategoryLink;BodyCategoryLink;;c00001;;
+;;BodyTreatsCategoryLink; Body Treats Category Link;/Body/Bath-Treats/c/c00013;BodyTreatsCategoryLink;BodyTreatsCategoryLink;;c00013;;
+;;BodyButtersCategoryLink; Body Butters Category Link;/Body/Body-Butters/c/c00014;BodyButtersCategoryLink;BodyButtersCategoryLink;;c00014;;
+;;BodyYogurtsCategoryLink; Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;BodyYogurtsCategoryLink;BodyYogurtsCategoryLink;;c00284;;
+;;BodyMassageOilsCategoryLink; Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;BodyMassageOilsCategoryLink;BodyMassageOilsCategoryLink;;c00024;;
+;;BodyBronzingCategoryLink; Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;BodyBronzingCategoryLink;BodyBronzingCategoryLink;;c00018;;
+;;DeodorantCategoryLink; Deodorant Category Link;/Body/Deodorant/c/c00019;DeodorantCategoryLink;DeodorantCategoryLink;;c00019;;
+;;FootCareCategoryLink; Foot Care Category Link;/Body/Foot-Care/c/c00020;FootCareCategoryLink;FootCareCategoryLink;;c00020;;
+;;TravelSizesCategoryLink; Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;TravelSizesCategoryLink;TravelSizesCategoryLink;;c00021;;
+;;FaceCategoryLink; Face Category Link;/Face/c/c00010;FaceCategoryLink;FaceCategoryLink;;c00010;;
+;;FaceMasksCategoryLink; Face Masks Category Link;/Face/Face-Masks/c/c00143;FaceMasksCategoryLink;FaceMasksCategoryLink;;c00143;;
+;;MakeUpRemoversCategoryLink; Make-up Removers Link;/Face/Make-up-Removers/c/c00145;MakeUpRemoversCategoryLink;MakeUpRemoversCategoryLink;;c00145;;
+;;EyeCareCategoryLink; Eye Care CategoryLink;/Face/Eye-Care/c/c00144;EyeCareCategoryLink;EyeCareCategoryLink;;c00144;;
+;;NightTimeTreatmentsCategoryLink; Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;NightTimeTreatmentsCategoryLink;NightTimeTreatmentsCategoryLink;;c00149;;
+;;LipBalmCategoryLink; Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;LipBalmCategoryLink;LipBalmCategoryLink;;c00146;;
+;;MenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;MenShavingCategoryLink;MenShavingCategoryLink;;c00147;;
+;;CleansersAndTonersCategoryLink; Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;CleansersAndTonersCategoryLink;CleansersAndTonersCategoryLink;;c00141;;
+;;MoisturisersCategoryLink; Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;MoisturisersCategoryLink;MoisturisersCategoryLink;;c00148;;
+;;AccessoriesCategoryLink; Accessories CategoryLink;/Face/Accessories/c/c00140;AccessoriesCategoryLink;AccessoriesCategoryLink;;c00140;;
+;;FaceScrubsCategoryLink; Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;FaceScrubsCategoryLink;FaceScrubsCategoryLink;;c00275;;
+;;HandsCategoryLink; Hands CategoryLink;/Hands/c/c00006;HandsCategoryLink;HandsCategoryLink;;c00006;;
+;;HandsMoisturisersCategoryLink; Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;HandsMoisturisersCategoryLink;HandsMoisturisersCategoryLink;;c00054;;
+;;HandWashCategoryLink; Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;HandWashCategoryLink;HandWashCategoryLink;;c00056;;
+;;TargetedTreatmentCategoryLink; Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;TargetedTreatmentCategoryLink;TargetedTreatmentCategoryLink;;c00055;;
+;;HairCategoryLink; Hair Category Link;/Hair/c/c00005;HairCategoryLink;HairCategoryLink;;c00005;;
+;;BrushesAndCombsCategoryLink; Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;BrushesAndCombsCategoryLink;BrushesAndCombsCategoryLink;;c00047;;
+;;ConditionerCategoryLink; Conditioner Category Link;/Hair/Conditioner/c/c00048;ConditionerCategoryLink;ConditionerCategoryLink;;c00048;;
+;;ShampooCategoryLink; Shampoo Category Link;/Hair/Shampoo/c/c00051;ShampooCategoryLink;ShampooCategoryLink;;c00051;;
+;;TreatmentCategoryLink; Treatment Category Link;/Hair/Treatment/c/c00050;TreatmentCategoryLink;TreatmentCategoryLink;;c00050;;
+;;StylingCategoryLink; Styling Category Link;/Hair/Styling/c/c00049;StylingCategoryLink;StylingCategoryLink;;c00049;;
+;;MakeUpCategoryLink; Make-up Category Link;/Make-up/c/c00007;MakeUpCategoryLink;MakeUpCategoryLink;;c00007;;
+;;FoundationsConcealersCategoryLink; Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;FoundationsConcealersCategoryLink;FoundationsConcealersCategoryLink;;c00065;;
+;;BrushesAndToolsCategoryLink; Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;BrushesAndToolsCategoryLink;BrushesAndToolsCategoryLink;;c00059;;
+;;BBCreamsCategoryLink; BB Creams Category Link;/Make-up/BB-Creams/c/c00060;BBCreamsCategoryLink;BBCreamsCategoryLink;;c00060;;
+;;BronzingCategoryLink; Bronzing Category Link;/Make-up/Bronzing/c/c00061;BronzingCategoryLink; BronzingCategoryLink;;c00061;;
+;;CheeksCategoryLink; Cheeks Category Link;/Make-up/Cheeks/c/c00062;CheeksCategoryLink;CheeksCategoryLink;;c00062;;
+;;EyeLinersCategoryLink; Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;EyeLinersCategoryLink;EyeLinersCategoryLink;;c00064;;
+;;EyeShadowCategoryLink; Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;EyeShadowCategoryLink;EyeShadowCategoryLink;;c00063;;
+;;LipsCategoryLink; Lips Category Link;/Make-up/Lips/c/c00066;LipsCategoryLink;LipsCategoryLink;;c00066;;
+;;MascaraCategoryLink; Mascara Category Link;/Make-up/Mascara/c/c00067;MascaraCategoryLink;MascaraCategoryLink;;c00067;;
+;;PrimersCategoryLink; Primers Category Link;/Make-up/Primers/c/c00069;PrimersCategoryLink;PrimersCategoryLink;;c00069;;
+;;DeliveryLink;Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";DeliveryLink;DeliveryLink;newWindow;;;
+;;ReturnsLink;Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";ReturnsLink;ReturnsLink;newWindow;;;
+;;FAQLink;FAQ Link;/faq;FAQLink;FAQLink;;;;
+;;TermsAndConditionsLink;TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";TermsAndConditionsLink;TermsAndConditionsLink;newWindow;
+;;PrivacyPolicyLink;PrivacyPolicy Link;/privacy-policy;PrivacyPolicyLink;PrivacyPolicyLink;newWindow;
+;;SitemapLink;Sitemap Link;/sitemap;SitemapLink;SitemapLink;newWindow;
+;;StoresLink;Stores Link;"https://www.thebodyshop.com/store-finder";StoresLink;StoresLink;newWindow;
+;;LoveYourBodyClubLink;Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";LoveYourBodyClubLink;LoveYourBodyClubLink;newWindow;
+;;StudentDiscountLink;Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";StudentDiscountLink;StudentDiscountLink;newWindow;
+;;GiftCardsLink;Gift Cards Link;/gift-card-balance;GiftCardsLink;GiftCardsLink;newWindow;
+;;AboutUsLink;About us Link;"https://www.thebodyshop.com/about-us";AboutUsLink;AboutUsLink;newWindow;
+;;TheBodyShopAtHomeLink;The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";TheBodyShopAtHomeLink;TheBodyShopAtHomeLink;newWindow;
+;;AffiliatesLink;Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";AffiliatesLink;AffiliatesLink;newWindow;
+;;GenderPayGapLink;Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";GenderPayGapLink;GenderPayGapLink;newWindow;
+;;ModernSlaveryStatementLink;Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";ModernSlaveryStatementLink;ModernSlaveryStatementLink;newWindow;
+;;AgainstAnimalTestingLink;Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";AgainstAnimalTestingLink;AgainstAnimalTestingLink;newWindow;
+;;TaxStrategyLink;Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";TaxStrategyLink;TaxStrategyLink;newWindow;
+;;CareersLink;Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";CareersLink;CareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]             ; $contentCV[unique=true] ; name                          		; parent(uid, $contentCV)  ; links(&linkRef)                                             																						; &nodeRef
+                                ; TBSGlobalRootNode            ;                         ; TBS Global Root Node                	; root                     ;                                                             																						; TBSGlobalRootNode
+                                ; TbsGlobalNavNode             ;                         ; TBS Global Site Nav Node      		; TBSGlobalRootNode        ;                                              																						; TbsGlobalNavNode
+                                ; TbsGlobalCategoryNavNode     ;                         ; TBS Global Category Navigation  		; TbsGlobalNavNode         ;                                                             																						; TbsGlobalCategoryNavNode
+                                ; TbsGlobalDiscoverNavNode     ;                         ; TBS Global Discover Navigation  		; TbsGlobalNavNode         ;                                                             																						; TbsGlobalDiscoverNavNode
+                                ; MyAccountNavNode             ;                         ; My Account                    		; TbsGlobalNavNode         ;                                                             																						; MyAccountNavNode
+                                ; FooterNavNode                ;                         ; Footer Navigation             		; TbsGlobalNavNode         ;                                                             																						; FooterNavNode
+                                ; UsefullInformationNavNode    ;                         ; Useful Information   				; FooterNavNode            ; DeliveryLink,ReturnsLink,FAQLink,TermsAndConditionsLink,PrivacyPolicyLink,SitemapLink                                								; UsefullInformationNavNode
+                                ; WaysToShopNavNode 		   ;                         ; Ways To Shop 						; FooterNavNode            ; StoresLink,LoveYourBodyClubLink,StudentDiscountLink,GiftCardsLink                                  												; WaysToShopNavNode
+                                ; AboutUsNavNode              ;                          ; About Us               				; FooterNavNode            ; AboutUsLink,TheBodyShopAtHomeLink,AffiliatesLink,GenderPayGapLink,ModernSlaveryStatementLink,AgainstAnimalTestingLink,TaxStrategyLink,CareersLink 	; AboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsGlobalCategoryNavNode;;Tbs Categories;TbsGlobalNavNode;BodyCategoryNavNode,FaceCategoryNavNode,HandsCategoryNavNode,HairCategoryNavNode,MakeUpCategoryNavNode;TbsGlobalCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; BodyCategoryNavNode;;Body Nav Node;Body;BodyByProductTypeNavNode,BodyBySkinTypeNavNode;;BodyCategoryNavNode
+                               ; FaceCategoryNavNode;;Face Nav Node;Face;FaceByProductTypeNavNode,FaceBySkinTypeNavNode;;FaceCategoryNavNode
+                               ; HandsCategoryNavNode;;Hands Nav Node;Hands;HandsByProductTypeNavNode,HandsBySkinTypeNavNode;;HandsCategoryNavNode
+                               ; HairCategoryNavNode;;Hair Nav Node;Hair;HairByProductTypeNavNode,HairByHairConcernTypeNavNode;;HairCategoryNavNode
+                               ; MakeUpCategoryNavNode;;MakeUp Nav Node;MakeUp;MakeUpByProductTypeNavNode,MakeUpBySkinTypeNavNode;;MakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;BodyByProductTypeNavNode;; Body By Product Type;BodyTreatsCategoryNavNode,BodyButtersCategoryNavNode,BodyYogurtsCategoryNavNode,BodyMassageOilsCategoryNavNode,FootCareCategoryNavNode;;BodyByProductTypeNavNode;
+                               ;BodyBySkinTypeNavNode;; Body By Skin Type;DeodorantCategoryNavNode,BodyBronzingCategoryNavNode,TravelSizesCategoryNavNode,BodyAllCategoryNavNode;;BodyBySkinTypeNavNode;
+
+#Face_Category_NavNodes
+                               ;FaceByProductTypeNavNode;; Face By Product Type;FaceMasksCategoryNavNode,MakeUpRemoversCategoryNavNode,EyeCareCategoryNavNode,NightTimeTreatmentsCategoryNavNode,MenShavingCategoryNavNode;;FaceByProductTypeNavNode;
+                               ;FaceBySkinTypeNavNode;; Face By Skin Type;LipBalmCategoryNavNode,CleansersAndTonersNavNode,MoisturisersCategoryNavNode,AccessoriesCategoryNavNode,FaceScrubsCategoryNavNode,FaceAllCategoryNavNode;;FaceBySkinTypeNavNode;
+
+#Hands_Category_NavNodes
+                               ;HandsByProductTypeNavNode;;Hands By Product Type;HandsMoisturisersCategoryNavNode,HandWashCategoryNavNode;;HandsByProductTypeNavNode;
+                               ;HandsBySkinTypeNavNode;;Hands By Skin Type;TargetedTreatmentCategoryNavNode,HandsAllCategoryNavNode;;HandsBySkinTypeNavNode;
+
+#Hair_Category_NavNodes
+                               ;HairByProductTypeNavNode;; Hair By Product Type;BrushesAndCombsCategoryNavNode,ConditionerCategoryNavNode,ShampooCategoryNavNode;;HairByProductTypeNavNode;
+                               ;HairByHairConcernTypeNavNode;; Hair By Hair Concern Type;TreatmentCategoryNavNode,StylingCategoryNavNode,HairAllCategoryNavNode;;HairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;MakeUpByProductTypeNavNode;; MakeUp By Product Type;FoundationsConcealersCategoryNavNode,BrushesAndToolsCategoryNavNode,BBCreamsCategoryNavNode,BronzingCategoryNavNode,CheeksCategoryNavNode;;MakeUpByProductTypeNavNode;
+                               ;MakeUpBySkinTypeNavNode;; MakeUp By Skin Type;EyeLinersCategoryNavNode,EyeShadowCategoryNavNode,LipsCategoryNavNode,MascaraCategoryNavNode,PrimersCategoryNavNode,MakeUpAllCategoryNavNode;;MakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;BodyTreatsCategoryNavNode;; Body Treats;;BodyTreatsCategoryNavNode
+                               ;BodyButtersCategoryNavNode;; Body Butters;;BodyButtersCategoryNavNode
+                               ;BodyYogurtsCategoryNavNode;; Body Yogurts;;BodyYogurtsCategoryNavNode
+                               ;BodyMassageOilsCategoryNavNode;; Body Massage Oils;;BodyMassageOilsCategoryNavNode
+                               ;FootCareCategoryNavNode;; Foot Care;;FootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;BodyAllCategoryNavNode;; Body All Categories;;BodyAllCategoryNavNode
+                               ;BodyBronzingCategoryNavNode;; Body Bronzing;;BodyBronzingCategoryNavNode
+                               ;TravelSizesCategoryNavNode;; Travel Sizes;;TravelSizesCategoryNavNode
+                               ;DeodorantCategoryNavNode;; Deodorant;;DeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;FaceMasksCategoryNavNode;; Face Masks;;FaceMasksCategoryNavNode
+                               ;MakeUpRemoversCategoryNavNode;; Make-up Removers;;MakeUpRemoversCategoryNavNode
+                               ;EyeCareCategoryNavNode;; Eye Care;;EyeCareCategoryNavNode
+                               ;NightTimeTreatmentsCategoryNavNode;; Night Time Treatments;;NightTimeTreatmentsCategoryNavNode
+                               ;MenShavingCategoryNavNode;;"Men's Shaving";;MenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;LipBalmCategoryNavNode;; Lip Balm;;LipBalmCategoryNavNode
+                               ;CleansersAndTonersNavNode;; Cleansers and Toners;;CleansersAndTonersNavNode
+                               ;MoisturisersCategoryNavNode;; Moisturisers;;MoisturisersCategoryNavNode
+                               ;AccessoriesCategoryNavNode;; Accessories;;AccessoriesCategoryNavNode
+                               ;FaceScrubsCategoryNavNode;; Face Scrubs;;FaceScrubsCategoryNavNode
+                               ;FaceAllCategoryNavNode;; Face All Categories;;FaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;HandsMoisturisersCategoryNavNode;;Hands Moisturisers;;HandsMoisturisersCategoryNavNode
+                               ;HandWashCategoryNavNode;; Hand Wash;;HandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;TargetedTreatmentCategoryNavNode;; Targeted Treatment;;TargetedTreatmentCategoryNavNode
+                               ;HandsAllCategoryNavNode;; Hands All Categories;;HandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;BrushesAndCombsCategoryNavNode;; Brushes And Combs;;BrushesAndCombsCategoryNavNode
+                               ;ConditionerCategoryNavNode;; Conditioner;;ConditionerCategoryNavNode
+                               ;ShampooCategoryNavNode;; Shampoo;;ShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;TreatmentCategoryNavNode;; Treatment;;TreatmentCategoryNavNode
+                               ;StylingCategoryNavNode;; Styling;;StylingCategoryNavNode
+                               ;HairAllCategoryNavNode;; Hair All Categories;;HairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;FoundationsConcealersCategoryNavNode;; Foundations Concealers;;FoundationsConcealersCategoryNavNode
+                               ;BrushesAndToolsCategoryNavNode;; Brushes and Tools;;BrushesAndToolsCategoryNavNode
+                               ;BBCreamsCategoryNavNode;; BB Creams;;BBCreamsCategoryNavNode
+                               ;BronzingCategoryNavNode;; Bronzing;;BronzingCategoryNavNode
+                               ;CheeksCategoryNavNode;; Cheeks;;CheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;EyeLinersCategoryNavNode;; Eye Liners;;EyeLinersCategoryNavNode
+                               ;EyeShadowCategoryNavNode;; Eye Shadow;;EyeShadowCategoryNavNode
+                               ;LipsCategoryNavNode;; Lips;;LipsCategoryNavNode
+                               ;MascaraCategoryNavNode;; Mascara;;MascaraCategoryNavNode
+                               ;PrimersCategoryNavNode;; Primers;;PrimersCategoryNavNode
+                               ;MakeUpAllCategoryNavNode;; Make-up All Categories;;MakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;BodyAllCategoryNavNodeEntry;;BodyAllCategoryNavNodeEntry;BodyAllCategoryNavNode;BodyCategoryLink
+;BodyTreatsCategoryNavNodeEntry;;BodyTreatsCategoryNavNodeEntry;BodyTreatsCategoryNavNode;BodyTreatsCategoryLink;
+;BodyButtersCategoryNavNodeEntry;;BodyButtersCategoryNavNodeEntry;BodyButtersCategoryNavNode;BodyButtersCategoryLink;
+;BodyYogurtsCategoryNavNodeEntry;;BodyYogurtsCategoryNavNodeEntry;BodyYogurtsCategoryNavNode;BodyYogurtsCategoryLink
+;BodyMassageOilsCategoryNavNodeEntry;;BodyMassageOilsCategoryNavNodeEntry;BodyMassageOilsCategoryNavNode;BodyMassageOilsCategoryLink
+;BodyBronzingCategoryNavNodeEntry;;BodyBronzingCategoryNavNodeEntry;BodyBronzingCategoryNavNode;BodyBronzingCategoryLink
+;DeodorantCategoryNavNodeEntry;;DeodorantCategoryNavNodeEntry;DeodorantCategoryNavNode;DeodorantCategoryLink
+;TravelSizesCategoryNavNodeEntry;;TravelSizesCategoryNavNodeEntry;TravelSizesCategoryNavNode;TravelSizesCategoryLink
+;FootCareCategoryNavNodeEntry;;FootCareCategoryNavNodeEntry;FootCareCategoryNavNode;FootCareCategoryLink
+;FaceAllCategoryNavNodeEntry;;FaceAllCategoryNavNodeEntry;FaceAllCategoryNavNode;FaceCategoryLink;
+;FaceMasksCategoryNavNodeEntry;;FaceMasksCategoryNavNodeEntry;FaceMasksCategoryNavNode;FaceMasksCategoryLink;
+;MakeUpRemoversCategoryNavNodeEntry;;MakeUpRemoversCategoryNavNodeEntry;MakeUpRemoversCategoryNavNode;MakeUpRemoversCategoryLink;
+;EyeCareCategoryNavNodeEntry;;EyeCareCategoryNavNodeEntry;EyeCareCategoryNavNode;EyeCareCategoryLink
+;NightTimeTreatmentsCategoryNavNodeEntry;;NightTimeTreatmentsCategoryNavNodeEntry;NightTimeTreatmentsCategoryNavNode;NightTimeTreatmentsCategoryLink
+;MenShavingCategoryNavNodeEntry;;MenShavingCategoryNavNodeEntry;MenShavingCategoryNavNode;MenShavingCategoryLink
+;LipBalmCategoryNavNodeEntry;;LipBalmCategoryNavNodeEntry;LipBalmCategoryNavNode;LipBalmCategoryLink
+;CleansersAndTonersNavNodeEntry;;CleansersAndTonersNavNodeEntry;CleansersAndTonersNavNode;CleansersAndTonersCategoryLink
+;MoisturisersCategoryNavNodeEntry;;MoisturisersCategoryNavNodeEntry;MoisturisersCategoryNavNode;MoisturisersCategoryLink
+;AccessoriesCategoryNavNodeEntry;;AccessoriesCategoryNavNodeEntry;AccessoriesCategoryNavNode;AccessoriesCategoryLink
+;FaceScrubsCategoryNavNodeEntry;;FaceScrubsCategoryNavNodeEntry;FaceScrubsCategoryNavNode;FaceScrubsCategoryLink
+;HandsAllCategoryNavNodeEntry;;HandsAllCategoryNavNodeEntry;HandsAllCategoryNavNode;HandsCategoryLink
+;HandsMoisturisersCategoryNavNodeEntry;;HandsMoisturisersCategoryNavNodeEntry;HandsMoisturisersCategoryNavNode;HandsMoisturisersCategoryLink
+;HandWashCategoryNavNodeEntry;;HandWashCategoryNavNodeEntry;HandWashCategoryNavNode;HandWashCategoryLink
+;TargetedTreatmentCategoryNavNodeEntry;;TargetedTreatmentCategoryNavNodeEntry;TargetedTreatmentCategoryNavNode;TargetedTreatmentCategoryLink
+;HairAllCategoryNavNodeEntry;;HairAllCategoryNavNodeEntry;HairAllCategoryNavNode;HairCategoryLink
+;BrushesAndCombsCategoryNavNodeEntry;;BrushesAndCombsCategoryNavNodeEntry;BrushesAndCombsCategoryNavNode;BrushesAndCombsCategoryLink
+;ConditionerCategoryNavNodeEntry;;ConditionerCategoryNavNodeEntry;ConditionerCategoryNavNode;ConditionerCategoryLink
+;ShampooCategoryNavNodeEntry;;ShampooCategoryNavNodeEntry;ShampooCategoryNavNode;ShampooCategoryLink
+;TreatmentCategoryNavNodeEntry;;TreatmentCategoryNavNodeEntry;TreatmentCategoryNavNode;TreatmentCategoryLink
+;StylingCategoryNavNodeEntry;;StylingCategoryNavNodeEntry;StylingCategoryNavNode;StylingCategoryLink
+;MakeUpAllCategoryNavNodeEntry;;MakeUpAllCategoryNavNodeEntry;MakeUpAllCategoryNavNode;MakeUpCategoryLink
+;FoundationsConcealersCategoryNavNodeEntry;;FoundationsConcealersCategoryNavNodeEntry;FoundationsConcealersCategoryNavNode;FoundationsConcealersCategoryLink
+;BrushesAndToolsCategoryNavNodeEntry;;BrushesAndToolsCategoryNavNodeEntry;BrushesAndToolsCategoryNavNode;BrushesAndToolsCategoryLink
+;BBCreamsCategoryNavNodeEntry;;BBCreamsCategoryNavNodeEntry;BBCreamsCategoryNavNode;BBCreamsCategoryLink
+;BronzingCategoryNavNodeEntry;;BronzingCategoryNavNodeEntry;BronzingCategoryNavNode;BronzingCategoryLink
+;CheeksCategoryNavNodeEntry;;CheeksCategoryNavNodeEntry;CheeksCategoryNavNode;CheeksCategoryLink
+;EyeLinersCategoryNavNodeEntry;;EyeLinersCategoryNavNodeEntry;EyeLinersCategoryNavNode;EyeLinersCategoryLink
+;EyeShadowCategoryNavNodeEntry;;EyeShadowCategoryNavNodeEntry;EyeShadowCategoryNavNode;EyeShadowCategoryLink
+;LipsCategoryNavNodeEntry;;LipsCategoryNavNodeEntry;LipsCategoryNavNode;LipsCategoryLink
+;MascaraCategoryNavNodeEntry;;MascaraCategoryNavNodeEntry;MascaraCategoryNavNode;MascaraCategoryLink
+;PrimersCategoryNavNodeEntry;;PrimersCategoryNavNodeEntry;PrimersCategoryNavNode;PrimersCategoryLink
+
+INSERT_UPDATE CategoryNavigationComponent;$contentCV[unique=true];uid[unique=true];name;styleClass;&componentRef;navigationNode(&nodeRef);wrapAfter
+;;tbsGlobalNavComponent;Navigation Component;;tbsGlobalNavComponent;;10
+;;tbsGlobalDiscoverNavComponent;Navigation Discover Component;;tbsGlobalDiscoverNavComponent;TbsGlobalDiscoverNavNode;10
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsGlobalDiscoverNavNode;;Tbs Discover;TbsGlobalNavNode;DiscoverPartyNavNode,DiscoverTipsAndAdviceNavNode,DiscoverAboutUsNavNode;TbsGlobalDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; DiscoverPartyNavNode;; Party Nav Node;Party;Discover_TheBodyShopAtHomeNavNode;;DiscoverPartyNavNode
+                               ; DiscoverTipsAndAdviceNavNode;; Tips & Advice Nav Node;Tips & Advice;SkincareArticlesNavNode,BodyCareArticlesNavNode,Make-UpAeticlesNavNode,LifeStyleArticlesNavNode,IngredientBenefitsNavNode;;DiscoverTipsAndAdviceNavNode
+                               ; DiscoverAboutUsNavNode;; About us Nav Node;About Us;WhoWeAreNavNode,LoyaltyProgramNavNode,SustainabilityNavNode,PlasticsNavNode;;DiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Discover_Party_NavNodes
+                               ;Discover_TheBodyShopAtHomeNavNode;; BodyShop AtHome;BeYourOwnBossNavNode,HostAPartyNavNode;;Discover_TheBodyShopAtHomeNavNode ;
+
+#Discover_Tips_And_Advice_NavNode
+
+                               ;SkincareArticlesNavNode;; Skin Care Articles;HowToReduceBlackheadsNavNode,SummerSkincareNavNode,HowToGetRidOfDarkCirclesNavNode,BestFaceMoisturisersNavNode,HowToKeepSkinLookingYouthfulNavNode,GymSkincareTipsNavNode;;SkincareArticlesNavNode ;
+                               ;BodyCareArticlesNavNode;; Body Care Articles;BenefitsOfDryBrushingNavNode,UnderstandingDrySkinNavNode,BestBodyExfoliatorsNavNode;;BodyCareArticlesNavNode ;
+                               ;Make-UpAeticlesNavNode;; Make-Up Articles;HowToFindTheRightFoundationNavNode,HowToApplyFoundationNavNode,HowToShapeEyebrowsNavNode,HowToGetASunKissedGlowNavNode;;Make-UpAeticlesNavNode ;
+                               ;LifeStyleArticlesNavNode;; LifeStyle Articles;BestVeganCitiesInTheNavNode,LongHaulFlightTipsNavNode,GymSkincareRoutineNavNode,ChildhoodDreamsNavNode,PixieGeldof’sTravelEssentialsNavNode;;LifeStyleArticlesNavNode ;
+                               ;IngredientBenefitsNavNode;; Ingedients Benefits;BenefitsOfCharcoalNavNode,HyaluronicAcidBenefitsNavNode,DiscoverAllIngredientsNavNode,SourcingOurIngredientsNavNode;;IngredientBenefitsNavNode ;
+
+#Discover_AboutUs_NavNode
+
+                               ;WhoWeAreNavNode;; Who We Are;OurHeritageNavNode,ForeverAgainstAnimalTestingNavNode,LatestNewsNavNode,Natura_CoNavNode,B_CorpNavNode,EducationalProgrammeNavNode,DonateMenstrualProductsNavNode,VegetarianBeautyNavNode;;WhoWeAreNavNode ;
+                               ;LoyaltyProgramNavNode;; Loyalty Program;Loyalty_JoinNowNavNode;;LoyaltyProgramNavNode;
+                               ;SustainabilityNavNode;; Sustainability;OurCommitmentNavNode,CommunityTradeNavNode,Bio-BridgesNavNode,ReducingEnvironmentalFootprintNavNode,EmpoweringWomenNavNode,ModernSlaveryNavNode;;SustainabilityNavNode;
+                               ;PlasticsNavNode;; Plastics;PlasticRecyclingInTheNavNode,TerraCycleInterviewNavNode,ReturnRecycleRepeatNavNode,CommunityTradePlasticsNavNode,PackagingAtTheBodyShopNavNode;;PlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;BeYourOwnBossNavNode;; Be your own boss;;BeYourOwnBossNavNode
+                               ;HostAPartyNavNode;; Host a party;;HostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;HowToReduceBlackheadsNavNode;; How to reduce Blackheads;;HowToReduceBlackheadsNavNode
+                               ;SummerSkincareNavNode;; Summer Skincare;;SummerSkincareNavNode
+                               ;HowToGetRidOfDarkCirclesNavNode;; How To Get Rid Of Dark Circles;;HowToGetRidOfDarkCirclesNavNode
+                               ;BestFaceMoisturisersNavNode;; Best Face Moisturisers;;BestFaceMoisturisersNavNode
+                               ;HowToKeepSkinLookingYouthfulNavNode;; How To Keep Skin Looking Youthful;;HowToKeepSkinLookingYouthfulNavNode
+                               ;GymSkincareTipsNavNode;; Gym Skincare Tips;;GymSkincareTipsNavNode
+
+#Child_Nodes_BodyCareArticles_NavNode
+
+                               ;BenefitsOfDryBrushingNavNode;; Benefits Of Dry Brushing;;BenefitsOfDryBrushingNavNode
+                               ;UnderstandingDrySkinNavNode;; Understanding Dry Skin;;UnderstandingDrySkinNavNode
+                               ;BestBodyExfoliatorsNavNode;; Best Body Exfoliators;;BestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;HowToFindTheRightFoundationNavNode;; How to find the right foundation;;HowToFindTheRightFoundationNavNode
+                               ;HowToApplyFoundationNavNode;; How to apply foundation;;HowToApplyFoundationNavNode
+                               ;HowToShapeEyebrowsNavNode;; How to shape eyebrows;;HowToShapeEyebrowsNavNode
+                               ;HowToGetASunKissedGlowNavNode;; How to get a sun kissed glow;;HowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;BestVeganCitiesInTheNavNode;;Best Vegan Cities in the ;;BestVeganCitiesInTheNavNode
+                               ;LongHaulFlightTipsNavNode;; Long haul flight tips;;LongHaulFlightTipsNavNode
+                               ;GymSkincareRoutineNavNode;; Gym skincare routine;;GymSkincareRoutineNavNode
+                               ;ChildhoodDreamsNavNode;; Childhood Dreams;;ChildhoodDreamsNavNode
+                               ;PixieGeldof’sTravelEssentialsNavNode;; Pixie Geldof’s Travel Essentials;;PixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;BenefitsOfCharcoalNavNode;; Benefits of charcoal;;BenefitsOfCharcoalNavNode
+                               ;HyaluronicAcidBenefitsNavNode;; Hyaluronic Acid Benefits;;HyaluronicAcidBenefitsNavNode
+                               ;DiscoverAllIngredientsNavNode;; Discover all ingredients;;DiscoverAllIngredientsNavNode
+                               ;SourcingOurIngredientsNavNode;; Sourcing our ingredients;;SourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_WhoWeAreNavNode
+                               ;OurHeritageNavNode;; Our Heritage;;OurHeritageNavNode
+                               ;ForeverAgainstAnimalTestingNavNode;; Forever Against Animal Testing;;ForeverAgainstAnimalTestingNavNode
+                               ;B_CorpNavNode;; B Corp;;B_CorpNavNode
+                               ;LatestNewsNavNode;; Latest News;;LatestNewsNavNode
+                               ;Natura_CoNavNode;; Natura & co;;Natura_CoNavNode
+                               ;EducationalProgrammeNavNode;; Educational Programme;;EducationalProgrammeNavNode
+                               ;DonateMenstrualProductsNavNode;; Donate Menstrual Products;;DonateMenstrualProductsNavNode
+                               ;VegetarianBeautyNavNode;; Vegetarian Beauty;;VegetarianBeautyNavNode
+
+#Child_Nodes_LoyaltyProgramNavNode
+                               ;Loyalty_JoinNowNavNode;; Join Now;;Loyalty_JoinNowNavNode
+
+#Child_Nodes_SustainabilityNavNode
+                               ;OurCommitmentNavNode;; Our Commitment;;OurCommitmentNavNode
+                               ;CommunityTradeNavNode;; Community Trade;;CommunityTradeNavNode
+                               ;Bio-BridgesNavNode;; Bio-Bridges;;Bio-BridgesNavNode
+                               ;ReducingEnvironmentalFootprintNavNode;; Reducing Environmental Footprint;;ReducingEnvironmentalFootprintNavNode
+                               ;EmpoweringWomenNavNode;; EmpoweringWomen;;EmpoweringWomenNavNode
+                               ;ModernSlaveryNavNode;; ModernSlavery;;ModernSlaveryNavNode
+
+#Child_Nodes_PlasticsNavNode
+                               ;PlasticRecyclingInTheNavNode;; Plastic Recycling In The ;;PlasticRecyclingInTheNavNode
+                               ;TerraCycleInterviewNavNode;; Terra Cycle Interview;;TerraCycleInterviewNavNode
+                               ;ReturnRecycleRepeatNavNode;; Return Recycle Repeat;;ReturnRecycleRepeatNavNode
+                               ;CommunityTradePlasticsNavNode;; Community Trade Plastics;;CommunityTradePlasticsNavNode
+                               ;PackagingAtTheBodyShopNavNode;; Packaging At The Body Shop;;PackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;BeYourOwnBossLink; Be your own boss Link;/;BeYourOwnBossLink;BeYourOwnBossLink;;;;
+                              ;;HostAPartyNavNodeLink; Host a party Link;/;HostAPartyNavNodeLink;HostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;SummerSkincareLink; Summer Skincare Link;/;SummerSkincareLink;SummerSkincareLink;;;;
+                              ;;HowToReduceBlackheadsLink; How to reduce blackheads Link;/;HowToReduceBlackheadsLink;HowToReduceBlackheadsLink;;;;
+                              ;;HowToGetRidOfDarkCirclesLink; How to get rid of dark circles Link;/;HowToGetRidOfDarkCirclesLink;HowToGetRidOfDarkCirclesLink;;;;
+                              ;;BestFaceMoisturisersLink; Best Face Moisturisers Link;/;BestFaceMoisturisersLink;BestFaceMoisturisersLink;;;;
+                              ;;HowToKeepSkinLookingYouthfulLink; How to keep skin looking youthful Link;/;HowToKeepSkinLookingYouthfulLink;HowToKeepSkinLookingYouthfulLink;;;;
+                              ;;GymSkincareTipsLink; Gym Skincare Tips Link;/;GymSkincareTipsLink;GymSkincareTipsLink;;;;
+
+                              ;;BenefitsOfDryBrushingLink; Benefits of dry brushing Link;/;BenefitsOfDryBrushingLink;BenefitsOfDryBrushingLink;;;;
+                              ;;UnderstandingDrySkinLink; Understanding dry skin Link;/;UnderstandingDrySkinLink;UnderstandingDrySkinLink;;;;
+                              ;;BestBodyExfoliatorsLink; Best body exfoliators Link;/;BestBodyExfoliatorsLink;BestBodyExfoliatorsLink;;;;
+
+                              ;;HowToFindTheRightFoundationLink; How to find the right foundation Link;/;HowToFindTheRightFoundationLink;HowToFindTheRightFoundationLink;;;;
+                              ;;HowToApplyFoundationLink; How to apply foundation Link;/;HowToApplyFoundationLink;HowToApplyFoundationLink;;;;
+                              ;;HowToShapeEyebrowsLink; How to shape eyebrows youthful Link;/;HowToShapeEyebrowsLink;HowToShapeEyebrowsLink;;;;
+                              ;;HowToGetASunKissedGlowLink; How to get a sun kissed glow Link;/;HowToGetASunKissedGlowLink;HowToGetASunKissedGlowLink;;;;
+
+                              ;;BestVeganCitiesInTheLink;Best Vegan Cities in the  Link;/;BestVeganCitiesInTheLink;BestVeganCitiesInTheLink;;;;
+                              ;;LongHaulFlightTipsLink; Long haul flight tips Link;/;LongHaulFlightTipsLink;LongHaulFlightTipsLink;;;;
+                              ;;GymSkincareRoutineLink; Gym skincare routine Link;/;GymSkincareRoutineLink;GymSkincareRoutineLink;;;;
+                              ;;ChildhoodDreamsLink; Childhood Dreams Link;/;ChildhoodDreamsLink;ChildhoodDreamsLink;;;;
+                              ;;PixieGeldof’sTravelEssentialsLink; Pixie Geldof’s Travel Essentials Link;/;PixieGeldof’sTravelEssentialsLink;PixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;BenefitsOfCharcoalLink; Benefits of charcoal Link;/;BenefitsOfCharcoalLink;BenefitsOfCharcoalLink;;;;
+                              ;;HyaluronicAcidBenefitsLink; Hyaluronic Acid Benefits Link;/;HyaluronicAcidBenefitsLink;HyaluronicAcidBenefitsLink;;;;
+                              ;;DiscoverAllIngredientsLink; Discover all ingredients Link;/;DiscoverAllIngredientsLink;DiscoverAllIngredientsLink;;;;
+                              ;;SourcingOurIngredientsLink; Sourcing our ingredients Link;/;SourcingOurIngredientsLink;SourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;OurHeritageLink; Our Heritage Link;/;OurHeritageLink;OurHeritageLink;;;;
+                              ;;ForeverAgainstAnimalTestingLink; How to reduce blackheads Link;/;ForeverAgainstAnimalTestingLink;ForeverAgainstAnimalTestingLink;;;;
+                              ;;B_CorpLink; B Corp Link;/;B_CorpLink;B_CorpLink;;;;
+                              ;;LatestNewsLink; Latest News Link;/;LatestNewsLink;LatestNewsLink;;;;
+                              ;;Natura_CoLink; Natura & co Link;/;Natura_CoLink;Natura_CoLink;;;;
+                              ;;EducationalProgrammeLink; Educational PRogramme Link;/;EducationalProgrammeLink;EducationalProgrammeLink;;;;
+                              ;;DonateMenstrualProductsLink; Donate Menstrual Products Link;/;DonateMenstrualProductsLink;DonateMenstrualProductsLink;;;;
+                              ;;VegetarianBeautyLink; Vegetarian Beauty Link;/;VegetarianBeautyLink;VegetarianBeautyLink;;;;
+
+                              ;;Loyalty_JoinNowLink; Join Now Link;/;Loyalty_JoinNowLink;Loyalty_JoinNowLink;;;;
+
+                              ;;OurCommitmentLink; Our Commitment Link;/;OurCommitmentLink;OurCommitmentLink;;;;
+                              ;;CommunityTradeLink; Community Trade Link;/;CommunityTradeLink;CommunityTradeLink;;;;
+                              ;;Bio-BridgesLink; Bio-Bridges Link;/;Bio-BridgesLink;Bio-BridgesLink;;;;
+                              ;;ReducingEnvironmentalFootprintLink; Reducing Environmental Footprint Link;/;ReducingEnvironmentalFootprintLink;ReducingEnvironmentalFootprintLink;;;;
+                              ;;EmpoweringWomenLink; Empowering Women Link;/;EmpoweringWomenLink;EmpoweringWomenLink;;;;
+                              ;;ModernSlaveryLink; Modern Slavery Link;/;ModernSlaveryLink;ModernSlaveryLink;;;;
+
+                              ;;PlasticRecyclingInTheLink;Plastic recycling in the  Link;/;PlasticRecyclingInTheLink;PlasticRecyclingInTheLink;;;;
+                              ;;TerraCycleInterviewLink; TerraCycle Interview Link;/;TerraCycleInterviewLink;TerraCycleInterviewLink;;;;
+                              ;;ReturnRecycleRepeatNavNodeLink; Return. Recycle. Repeat Link;/;ReturnRecycleRepeatNavNodeLink;ReturnRecycleRepeatNavNodeLink;;;;
+                              ;;CommunityTradePlasticsLink; Community Trade Plastics Link;/;CommunityTradePlasticsLink;CommunityTradePlasticsLink;;;;
+                              ;;PackagingAtTheBodyShopLink; Packaging at The Body Shop Link;/;PackagingAtTheBodyShopLink;PackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;BeYourOwnBossNavNodeEntry;;BeYourOwnBossNavNodeEntry;BeYourOwnBossNavNode;BeYourOwnBossLink
+                                ;HostAPartyNavNodeEntry;;HostAPartyNavNodeEntry;HostAPartyNavNode;HostAPartyNavNodeLink
+
+#Entry_SkincareArticlesNavNode
+                                ;HowToReduceBlackheadsNavNodeEntry;;HowToReduceBlackheadsNavNodeEntry;HowToReduceBlackheadsNavNode;HowToReduceBlackheadsLink
+                                ;SummerSkincareNavNodeEntry;;SummerSkincareNavNodeEntry;SummerSkincareNavNode;SummerSkincareLink
+                                ;HowToGetRidOfDarkCirclesNavNodeEntry;;HowToGetRidOfDarkCirclesNavNodeEntry;HowToGetRidOfDarkCirclesNavNode;HowToGetRidOfDarkCirclesLink
+                                ;BestFaceMoisturisersNavNodeEntry;;BestFaceMoisturisersNavNodeEntry;BestFaceMoisturisersNavNode;BestFaceMoisturisersLink
+                                ;HowToKeepSkinLookingYouthfulNavNodeEntry;;HowToKeepSkinLookingYouthfulNavNodeEntry;HowToKeepSkinLookingYouthfulNavNode;HowToKeepSkinLookingYouthfulLink
+                                ;GymSkincareTipsNavNodeEntry;;GymSkincareTipsNavNodeEntry;GymSkincareTipsNavNode;GymSkincareTipsLink
+
+#Entry_BodyCareArticlesNavNode
+                                ;BenefitsOfDryBrushingNavNodeEntry;;BenefitsOfDryBrushingNavNodeEntry;BenefitsOfDryBrushingNavNode;BenefitsOfDryBrushingLink
+                                ;UnderstandingDrySkinNavNodeEntry;;UnderstandingDrySkinNavNodeEntry;UnderstandingDrySkinNavNode;UnderstandingDrySkinLink
+                                ;BestBodyExfoliatorsNavNodeEntry;;BestBodyExfoliatorsNavNodeEntry;BestBodyExfoliatorsNavNode;BestBodyExfoliatorsLink
+
+#Entry_Make-UpAeticlesNavNode
+                                ;HowToFindTheRightFoundationNavNodeEntry;;HowToFindTheRightFoundationNavNodeEntry;HowToFindTheRightFoundationNavNode;HowToFindTheRightFoundationLink
+                                ;HowToApplyFoundationNavNodeEntry;;HowToApplyFoundationNavNodeEntry;HowToApplyFoundationNavNode;HowToApplyFoundationLink
+                                ;HowToShapeEyebrowsNavNodeEntry;;HowToShapeEyebrowsNavNodeEntry;HowToShapeEyebrowsNavNode;HowToShapeEyebrowsLink
+                                ;HowToGetASunKissedGlowNavNodeEntry;;HowToGetASunKissedGlowNavNodeEntry;HowToGetASunKissedGlowNavNode;HowToGetASunKissedGlowLink
+
+#EntryLifeStyleArticlesNavNode
+                                ;BestVeganCitiesInTheNavNodeEntry;;BestVeganCitiesInTheNavNodeEntry;BestVeganCitiesInTheNavNode;BestVeganCitiesInTheLink
+                                ;LongHaulFlightTipsNavNodeEntry;;LongHaulFlightTipsNavNodeEntry;LongHaulFlightTipsNavNode;LongHaulFlightTipsLink
+                                ;GymSkincareRoutineNavNodeEntry;;GymSkincareRoutineNavNodeEntry;GymSkincareRoutineNavNode;GymSkincareRoutineLink
+                                ;ChildhoodDreamsNavNodeEntry;;ChildhoodDreamsNavNodeEntry;ChildhoodDreamsNavNode;ChildhoodDreamsLink
+                                ;PixieGeldof’sTravelEssentialsNavNodeEntry;;PixieGeldof’sTravelEssentialsNavNodeEntry;PixieGeldof’sTravelEssentialsNavNode;PixieGeldof’sTravelEssentialsLink
+
+#Entry_IngredientBenefitsNavNode
+
+                                ;BenefitsOfCharcoalNavNodeEntry;;BenefitsOfCharcoalNavNodeEntry;BenefitsOfCharcoalNavNode;BenefitsOfCharcoalLink
+                                ;HyaluronicAcidBenefitsNavNodeEntry;;HyaluronicAcidBenefitsNavNodeEntry;HyaluronicAcidBenefitsNavNode;HyaluronicAcidBenefitsLink
+                                ;DiscoverAllIngredientsNavNodeEntry;;DiscoverAllIngredientsNavNodeEntry;DiscoverAllIngredientsNavNode;DiscoverAllIngredientsLink
+                                ;SourcingOurIngredientsNavNodeEntry;;SourcingOurIngredientsNavNodeEntry;SourcingOurIngredientsNavNode;SourcingOurIngredientsLink
+
+#Entry_WhoWeAre_NavNode
+                                ;OurHeritageNavNodeEntry;;OurHeritageNavNodeEntry;OurHeritageNavNode;OurHeritageLink
+                                ;ForeverAgainstAnimalTestingNavNodeEntry;;ForeverAgainstAnimalTestingNavNodeEntry;ForeverAgainstAnimalTestingNavNode;ForeverAgainstAnimalTestingLink
+                                ;B_CorpNavNodeEntry;;B_CorpNavNodeEntry;B_CorpNavNode;B_CorpLink
+                                ;LatestNewsNavNodeEntry;;LatestNewsNavNodeEntry;LatestNewsNavNode;LatestNewsLink
+                                ;Natura_CoNavNodeEntry;;Natura_CoNavNodeEntry;Natura_CoNavNode;Natura_CoLink
+                                ;EducationalProgrammeNavNodeEntry;;EducationalProgrammeNavNodeEntry;EducationalProgrammeNavNode;EducationalProgrammeLink
+                                ;DonateMenstrualProductsNavNodeEntry;;DonateMenstrualProductsNavNodeEntry;DonateMenstrualProductsNavNode;DonateMenstrualProductsLink
+                                ;VegetarianBeautyNavNodeEntry;;VegetarianBeautyNavNodeEntry;VegetarianBeautyNavNode;VegetarianBeautyLink
+
+#Entry_LoyaltyProgramNavNode
+                                ;Loyalty_JoinNowNavNodeEntry;;Loyalty_JoinNowNavNodeEntry;Loyalty_JoinNowNavNode;Loyalty_JoinNowLink
+
+#Entry_SustainabilityNavNode
+                                ;OurCommitmentNavNodeEntry;;OurCommitmentNavNodeEntry;OurCommitmentNavNode;OurCommitmentLink
+                                ;CommunityTradeNavNodeEntry;;CommunityTradeNavNodeEntry;CommunityTradeNavNode;CommunityTradeLink
+                                ;Bio-BridgesNavNodeEntry;;Bio-BridgesNavNodeEntry;Bio-BridgesNavNode;Bio-BridgesLink
+                                ;ReducingEnvironmentalFootprintNavNodeEntry;;ReducingEnvironmentalFootprintNavNodeEntry;ReducingEnvironmentalFootprintNavNode;ReducingEnvironmentalFootprintLink
+                                ;EmpoweringWomenNavNodeEntry;;EmpoweringWomenNavNodeEntry;EmpoweringWomenNavNode;EmpoweringWomenLink
+                                ;ModernSlaveryNavNodeEntry;;ModernSlaveryNavNodeEntry;ModernSlaveryNavNode;ModernSlaveryLink
+
+#Child_Nodes_PlasticsNavNode
+                                ;PlasticRecyclingInTheNavNodeEntry;;PlasticRecyclingInTheNavNodeEntry;PlasticRecyclingInTheNavNode;PlasticRecyclingInTheLink
+                                ;TerraCycleInterviewNavNodeEntry;;TerraCycleInterviewNavNodeEntry;TerraCycleInterviewNavNode;TerraCycleInterviewLink
+                                ;ReturnRecycleRepeatNavNodeEntry;;ReturnRecycleRepeatNavNodeEntry;ReturnRecycleRepeatNavNode;ReturnRecycleRepeatNavNodeLink
+                                ;CommunityTradePlasticsNavNodeEntry;;CommunityTradePlasticsNavNodeEntry;CommunityTradePlasticsNavNode;CommunityTradePlasticsLink
+                                ;PackagingAtTheBodyShopNavNodeEntry;;PackagingAtTheBodyShopNavNodeEntry;PackagingAtTheBodyShopNavNode;PackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# Lightbox Banner for Mini Cart
+INSERT_UPDATE SimpleBannerComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;urlLink
+;;LightboxHomeDeliveryBannerComponent;Lightbox Home Delivery Banner Component;LightboxHomeDeliveryBannerComponent;
+
+# CMS Mini Cart Component
+INSERT_UPDATE MiniCartComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;totalDisplay(code);shownProductCount;lightboxBannerComponent(&componentRef)
+;;MiniCart;Mini Cart;MiniCart;SUBTOTAL;3;LightboxHomeDeliveryBannerComponent
+
+INSERT_UPDATE BreadcrumbComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;breadcrumbComponent;Breadcrumb CMS Component;breadcrumbComponent
+
+# CMS SearchBox Components
+INSERT_UPDATE SearchBoxComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;SearchBox;Search Box;SearchBox
+
+# CMS Language and Currency Component
+INSERT_UPDATE LanguageCurrencyComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;LangCurrencyComponent;Language and Currency Component;LangCurrencyComponent
+
+# CMS Footer Component
+INSERT_UPDATE FooterComponent;$contentCV[unique=true];uid[unique=true];wrapAfter;&componentRef
+;;FooterComponent;2;FooterComponent
+
+INSERT_UPDATE AmplienceCMSComponent;$contentCV[unique=true];uid[unique=true];name;
+;;FooterHereToHelpAmplienceComponent;Here to help;
+
+INSERT_UPDATE AmplienceCMSComponent;$contentCV[unique=true];uid[unique=true];name;
+;;FooterCopyrightsAmplienceComponent;Copyrights;
+
+# Update CMS Footer Component with Nav Nodes
+INSERT_UPDATE FooterComponent;$contentCV[unique=true];uid[unique=true];navigationNodes(&nodeRef)
+;;FooterComponent;UsefullInformationNavNode,WaysToShopNavNode,AboutUsNavNode
+
+# Market Selector Component
+INSERT_UPDATE MarketSelectorCMSComponent ;uid[unique=true];$contentCV[unique=true];&componentRef;
+;TbsMarketSelector;;TbsMarketSelector
+
+# CMS Paragraph Component (Contact information)
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+#;;EmptyCartParagraphComponent;Empty Cart Paragraph Component;EmptyCartParagraphComponent
+;;HelpParagraphComponent;Help Paragraph Component;HelpParagraphComponent
+
+# CMS VariantSelector Components
+INSERT_UPDATE ProductVariantSelectorComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;VariantSelector;Product Variant Selector;VariantSelector
+
+# CMS ProductAddToCart Components
+INSERT_UPDATE ProductAddToCartComponent;$contentCV[unique=true];uid[unique=true];name;actions(&actionRef);&componentRef
+;;AddToCart;Product Add To Cart;AddToCartAction,PickUpInStoreAction;AddToCart
+
+# CMS AddToCart Action
+INSERT_UPDATE AddToCartAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;AddToCartAction;/cart/add;Product Add To Cart Action;AddToCartAction
+
+INSERT_UPDATE ListAddToCartAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;ListAddToCartAction;/cart/add;Product Add To Cart Action List;ListAddToCartAction
+
+INSERT_UPDATE ListPickUpInStoreAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;ListPickUpInStoreAction;/store-pickup/{productCode}/pointOfServices;Pickup in Store Action List;ListPickUpInStoreAction
+
+# CMS PickUpInStoreAction Action
+
+# CMS Action Restrictions
+INSERT_UPDATE CMSActionRestriction;$contentCV[unique=true];uid[unique=true];name;
+;;ActionRestriction;A CMSAction restriction;s
+
+INSERT_UPDATE PickUpInStoreAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;PickUpInStoreAction;/store-pickup/{productCode}/pointOfServices;Pickup in Store Action;PickUpInStoreAction
+
+INSERT_UPDATE ProductRefinementComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;RefinementFacetComponent;Product Refinement Facet Component;RefinementFacetComponent
+
+INSERT_UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];name;visible;simpleCMSComponents(uid, $contentCV);&componentRef
+;;TabPanelContainer;Tab container;true;ProductDetailsTabComponent,ProductKeyIngredientsTabComponent;TabPanelContainer
+
+###### Product Details ######
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;ProductSummarySlot;Summary for product details;ProductIntroComponent,ProductImagesComponent,TabPanelContainer,ProductSummaryComponent,VariantSelector,AddToCart
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;Summary-ProductDetails;Summary;ProductDetailsPageTemplate;ProductSummarySlot;true
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;Summary;ProductDetailsPageTemplate;CMSFlexComponent,ProductVariantSelectorComponent,ProductAddToCartComponent;;
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;ProductImagesComponent;ProductImagesComponent;ProductImagesComponent
+;;ProductIntroComponent;ProductIntroComponent;ProductIntroComponent
+;;ProductSummaryComponent;ProductSummaryComponent;ProductSummaryComponent
+
+INSERT_UPDATE CMSProductListComponent;$contentCV[unique=true];uid[unique=true];name;actions(uid,$contentCV);&componentRef
+;;ProductListComponent;Product List Component;ListPickUpInStoreAction,ListAddToCartAction;ProductListComponent
+
+INSERT_UPDATE SearchResultsListComponent;$contentCV[unique=true];uid[unique=true];name;actions(uid,$contentCV);&componentRef
+;;SearchResultsList;Search Result List Component;ListPickUpInStoreAction,ListAddToCartAction;SearchResultsList
+
+
+# Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(&componentRef)
+;;SiteLogoSlot;SiteLogoComponent
+;;MiniCartSlot;MiniCart
+;;NavigationBarSlot;tbsGlobalNavComponent,tbsGlobalDiscoverNavComponent
+#;;TabsSlot;TabPanelContainer
+;;FooterSlot;FooterComponent
+#;;VariantSelectorSlot;VariantSelector
+#;;AddToCartSlot;AddToCart
+#;;UpSellingSlot;Similar
+#;;CrossSellingSlot;accessories
+;;ProductLeftRefinements;RefinementFacetComponent
+;;BottomHeaderSlot;breadcrumbComponent
+
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-Homepage;Section1 Slot for Homepage;true;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section1-Homepage;Section1;;Section1Slot-Homepage
+
+INSERT_UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique=true];name;urlLink;&componentRef
+;;EN_GB_HompageSplashBannerComponent;EN_GB Hompage Splash Banner Component;/c/c00001;EN_GB_HompageSplashBannerComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
+;;Section1Slot-Homepage;true;EN_GB_HompageSplashBannerComponent
+
+###### Footer Component Refactor Start ######
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;FooterLeftSlot;FooterHereToHelpAmplienceComponent,TbsMarketSelector,LanguageComponent;
+;;FooterSlot;FooterNavigationComponent;
+;;FooterContactSlot;SubscribeComponent,FooterContactParagraphComponent;
+;;FooterCopyrightsSlot;FooterCopyrightsAmplienceComponent
+
+INSERT_UPDATE FooterNavigationComponent;$contentCV[unique=true];uid[unique=true];wrapAfter;&componentRef;showLanguageCurrency;
+;;FooterNavigationComponent;4;FooterNavigationComponent;true;
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;UsefullInformationNavNode;;Useful Information;UsefullInformationNavNode;DeliveryNavNode,ReturnsNavNode,FAQNavNode,TermsAndConditionsNavNode,PrivacyPolicyNavNode,SitemapNavNode
+;WaysToShopNavNode;;Ways to Shop;WaysToShopNavNode;StoresNavNode,LoveYourBodyClubNavNode,StudentDiscountNavNode,GiftCardsNavNode
+;AboutUsNavNode;;About Us;AboutUsNavNode;AboutUsInternalNavNode,TheBodyShopAtHomeNavNode,AffiliatesNavNode,GenderPayGapNavNode,ModernSlaveryStatementNavNode,AgainstAnimalTestingNavNode,TaxStrategyNavNode,CareersNavNode
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;DeliveryNavNode;;DeliveryNavNode;DeliveryNavNode;
+;ReturnsNavNode;;ReturnsNavNode;ReturnsNavNode;
+;FAQNavNode;;FAQ Page;FAQNavNode
+;TermsAndConditionsNavNode;;TermsAndConditionsNavNode;TermsAndConditionsNavNode;
+;PrivacyPolicyNavNode;;PrivacyPolicyNavNode;PrivacyPolicyNavNode;
+;SitemapNavNode;;SitemapNavNode;SitemapNavNode;
+;StoresNavNode;;StoresNavNode;StoresNavNode;
+;LoveYourBodyClubNavNode;;LoveYourBodyClubNavNode;LoveYourBodyClubNavNode;
+;StudentDiscountNavNode;;StudentDiscountNavNode;StudentDiscountNavNode;
+;GiftCardsNavNode;;GiftCardsNavNode;GiftCardsNavNode;
+;AboutUsInternalNavNode;;AboutUsInternalNavNode;AboutUsInternalNavNode
+;TheBodyShopAtHomeNavNode;;TheBodyShopAtHomeNavNode;TheBodyShopAtHomeNavNode
+;AffiliatesNavNode;;AffiliatesNavNode;AffiliatesNavNode
+;GenderPayGapNavNode;;GenderPayGapNavNode;GenderPayGapNavNode
+;ModernSlaveryStatementNavNode;;ModernSlaveryStatementNavNode;ModernSlaveryStatementNavNode
+;AgainstAnimalTestingNavNode;;AgainstAnimalTestingNavNode;AgainstAnimalTestingNavNode
+;TaxStrategyNavNode;;TaxStrategyNavNode;TaxStrategyNavNode
+;CareersNavNode;;CareersNavNode;CareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;DeliveryNavNodeEntry;;DeliveryNavNodeEntry;DeliveryNavNode;DeliveryLink;
+;ReturnsNavNodeEntry;;ReturnsNavNodeEntry;ReturnsNavNode;ReturnsLink;
+;FAQNavNodeEntry;;FAQ Navigation Node Entry;FAQNavNode;FAQLink;
+;TermsAndConditionsNavNodeEntry;;TermsAndConditionsNavNodeEntry;TermsAndConditionsNavNode;TermsAndConditionsLink;
+;PrivacyPolicyNavNodeEntry;;PrivacyPolicyNavNodeEntry;PrivacyPolicyNavNode;PrivacyPolicyLink;
+;SitemapNavNodeEntry;;SitemapNavNodeEntry;SitemapNavNode;SitemapLink;
+;StoresNavNodeEntry;;StoresNavNodeEntry;StoresNavNode;StoresLink;
+;LoveYourBodyClubNavNodeEntry;;LoveYourBodyClubNavNodeEntry;LoveYourBodyClubNavNode;LoveYourBodyClubLink;
+;StudentDiscountNavNodeEntry;;StudentDiscountNavNodeEntry;StudentDiscountNavNode;StudentDiscountLink;
+;GiftCardsNavNodeEntry;;GiftCardsNavNodeEntry;GiftCardsNavNode;GiftCardsLink;
+;AboutUsInternalNavNodeEntry;;AboutUsInternalNavNodeEntry;AboutUsInternalNavNode;AboutUsLink;
+;TheBodyShopAtHomeNavNodeEntry;;TheBodyShopAtHomeNavNodeEntry;TheBodyShopAtHomeNavNode;TheBodyShopAtHomeLink;
+;AffiliatesNavNodeEntry;;AffiliatesNavNodeEntry;AffiliatesNavNode;AffiliatesLink;
+;GenderPayGapNavNodeEntry;;GenderPayGapNavNodeEntry;GenderPayGapNavNode;GenderPayGapLink;
+;ModernSlaveryStatementNavNodeEntry;;ModernSlaveryStatementNavNodeEntry;ModernSlaveryStatementNavNode;ModernSlaveryStatementLink;
+;AgainstAnimalTestingNavNodeEntry;;AgainstAnimalTestingNavNodeEntry;AgainstAnimalTestingNavNode;AgainstAnimalTestingLink;
+;TaxStrategyNavNodeEntry;;TaxStrategyNavNodeEntry;TaxStrategyNavNode;TaxStrategyLink;
+;CareersNavNodeEntry;;CareersNavNodeEntry;CareersNavNode;CareersLink;
+###### Footer Component Refactor End ######
+
+# Create CMSFlexComponent
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;AccountAddEditAddressComponent;Account Add Edit Address Component;AccountAddEditAddressComponent;AccountAddEditAddressComponent
+;;AccountAddressBookComponent;Account Address Book Component;AccountAddressBookComponent;AccountAddressBookComponent
+;;AccountOrderDetailsActionsComponent;Account Order Details Actions Component;AccountOrderDetailsActionsComponent;AccountOrderDetailsActionsComponent
+;;AccountOrderDetailsHeadlineComponent;Account Order Details Headline Component;AccountOrderDetailsHeadlineComponent;AccountOrderDetailsHeadlineComponent
+;;AccountOrderDetailsItemsComponent;Account Order Details Items Info Component;AccountOrderDetailsItemsComponent;AccountOrderDetailsItemsComponent
+;;AccountOrderDetailsOverviewComponent;Account Order Details Overview Info Component;AccountOrderDetailsOverviewComponent;AccountOrderDetailsOverviewComponent
+;;AccountOrderDetailsShippingComponent;Account Order Details Shipping Info Component;AccountOrderDetailsShippingComponent;AccountOrderDetailsShippingComponent
+;;AccountOrderDetailsTotalsComponent;Account Order Details Order Totals Component;AccountOrderDetailsTotalsComponent;AccountOrderDetailsTotalsComponent
+;;AccountOrderHistoryComponent;Account History Component;AccountOrderHistoryComponent;AccountOrderHistoryComponent
+;;AccountPaymentDetailsComponent;Account Payment Details Component;AccountPaymentDetailsComponent;AccountPaymentDetailsComponent
+;;AnonymousConsentManagementComponent;Anonymous Consent Management Component;AnonymousConsentManagementComponent;AnonymousConsentManagementComponent
+;;CartComponent;Cart Display Component;CartComponent;CartComponent
+;;CartTotalsComponent;Cart Totals Display Component;CartTotalsComponent;CartTotalsComponent
+;;CheckoutComponent;Checkout Display Component;CheckoutComponent;CheckoutComponent
+;;CloseAccountComponent;Close Account Component;CloseAccountComponent;CloseAccountComponent
+;;ConsentManagementComponent;Consent Management Component;ConsentManagementComponent;ConsentManagementComponent
+;;CookieNotificationComponent;Cookie Notification Component;CookieNotificationComponent;CookieNotificationComponent
+;;GuestCheckoutLoginComponent;Guest Checkout Login Component;GuestCheckoutLoginComponent;GuestCheckoutLoginComponent
+;;OrderConfirmationContinueButtonComponent;Order Confirmation Continue Button Component;OrderConfirmationContinueButtonComponent;OrderConfirmationContinueButtonComponent
+;;OrderConfirmationItemsComponent;Order Confirmation Items Info Component;OrderConfirmationItemsComponent;OrderConfirmationItemsComponent
+;;OrderConfirmationOverviewComponent;Order Confirmation Overview Info Component;OrderConfirmationOverviewComponent;OrderConfirmationOverviewComponent
+;;OrderConfirmationShippingComponent;Order Confirmation Shipping Info Component;OrderConfirmationShippingComponent;OrderConfirmationShippingComponent
+;;OrderConfirmationThankMessageComponent;Order Confirmation Thank You Message Component;OrderConfirmationThankMessageComponent;OrderConfirmationThankMessageComponent
+;;OrderConfirmationTotalsComponent;Order Confirmation Totals Component;OrderConfirmationTotalsComponent;OrderConfirmationTotalsComponent
+;;PotentialPromotionsComponent;Potential Promotions Component;PotentialPromotionsComponent;PotentialPromotionsComponent
+;;ProductDetailsTabComponent;Product Details Tab;ProductDetailsTabComponent;ProductDetailsTabComponent
+;;ProductKeyIngredientsTabComponent;Product Key Ingredients Tab;ProductKeyIngredientsTabComponent;ProductKeyIngredientsTabComponent
+;;PromotionsComponent;Promotions Component;PromotionsComponent;PromotionsComponent
+;;ReturningCustomerCheckoutLoginComponent;Returning Customer Checkout Login Component;ReturningCustomerCheckoutLoginComponent;ReturningCustomerCheckoutLoginComponent
+;;ReturningCustomerLoginComponent;Returning Customer Login Component;ReturningCustomerLoginComponent;ReturningCustomerLoginComponent
+;;StoreFinderComponent;Store Finder Component;StoreFinderComponent;StoreFinderComponent
+;;UpdateEmailComponent;Update Email Component;UpdateEmailComponent;UpdateEmailComponent
+;;UpdatePasswordComponent;Update Password Component;UpdatePasswordComponent;UpdatePasswordComponent
+;;UpdateProfileComponent;Update Profile Component;UpdateProfileComponent;UpdateProfileComponent
+;;StyleGuideComponent;Style Guide Component;StyleGuideComponent;StyleGuideComponent
+;;SubscribeComponent;Subscribe Component;SubscribeComponent;SubscribeComponent
+
+# CMS View Order Action
+INSERT_UPDATE ViewOrderAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;ViewOrderAction;/my-account/order/{orderCode};View Order Action;ViewOrderAction
+
+# CMS View Store Action
+INSERT_UPDATE ViewStoreAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;ViewStoreAction;;View Store Action;ViewStoreAction
+
+# Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)[mode=append]
+;;TopHeaderSlot;true;CookieNotificationComponent,AnonymousConsentManagementComponent
+
+#Cart Page
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;EmptyCartMiddleContent-cartPage;Empty Cart Middle Slot for Cart Page;true;breadcrumbComponent,EmptyCartPageComponent
+;;CenterContentSlot-cartPage;Center Content Slot for Cart Page;true;breadcrumbComponent,PromotionsComponent,PotentialPromotionsComponent,CartComponent,CartTotalsComponent,CheckoutComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='cartPage'];contentSlot(uid,$contentCV)[unique=true]
+;;EmptyCartMiddleForCartPage;EmptyCartMiddleContent;;EmptyCartMiddleContent-cartPage
+;;CenterContentSlotCartPage;CenterContentSlot;;CenterContentSlot-cartPage;
+
+###### Account Address Book
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContent-address-book;Side Content Slot for Account Address Book;true;;;;
+;;BodyContent-address-book;Body Content Slot for Account Address Book;true;AccountAddressBookComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='address-book'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-address-book;SideContent;;SideContent-address-book;;;
+;;BodyContent-address-book;BodyContent;;BodyContent-address-book;;;
+
+###### Style guide
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+                         ;;BodyContent-style-guide;Body Content Slot for Style Guide;true;StyleGuideComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='style-guide'];contentSlot(uid,$contentCV)[unique=true];;;
+                                ;;BodyContent-style-guide;BodyContent;;BodyContent-style-guide;;;
+
+######  Account payment detail page
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContent-payment-details;Side Content Slot for My Account payment-details;true;;;;
+;;BodyContent-payment-details;Body Content Slot for My Account payment-details;true;AccountPaymentDetailsComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='payment-details'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-payment-details;SideContent;;SideContent-payment-details;;;
+;;BodyContent-payment-details;BodyContent;;BodyContent-payment-details;;;
+
+
+###### Account Order History
+
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContent-orders;Side Content Slot for My Account Order History;true;;;;
+;;BodyContent-orders;Body Content Slot for My Account Order History;true;AccountOrderHistoryComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='orders'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-orders;SideContent;;SideContent-orders;;;
+;;BodyContent-orders;BodyContent;;BodyContent-orders;;;
+
+
+###### Account Order Details
+
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContent-orderdetail;Side Content Slot for My Account Order Details;true;;;;
+;;BodyContent-orderdetail;Body Content Slot for My Account Order Details;true;AccountOrderDetailsHeadlineComponent,AccountOrderDetailsOverviewComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsActionsComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='order'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-orderdetail;SideContent;;SideContent-orderdetail;;;
+;;BodyContent-orderdetail;BodyContent;;BodyContent-orderdetail;;;
+
+###### Account Update Password
+# ContentSlot
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContent-updatePassword;Side Content Slot for Update Password;true;;;;
+;;BodyContent-updatePassword;Body Content Slot for Update Password;true;UpdatePasswordComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='updatePassword'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-updatePassword;SideContent;;SideContent-updatePassword;;;
+;;BodyContent-updatePassword;BodyContent;;BodyContent-updatePassword;;;
+
+###### Account Update Profile
+# ContentSlot
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContent-update-profile;Side Content Slot for Update Profile;true;;;;
+;;BodyContent-update-profile;Body Content Slot for Update Profile;true;UpdateProfileComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='update-profile'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-update-profile;SideContent;;SideContent-update-profile;;;
+;;BodyContent-update-profile;BodyContent;;BodyContent-update-profile;;;
+
+###### Account Update Email
+# ContentSlot
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContent-update-email;Side Content Slot for Update Email;true;;;;
+;;BodyContent-update-email;Body Content Slot for Update Email;true;UpdateEmailComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='update-email'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-update-email;SideContent;;SideContent-update-email;;;
+;;BodyContent-update-email;BodyContent;;BodyContent-update-email;;;
+
+###### Account Consent Management
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContentSlot-consents;Side Content Slot for Consent Management;true;;;;
+;;BodyContentSlot-consents;Body Content Slot for Consent Management;true;ConsentManagementComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='consents'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-consents;SideContent;;SideContentSlot-consents;;;
+;;BodyContent-consents;BodyContent;;BodyContentSlot-consents;;;
+
+
+###### Close Account Page
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+#;;SideContentSlot-close-account;Side Content Slot for Close Account Page;true;;;;
+;;BodyContentSlot-close-account;Body Content Slot for Close Account Page;true;CloseAccountComponent;;;
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='close-account'];contentSlot(uid,$contentCV)[unique=true];;;
+#;;SideContent-close-account;SideContent;;SideContentSlot-close-account;;;
+;;BodyContent-close-account;BodyContent;;BodyContentSlot-close-account;;;
+
+
+#### ProductListPage
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;ProductListSlot;Product List Slot for Product List;true;ProductListComponent;;;
+
+#### SearchResultListPage
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SearchResultsListSlot;Search Result List Slot for Search List;true;SearchResultsList;;;
+
+### Customer Login
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;LeftContentSlot-login;Left Content Slot for Customer Login;true;ReturningCustomerLoginComponent;;;
+;;RightContentSlot-login;Right Content Slot for Customer Login;true;;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='login'];contentSlot(uid,$contentCV)[unique=true];;;
+;;LeftContentSlot-login;LeftContentSlot;;LeftContentSlot-login;;;
+;;RightContentSlot-login;RightContentSlot;;RightContentSlot-login;;;
+
+### Checkout Login
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;LeftContentSlot-checkout-login;Left Content Slot for Checkout Login;true;ReturningCustomerCheckoutLoginComponent;;;
+;;CenterContentSlot-checkout-login;Center Content Slot for Checkout Login;true;;;;
+;;RightContentSlot-checkout-login;Right Content Slot for Checkout Login;true;GuestCheckoutLoginComponent;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='checkout-login'];contentSlot(uid,$contentCV)[unique=true];;;
+;;LeftContentSlot-checkout-login;LeftContentSlot;;LeftContentSlot-checkout-login;;;
+;;CenterContentSlot-checkout-login;CenterContentSlot;;CenterContentSlot-checkout-login;;;
+;;RightContentSlot-checkout-login;RightContentSlot;;RightContentSlot-checkout-login;;;
+
+# Create the missing pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;sale;Sale Information Page;LandingPage1Template;/sale
+;;help;Order Help Page;LandingPage1Template;/help
+;;contactUs;Contact Us Page;LandingPage1Template;/contact
+
+###### Error Page Section ######
+# Create components using existing for error page
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;TopContent;ErrorPageTemplate;;wide
+
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;content;&componentRef
+;;PageNotFoundParagraphComponent;Page Not Found Paragraph Component;"<h2>Oops!</h2><h3>We couldn't find the page you are looking for.</h3><p>Here are some useful links instead:</p>";PageNotFoundParagraphComponent
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow']
+;;CartLink;Contact Us Link;/cart;CartLink;CartLink
+
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;MiddleContent-Errorpage;Middle Content Slot for Error Page;true;PageNotFoundParagraphComponent;;;
+
+# Create Content Slots for Page
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='notFound'];contentSlot(uid,$contentCV)[unique=true]
+;;MiddleContent-Errorpage;MiddleContent;;MiddleContent-Errorpage
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;BottomContent-Errorpage;Bottom Content Slot for Error Page;true;FAQLink,CartLink
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BottomContent-Errorpage;BottomContent;notFound;BottomContent-Errorpage
+
+###### My Account Section ######
+
+# Create additional links
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;target(code)[default='sameWindow']
+;;SignOutLink;SignOutLink;/logout;SignOutLink;
+
+# Create additional Navvigation Nodes
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(&linkRef);&nodeRef;icon
+;SignOutNavNode;;Sign Out;MyAccountNavNode;;SignOutNavNode;sign-out;
+
+# Create additional cms navigation entries
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;SignOutNavNodeEntry;;SignOutNavNodeEntry;SignOutNavNode;SignOutLink;
+
+# create navigation root node for my account & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(&linkRef);&nodeRef;icon
+# children for my account
+                               ;MyAccountSubNavNode;;My Account Sub Node;MyAccountNavNode;;MyAccountSubNavNode;my-account;
+                               ;PersonalDetailsNavNode;;Personal Details;MyAccountNavNode;;PersonalDetailsNavNode;profile;
+                               #;UpdateEmailNavNode;;Update Email;MyAccountNavNode;;UpdateEmailNavNode
+                               ;PaymentDetailsNavNode;;Payment Details;MyAccountNavNode;;PaymentDetailsNavNode;payment;
+                               ;ChangePasswordNavNode;;Change Password;MyAccountNavNode;;ChangePasswordNavNode;password;
+                               ;OrderHistoryNavNode;;Order History;MyAccountNavNode;;OrderHistoryNavNode;order-history;
+                               ;AddressBookNavNode;;Address Book;MyAccountNavNode;;AddressBookNavNode;addresses;
+                               #;SavedCartsNavNode;;Saved Carts;MyAccountNavNode;;SavedCartsNavNode
+                               #;ConsentManagementNavNode;;Consent Management;MyAccountNavNode;;ConsentManagementNavNode
+                               #;CloseAccountNavNode;;Close Account;MyAccountNavNode;;CloseAccountNavNode
+                               ;PreferencesNavNode;; Preferences ;MyAccountNavNode;;PreferencesNavNode;preferences;
+                               ;PointsRewardNavNode;; Points Reward ;MyAccountNavNode;;PointsRewardNavNode;star_empty;
+                               ;DataPrivacyNavNode;; Data Privacy ;MyAccountNavNode;;DataPrivacyNavNode;privacy;
+                               ;WishlistNavNode;; Wishlist;MyAccountNavNode;;WishlistNavNode;heart;
+
+
+# create cms link components for my account pages
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;target(code)[default='sameWindow']
+;;MyAccountSubNavNodeLink;MyAccountSubNavNodeLink;/my-account;MyAccountSubNavNodeLink;
+;;PersonalDetailsLink;PersonalDetailsLink;/my-account/update-profile;PersonalDetailsLink;
+#;;UpdateEmailLink;UpdateEmailLink;/my-account/update-email;UpdateEmailLink;
+;;UpdatePasswordLink;UpdatePasswordLink;/my-account/update-password;UpdatePasswordLink;
+;;AddressBookLink;AddressBookLink;/my-account/address-book;AddressBookLink;
+;;PaymentDetailsLink;PaymentDetailsLink;/my-account/payment-details;PaymentDetailsLink;
+;;OrderHistoryLink;OrderHistoryLink;/my-account/orders;OrderHistoryLink;
+;;SavedCartsLink;SavedCartsLink;/my-account/saved-carts;SavedCartsLink;
+;;ConsentManagementLink;ConsentManagementLink;/my-account/consents;ConsentManagementLink;
+;;CloseAccountLink;CloseAccountLink;/my-account/close-account;CloseAccountLink;
+;;PreferencesLink;Preferences Link;/my-account/preferences;PreferencesLink;
+;;PointsRewardLink;PointsReward Link;/my-account/points-rewards;PointsRewardLink;
+;;DataPrivacyLink;DataPrivacy Link;/my-account/data-privacy;DataPrivacyLink;
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;MyAccountSubNavNodeEntry;;MyAccountSubNavNodeEntry;MyAccountSubNavNode;MyAccountSubNavNodeLink;
+;PersonalDetailsNavNodeEntry;;PersonalDetailsNavNodeEntry;PersonalDetailsNavNode;PersonalDetailsLink;
+#;UpdateEmailNavNodeEntry;;UpdateEmailNavNodeEntry;UpdateEmailNavNode;UpdateEmailLink;
+;ChangePasswordNavNodeEntry;;ChangePasswordNavNodeEntry;ChangePasswordNavNode;UpdatePasswordLink;
+;AddressBookNavNodeEntry;;AddressBookNavNodeEntry;AddressBookNavNode;AddressBookLink;
+;PaymentDetailsNavNodeEntry;;PaymentDetailsNavNodeEntry;PaymentDetailsNavNode;PaymentDetailsLink;
+;OrderHistoryNavNodeEntry;;OrderHistoryNavNodeEntry;OrderHistoryNavNode;OrderHistoryLink;
+;WishlistNavNodeEntry;;WishlistNavNodeEntry;WishlistNavNode;WishlistLink;
+#;SavedCartsNavNodeEntry;;SavedCartsNavNodeEntry;SavedCartsNavNode;SavedCartsLink;
+#;ConsentManagementNavNodeEntry;;ConsentManagementNavNodeEntry;ConsentManagementNavNode;ConsentManagementLink;
+#;CloseAccountNavNodeEntry;;CloseAccountNavNodeEntry;CloseAccountNavNode;CloseAccountLink;
+;PreferencesNavNodeEntry;;PreferencesNavNodeEntry;PreferencesNavNode;PreferencesLink
+;PointsRewardNavNodeEntry;;PointsRewardNavNodeEntry;PointsRewardNavNode;PointsRewardLink;
+;DataPrivacyNavNodeEntry;;DataPrivacyNavNodeEntry;DataPrivacyNavNode;DataPrivacyLink;
+
+# Set the order or the items in the My Account Menu
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];children(uid,$contentCV)
+;MyAccountNavNode;;MyAccountSubNavNode,PersonalDetailsNavNode,PreferencesNavNode,ChangePasswordNavNode,WishlistNavNode,PointsRewardNavNode,OrderHistoryNavNode,AddressBookNavNode,PaymentDetailsNavNode,DataPrivacyNavNode,SignOutNavNode
+
+INSERT_UPDATE AccountNavigationComponent;$contentCV[unique=true];uid[unique=true];name;styleClass;navigationNode(&nodeRef);&componentRef
+                                        ;;TbsAccountNavigationComponent;My Account;accNavComponent;MyAccountNavNode;TbsAccountNavigationComponent
+
+INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]; cmsComponents(uid, $contentCV)
+                         ;                          ; SideContentSlot; TbsAccountNavigationComponent
+
+
+# create navigation component for my account
+INSERT_UPDATE NavigationComponent;$contentCV[unique=true];uid[unique=true];name;styleClass;&componentRef;navigationNode(&nodeRef)
+;;MyAccountComponent;My Account;accNavComponent;MyAccountComponent;MyAccountNavNode
+
+# create a user restriction
+INSERT_UPDATE CMSUserRestriction;$contentCV[unique=true];&userRestriction;name;uid[unique=true];users(uid)
+;;anonymousUserRestriction;Anonymous User Restriction;anonymousUserRestriction;anonymous
+
+# create a inverse restriction
+INSERT_UPDATE CMSInverseRestriction;$contentCV[unique=true];name;originalRestriction(&userRestriction)[allownull=true];uid[unique=true];components(&componentRef)
+;;Logged in User;anonymousUserRestriction;loggedInUser;MyAccountComponent
+
+
+###### Create Forgot/Reset Password Pages and Components ######
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;forgotPassword;Forgot Password Page;LoginPageTemplate;/login/forgot-password
+;;resetPassword;Reset Password Page;LoginPageTemplate;/login/reset-password
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;LeftContentSlot-forgotPassword;Left Content Slot for Forgot Password;true;ForgotPasswordComponent
+;;LeftContentSlot-resetPassword;Left Content Slot for Reset Password;true;ResetPasswordComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;LeftContent-forgotPassword;LeftContentSlot;forgotPassword;LeftContentSlot-forgotPassword
+;;LeftContent-resetPassword;LeftContentSlot;resetPassword;LeftContentSlot-resetPassword
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;ForgotPasswordComponent;Forgot Password Component;ForgotPasswordComponent;ForgotPasswordComponent
+;;ResetPasswordComponent;Reset New Password Component;ResetPasswordComponent;ResetPasswordComponent
+
+###### Create Register Page ######
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;register;Register Page;LandingPage1Template;/login/register
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1-register;Body Content Slot for Register;true;RegisterCustomerComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;Section1-register;Section1;register;Section1-register
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;RegisterCustomerComponent;Register Customer Component;RegisterCustomerComponent;RegisterCustomerComponent
+
+
+###### Override page urls ######
+###### Override page urls ######
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];label
+;;login;/login
+;;notFound;/not-found
+;;storefinderPage;/store-finder
+;;update-email;/my-account/update-email
+;;updatePassword;/my-account/update-password
+;;update-profile;/my-account/update-profile
+;;close-account;/my-account/close-account
+;;consents;/my-account/consents
+;;address-book;/my-account/address-book
+;;orders;/my-account/orders
+;;payment-details;/my-account/payment-details
+;;cartPage;/cart
+;;orderConfirmationPage;/order-confirmation
+;;order;/my-account/order
+;;style-guide;/style-guide
+
+
+###### Reconfig searchbox component config ######
+# UI requirements
+INSERT_UPDATE SearchBoxComponent;uid;minCharactersBeforeRequest;maxProducts;maxSuggestions;waitTimeBeforeRequest;$contentCV[unique=true]
+;SearchBox;0;5;5;0
+
+###### Pages related to checkout ######
+
+# add some ContentSlotName into MultiStepCheckoutSummaryPageTemplate
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='MultiStepCheckoutSummaryPageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;BodyContent;;;wide
+;TopContent;;;
+;BottomContent;;;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;CheckoutHeaderSlot;Checkout Header Slot
+;;CheckoutFooterSlot;Checkout Footer Slot;HelpParagraphComponent
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;CheckoutHeader-MultiStepCheckoutSummaryPageTemplate;TopContent;MultiStepCheckoutSummaryPageTemplate;CheckoutHeaderSlot;true
+;;CheckoutFooter-MultiStepCheckoutSummaryPageTemplate;BottomContent;MultiStepCheckoutSummaryPageTemplate;CheckoutFooterSlot;true
+
+# component shared by all checkout pages
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutOrderSummaryComponent;Checkout OrderSummary Component;CheckoutOrderSummary
+
+## Checkout page (/checkout)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;Checkout;Checkout Page;MultiStepCheckoutSummaryPageTemplate;/checkout
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-checkout;Checkout Orchestrator Slot;CheckoutOrchestratorComponent
+;;SideContentSlot-checkout;Order Summary Slot;CheckoutOrderSummaryComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-checkout;BodyContent;Checkout;BodyContentSlot-checkout
+;;SideContent-checkout;SideContent;Checkout;SideContentSlot-checkout
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutOrchestratorComponent;Checkout Orchestrator Component;CheckoutOrchestrator
+
+## Shipping address page (/checkout/shipping-address)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;CheckoutShippingAddress;Checkout Shipping Address Page;MultiStepCheckoutSummaryPageTemplate;/checkout/shipping-address
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-checkoutShippingAddress;Checkout Shipping Address Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutShippingAddressComponent,CheckoutProgressMobileBottomComponent
+;;SideContentSlot-checkoutShippingAddress;Order Summary Slot;CheckoutOrderSummaryComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-checkoutShippingAddress;BodyContent;CheckoutShippingAddress;BodyContentSlot-checkoutShippingAddress
+;;SideContent-checkoutShippingAddress;SideContent;CheckoutShippingAddress;SideContentSlot-checkoutShippingAddress
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutProgressComponent;Checkout Progress Component;CheckoutProgress
+;;CheckoutProgressMobileTopComponent;Checkout Progress Mobile Top Component;CheckoutProgressMobileTop
+;;CheckoutShippingAddressComponent;Checkout Shipping Address Component;CheckoutShippingAddress
+;;CheckoutProgressMobileBottomComponent;Checkout Progress Mobile Bottom Component;CheckoutProgressMobileBottom
+
+## Delivery mode page (/checkout/delivery-mode)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;CheckoutDeliveryMode;Checkout Delivery Mode Page;MultiStepCheckoutSummaryPageTemplate;/checkout/delivery-mode
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-checkoutDeliveryMode;Checkout Delivery Mode Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutDeliveryModeComponent,CheckoutProgressMobileBottomComponent
+;;SideContentSlot-checkoutDeliveryMode;Order Summary Slot;CheckoutOrderSummaryComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-checkoutDeliveryMode;BodyContent;CheckoutDeliveryMode;BodyContentSlot-checkoutDeliveryMode
+;;SideContent-checkoutDeliveryMode;SideContent;CheckoutDeliveryMode;SideContentSlot-checkoutDeliveryMode
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutDeliveryModeComponent;CheckoutDeliveryModeComponent;CheckoutDeliveryMode
+
+## Payment details page (/checkout/payment-details)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;CheckoutPaymentDetails;Checkout Payment Details Page;MultiStepCheckoutSummaryPageTemplate;/checkout/payment-details
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-checkoutPaymentDetails;Checkout Payment Details Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutPaymentDetailsComponent,CheckoutProgressMobileBottomComponent
+;;SideContentSlot-checkoutPaymentDetails;Order Summary Slot;CheckoutOrderSummaryComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-checkoutPaymentDetails;BodyContent;CheckoutPaymentDetails;BodyContentSlot-checkoutPaymentDetails
+;;SideContent-checkoutPaymentDetails;SideContent;CheckoutPaymentDetails;SideContentSlot-checkoutPaymentDetails
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutPaymentDetailsComponent;CheckoutPaymentDetailsComponent;CheckoutPaymentDetails
+
+## Review order page (/checkout/review-order)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];allowedForAllMarkets[default=true]
+;;CheckoutReviewOrder;Checkout Review Order Page;MultiStepCheckoutSummaryPageTemplate;/checkout/review-order
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-checkoutReviewOrder;Checkout Review Order Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutReviewOrderComponent,CheckoutProgressMobileBottomComponent
+;;SideContentSlot-checkoutReviewOrder;Checkout Place Order Slot;CheckoutOrderSummaryComponent,CheckoutPlaceOrderComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-checkoutReviewOrder;BodyContent;CheckoutReviewOrder;BodyContentSlot-checkoutReviewOrder
+;;SideContent-checkoutReviewOrder;SideContent;CheckoutReviewOrder;SideContentSlot-checkoutReviewOrder
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutPlaceOrderComponent;CheckoutPlaceOrderComponent;CheckoutPlaceOrder
+;;CheckoutReviewOrderComponent;CheckoutReviewOrderComponent;CheckoutReviewOrder
+
+###### SiteContext Slot and Components ######
+INSERT_UPDATE CMSSiteContextComponent;$contentCV[unique=true];uid[unique=true];name;context(code);&componentRef
+;;LanguageComponent;Site Languages;LANGUAGE;LanguageComponent
+;;CurrencyComponent;Site Currencies;CURRENCY;CurrencyComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;SiteContextSlot;Site Context Slot;true;LanguageComponent,CurrencyComponent,ICON_StoreFinderLink
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;SiteContext;ProductDetailsPageTemplate;CMSSiteContextComponent;;
+;SiteContext;ErrorPageTemplate;CMSSiteContextComponent;;
+;SiteContext;ProductListPageTemplate;CMSSiteContextComponent;;
+;SiteContext;SearchResultsListPageTemplate;CMSSiteContextComponent;;
+;SiteContext;SearchResultsEmptyPageTemplate;CMSSiteContextComponent;;
+;SiteContext;CategoryPageTemplate;CMSSiteContextComponent;;
+;SiteContext;LandingPage1Template;CMSSiteContextComponent;;
+;SiteContext;CartPageTemplate;CMSSiteContextComponent;;
+;SiteContext;LoginPageTemplate;CMSSiteContextComponent;;
+;SiteContext;CheckoutLoginPageTemplate;CMSSiteContextComponent;;
+;SiteContext;MultiStepCheckoutSummaryPageTemplate;CMSSiteContextComponent;;
+;SiteContext;OrderConfirmationPageTemplate;CMSSiteContextComponent;;
+;SiteContext;AccountPageTemplate;CMSSiteContextComponent;;
+;SiteContext;StoreFinderPageTemplate;CMSSiteContextComponent;;
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteContextSlot-ProductDetailsPage;SiteContext;ProductDetailsPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-ErrorPage;SiteContext;ErrorPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-ProductListPage;SiteContext;ProductListPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-SearchResultsListPage;SiteContext;SearchResultsListPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-SearchResultsEmpytPage;SiteContext;SearchResultsEmptyPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-CategoryPage;SiteContext;CategoryPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-LandingPage1;SiteContext;LandingPage1Template;SiteContextSlot;true
+;;SiteContextSlot-CartPage;SiteContext;CartPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-LoginPage;SiteContext;LoginPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-CheckoutLoginPage;SiteContext;CheckoutLoginPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-MultiStepCheckoutSummaryPage;SiteContext;MultiStepCheckoutSummaryPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-OrderConfirmationPage;SiteContext;OrderConfirmationPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-AccountPage;SiteContext;AccountPageTemplate;SiteContextSlot;true
+;;SiteContextSlot-StoreFinderPage;SiteContext;StoreFinderPageTemplate;SiteContextSlot;true
+
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;content
+;;SaleParagraphComponent;Sale Paragraph Component;"Sale"
+;;ContactUsParagraphComponent;Contact Us Paragraph Component;"Contact"
+;;CloseAccountParagraphComponent;Close Account Paragraph Component;"When you close your account, your profile information will be kept for the retention period mandated by the laws and regulations of your country. Customer Support will be able to assist you with any order history or proof of purchase needs during this time.<br/><br/>At the end of the retention period, the following profile information will be deleted and will no longer be accessible to you or anyone else:<br/><br/><ul><li>email addresses</li><li>contact information</li><li>shipping details</li><li>delivery preferences</li><li>consent management settings</li><li>account history</li><li>payment details</li><li>order history</li></ul>"
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;Section2A-Sale;Section 2A Slot for Sales Page;true;SaleParagraphComponent
+;;Section2A-ContactUs;Section 2A Slot for Contact Us Page;true;ContactUsParagraphComponent
+;;BodyContentSlot-close-account;Body content Slot for Close Account;true;CloseAccountParagraphComponent,CloseAccountComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;Section2A-Sale;Section2A;sale;Section2A-Sale
+;;Section2A-ContactUs;Section2A;contactUs;Section2A-ContactUs
+;;BodyContent-close-account;BodyContent;close-account;BodyContentSlot-close-account
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV)
+;;SiteLinksSlot;Slot contains some links;true;SearchBox,ICON_Login,MyAccountLink,ICON_WishListLink,GuestWishlistLink
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true];validComponentTypes(code);compTypeGroup(code)
+;SiteLinks;ProductDetailsPageTemplate;CMSLinkComponent;;
+;SiteLinks;ErrorPageTemplate;CMSLinkComponent;;
+;SiteLinks;ProductListPageTemplate;CMSLinkComponent;;
+;SiteLinks;SearchResultsListPageTemplate;CMSLinkComponent;;
+;SiteLinks;SearchResultsEmptyPageTemplate;CMSLinkComponent;;
+;SiteLinks;CategoryPageTemplate;CMSLinkComponent;;
+;SiteLinks;LandingPage1Template;CMSLinkComponent;;
+;SiteLinks;CartPageTemplate;CMSLinkComponent;;
+;SiteLinks;LoginPageTemplate;CMSLinkComponent;;
+;SiteLinks;CheckoutLoginPageTemplate;CMSLinkComponent;;
+;SiteLinks;MultiStepCheckoutSummaryPageTemplate;CMSLinkComponent;;
+;SiteLinks;OrderConfirmationPageTemplate;CMSLinkComponent;;
+;SiteLinks;AccountPageTemplate;CMSLinkComponent;;
+;SiteLinks;StoreFinderPageTemplate;CMSLinkComponent;;
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLinksSlot-ProductDetailsPage;SiteLinks;ProductDetailsPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-ErrorPage;SiteLinks;ErrorPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-ProductListPage;SiteLinks;ProductListPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-SearchResultsListPage;SiteLinks;SearchResultsListPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-SearchResultsEmpytPage;SiteLinks;SearchResultsEmptyPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-CategoryPage;SiteLinks;CategoryPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-LandingPage1;SiteLinks;LandingPage1Template;SiteLinksSlot;true
+;;SiteLinksSlot-CartPage;SiteLinks;CartPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-LoginPage;SiteLinks;LoginPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-CheckoutLoginPage;SiteLinks;CheckoutLoginPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-MultiStepCheckoutSummaryPage;SiteLinks;MultiStepCheckoutSummaryPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-OrderConfirmationPage;SiteLinks;OrderConfirmationPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-AccountPage;SiteLinks;AccountPageTemplate;SiteLinksSlot;true
+;;SiteLinksSlot-StoreFinderPage;SiteLinks;StoreFinderPageTemplate;SiteLinksSlot;true
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='orderConfirmationPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-orderConfirmation;SideContent;;SideContent-orderConfirmation;;;
+;;BodyContent-orderConfirmation;BodyContent;;BodyContent-orderConfirmation;;;
+
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-orderConfirmation;Side Content Slot for Order Confirmation;true;;;;
+;;BodyContent-orderConfirmation;Body Content Slot for Order Confirmation;true;;;;
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;SideContent-StoreFinderPage;Side Slot for Store Finder Page;true;
+;;MiddleContent-StoreFinderPage;Middle Slot for Store Finder Page;true;TbsStoreFinderComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='storefinderPage'];contentSlot(uid,$contentCV)[unique=true]
+;;Side-StoreFinderPage;SideContent;;SideContent-StoreFinderPage
+;;Middle-StoreFinderPage;MiddleContent;;MiddleContent-StoreFinderPage
+
+##GiftWrapBannerCMSComponent Start ##
+
+INSERT_UPDATE GiftWrapBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;giftImage;giftWrapServiceImage;giftWrapServiceMessage;&componentRef
+;;GiftWrapBannerCMSComponent;GiftWrap Banner CMS Component;https://i1.adis.ws/i/thebodyshop/gift_asset_image1;https://i1.adis.ws/i/thebodyshop/gift_asset_image1;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor.;GiftWrapBannerCMSComponent
+
+##GiftWrapBannerCMSComponent End ##
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;CartApplyCouponComponent;Cart Apply Coupon Component;CartApplyCouponComponent;CartApplyCouponComponent
+
+# Update slots
+UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid, $contentCV)
+;;BodyContent-address-book;AccountAddressBookComponent
+;;BodyContent-orderdetail;AccountOrderDetailsHeadlineComponent,AccountOrderDetailsOverviewComponent,AccountOrderDetailsItemsComponent,AccountOrderDetailsShippingComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsActionsComponent
+;;BodyContent-orders;AccountOrderHistoryComponent
+;;BodyContent-payment-details;AccountPaymentDetailsComponent
+;;BodyContentSlot-close-account;CloseAccountComponent
+;;BodyContentSlot-consents;ConsentManagementComponent
+;;BodyContent-update-email;UpdateEmailComponent
+;;BodyContent-updatePassword;UpdatePasswordComponent
+;;BodyContent-update-profile;UpdateProfileComponent
+;;BodyContent-orderConfirmation;OrderConfirmationThankMessageComponent,OrderConfirmationOverviewComponent,OrderConfirmationItemsComponent,OrderConfirmationShippingComponent,OrderConfirmationTotalsComponent,OrderConfirmationContinueButtonComponent
+;;TopHeaderSlot;CookieNotificationComponent,AnonymousConsentManagementComponent
+;;RightContentSlot-checkout-login;GuestCheckoutLoginComponent
+;;LeftContentSlot-checkout-login;ReturningCustomerCheckoutLoginComponent
+;;LeftContentSlot-login;ReturningCustomerLoginComponent
+;;MiddleContent-StoreFinderPage;tbsStoreFinderComponent
+;;BodyContent-style-guide;StyleGuideComponent
+;;CenterContentSlot-cartPage;breadcrumbComponent,PromotionsComponent,PotentialPromotionsComponent,CartComponent,CartApplyCouponComponent,GiftWrapBannerCMSComponent,CartTotalsComponent,CheckoutComponent
+
+
+INSERT_UPDATE CMSBaseStoreTimeRestriction ;uid[unique=true];$contentCV[unique=true];baseStores(uid);passIfStoreDoesntMatch;activeFrom[dateformat='yyyy-MM-dd''T''HH:mm:ss'];activeUntil[dateformat='yyyy-MM-dd''T''HH:mm:ss'];components(uid, $contentCV)
+;GlobalStoreMiniCartRestriction;;tbsGlobalStore;true;"2000-12-24T00:00:00";"2000-12-26T00:00:00";MiniCart;
+
+INSERT_UPDATE CMSParagraphComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;FooterHereToHelpParagraphComponent;Footer Here To Help Paragraph Component;FooterHereToHelpParagraphComponent;
+;;FooterContactParagraphComponent;Footer Contact Paragraph Component;FooterContactParagraphComponent;
+;;FooterCopyrightParagraphComponent;Footer Copyright Paragraph Component;FooterCopyrightParagraphComponent;
+
+#### Category image banner component ####
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+                                        ;;CategoryBannerCMSComponent;Category Banner CMSComponent;CategoryBannerCMSComponent
+
+###### Sample category page #########
+INSERT_UPDATE CategoryPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)
+;;bodyCategoryPage;Body Category Page;CategoryPageTemplate;false;approved
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1-BodyCategoryPage;Section1 Slot for Category Page;true;CategoryBannerCMSComponent
+;;Section2-BodyCategoryPage;Section2 Slot for Category Page;true;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='bodyCategoryPage'];contentSlot(uid,$contentCV)[unique=true]
+;;Section1-BodyCategoryPage;Section1;;Section1-BodyCategoryPage;
+;;Section2-BodyCategoryPage;Section2;;Section2-BodyCategoryPage;
+
+INSERT_UPDATE CMSCategoryRestriction;$contentCV[unique=true];uid[unique=true];name;$pages;$categories;
+;;bodyCategoryPageRestriction;Body Category Page Restriction;bodyCategoryPage;c00001;
+
+##SiteMap Page Start ##
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+                         ;;Section1Slot-htmlSitemapComponent;Section1 Slot for Navigation SiteMap;true;navigationHtmlSitemapComponent;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='sitemapPage'];contentSlot(uid,$contentCV)[unique=true];;;
+                                ;;Section1Slot-htmlSitemapComponent;Section1;;Section1Slot-htmlSitemapComponent;;;
+
+INSERT_UPDATE HtmlSiteMapComponent;$contentCV[unique=true];uid[unique=true];name;navigationNode(&nodeRef);&componentRef
+                                  ;;navigationHtmlSitemapComponent;Sitemap component for Navigation;TbsGlobalCategoryNavNode;navigationHtmlSitemapComponent
+##SiteMap Page End ##
+
+##GiftCardBalance Page Start ##
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+                         ;;Section1Slot-giftCardBalanceCMSComponent;Section1 Slot for GiftCard Balance;true;giftCardBalanceCMSComponent;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='giftCardBalancePage'];contentSlot(uid,$contentCV)[unique=true];;;
+                                ;;Section1-giftCardBalanceCMSComponent;Section1;;Section1Slot-giftCardBalanceCMSComponent;;;
+
+INSERT_UPDATE GiftCardBalanceCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+                                         ;;giftCardBalanceCMSComponent;GiftCard Balance CMS component;giftCardBalanceCMSComponent
+##GiftCardBalance Page End ##
+
+##StoreFinder Component Start ##
+INSERT_UPDATE TbsStoreFinderComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;tbsStoreFinderComponent;Tbs StoreFinder Component;TbsStoreFinderComponent
+##StoreFinder Component end ##
+
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType;&componentRef
+;;EmptyCartPageComponent;EmptyCartPageComponent;EmptyCartPageComponent;EmptyCartPageComponent
+
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];styleAttributes;restrictions(uid,$contentCV)
+;;ICON_StoreFinderLink;ICON_StoreFinderLink;;
+;;ICON_WishListLink;ICON_WishListLink;loggedInUser;
+;;ICON_Login;ICON_Login;anonymousUserRestriction;
+;;MyAccountLink;ICON_Login;loggedInUser;
+;;GuestWishlistLink;ICON_WishListLink;anonymousUserRestriction;

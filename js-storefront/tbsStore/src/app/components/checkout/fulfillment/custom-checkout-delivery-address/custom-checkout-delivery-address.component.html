@@ -1,0 +1,81 @@
+<div class="checkout-content my-0 w-100">
+  <ng-container *ngIf="existingAddresses$ | async as existingAddresses">
+    <!-- TITLE  -->
+    <h3 class="cx-checkout-title d-flex mb-3">
+      {{ 'checkoutAddress.deliverTo' | cxTranslate }}
+    </h3>
+    <ng-container *ngIf="!(isLoading$ | async); else loading">
+      <!-- BILLING ADDRESS CARDS LIST -->
+      <cx-checkout-address-cards
+        [ngClass]="{ 'delivery-adress-text-container': selectedAddress }"
+        [selectedAddress]="selectedAddress"
+        [userAddresses]="existingAddresses$.value"
+        [isLoadingAddresses]="isLoading$ | async"
+        (addressSelectEmit)="addressSelected($event)"
+        (addressEditEmit)="addressEditTrigger($event)"
+        (addressAddEmit)="showNewAddressForm(false)"
+        class="d-flex flex-row col-12 pl-0 pr-0 checkout-delivery-adress-cards"
+      ></cx-checkout-address-cards>
+      <div class="cx-checkout-btns w-100 text-right">
+        <button
+          *ngIf="selectedAddress"
+          type="button"
+          class="mat-form-field-address-btn-edit"
+          (click)="addressEditTrigger()"
+        >
+          <span class="icon icon--edit"></span>{{ 'common.edit' | cxTranslate }}
+        </button>
+      </div>
+    </ng-container>
+    <!-- LOADING  -->
+    <ng-template #loading>
+      <div class="cx-spinner">
+        <cx-spinner></cx-spinner>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <!-- MODAL -->
+  <ng-template #shippingAddressModal let-c="close" let-d="dismiss" id="checkout-shipping-address-modal">
+    <div class="modal-header flex-column">
+      <div class="row justify-content-between w-100 pl-4 pr-0 m-0">
+        <h2 class="modal-title">{{ 'addressForm.addressHeader' | cxTranslate }}</h2>
+        <button
+          type="button"
+          class="close"
+          [attr.aria-label]="'common.closeBtn' | cxTranslate"
+          (click)="closeAddressModal()"
+        >
+          <span aria-hidden="true">
+            <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body d-flex flex-row flex-wrap pt-3">
+      <ng-container *ngIf="(existingAddresses$ | async)?.length > 0 && isExistingAddress; else initialAddressForm">
+        <cx-custom-address-form
+          [isEditing]="'true'"
+          [addressFormType]="'SHIPPING'"
+          [addressData]="editingAddress"
+          showTitleCode="true"
+          cancelBtnLabel="{{ 'common.cancel' | cxTranslate }}"
+          (backToAddress)="closeAddressModal()"
+          (submitAddress)="editAddress($event)"
+        ></cx-custom-address-form>
+      </ng-container>
+
+      <ng-template #initialAddressForm>
+        <cx-custom-address-form
+          [isEditing]="'false'"
+          [addressFormType]="'SHIPPING'"
+          [addressData]="null"
+          showTitleCode="true"
+          cancelBtnLabel="{{ 'common.cancel' | cxTranslate }}"
+          (backToAddress)="closeAddressModal()"
+          (submitAddress)="addNewAddress($event)"
+        ></cx-custom-address-form>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

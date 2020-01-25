@@ -1,0 +1,14 @@
+// SOURCE: http://idangero.us/swiper/
+@import '~swiper/dist/css/swiper.min.css';
+
+.swiper-scrollbar {
+  background: $slider-scrollbar-bg;
+}
+.swiper-scrollbar-drag {
+  background: $slider-scrollbar-drag-bg;
+  top: -2px;
+  height: 5px;
+}
+.swiper-container-horizontal > .swiper-scrollbar {
+  height: 1px;
+}

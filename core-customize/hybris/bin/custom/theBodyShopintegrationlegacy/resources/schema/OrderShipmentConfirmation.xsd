@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/orderShipmentConfirmationSchema" xmlns:tns="http://thebodyshop/orderShipmentConfirmationSchema" elementFormDefault="qualified">
+
+    <xs:element name="OrderShipmentConfirmationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="OrderShipmentConfirmation" type="tns:OrderShipmentConfirmation" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="SAPStatusEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Y2" />
+            <xs:enumeration value="Z" />
+            <xs:enumeration value="N" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="OrderShipmentConfirmation">
+        <xs:sequence>
+            <xs:element name="Code" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Status" type="tns:SAPStatusEnum" minOccurs="1" maxOccurs="1" />
+            <xs:element name="StatusNotificationDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="StatusNotificationTime" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="ShippingDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="ShippingTime" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Carrier" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="CarrierService" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="TrackingID" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Entries" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Entry" minOccurs="1" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="EntryNumber" minOccurs="1" maxOccurs="1">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:minLength value="1" />
+                                                <xs:maxLength value="5" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="ArticleId" minOccurs="0" maxOccurs="1">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:minLength value="1" />
+                                                <xs:maxLength value="18" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="Gtin" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                                    <xs:element name="QuantityDispatched" type="xs:int" minOccurs="1" maxOccurs="1" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="OrderShipmentConfirmationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="statusCode" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>The response of OrderShipmentConfirmation Request</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="messageId" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>The Hybris Id of the Feed</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,22 @@
+<div class="container" *ngIf="showBanner">
+  <div class="row">
+    <div class="col-12">
+      <div class="notice-banner alert alert-danger">
+        <div class="notice-banner__text-content">
+          <h3 class="notice-banner__heading">{{ 'storeFinder.noticeBanner.heading' | cxTranslate }}</h3>
+          <p class="notice-banner__text">
+            {{
+              'storeFinder.noticeBanner.text'
+                | cxTranslate: { fromDate: data?.temporaryClosedFromDate, toDate: data?.temporaryClosedToDate }
+            }}
+          </p>
+        </div>
+        <img
+          src="{{ 'storeFinder.noticeBanner.image' | cxTranslate }}"
+          alt="{{ 'storeFinder.noticeBanner.heading' | cxTranslate }}"
+          class="notice-banner__img"
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<ul class="social-icons">
+  <li *ngFor="let socialItem of socialItems" class="social-icons__item">
+    <a class="social-icons__link" href="/" [attr.aria-label]="socialItem.aria | cxTranslate"
+      ><span class="sr-only">{{ socialItem.aria | cxTranslate }}</span
+      ><span class="social-icons__icon icon icon--{{ socialItem.class }}"></span
+    ></a>
+  </li>
+</ul>

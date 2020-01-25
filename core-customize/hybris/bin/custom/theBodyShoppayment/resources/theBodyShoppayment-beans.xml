@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	
+	<bean class="uk.co.thebodyshop.payment.data.ItemWSDTO">
+		<property name="id" type="String"/>
+		<property name="name" type="String"/>
+		<property name="optional" type="Boolean"/>
+		<property name="type" type="String"/>
+		<property name="value" type="String"/>
+		<property name="configuration" type="java.util.Map&lt;String,String>"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.payment.data.PaymentMethodGroupWSDTO">
+		<property name="name" type="String"/>
+		<property name="type" type="String"/>
+	</bean>
+	<bean class="uk.co.thebodyshop.payment.data.SubInputDetailWSDTO">
+		<property name="key" type="String"/>
+		<property name="items" type="java.util.List&lt;uk.co.thebodyshop.payment.data.ItemWSDTO>"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.payment.data.InputDetailWSDTO">
+		<property name="configuration" type="java.util.Map&lt;String,String>"/>
+		<property name="itemSearchUrl" type="String"/>
+		<property name="key" type="String"/>
+		<property name="optional" type="Boolean"/>
+		<property name="items" type="java.util.List&lt;uk.co.thebodyshop.payment.data.ItemWSDTO>"/>
+		<property name="type" type="String"/>
+		<property name="value" type="String"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.payment.data.PaymentMethodWSDTO">
+		<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">PaymentMethod</hint>
+        </hints>
+		<property name="name" type="String"/>
+		<property name="type" type="String"/>
+		<!-- <property name="supportsRecurring" type="boolean"/> -->
+		<property name="configuration" type="java.util.Map&lt;String,String>"/>
+		<property name="brands" type="java.util.List&lt;java.lang.String>" />
+		<property name="paymentMethodData" type="String"/>
+		<property name="details" type="java.util.List&lt;uk.co.thebodyshop.payment.data.InputDetailWSDTO>"/>
+		<property name="group" type="uk.co.thebodyshop.payment.data.PaymentMethodGroupWSDTO"/>
+	</bean>
+	
+	<bean class="uk.co.thebodyshop.payment.data.PaymentMethodsResponse">
+		 <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">PaymentMethods</hint>
+        </hints>
+		<property name="creditCardPayment" type="boolean"/>
+		<property name="paymentMethods" type="java.util.List&lt;uk.co.thebodyshop.payment.data.PaymentMethodWSDTO>"/>
+		<property name="adyenOriginKey" type="String"/>
+		<property name="savedPayments" type="de.hybris.platform.commercewebservicescommons.dto.order.PaymentDetailsListWsDTO"/>
+	</bean>
+	
+ 	<bean class="de.hybris.platform.commercewebservicescommons.dto.order.PaymentDetailsWsDTO">
+ 		<property name="sameAsShippingAddress" type="boolean"/>
+ 		<property name="cardPaymentRequired" type="boolean"/>
+ 	</bean>
+ 	
+ 	<bean class="uk.co.thebodyshop.payment.data.PaymentRedirectResponseData">
+		<property name="redirectUrl" type="String"/>
+		<property name="method" type="String"/>
+		<property name="data" type="java.util.Map&lt;String,String>"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+        <property name="paymentRedirect" type="uk.co.thebodyshop.payment.data.PaymentRedirectResponseData" />
+    </bean>
+	
+	 <bean class="uk.co.thebodyshop.payment.dto.PaymentRedirectResponseWsDTO">
+	 	<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">PaymentRedirectResponseWsDTO</hint>
+        </hints>
+		<property name="redirectUrl" type="String"/>
+		<property name="method" type="String"/>
+		<property name="data" type="java.util.Map&lt;String,String>"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercewebservicescommons.dto.order.AbstractOrderWsDTO">
+        <description>Representation of an Abstract Order</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">AbstractOrder</hint>
+        </hints>
+        <property name="paymentRedirect" type="uk.co.thebodyshop.payment.dto.PaymentRedirectResponseWsDTO">
+        	<description>Payment redirect DTO</description>
+        </property>
+    </bean>
+    
+    <enum class="de.hybris.platform.payment.dto.TransactionStatus">
+		<!-- Supports payment redirect scenarios -->
+		<value>PAYMENT_REDIRECT</value>
+		<value>PAYMENT_REDIRECT_FAILURE</value>
+		<value>AUTHORIZATION_PENDING</value>
+	</enum>
+	
+	<enum class="de.hybris.platform.payment.dto.TransactionStatusDetails">
+		<value>PAYMENT_REDIRECT_FAILURE</value>
+	</enum>
+ 	
+</beans>

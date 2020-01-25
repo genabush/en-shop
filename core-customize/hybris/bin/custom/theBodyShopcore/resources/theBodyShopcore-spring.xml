@@ -1,0 +1,1609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+
+	<!-- Spring Integration -->
+
+	<import resource="classpath:/theBodyShopcore/integration/hot-folder-common-spring.xml" />
+	<import resource="classpath:/theBodyShopcore/integration/hot-folder-pointofservice-spring.xml" />
+	<import resource="classpath:/theBodyShopcore/integration/hot-folder-openingschedule-spring.xml" />
+
+	<!-- SystemSetup for the TheBodyShopCore -->
+
+	<bean id="acceleratorCoreSystemSetup" class="uk.co.thebodyshop.core.setup.CoreSystemSetup" parent="abstractCoreSystemSetup">
+		<property name="solrServerMode" value="#{configurationService.configuration.getProperty('solr.server.mode')}" />
+	</bean>
+
+	<!-- Solr field value providers -->
+
+	<bean id="volumeAwareProductPriceValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.VolumeAwareProductPriceValueProvider" parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="priceService" ref="priceService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="userService" ref="userService" />
+		<property name="priceComparator" ref="volumePriceComparator" />
+		<property name="catalogVersionService" ref="catalogVersionService" />
+	</bean>
+
+	<bean id="volumePriceComparator" class="uk.co.thebodyshop.core.comparators.VolumeAwarePriceInformationComparator" scope="singleton" />
+
+	<bean id="productVolumePricesProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductVolumePricesProvider" parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="priceService" ref="priceService" />
+	</bean>
+
+	<bean id="abstractCategoryCodeValueProvider" abstract="true" class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.CategoryCodeValueProvider" parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+	<bean id="abstractCategoryNameValueProvider" abstract="true" class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.CategoryNameValueProvider" parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<bean id="tbsCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="" />
+	</bean>
+
+	<bean id="tbsCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="tbsCategorySource" />
+	</bean>
+
+	<bean id="tbsCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="tbsCategorySource" />
+	</bean>
+
+
+	<bean id="tbsProductPriceValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.TbsProductPriceValueProvider"
+		  parent="productPriceValueProvider">
+		<constructor-arg name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<constructor-arg name="commercePriceService" ref="commercePriceService" />
+		<constructor-arg name="userPriceGroupService" ref="userPriceGroupService" />
+	</bean>
+
+
+	<bean id="image515ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="515Wx515H" />
+	</bean>
+	<bean id="image300ValueProvider" parent="abstractImageValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.TbsImageValueProvider">
+		<property name="mediaFormat" value="300Wx300H" />
+		<property name="productBadgesDataHelper" ref="productBadgesDataHelper"/>
+	</bean>
+	<bean id="image96ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="96Wx96H" />
+	</bean>
+	<bean id="image65ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="65Wx65H" />
+	</bean>
+	<bean id="image30ValueProvider" parent="abstractImageValueProvider">
+		<property name="mediaFormat" value="30Wx30H" />
+	</bean>
+
+	<bean id="productUrlValueProvider" class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.ProductUrlValueProvider" parent="abstractPropertyFieldValueProvider">
+		<property name="urlResolver" ref="productModelUrlResolver" />
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<bean id="promotionCodeValueProvider" class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.PromotionCodeValueProvider" parent="abstractPropertyFieldValueProvider">
+		<property name="promotionsService" ref="promotionsService" />
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+	<bean id="promotionImageValueProvider" class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.PrimaryPromotionImageValueProvider" parent="abstractPropertyFieldValueProvider">
+		<property name="promotionsService" ref="promotionsService" />
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+	</bean>
+
+	<bean id="tbsPointOfServiceFacetDisplayNameProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.display.name.provider.PointOfServiceFacetDisplayNameProvider">
+		<property name="pointOfServiceService" ref="pointOfServiceService" />
+	</bean>
+
+	<bean id="tbsProductFacetValueResolver" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.TbsProductFacetValueResolver" parent="abstractValueResolver">
+		<constructor-arg name="modelService" ref="modelService" />
+	</bean>
+	<bean id="productBarcodesValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductBarcodesValueProvider" parent="abstractValueResolver" >
+		<property name="searchRestrictionService" ref="searchRestrictionService"/>
+	</bean>
+
+	<bean id="tbsProductFacetDisplayNameProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.display.name.provider.TbsProductFacetDisplayNameProvider">
+		<constructor-arg name="commonI18NService" ref="commonI18NService" />
+		<constructor-arg name="tbsProductFacetService" ref="tbsProductFacetService" />
+	</bean>
+
+	<bean id="productVariantFlagValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductVariantFlagValueProvider" parent="abstractValueResolver" />
+
+	<bean id="productPreviewDescriptionValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductPreviewDescriptionValueProvider" parent="abstractValueResolver">
+		<property name="descriptionMaxLength" value="#{configurationService.configuration.getProperty('tbs.preview.description.max.length')}" />
+    <property name="qualifierProvider" ref="languageQualifierProvider" />
+	</bean>
+
+	<bean id="variantSizeValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.VariantSizeValueProvider" parent="abstractValueResolver">
+		<property name="variantDataHelper" ref="variantDataHelper" />
+    <property name="qualifierProvider" ref="languageQualifierProvider" />
+	</bean>
+
+	<bean id="ratingRangeDisplayNameProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.display.name.provider.RatingRangeDisplayNameProvider" />
+
+	<bean id="productColourDisplayNameProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.display.name.provider.ProductColourDisplayNameProvider" />
+
+	<bean id="variantDataHelper" class="uk.co.thebodyshop.core.helpers.impl.DefaultVariantDataHelper">
+        <constructor-arg name="commerceStockService" ref="commerceStockService" />
+        <constructor-arg name="commercePriceService" ref="commercePriceService" />
+        <constructor-arg name="pricePerMetricCalculationStrategy" ref="pricePerMetricCalculationStrategy" />
+        <constructor-arg name="priceDataFactory" ref="priceDataFactory" />
+        <constructor-arg name="commonI18nService" ref="commonI18NService" />
+        <constructor-arg name="loyaltyPointsCalculationStrategy" ref="loyaltyPointsCalculationStrategy" />
+    </bean>
+
+    <bean id="baseProductVariantsValueResolver" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.BaseProductVariantsValueResolver" parent="abstractValueResolver">
+		<constructor-arg name="productVisibilityService" ref="productVisibilityService"/>
+		<constructor-arg name="userPriceGroupService" ref="userPriceGroupService" />
+		<property name="qualifierProvider" ref="currencyQualifierProvider" />
+    </bean>
+
+	<bean id="baseProductMultiVariantValueResolver" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.BaseProductMultiVariantValueResolver" parent="abstractValueResolver">
+		<constructor-arg name="productVisibilityService" ref="productVisibilityService"/>
+		<constructor-arg name="userPriceGroupService" ref="userPriceGroupService" />
+		<property name="qualifierProvider" ref="currencyQualifierProvider" />
+	</bean>
+
+
+
+    <bean id="productBadgesDataHelper" class="uk.co.thebodyshop.core.helpers.impl.DefaultProductBadgesDataHelper">
+    	<constructor-arg name="mediaFormatForBadges" value="#{configurationService.configuration.getProperty('image.badges.media.formats')}"/>
+    </bean>
+
+	<!-- Event listeners are singletons, therefore the dependency for a bean in tenant-scope must be configured with a lookup method. -->
+
+	<bean id="orderCancelledEventListener" class="uk.co.thebodyshop.core.event.OrderCancelledEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="orderRefundEventListener" class="uk.co.thebodyshop.core.event.OrderRefundEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="customerRegistrationEventListener" class="uk.co.thebodyshop.core.event.RegistrationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="forgottenPasswordEventListener" class="uk.co.thebodyshop.core.event.ForgottenPasswordEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="submitOrderEventListener" class="uk.co.thebodyshop.core.event.SubmitOrderEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="modelService" ref="modelService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+	</bean>
+	<bean id="orderConfirmationEventListener" class="uk.co.thebodyshop.core.event.OrderConfirmationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendDeliveryMessageEventListener" class="uk.co.thebodyshop.core.event.SendDeliveryMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendReadyForPickupMessageEventListener" class="uk.co.thebodyshop.core.event.SendReadyForPickupMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendOrderPartiallyCanceledMessageEventListener" class="uk.co.thebodyshop.core.event.SendOrderPartiallyCanceledMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendOrderPartiallyRefundedMessageEventListener" class="uk.co.thebodyshop.core.event.SendOrderPartiallyRefundedMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledMessageEventListener" class="uk.co.thebodyshop.core.event.SendNotPickedUpConsignmentCanceledMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	<bean id="orderCompletedEventListener" class="uk.co.thebodyshop.core.event.OrderCompletedEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<!-- Process resources definition -->
+
+	<bean id="customerRegistrationEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/customerRegistrationEmailProcess.xml" />
+	</bean>
+	<bean id="forgottenPasswordEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/forgottenPasswordEmailProcess.xml" />
+	</bean>
+	<bean id="orderConfirmationEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/orderConfirmationEmailProcess.xml" />
+	</bean>
+	<bean id="sendDeliveryEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/sendDeliveryEmailProcess.xml" />
+	</bean>
+	<bean id="sendReadyForPickupEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/sendReadyForPickupEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderCancelledEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/sendOrderCancelledEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderRefundEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/sendOrderRefundEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderPartiallyCanceledEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/sendOrderPartiallyCanceledEmailProcess.xml" />
+	</bean>
+	<bean id="sendOrderPartiallyRefundedEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/sendOrderPartiallyRefundedEmailProcess.xml" />
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/sendNotPickedUpConsignmentCanceledEmailProcess.xml" />
+	</bean>
+	<bean id="productCreateNotificationProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/productCreateNotificationProcess.xml"/>
+	</bean>
+
+	<!-- Actions -->
+
+	<bean id="abstractAction" class="de.hybris.platform.processengine.action.AbstractAction" abstract="true">
+		<property name="modelService" ref="modelService" />
+		<property name="processParameterHelper" ref="processParameterHelper" />
+	</bean>
+
+	<bean id="sendEmail" class="de.hybris.platform.acceleratorservices.process.email.actions.SendEmailAction" parent="abstractAction">
+		<property name="emailService" ref="emailService" />
+	</bean>
+
+	<bean id="abstractGenerateEmailAction" class="de.hybris.platform.acceleratorservices.process.email.actions.GenerateEmailAction" parent="abstractAction" abstract="true">
+		<property name="modelService" ref="modelService" />
+		<property name="cmsEmailPageService" ref="cmsEmailPageService" />
+		<property name="contextResolutionStrategy" ref="processContextResolutionStrategy" />
+		<property name="emailGenerationService" ref="emailGenerationService" />
+	</bean>
+
+	<bean id="generateCustomerRegistrationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CustomerRegistrationEmailTemplate" />
+	</bean>
+
+	<bean id="generateForgottenPasswordEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ForgottenPasswordEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderConfirmationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderConfirmationEmailTemplate" />
+	</bean>
+
+	<bean id="generateDeliverySentEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="DeliverySentEmailTemplate" />
+	</bean>
+
+	<bean id="generateReadyForPickupEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ReadyForPickupEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderCancelledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderCancelledEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderRefundEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderRefundEmailTemplate" />
+	</bean>
+
+	<bean id="generateOrderPartiallyCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyCanceledEmailTemplate" />
+	</bean>
+	<bean id="generateOrderPartiallyRefundedEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyRefundedEmailTemplate" />
+	</bean>
+	<bean id="generateNotPickedUpConsignmentCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="NotPickedUpConsignmentCanceledEmailTemplate" />
+	</bean>
+
+	<bean id="generateProductCreateNotificationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ProductCreateNotificationEmailTemplate" />
+	</bean>
+
+	<bean id="removeSentEmail" class="de.hybris.platform.acceleratorservices.process.email.actions.RemoveSentEmailAction" parent="abstractAction">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<bean id="markQuoteNotificationAsSent" class="uk.co.thebodyshop.core.actions.quote.MarkQuoteNotificationAsSentAction" parent="abstractAction" abstract="true">
+		<property name="quoteService" ref="quoteService" />
+	</bean>
+
+	<!-- Simple Suggestion Service -->
+
+	<alias alias="simpleSuggestionService" name="defaultSimpleSuggestionService" />
+	<bean id="defaultSimpleSuggestionService" class="uk.co.thebodyshop.core.suggestion.impl.DefaultSimpleSuggestionService">
+		<property name="simpleSuggestionDao" ref="simpleSuggestionDao" />
+	</bean>
+	<alias alias="simpleSuggestionDao" name="defaultSimpleSuggestionDao" />
+	<bean id="defaultSimpleSuggestionDao" class="uk.co.thebodyshop.core.suggestion.dao.impl.DefaultSimpleSuggestionDao" parent="abstractItemDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<!-- Sales quote process actions -->
+
+	<!-- quote -->
+	<bean id="quoteBuyerSubmitEventListener" class="uk.co.thebodyshop.core.event.QuoteBuyerSubmitEventListener" parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteSalesRepSubmitEventListener" class="uk.co.thebodyshop.core.event.QuoteSalesRepSubmitEventListener" parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteSellerApprovalSubmitEventListener" class="uk.co.thebodyshop.core.event.QuoteSellerApprovalSubmitEventListener" parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteBuyerOrderPlacedEventListener" class="uk.co.thebodyshop.core.event.QuoteBuyerOrderPlacedEventListener" parent="abstractEventListener">
+		<property name="commerceQuoteService" ref="commerceQuoteService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<bean id="quoteToExpireSoonEventListener" class="uk.co.thebodyshop.core.event.QuoteToExpireSoonEventListener" parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteExpiredEventListener" class="uk.co.thebodyshop.core.event.QuoteExpiredEventListener" parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteCancelEventListener" class="uk.co.thebodyshop.core.event.QuoteCancelEventListener" parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<bean id="quoteBuyerProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/quote/quote-buyer-process.xml" />
+	</bean>
+
+	<bean id="quoteSalesRepProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/quote/quote-salesrep-process.xml" />
+	</bean>
+
+	<bean id="quoteSellerApprovalProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/quote/quote-seller-approval-process.xml" />
+	</bean>
+
+	<bean id="quotePostCancellationProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/quote/quote-post-cancellation-process.xml" />
+	</bean>
+
+	<bean id="quoteToExpireSoonProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/quote/quote-to-expire-soon-email-process.xml" />
+	</bean>
+
+	<bean id="quoteExpiredProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/theBodyShopcore/processes/quote/quote-expired-email-process.xml" />
+	</bean>
+
+	<!-- Quotes email notification jobs -->
+	<bean id="quoteToExpireSoonJobPerformable" class="uk.co.thebodyshop.core.job.QuoteToExpireSoonJobPerformable" parent="abstractJobPerformable">
+		<property name="supportedQuoteStatuses">
+			<set value-type="de.hybris.platform.core.enums.QuoteState">
+				<value>BUYER_OFFER</value>
+			</set>
+		</property>
+		<property name="commerceQuoteDao" ref="commerceQuoteDao" />
+		<property name="eventService" ref="eventService" />
+		<property name="configurationService" ref="configurationService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+
+	<bean id="quoteExpiredJobPerformable" class="uk.co.thebodyshop.core.job.QuoteExpiredJobPerformable" parent="abstractJobPerformable">
+		<property name="supportedQuoteStatuses">
+			<set value-type="de.hybris.platform.core.enums.QuoteState">
+				<value>BUYER_OFFER</value>
+			</set>
+		</property>
+		<property name="commerceQuoteDao" ref="commerceQuoteDao" />
+		<property name="eventService" ref="eventService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+
+	<import resource="/theBodyShopcore/processes/quote/quote-buyer-process-spring.xml" />
+	<import resource="/theBodyShopcore/processes/quote/quote-salesrep-process-spring.xml" />
+	<import resource="/theBodyShopcore/processes/quote/quote-seller-approval-process-spring.xml" />
+	<import resource="/theBodyShopcore/processes/quote/quote-to-expire-soon-email-process-spring.xml" />
+	<import resource="/theBodyShopcore/processes/quote/quote-expired-email-process-spring.xml" />
+	<import resource="/theBodyShopcore/processes/quote/quote-post-cancellation-process-spring.xml" />
+
+	<!-- Customer cleanup -->
+	<alias name="defaultCustomerCleanupRelatedObjectsAction" alias="customerCleanupRelatedObjectsAction" />
+	<bean id="defaultCustomerCleanupRelatedObjectsAction" class="uk.co.thebodyshop.core.retention.impl.DefaultCustomerCleanupRelatedObjectsAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="customerCleanupHooks" />
+	</bean>
+
+	<!-- Cleanup the customers not owning any order currently and the current date has past deactivation date+retention date. Also removes customers audit records. -->
+	<alias name="defaultCustomerNotOwningOrdersRemoveCleanupAction" alias="customerNotOwningOrdersRemoveCleanupAction" />
+	<bean id="defaultCustomerNotOwningOrdersRemoveCleanupAction" class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="customerCleanupHooks" />
+	</bean>
+
+	<!-- Order cleanup -->
+	<!-- Cleanup the order related objects and then remove order and its audit records. -->
+	<alias name="defaultOrderRemoveCleanupAction" alias="orderRemoveCleanupAction" />
+	<bean id="defaultOrderRemoveCleanupAction" class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="orderCleanupHooks" />
+	</bean>
+
+	<!-- CsTicket Remove action -->
+	<alias name="defaultCSTicketRemoveCleanupAction" alias="csTicketRemoveCleanupAction" />
+	<bean id="defaultCSTicketRemoveCleanupAction" class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="csTicketCleanupHooks" />
+	</bean>
+
+	<!-- CsTicket Stagnation action -->
+	<alias name="defaultCSTicketStagnationAction" alias="csTicketStagnationAction" />
+	<bean id="defaultCSTicketStagnationAction" class="uk.co.thebodyshop.core.retention.impl.DefaultCSTicketStagnationAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="csTicketRetentionHooks" />
+		<property name="ticketBusinessService" ref="ticketBusinessService" />
+	</bean>
+
+	<alias alias="stockLevelStatusStrategy" name="tbsStockLevelStatusStrategy" />
+	<bean id="tbsStockLevelStatusStrategy" class="uk.co.thebodyshop.core.strategies.impl.TbsStockLevelStatusStrategy" parent="commerceStockLevelStatusStrategy" />
+
+	<alias alias="tbsStockAvailabilityCalculationStrategy" name="tbsStockAvailabilityCalculationStrategy" />
+	<alias alias="commerceStockLevelCalculationStrategy" name="tbsStockAvailabilityCalculationStrategy" />
+	<bean id="tbsStockAvailabilityCalculationStrategy" parent="defaultCommerceStockLevelCalculationStrategy" class="uk.co.thebodyshop.core.strategies.impl.TbsStockAvailabilityCalculationStrategy" />
+
+	<!-- Email Context -->
+	<bean id="customerEmailContext" class="uk.co.thebodyshop.core.process.email.context.CustomerEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="customerConverter" ref="customerConverter" />
+	</bean>
+
+	<bean id="forgottenPasswordEmailContext" class="uk.co.thebodyshop.core.process.email.context.ForgottenPasswordEmailContext" parent="customerEmailContext" scope="prototype">
+		<property name="customerConverter" ref="customerConverter" />
+	</bean>
+
+	<bean id="orderNotificationEmailContext" class="uk.co.thebodyshop.core.process.email.context.OrderNotificationEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+
+	<bean id="quoteNotificationEmailContext" class="uk.co.thebodyshop.core.process.email.context.QuoteNotificationEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="quoteService" ref="quoteService" />
+		<property name="quoteConverter" ref="quoteConverter" />
+	</bean>
+
+	<bean id="deliverySentEmailContext" class="uk.co.thebodyshop.core.process.email.context.DeliverySentEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter" ref="consignmentConverter" />
+	</bean>
+
+	<bean id="readyForPickupEmailContext" class="uk.co.thebodyshop.core.process.email.context.ReadyForPickupEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter" ref="consignmentConverter" />
+	</bean>
+
+	<bean id="orderCancelledEmailContext" class="uk.co.thebodyshop.core.process.email.context.OrderCancelledEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+
+	<bean id="orderRefundEmailContext" class="uk.co.thebodyshop.core.process.email.context.OrderRefundEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+	<bean id="consignmentCollectionReminderEmailContext" class="uk.co.thebodyshop.core.process.email.context.ConsignmentCollectionReminderEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter" ref="consignmentConverter" />
+		<property name="formatFactory" ref="formatFactory" />
+		<property name="customerServiceUncollectedConsignmentStrategy" ref="customerServiceUncollectedConsignmentStrategy" />
+		<property name="orderConverter" ref="orderConverter" />
+	</bean>
+
+	<bean id="orderPartiallyModifiedEmailContext" class="uk.co.thebodyshop.core.process.email.context.OrderPartiallyModifiedEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter" />
+		<property name="orderEntryConverter" ref="orderEntryConverter" />
+		<property name="priceDataFactory" ref="priceDataFactory" />
+	</bean>
+
+	<bean id="orderPartiallyCanceledEmailContext" class="uk.co.thebodyshop.core.process.email.context.OrderPartiallyCanceledEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype">
+	</bean>
+
+	<bean id="orderPartiallyRefundedEmailContext" class="uk.co.thebodyshop.core.process.email.context.OrderPartiallyRefundedEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype">
+	</bean>
+
+	<bean id="notPickedUpConsignmentCanceledEmailContext" class="uk.co.thebodyshop.core.process.email.context.NotPickedUpConsignmentCanceledEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter" ref="consignmentConverter" />
+		<property name="priceDataFactory" ref="priceDataFactory" />
+	</bean>
+
+	<bean id="productCreateNotificationEmailContext" class="uk.co.thebodyshop.core.process.email.context.ProductCreateNotificationEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="configurationService" ref="configurationService" />
+	</bean>
+
+	<alias alias="processContextResolutionStrategy" name="tbsProcessContextResolutionStrategy" />
+	<bean id="tbsProcessContextResolutionStrategy" class="de.hybris.platform.acceleratorservices.process.strategies.impl.DefaultProcessContextResolutionStrategy">
+		<property name="processStrategyMap" ref="tbsProcessContextResolutionStrategyMap" />
+	</bean>
+
+	<alias alias="tbsProcessContextResolutionStrategyMap" name="tbsProcessContextResolutionStrategyMap" />
+	<bean id="tbsProcessContextResolutionStrategyMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="targetMapClass">
+			<value>java.util.HashMap</value>
+		</property>
+		<property name="sourceMap">
+			<map>
+				<entry value-ref="orderProcessContextStrategy">
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.orderprocessing.model.OrderProcessModel</value>
+					</key>
+				</entry>
+				<entry value-ref="returnProcessContextStrategy">
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.returns.model.ReturnProcessModel</value>
+					</key>
+				</entry>
+				<entry value-ref="consignmentProcessContextStrategy">
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.ordersplitting.model.ConsignmentProcessModel</value>
+					</key>
+				</entry>
+				<entry value-ref="storeFrontProcessContextStrategy">
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.commerceservices.model.process.StoreFrontProcessModel</value>
+					</key>
+				</entry>
+				<entry value-ref="quoteProcessContextStrategy">
+					<key>
+						<value type="java.lang.Class">de.hybris.platform.commerceservices.model.process.QuoteProcessModel</value>
+					</key>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<alias alias="outstandingAmountCalculationStrategy" name="defaultOutstandingAmountCalculationStrategy" />
+	<bean id="defaultOutstandingAmountCalculationStrategy" class="uk.co.thebodyshop.core.calculation.strategies.impl.DefaultOutstandingAmountCalculationStrategy"/>
+
+	<!-- Gateways/Integrations -->
+
+  <alias name="defaultAmplienceDynamicContentGateway" alias="amplienceDynamicContentGateway" />
+  <bean id="defaultAmplienceDynamicContentGateway" class="uk.co.thebodyshop.core.integration.amplience.impl.DefaultAmplienceDynamicContentGateway" />
+
+	<!-- Services/Daos -->
+
+	<alias name="defaultTBSMarketSelectorService" alias="tbsMarketSelectorService" />
+	<bean id="defaultTBSMarketSelectorService" class="uk.co.thebodyshop.core.services.impl.DefaultMarketSelectorService">
+		<constructor-arg ref="tbsMarketSelectorDao" />
+	</bean>
+
+	<alias name="defaultTbsMarketSelectorDao" alias="tbsMarketSelectorDao" />
+	<bean id="defaultTbsMarketSelectorDao" class="uk.co.thebodyshop.core.daos.impl.DefaultTbsMarketSelectorDao">
+		<constructor-arg ref="flexibleSearchService" />
+	</bean>
+
+	<alias name="defaultTbsProductFacetDao" alias="tbsProductFacetDao" />
+	<bean id="defaultTbsProductFacetDao" class="uk.co.thebodyshop.core.daos.impl.DefaultTbsProductFacetDao">
+		<constructor-arg ref="flexibleSearchService" />
+	</bean>
+
+	<bean id="baseProductCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+		<property name="key" value="${keygen.baseproduct.code.name}" />
+		<property name="digits" value="${keygen.baseproduct.code.digits}" />
+		<property name="start" value="${keygen.baseproduct.code.start}" />
+		<property name="type" value="${keygen.baseproduct.code.type}" />
+		<property name="template" value="${keygen.baseproduct.code.template}" />
+	</bean>
+
+	<alias alias="catalogVersionService" name="defaultTbsCatalogVersionService" />
+	<alias alias="tbsCatalogVersionService" name="defaultTbsCatalogVersionService" />
+	<bean id="defaultTbsCatalogVersionService" parent="defaultCatalogVersionService" class="uk.co.thebodyshop.core.catalog.services.impl.TbsDefaultCatalogVersionService">
+		<constructor-arg name="stagedCatalogId" index="0" value="#{configurationService.configuration.getProperty('tbs.catalog.staged')}" />
+		<constructor-arg name="globalProductCatalogId" index="1" value="#{configurationService.configuration.getProperty('tbs.global.product.catalog.id')}" />
+		<constructor-arg name="globalContentCatalogId" index="2" value="#{configurationService.configuration.getProperty('tbs.global.content.catalog.id')}" />
+		<constructor-arg name="onlineCatalogId" index="3" value="#{configurationService.configuration.getProperty('tbs.catalog.online')}" />
+	</bean>
+
+	<alias name="defaultTbsProductFacetService" alias="tbsProductFacetService" />
+	<bean id="defaultTbsProductFacetService" class="uk.co.thebodyshop.core.services.impl.DefaultProductFacetService">
+		<constructor-arg ref="tbsProductFacetDao" />
+	</bean>
+
+	<alias alias="categoryService" name="defaultTbsCategoryService" />
+	<alias alias="tbsCategoryService" name="defaultTbsCategoryService" />
+	<bean id="defaultTbsCategoryService" class="uk.co.thebodyshop.core.services.impl.DefaultTbsCategoryService" parent="defaultCategoryService">
+	</bean>
+
+	<alias name="tbsPriceDataFactory" alias="priceDataFactory" />
+	<bean id="tbsPriceDataFactory" class="uk.co.thebodyshop.core.factories.TbsPriceDataFactory" parent="defaultPriceDataFactory">
+		<constructor-arg name="baseStoreService" ref="baseStoreService" />
+	</bean>
+
+	<alias name="defaultPricePerMetricCalculationStrategy" alias="pricePerMetricCalculationStrategy" />
+	<bean id="defaultPricePerMetricCalculationStrategy" class="uk.co.thebodyshop.core.strategies.impl.PricePerMetricCalculationStrategy">
+		<constructor-arg name="priceDataFactory" ref="priceDataFactory" />
+		<constructor-arg name="commercePriceService" ref="commercePriceService" />
+		<constructor-arg name="i18nService" ref="i18nService" />
+		<constructor-arg name="commonI18NService" ref="commonI18NService" />
+		<constructor-arg name="commerceCommonI18NService" ref="commerceCommonI18NService" />
+	</bean>
+
+	<alias name="defaultTbsSynchronizationStatusService" alias="synchronizationStatusService"/>
+    <bean id="defaultTbsSynchronizationStatusService" parent="defaultSynchronizationStatusService"  class="uk.co.thebodyshop.core.catalog.services.impl.DefaultTbsSynchronizationStatusService" />
+
+	<!-- Populators -->
+
+	<alias name="tbsSearchSolrQueryPopulator" alias="commerceSearchSolrQueryPopulator" />
+	<bean id="tbsSearchSolrQueryPopulator" class="uk.co.thebodyshop.core.populators.TbsSearchSolrQueryPopulator" parent="defaultCommerceSearchSolrQueryPopulator">
+		<constructor-arg name="tbsCategoryService" ref="tbsCategoryService" />
+	</bean>
+
+	<alias name="tbsCommerceSearchResultProductPopulator" alias="commerceSearchResultProductPopulator"/>
+    <bean id="tbsCommerceSearchResultProductPopulator" class="uk.co.thebodyshop.core.populators.TbsCommerceSearchResultProductPopulator" parent="variantOptionsCommerceSearchResultProductPopulator"/>
+
+	<alias name="tbsCartPopulator" alias="cartPopulator"/>
+	<alias name="tbsCartPopulator" alias="extendedCartPopulator"/>
+    <bean id="tbsCartPopulator" class="uk.co.thebodyshop.core.cart.populators.TbsCartPopulator" parent="defaultCartPopulator" >
+		<constructor-arg name="outstandingAmountCalculationStrategy" ref="outstandingAmountCalculationStrategy" />
+		<constructor-arg name="commercePriceService" ref="commercePriceService" />
+		<constructor-arg name="priceDataFactory" ref="priceDataFactory" />
+    </bean>
+
+	<!-- Interceptors -->
+
+	<bean id="baseProductCodePrepareInterceptor" class="uk.co.thebodyshop.core.interceptors.BaseProductCodePrepareInterceptor">
+		<constructor-arg name="baseProductCodeGenerator" ref="baseProductCodeGenerator" />
+		<constructor-arg name="tbsCatalogVersionService" ref="tbsCatalogVersionService" />
+	</bean>
+
+	<bean id="baseProductCodePrepareMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="baseProductCodePrepareInterceptor" />
+		<property name="typeCode" value="TbsBaseProduct" />
+	</bean>
+
+	<bean id="baseProductVariantTypePrepareInterceptor" class="uk.co.thebodyshop.core.interceptors.BaseProductVariantTypePrepareInterceptor">
+        <constructor-arg name="variantsService" ref="variantsService" />
+    </bean>
+
+    <bean id="baseProductVariantTypePrepareMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="baseProductVariantTypePrepareInterceptor" />
+        <property name="typeCode" value="TbsBaseProduct" />
+    </bean>
+
+	<bean id="checkVariantApprovalValidateInterceptor" class="uk.co.thebodyshop.core.interceptors.CheckVariantApprovalValidateInterceptor">
+		<constructor-arg name="configurationService" ref="configurationService" />
+		<constructor-arg name="tbsCatalogVersionService" ref="tbsCatalogVersionService" />
+	</bean>
+
+	<bean id="variantProductValidateMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="checkVariantApprovalValidateInterceptor" />
+		<property name="typeCode" value="VariantProduct" />
+	</bean>
+
+	<bean id="productMarketPrepareInterceptor" class="uk.co.thebodyshop.core.interceptors.ProductMarketPrepareInterceptor">
+		<constructor-arg ref="catalogVersionService" />
+	</bean>
+
+	<bean id="productMarketPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="productMarketPrepareInterceptor" />
+		<property name="typeCode" value="Product" />
+	</bean>
+
+	<bean id="variantProductMeasurementPrepareInterceptor" class="uk.co.thebodyshop.core.interceptors.VariantProductMeasurementPrepareInterceptor">
+		<constructor-arg name="unitService" ref="unitService" />
+		<constructor-arg name="tbsCatalogVersionService" ref="tbsCatalogVersionService" />
+	</bean>
+
+	<bean id="variantProductMeasurementMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="variantProductMeasurementPrepareInterceptor" />
+		<property name="typeCode" value="TbsVariantProduct" />
+	</bean>
+
+	<bean id="productBadgesValidateInterceptor" class="uk.co.thebodyshop.core.interceptors.ProductBadgesValidateInterceptor">
+		<constructor-arg name="configurationService" ref="configurationService" />
+	</bean>
+
+	<bean id="productBadgesValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="productBadgesValidateInterceptor" />
+		<property name="typeCode" value="Product" />
+	</bean>
+
+	<bean id="markDownPriceValidationHelper" class="uk.co.thebodyshop.core.helpers.impl.DefaultMarkDownPriceValidationHelper">
+		<constructor-arg name="sessionService" ref="sessionService" />
+		<constructor-arg name="cmsSiteService" ref="cmsSiteService" />
+		<constructor-arg name="userPriceGroupService" ref="userPriceGroupService" />
+		<constructor-arg name="commercePriceService" ref="commercePriceService" />
+		<constructor-arg name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+    <bean id="variantMarkDownPriceRowValidateInterceptor" class="uk.co.thebodyshop.core.interceptors.VariantMarkDownPriceRowValidateInterceptor">
+    	<constructor-arg name="markDownPriceValidationHelper" ref="markDownPriceValidationHelper" />
+    </bean>
+
+    <bean id="variantMarkDownPriceRowValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="variantMarkDownPriceRowValidateInterceptor" />
+        <property name="typeCode" value="TbsVariantProduct" />
+    </bean>
+
+	<bean id="markDownPricePrepareInterceptor" class="uk.co.thebodyshop.core.interceptors.MarkDownPricePrepareInterceptor">
+		<constructor-arg name="catalogTypeService" ref="catalogTypeService" />
+		<constructor-arg name="markDownPriceProductModificationMarker" ref="markDownPriceProductModificationMarker" />
+	</bean>
+
+	<bean id="markDownPricePrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="markDownPricePrepareInterceptor" />
+		<property name="typeCode" value="MarkDownPriceRow" />
+	</bean>
+
+	<bean id="markDownPriceRemoveInterceptor" class="uk.co.thebodyshop.core.interceptors.MarkDownPriceRemoveInterceptor">
+		<constructor-arg name="markDownPriceProductModificationMarker" ref="markDownPriceProductModificationMarker"/>
+	</bean>
+
+	<bean id="markDownPriceRemoveInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="markDownPriceRemoveInterceptor" />
+		<property name="typeCode" value="MarkDownPriceRow" />
+	</bean>
+
+	<alias alias="markDownPriceProductModificationMarker" name="defaultMarkDownPriceProductModificationMarker" />
+	<bean id="defaultMarkDownPriceProductModificationMarker" class="uk.co.thebodyshop.core.markdownprice.marker.impl.DefaultMarkDownPriceProductModificationMarker">
+	</bean>
+
+	<alias name="defaultTbsProductReviewRatingValueResolver" alias="tbsProductReviewRatingValueResolver" />
+	<bean id="defaultTbsProductReviewRatingValueResolver" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.TbsProductReviewRatingValueResolver" parent="abstractValueResolver" >
+	</bean>
+
+	<alias name="defaultProductColourValueResolver" alias="productColourValueResolver" />
+	<bean id="defaultProductColourValueResolver" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductColourValueResolver" parent="abstractValueResolver" />
+
+	<alias name="defaultProductSizeValueResolver" alias="productSizeValueResolver" />
+	<bean id="defaultProductSizeValueResolver" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductSizeValueResolver" parent="abstractValueResolver"/>
+
+	<bean id="facetSearchResultConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.solrfacetsearch.search.impl.SolrSearchResult" />
+		<property name="populators">
+			<list merge="false">
+				<ref bean="facetSearchResultBasicPopulator" />
+				<ref bean="tbsFacetSearchResultFacetsPopulator" />
+				<ref bean="facetSearchResultDocumentsPopulator" />
+				<ref bean="facetSearchResultSortsPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultTbsFacetSearchResultFacetsPopulator" alias="tbsFacetSearchResultFacetsPopulator" />
+	<bean id="defaultTbsFacetSearchResultFacetsPopulator" class="uk.co.thebodyshop.core.search.solrfacetsearch.populator.TbsFacetSearchResultFacetsPopulator" parent="facetSearchResultFacetsPopulator" />
+
+	<bean id="productPriceAvailableValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductPriceAvailableValueProvider" parent="abstractValueResolver">
+		<property name="tbsCatalogVersionService" ref="tbsCatalogVersionService" />
+	</bean>
+
+	<bean id="productRestrictedGroupIdsValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductRestrictedGroupIdsValueProvider" parent="abstractValueResolver" />
+
+	<alias name="defaultCountryCatalogIdMap" alias="countryCatalogIdMap"/>
+	<util:map id="defaultCountryCatalogIdMap" key-type="java.lang.String">
+	    <entry key="AT" value="tbsATProductCatalog"/>
+	    <entry key="AU" value="tbsAUProductCatalog"/>
+	    <entry key="CA" value="tbsCAProductCatalog"/>
+	    <entry key="DE" value="tbsDEProductCatalog"/>
+	    <entry key="DK" value="tbsDKProductCatalog"/>
+	    <entry key="ES" value="tbsESProductCatalog"/>
+	    <entry key="FR" value="tbsFRProductCatalog"/>
+	    <entry key="HK" value="tbsHKProductCatalog"/>
+	    <entry key="NL" value="tbsNLProductCatalog"/>
+	    <entry key="SE" value="tbsSEProductCatalog"/>
+	    <entry key="SG" value="tbsSGProductCatalog"/>
+	    <entry key="UK" value="tbsUKProductCatalog"/>
+	    <entry key="US" value="tbsUSProductCatalog"/>
+	</util:map>
+
+	<alias name="defaultCountryBaseStoreIdMap" alias="countryBaseStoreIdMap"/>
+	<util:map id="defaultCountryBaseStoreIdMap" key-type="java.lang.String">
+	    <entry key="AT" value="tbsATStore"/>
+	    <entry key="AU" value="tbsAUStore"/>
+	    <entry key="CA" value="tbsCAStore"/>
+	    <entry key="DE" value="tbsDEStore"/>
+	    <entry key="DK" value="tbsDKStore"/>
+	    <entry key="ES" value="tbsESStore"/>
+	    <entry key="FR" value="tbsFRStore"/>
+	    <entry key="HK" value="tbsHKStore"/>
+	    <entry key="NL" value="tbsNLStore"/>
+	    <entry key="SE" value="tbsSEStore"/>
+	    <entry key="SG" value="tbsSGStore"/>
+	    <entry key="UK" value="tbsUKStore"/>
+	    <entry key="US" value="tbsUSStore"/>
+	    <entry key="GLOBAL" value="tbsGlobalStore"/>
+	</util:map>
+
+	<bean id="variantProductNameValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.VariantProductNameValueProvider" parent="abstractValueResolver">
+    <property name="qualifierProvider" ref="languageQualifierProvider" />
+	</bean>
+
+	<alias alias="productDao" name="defaultTbsProductDao"/>
+	<alias alias="tbsProductDao" name="defaultTbsProductDao" />
+	<bean id="defaultTbsProductDao" class="uk.co.thebodyshop.core.product.dao.impl.DefaultTbsProductDao" parent="defaultProductDao" />
+
+	<alias alias="productService" name="defaultTbsProductService"/>
+	<alias alias="tbsProductService" name="defaultTbsProductService" />
+	<bean id="defaultTbsProductService" class="uk.co.thebodyshop.core.product.services.impl.DefaultTbsProductService" parent="defaultProductService">
+		<constructor-arg name="tbsProductDao" ref="tbsProductDao" />
+	</bean>
+
+	<bean id="productCreateNotificationJob" class="uk.co.thebodyshop.core.cronjob.ProductCreateNotificationJob"
+			parent="abstractJobPerformable">
+		<property name="tbsProductService" ref="tbsProductService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="timeService" ref="timeService" />
+		<property name="cronJobHistoryService" ref="cronJobHistoryService"/>
+		<property name="tbsCatalogVersionService" ref="tbsCatalogVersionService" />
+	</bean>
+
+	<alias alias="emailGenerationService" name="defaultTbsEmailGenerationService"/>
+	<bean id="defaultTbsEmailGenerationService"
+	      class="uk.co.thebodyshop.core.email.services.impl.DefaultTbsEmailGenerationService" parent="defaultEmailGenerationService" />
+
+	<alias alias="tbsSearchKeywordDao" name="defaultTbsSearchKeywordDao"/>
+	<bean id="defaultTbsSearchKeywordDao" class="uk.co.thebodyshop.core.daos.impl.DefaultTbsSearchKeywordDao">
+		<constructor-arg name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<alias alias="seearchKeywordPopulator" name="defaultSeearchKeywordPopulator"/>
+	<bean id="defaultSeearchKeywordPopulator" class="uk.co.thebodyshop.core.populators.TbsSearchKeywordPopulator">
+		<constructor-arg name="localizedPopulator" ref="cmsLocalizedPopulator"/>
+	</bean>
+
+	<alias alias="searchKeywordConverter" name="defaultSearchKeywordConverter"/>
+	<bean id="defaultSearchKeywordConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.core.keywords.data.SearchKeyWordData"/>
+		<property name="populators">
+			<list>
+				<ref bean="seearchKeywordPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias alias="searchKeywordService" name="defaultSearchKeywordService"/>
+	<bean id="defaultSearchKeywordService" class="uk.co.thebodyshop.core.services.impl.DefaultSearchKeywordService">
+		<constructor-arg name="tbsSearchKeywordDao" ref="tbsSearchKeywordDao"/>
+		<constructor-arg name="searchKeyWordDataConverter" ref="searchKeywordConverter"/>
+	</bean>
+
+	<alias name="defaultContentSearchQueryPageableConverter" alias="contentSearchQueryPageableConverter" />
+	<bean id="defaultContentSearchQueryPageableConverter" parent="abstractPopulatingConverter">
+	<property name="targetClass" value="de.hybris.platform.commerceservices.search.solrfacetsearch.data.SolrSearchRequest" />
+	<property name="populators">
+		<list>
+			<ref bean="contentSearchSolrQueryPopulator" />
+			<ref bean="commerceSearchPagePopulator" />
+			<ref bean="commerceSearchSortPopulator" />
+			<ref bean="commerceSearchTextPopulator" />
+			<ref bean="commerceSearchFiltersPopulator" />
+		</list>
+	</property>
+	</bean>
+
+	<alias name="tbsContentSearchSolrQueryPopulator" alias="contentSearchSolrQueryPopulator"/>
+	<bean id="tbsContentSearchSolrQueryPopulator" class="uk.co.thebodyshop.core.populators.TbsContentSearchSolrQueryPopulator" parent="defaultCommerceSearchSolrQueryPopulator"/>
+
+	<alias name="defaultContentSolrSearchResponseConverter" alias="contentSolrSearchResponseConverter" />
+	<bean id="defaultContentSolrSearchResponseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.core.search.facetdata.ContentSearchPageData" />
+		<property name="populators">
+			<list>
+				<ref bean="commerceSearchResponseQueryPopulator" />
+				<ref bean="commerceSearchResponsePaginationPopulator" />
+				<ref bean="commerceSearchResponseResultsPopulator" />
+				<ref bean="commerceSearchResponseFacetsPopulator" />
+				<ref bean="commerceSearchResponseFacetFilterPopulator" />
+				<ref bean="commerceSearchResponseBreadcrumbsPopulator" />
+				<ref bean="commerceSearchResponseSortsPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultContentSearchPageConverter" alias="contentSearchPageConverter"/>
+	<bean id="defaultContentSearchPageConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+				  value="uk.co.thebodyshop.core.search.facetdata.ContentSearchPageData"/>
+		<property name="populators">
+			<list>
+				<ref bean="contentSearchPagePopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="tbsContentSearchPagePopulator" alias="contentSearchPagePopulator"/>
+	<bean id="tbsContentSearchPagePopulator" class="uk.co.thebodyshop.core.search.solrfacetsearch.populator.ContentSearchPagePopulator">
+		<constructor-arg name="breadcrumbConverter" ref="breadcrumbConverter"/>
+		<constructor-arg name="facetConverter" ref="facetConverter"/>
+		<constructor-arg name="searchResultContentConverter" ref="searchResultContentConverter"/>
+		<constructor-arg name="searchStateConverter" ref="solrSearchStateConverter"/>
+		<constructor-arg name="spellingSuggestionConverter" ref="spellingSuggestionConverter"/>
+	</bean>
+
+	<alias name="defaultSearchResultContentConverter" alias="searchResultContentConverter"/>
+	<bean id="defaultSearchResultContentConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.core.search.content.data.ContentPageData"/>
+		<property name="populators">
+			<list>
+				<ref bean="commerceSearchResultContentPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultCommerceSearchResultContentPopulator" alias="commerceSearchResultContentPopulator"/>
+	<bean id="defaultCommerceSearchResultContentPopulator" class="uk.co.thebodyshop.core.search.solrfacetsearch.populator.SearchResultContentPopulator"/>
+
+	<alias name="tbsContentSearchService" alias="contentSearchService" />
+	<bean id="tbsContentSearchService" class="uk.co.thebodyshop.core.services.impl.DefaultContentSearchService">
+		<constructor-arg name="searchQueryPageableConverter" ref="contentSearchQueryPageableConverter" />
+		<constructor-arg name="searchRequestConverter" ref="commerceSolrSearchRequestConverter" />
+		<constructor-arg name="searchResponseConverter" ref="contentSolrSearchResponseConverter" />
+	</bean>
+
+	<bean id="tbsSearchKeyWordsValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.TbsSearchKeywordsValueProvider" parent="abstractValueResolver">
+		<property name="qualifierProvider" ref="languageQualifierProvider" />
+	</bean>
+
+	<alias alias="mediaContainerDao" name="defaultTbsMediaContainerDao" />
+	<alias alias="tbsMediaContainerDao" name="defaultTbsMediaContainerDao" />
+	<bean id="defaultTbsMediaContainerDao" class="uk.co.thebodyshop.core.daos.impl.DefaultTbsMediaContainerDao" parent="defaultMediaContainerDao">
+	</bean>
+
+	<alias alias="mediaService" name="defaultTbsMediaService" />
+	<alias alias="tbsMediaService" name="defaultTbsMediaService" />
+	<bean id="defaultTbsMediaService"
+		  class="uk.co.thebodyshop.core.services.impl.DefaultTbsMediaService"
+		  parent="defaultMediaService">
+		<constructor-arg name="tbsMediaDao" ref="mediaDao" />
+	</bean>
+
+	<alias alias="mediaContainerService" name="defaultTbsMediaContainerService" />
+	<alias alias="tbsMediaContainerService" name="defaultTbsMediaContainerService" />
+	<bean id="defaultTbsMediaContainerService"
+		  class="uk.co.thebodyshop.core.services.impl.DefaultTbsMediaContainerService"
+		  parent="defaultMediaContainerService">
+		<constructor-arg name="tbsMediaContainerDao" ref="tbsMediaContainerDao" />
+	</bean>
+
+	<alias name="defaultAmplienceImageSyncService" alias="amplienceImageSyncService" />
+	<bean id="defaultAmplienceImageSyncService" class="uk.co.thebodyshop.core.services.impl.DefaultAmplienceImageSyncService">
+		<constructor-arg name="configurationService" ref="configurationService" />
+		<constructor-arg name="modelService" ref="modelService" />
+		<constructor-arg name="tbsMediaService" ref="tbsMediaService" />
+		<constructor-arg name="tbsMediaContainerService" ref="tbsMediaContainerService" />
+	</bean>
+
+	<bean id="amplienceSyncJobPerformable" class="uk.co.thebodyshop.core.job.AmplienceSyncJobPerformable" parent="abstractJobPerformable">
+		<constructor-arg name="productService" ref="productService" />
+		<constructor-arg name="amplienceImageSyncService" ref="amplienceImageSyncService"/>
+	</bean>
+
+	<alias name="defaultEmailWhenInStockService" alias="emailWhenInStockService" />
+	<bean id="defaultEmailWhenInStockService" class="uk.co.thebodyshop.core.services.impl.DefaultEmailWhenInStockService">
+		<constructor-arg ref="emailWhenInStockDao" />
+		<constructor-arg ref="modelService" />
+		<constructor-arg ref="cmsSiteService" />
+		<constructor-arg ref="productDao" />
+	</bean>
+
+	<alias name="defaultEmailWhenInStockDao" alias="emailWhenInStockDao" />
+	<bean id="defaultEmailWhenInStockDao" class="uk.co.thebodyshop.core.daos.impl.DefaultEmailWhenInStockDao">
+		<constructor-arg ref="flexibleSearchService" />
+	</bean>
+
+	<alias name="defaultOrderHoldStrategy" alias="orderHoldStrategy"/>
+	<bean id="defaultOrderHoldStrategy" class="uk.co.thebodyshop.core.strategies.impl.DefaultOrderHoldStrategy">
+		<constructor-arg name="modelService" ref="modelService"/>
+		<constructor-arg name="timeService" ref="timeService"/>
+		<constructor-arg name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+
+	<alias name="tbsSolrAsCategoryPathResolver" alias="solrAsCategoryPathResolver" />
+	<bean id="tbsSolrAsCategoryPathResolver" class="uk.co.thebodyshop.core.strategies.impl.TbsSolrAsCategoryPathResolver" parent="defaultSolrAsCategoryPathResolver"/>
+
+	<!-- This bean has to over ride the search provider used in back office so that this can be used in place of the oob adaptive search provider-->
+	<alias name="defaultSolrAsSearchProvider" alias="solrAsSearchProvider" />
+	<bean id="defaultSolrAsSearchProvider" class="uk.co.thebodyshop.core.strategies.impl.TbsSolrAsSearchProvider">
+		<property name="solrFacetSearchConfigDao" ref="solrFacetSearchConfigDao" />
+		<property name="solrIndexedTypeDao" ref="solrIndexedTypeDao" />
+		<property name="solrIndexedPropertyDao" ref="solrIndexedPropertyDao" />
+		<property name="solrIndexedPropertyTypeRegistry" ref="solrIndexedPropertyTypeRegistry" />
+		<property name="solrAsTypeMappingRegistry" ref="solrAsTypeMappingRegistry" />
+		<property name="facetSearchConfigService" ref="facetSearchConfigService" />
+		<property name="facetSearchService" ref="facetSearchService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<bean id="emailMeWhenInStockToggleValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.EmailMeWhenInStockToggleValueProvider">
+        <constructor-arg name="fieldNameProvider" ref="solrFieldNameProvider"/>
+    </bean>
+
+	<alias name="defaultTbsMimeService" alias="mimeService" />
+	<bean id="defaultTbsMimeService" class="uk.co.thebodyshop.core.services.impl.DefaultTbsMimeService" parent="defaultMimeService"/>
+
+	<alias alias="orderCancelCallbackService" name="defaultOrderCancelService"/>
+	<alias alias="orderCancelService" name="defaultOrderCancelService"/>
+	<bean id="defaultOrderCancelService"
+		  class="uk.co.thebodyshop.core.ordercancel.impl.TbsDefaultOrderCancelService">
+		<property name="modelService" ref="modelService"/>
+		<property name="orderCancelDao" ref="orderCancelDao"/>
+		<property name="orderCancelRecordsHandler" ref="orderCancelRecordsHandler"/>
+		<property name="cancelDenialStrategies">
+			<list>
+				<ref bean="tbsCancelRequestDenialStrategy"/>
+			</list>
+		</property>
+		<property name="requestExecutorsMap">
+			<map>
+				<entry key="PENDINGORHOLDINGAREA" value-ref="tbsCancelRequestExecutor"/>
+			</map>
+		</property>
+		<property name="responseExecutorsMap">
+			<map>
+				<entry key="SENTTOWAREHOUSE" value-ref="warehouseResponseExecutor"/>
+				<entry key="SHIPPING" value-ref="warehouseResponseExecutor"/>
+				<entry key="PARTIALLYSHIPPED" value-ref="warehouseResponseExecutor"/>
+			</map>
+		</property>
+		<property name="stateMappingStrategy" ref="orderCancelStateMappingStrategy"/>
+		<property name="cancelableEntriesStrategy" ref="cancelableEntriesStrategy"/>
+	</bean>
+
+	<alias alias="tbsCancelRequestDenialStrategy" name="defaultTbsCancelRequestDenialStrategy"/>
+	<bean id="defaultTbsCancelRequestDenialStrategy" class="uk.co.thebodyshop.core.ordercancel.impl.denialstrategies.TbsCancelRequestDenialStrategy">
+		<constructor-arg ref="orderHoldStrategy" />
+		<property name="reason">
+			<bean class="de.hybris.platform.ordercancel.DefaultOrderCancelDenialReason">
+				<property name="code" value="0"/>
+				<property name="description"
+						  value="Order cannot be cancelled because of it's time line"/>
+			</bean>
+		</property>
+	</bean>
+
+	<alias alias="tbsCancelRequestExecutor" name="defaultTbsCancelRequestExecutor"/>
+	<bean id="defaultTbsCancelRequestExecutor" class="uk.co.thebodyshop.core.ordercancel.impl.executors.TbsCancelRequestExecutor">
+		<constructor-arg ref="modelService" />
+	</bean>
+
+	<alias alias="variantProductsSortStrategy" name="defaultVariantProductsSortStrategy"/>
+	<bean id="defaultVariantProductsSortStrategy" class="uk.co.thebodyshop.core.strategies.impl.VariantProductsSortStrategy"/>
+
+	<alias alias="tbsOrderDao" name="defaultTbsOrderDao"/>
+	<bean id="defaultTbsOrderDao" class="uk.co.thebodyshop.core.daos.impl.DefaultTbsOrderDao">
+		<constructor-arg name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<alias alias="tbsOrderService" name="defaultTbsOrderService"/>
+	<bean id="defaultTbsOrderService" class="uk.co.thebodyshop.core.services.impl.DefaultTbsOrderService">
+		<constructor-arg name="tbsOrderDao" ref="tbsOrderDao"/>
+	</bean>
+	<alias alias="tbsCommerceStockService" name="defaultTbsCommerceStockService" />
+	<alias alias="commerceStockService" name="defaultTbsCommerceStockService"/>
+    <bean id="defaultTbsCommerceStockService"
+          class="uk.co.thebodyshop.core.stock.impl.DefaultTbsCommerceStockService" parent="defaultCommerceStockService">
+      	<property name="stockProcessorFactory" ref="stockProcessorFactory" />
+    </bean>
+
+    <alias alias="stockProcessorFactory" name="defaultStockProcessorFactory" />
+    <bean name="defaultStockProcessorFactory" class="uk.co.thebodyshop.core.stock.processor.StockProcessorFactory">
+    	<property name="emptyStrategy" ref="emptyProcessStrategy" />
+    	<property name="stockProcessStrategyList">
+    		<list>
+    			<ref bean="stockLevelProcessStrategy" />
+    			<ref bean="storeStockLevelProcessStrategy" />
+    		</list>
+    	</property>
+    </bean>
+
+    <alias alias="emptyProcessStrategy" name="defaultEmptyProcessStrategy" />
+    <bean name="defaultEmptyProcessStrategy" class="uk.co.thebodyshop.core.stock.processor.EmptyProcessStrategy" />
+
+    <alias alias="stockLevelProcessStrategy" name="defaultStockLevelProcessStrategy" />
+    <bean name="defaultStockLevelProcessStrategy" class="uk.co.thebodyshop.core.stock.processor.StockLevelProcessStrategy">
+    	<property name="stockService" ref="stockService" />
+    	<property name="modelService" ref="modelService" />
+    	<property name="tbsStockAvailabilityCalculationStrategy" ref="tbsStockAvailabilityCalculationStrategy" />
+    </bean>
+
+    <alias alias="storeStockLevelProcessStrategy" name="defaultStoreStockLevelProcessStrategy"/>
+    <bean name="defaultStoreStockLevelProcessStrategy" class="uk.co.thebodyshop.core.stock.processor.StoreStockLevelProcessStrategy">
+    	<property name="stockService" ref="stockService" />
+    	<property name="modelService" ref="modelService" />
+    	<property name="tbsStockAvailabilityCalculationStrategy" ref="tbsStockAvailabilityCalculationStrategy" />
+    	<property name="tbsCommerceStockService" ref="tbsCommerceStockService"/>
+    </bean>
+
+    <bean id="abstractDeliveryRestrictionHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.AbstractFieldDeliveryRestrictionHandler" abstract="true" />
+
+    <alias alias="cityRestrictionsHandler" name="defaultCityRestrictionsHandler"/>
+    <bean id="defaultCityRestrictionsHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.CityFieldRestrictionsHandler" parent="abstractDeliveryRestrictionHandler" />
+
+    <alias alias="regionRestrictionsHandler" name="defaultRegionRestrictionsHandler"/>
+    <bean id="defaultRegionRestrictionsHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.RegionFieldRestrictionsHandler" />
+
+    <alias alias="countryRestrictionsHandler" name="defaultCountryRestrictionsHandler"/>
+    <bean id="defaultCountryRestrictionsHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.CountryFieldRestrictionsHandler" />
+
+    <alias alias="ukPartialPostcodeRestrictionHandler" name="defaultUkPartialPostcodeRestrictionHandler"/>
+    <bean id="defaultUkPartialPostcodeRestrictionHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.UKPartialPostcodeRestrictionHandler" />
+
+    <alias alias="usPartialPostcodeRestrictionHandler" name="defaultUsPartialPostcodeRestrictionHandler"/>
+    <bean id="defaultUsPartialPostcodeRestrictionHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.USPartialPostcodeRestrictionHandler" />
+
+    <alias alias="spainPartialPostCodeRestrictionHandler" name="defaultSpainPartialPostCodeRestrictionHandler"/>
+    <bean id="defaultSpainPartialPostCodeRestrictionHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.SpainPartialPostCodeRestrictionHandler" />
+
+    <alias alias="postCodeRestrictionsHandler" name="defaultPostCodeRestrictionsHandler"/>
+    <bean id="defaultPostCodeRestrictionsHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.PostCodeFieldRestrictionsHandler">
+        <property name="partialPostcodeHandlerMap">
+            <map>
+                <entry key="tbsUKStore" value-ref="ukPartialPostcodeRestrictionHandler" />
+                <entry key="tbsUSStore" value-ref="usPartialPostcodeRestrictionHandler" />
+                <entry key="tbsESStore" value-ref="spainPartialPostCodeRestrictionHandler" />
+
+            </map>
+        </property>
+        <property name="baseStoreService" ref="baseStoreService" />
+    </bean>
+
+    <alias alias="compositeDeliveryModeDeliveryRestriction" name="defaultCompositeDeliveryModeDeliveryRestriction"/>
+    <bean id="defaultCompositeDeliveryModeDeliveryRestriction" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.CompositeFieldRestrictionHandlers">
+        <property name="restrictionsHandlers">
+            <list>
+                <ref bean="countryRestrictionsHandler" />
+                <ref bean="regionRestrictionsHandler" />
+                <ref bean="cityRestrictionsHandler" />
+                <ref bean="postCodeRestrictionsHandler" />
+            </list>
+        </property>
+    </bean>
+
+    <alias alias="compositeProductDeliveryRestriction" name="defaultCompositeProductDeliveryRestriction"/>
+    <bean id="defaultCompositeProductDeliveryRestriction" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.CompositeFieldRestrictionHandlers">
+        <property name="restrictionsHandlers">
+            <list>
+                <ref bean="countryRestrictionsHandler" />
+                <ref bean="regionRestrictionsHandler" />
+                <ref bean="cityRestrictionsHandler" />
+            </list>
+        </property>
+    </bean>
+
+    <alias alias="deliveryModeDeliveryRestrictionHandler" name="defaultDeliveryModeDeliveryRestrictionHandler"/>
+    <bean id="defaultDeliveryModeDeliveryRestrictionHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.DefaultDeliveryRestrictionHandler">
+        <property name="handler" ref="compositeDeliveryModeDeliveryRestriction" />
+    </bean>
+
+    <alias alias="productDeliveryRestrictionHandler" name="defaultProductDeliveryRestrictionHandler"/>
+    <bean id="defaultProductDeliveryRestrictionHandler" class="uk.co.thebodyshop.core.deliveryrestrictions.handlers.impl.DefaultDeliveryRestrictionHandler">
+        <property name="handler" ref="compositeProductDeliveryRestriction" />
+    </bean>
+
+	<alias alias="restrictionsManager" name="defaultRestrictionsManager"/>
+	<bean id="defaultRestrictionsManager" class="uk.co.thebodyshop.core.deliveryrestrictions.manager.impl.DefaultRestrictionsManager">
+        <property name="deliveryModeDeliveryRestrictionHandler" ref="deliveryModeDeliveryRestrictionHandler" />
+        <property name="productDeliveryRestrictionHandler" ref="productDeliveryRestrictionHandler" />
+    </bean>
+	<alias alias="restrictedDeliveryModesStrategy" name="defaultRestrictedDeliveryModesStrategy"/>
+    <bean id="defaultRestrictedDeliveryModesStrategy" class="uk.co.thebodyshop.core.strategies.impl.RestrictedDeliveryModesStrategy">
+    	<property name="tbsCommerceStockService" ref="commerceStockService" />
+    </bean>
+
+    <alias alias="hazmatDeliveryModeRestrictionStrategy" name="defaultHazmatDeliveryModeRestrictionStrategy"/>
+    <bean id="defaultHazmatDeliveryModeRestrictionStrategy" class="uk.co.thebodyshop.core.strategies.impl.HazmatDeliveryModeRestrictionStrategy" />
+
+    <alias alias="addressDeliveryModeRestrictionStrategy" name="defaultAddressDeliveryModeRestrictionStrategy"/>
+    <bean id="defaultAddressDeliveryModeRestrictionStrategy" class="uk.co.thebodyshop.core.strategies.impl.AddressDeliveryModeRestrictionStrategy">
+    	<property name="restrictionsManager" ref="restrictionsManager" />
+    </bean>
+
+    <alias alias="collectionPointDeliveryModesStrategy" name="defaultCollectionPointDeliveryModesStrategy"/>
+    <bean id="defaultCollectionPointDeliveryModesStrategy" class="uk.co.thebodyshop.core.strategies.impl.CollectionPointDeliveryModesStrategy" />
+
+    <alias alias="directDeliveryModesStrategy" name="defaultDirectDeliveryModesStrategy"/>
+    <bean id="defaultDirectDeliveryModesStrategy" class="uk.co.thebodyshop.core.strategies.impl.DirectDeliveryModesStrategy" />
+
+	<alias alias="tbsDeliveryService" name="defaultTbsDeliveryService"/>
+	<alias alias="deliveryService" name="defaultTbsDeliveryService"/>
+    <bean id="defaultTbsDeliveryService" class="uk.co.thebodyshop.core.delivery.impl.DefaultTbsDeliveryService" parent="defaultDeliveryService">
+        <property name="deliveryModeRestrictionStrategies">
+            <list>
+                <ref bean="restrictedDeliveryModesStrategy"/>
+                <ref bean="hazmatDeliveryModeRestrictionStrategy" />
+                <ref bean="addressDeliveryModeRestrictionStrategy" />
+                <ref bean="collectionPointDeliveryModesStrategy" />
+                <ref bean="directDeliveryModesStrategy" />
+            </list>
+        </property>
+        <property name="deliveryModeStrategyErrorMapping" ref="deliveryModeStrategyErrorMapping" />
+    </bean>
+
+    <alias name="defaultDeliveryModeStrategyErrorMapping" alias="deliveryModeStrategyErrorMapping"/>
+	<util:map id="defaultDeliveryModeStrategyErrorMapping" key-type="java.lang.String">
+	    <entry key="HazmatDeliveryModeRestrictionStrategy" value="deliveryrestriction.error.hazmatDeliveryMode"/>
+	    <entry key="AddressDeliveryModeRestrictionStrategy" value="deliveryrestriction.error.addressDeliveryMode"/>
+	</util:map>
+
+	<alias alias="cartFactory" name="tbsCartFactory"/>
+	<bean id="tbsCartFactory" class="uk.co.thebodyshop.core.cart.factory.TbsCommerceCartFactory" parent="commerceCartFactory">
+		<constructor-arg name="modelService" ref="modelService"/>
+		<constructor-arg name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<alias name="defaultMarkDownPriceRowService" alias="markDownPriceRowService" />
+	<bean id="defaultMarkDownPriceRowService" class="uk.co.thebodyshop.core.services.impl.DefaultMarkDownPriceRowService">
+	</bean>
+
+	<alias name="defaultActiveProductCatalogVersionSupplier" alias="activeProductCatalogVersionSupplier" />
+	<bean id="defaultActiveProductCatalogVersionSupplier" class="uk.co.thebodyshop.core.suppliers.ActiveProductCatalogVersionSupplier">
+		<constructor-arg name="baseSiteService" ref="baseSiteService"/>
+	</bean>
+
+	<alias name="defaultProductPriceAvailableBeforeSearchFilterHandler" alias="productPriceAvailableBeforeSearchFilterHandler" />
+	<bean id="defaultProductPriceAvailableBeforeSearchFilterHandler" class="uk.co.thebodyshop.core.search.solrfacetsearch.filter.ProductPriceAvailableFilterHandler">
+		<constructor-arg name="fieldNameProvider" ref="solrFieldNameProvider"/>
+	</bean>
+
+	<alias name="defaultUserGroupBeforeSearchFilterHandler" alias="userGroupBeforeSearchFilterHandler" />
+	<bean id="defaultUserGroupBeforeSearchFilterHandler" class="uk.co.thebodyshop.core.search.solrfacetsearch.filter.UserGroupFilterHandler">
+		<constructor-arg name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<constructor-arg name="userService" ref="userService"/>
+	</bean>
+
+	<alias name="defaultBeforeSearchFilterQueryListener" alias="beforeSearchFilterQueryListener" />
+	<bean id="defaultBeforeSearchFilterQueryListener" class="uk.co.thebodyshop.core.search.solrfacetsearch.context.listeners.BeforeSearchFilterQueryListener">
+		<constructor-arg name="searchFilterHandlers">
+			<list>
+				<ref bean="productPriceAvailableBeforeSearchFilterHandler"/>
+				<ref bean="userGroupBeforeSearchFilterHandler"/>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="beforeSearchFilterQueryListenerDefinition" parent="solrListenerDefinition">
+		<property name="priority" value="1000" />
+		<property name="listener" ref="beforeSearchFilterQueryListener" />
+	</bean>
+
+	<alias name="defaultClickAndCollectConsignmentPredicate" alias="clickAndCollectConsignmentPredicate" />
+	<bean id="defaultClickAndCollectConsignmentPredicate" class="uk.co.thebodyshop.core.predicates.ClickAndCollectConsignmentPredicate"/>
+
+	<alias name="defaultConsignmentStatusStrategy" alias="consignmentStatusStrategy" />
+	<bean id="defaultConsignmentStatusStrategy" class="uk.co.thebodyshop.core.strategies.impl.DefaultConsignmentStatusStrategy">
+		<constructor-arg name="clickAndCollectConsignmentPredicate" ref="clickAndCollectConsignmentPredicate"/>
+	</bean>
+
+	<bean id="europe1.manager" class="uk.co.thebodyshop.core.price.factory.TbsEurope1PriceFactory"
+          init-method="init" destroy-method="destroy">
+        <property name="retrieveChannelStrategy" ref="retrieveChannelStrategy"/>
+        <property name="markDownPriceRowService" ref="markDownPriceRowService"/>
+		<property name="modelService" ref="modelService"/>
+    </bean>
+
+	<alias alias="commercePriceService" name="defaultTbsCommercePriceService"/>
+	<bean id="defaultTbsCommercePriceService" class="uk.co.thebodyshop.core.price.impl.DefaultTbsCommercePriceService" parent="defaultCommercePriceService">
+		<property name="priceService" ref="priceService"/>
+		<property name="markDownPriceRowService" ref="markDownPriceRowService"/>
+	</bean>
+
+	<bean id="TbsVariantProduct_markDownPricesAttributeHandler" class="uk.co.thebodyshop.core.dynamic.handler.MarkDownPricesAttributeHandler">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <bean id="productNewValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductNewValueProvider" parent="abstractValueResolver"/>
+
+    <bean id="productOnlineFromDateValueProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.provider.impl.ProductOnlineFromDateValueProvider" parent="abstractValueResolver"/>
+
+	<bean id="phaseInOutProductValidateInterceptor" class="uk.co.thebodyshop.core.interceptors.PhaseInOutProductValidateInterceptor"/>
+
+	<bean id="phaseInOutProductValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="phaseInOutProductValidateInterceptor" />
+		<property name="typeCode" value="TbsVariantProduct" />
+	</bean>
+
+	<alias name="defaultPhaseInPhaseOutProductService" alias="phaseInPhaseOutProductService"/>
+	<bean id="defaultPhaseInPhaseOutProductService" class="uk.co.thebodyshop.core.services.impl.DefaultPhaseInPhaseOutProductService">
+		<constructor-arg  name="modelService" ref="modelService"/>
+		<constructor-arg name="emailWhenInStockService" ref="emailWhenInStockService"/>
+		<constructor-arg name="wishlistService" ref="wishlistService"/>
+		<constructor-arg name="searchRestrictionService" ref="searchRestrictionService"/>
+	</bean>
+
+	<bean id="phaseInOutStockEventListener" class="uk.co.thebodyshop.core.event.PhaseInOutStockEventListener" parent="abstractEventListener">
+		<constructor-arg name="phaseInPhaseOutProductService" ref="phaseInPhaseOutProductService"/>
+		<constructor-arg name="catalogVersionService" ref="catalogVersionService"/>
+		<constructor-arg name="productService" ref="productService"/>
+	</bean>
+
+	<alias name="defaultBaseStoreNameSupplier" alias="baseStoreNameSupplier"/>
+	<bean id="defaultBaseStoreNameSupplier" class="uk.co.thebodyshop.core.suppliers.BaseStoreNameSupplier">
+		<constructor-arg name="baseStoreService" ref="baseStoreService"/>
+	</bean>
+
+	<alias name="defaultUserPriceGroupService" alias="userPriceGroupService"/>
+	<bean id="defaultUserPriceGroupService" class="uk.co.thebodyshop.core.services.impl.DefaultUserPriceGroupService">
+		<constructor-arg name="sessionService" ref="sessionService"/>
+	</bean>
+
+	<alias alias="tbsWishlistService" name="defaultTbsWishlistService" />
+	<bean id="defaultTbsWishlistService" class="uk.co.thebodyshop.core.services.impl.DefaultTbsWishlist2Service" parent="defaultWishlistService">
+		<constructor-arg name="userService" ref="userService"/>
+		<constructor-arg  name="modelService" ref="modelService"/>
+		<constructor-arg name="tbsWishlistDao" ref="tbsWishlistDao"/>
+		<constructor-arg name="guidKeyGenerator" ref="guidKeyGenerator"/>
+	</bean>
+
+	<alias alias="tbsWishlistDao" name="defaultTbsWishlistDao" />
+	<bean id="defaultTbsWishlistDao" class="uk.co.thebodyshop.core.daos.impl.DefaultTbsWishlist2Dao" parent="defaultWishlistDao" />
+
+	<alias name="defaultTbsAcceleratorCheckoutService" alias="tbsAcceleratorCheckoutService"/>
+	<alias name="defaultTbsAcceleratorCheckoutService" alias="acceleratorCheckoutService"/>
+	<bean id="defaultTbsAcceleratorCheckoutService"
+	      class="uk.co.thebodyshop.core.services.order.impl.DefaultTbsAcceleratorCheckoutService" parent="defaultAcceleratorCheckoutService">
+		<property name="pickupPOSConsolidationStrategy" ref="pickupPOSConsolidationStrategy"/>
+	</bean>
+
+	<alias name="defaultPOSConsolidationStrategy"
+	       alias="pickupPOSConsolidationStrategy"/>
+	<bean id="defaultPOSConsolidationStrategy"
+	      class="uk.co.thebodyshop.core.services.store.pickup.impl.DefaultPickupPOSConsolidationStrategy">
+		<property name="tbsCommerceStockService" ref="tbsCommerceStockService"/>
+	</bean>
+
+    <bean id="currencyQualifierProvider" class="uk.co.thebodyshop.core.search.solrfacetsearch.qualifier.provider.impl.TbsCurrencyQualifierProvider">
+        <property name="commonI18NService" ref="commonI18NService" />
+        <constructor-arg name="attributeCurrencyMap" ref="attributeCurrencyMap"/>
+    </bean>
+
+    <alias name="defaultAttributeCurrencyMap" alias="attributeCurrencyMap"/>
+	<util:map id="defaultAttributeCurrencyMap" key-type="java.lang.String">
+	    <entry key="multiVariant" value="multiVariant"/>
+	    <entry key="variants" value="variants"/>
+	</util:map>
+	<bean id="loyaltyPointsCartCalculationMethodHook" class="uk.co.thebodyshop.core.order.hook.LoyaltyPointsCartCalculationMethodHook">
+		<constructor-arg name="modelService" ref="modelService"/>
+		<constructor-arg name="loyaltyPointsCalculationStrategy" ref="loyaltyPointsCalculationStrategy"/>
+		<constructor-arg name="baseStoreService" ref="baseStoreService"/>
+	</bean>
+
+	<bean id="loyaltyPointsCartCalculationMethodHookMergeDirective" depends-on="commerceCartCalculationMethodHooks" parent="listMergeDirective">
+        <property name="add" ref="loyaltyPointsCartCalculationMethodHook"/>
+    </bean>
+
+	<bean id="fileNameComparator" class="uk.co.thebodyshop.core.filename.comparator.FileNameComparator"/>
+
+	<alias name="tbsStatusDisplayMap" alias="acceleratorStatusDisplayMap"/>
+	<util:map id="tbsStatusDisplayMap">
+		<entry key="CHECKED_VALID" value="orderStatusDisplay.placed"/>
+		<entry key="ORDER_HELD" value="orderStatusDisplay.placed"/>
+		<entry key="CANCELLED" value="orderStatusDisplay.showcancelled"/>
+		<entry key="PAYMENT_AUTHORIZED" value="orderStatusDisplay.placed"/>
+        <entry key="PAYMENT_PENDING" value="orderStatusDisplay.placed"/>
+        <entry key="PAYMENT_NOT_AUTHORIZED" value="orderStatusDisplay.placed"/>
+		<entry key="ORDER_SPLIT" value="orderStatusDisplay.inprogress"/>
+		<entry key="SHIPPED" value="orderStatusDisplay.shipped"/>
+		<entry key="PART_SHIPPED" value="orderStatusDisplay.shipped"/>
+		<entry key="NOT_SHIPPED" value="orderStatusDisplay.unableToFulFill"/>
+		<entry key="PAYMENT_CAPTURED" value="orderStatusDisplay.shipped"/>
+		<entry key="PAYMENT_NOT_CAPTURED" value="orderStatusDisplay.shipped"/>
+		<entry key="PRIMARY_PAYMENT_NOT_CAPTURED" value="orderStatusDisplay.shipped"/>
+		<entry key="PAYMENT_FAILED" value="orderStatusDisplay.shipped"/>
+		<entry key="ORDER_CONFIRMED" value="orderStatusDisplay.shipped"/>
+		<entry key="COMPLETED" value="orderStatusDisplay.shipped"/>
+		<entry key="READY_FOR_COLLECTION" value="orderStatusDisplay.readyForCollection"/>
+		<entry key="COLLECTED" value="orderStatusDisplay.collected"/>
+		<entry key="NOT_COLLECTED" value="orderStatusDisplay.inprogress"/>
+		<entry key="REFUNDED" value="orderStatusDisplay.refunded"/>
+		<entry key="SENT_TO_SAP" value="orderStatusDisplay.inprogress"/>
+	</util:map>
+
+	<alias alias="dynamicAttributesConsignmentStatusDisplay"
+		   name="tbsDynamicAttributesConsignmentStatusDisplayByMap"/>
+	<bean id="tbsDynamicAttributesConsignmentStatusDisplayByMap"
+		  class="de.hybris.platform.acceleratorservices.attribute.ConsignmentStatusDisplayDynamicAttributeHandler">
+		<property name="statusDisplayMap">
+			<map key-type="de.hybris.platform.basecommerce.enums.ConsignmentStatus">
+				<entry key="READY" value="consignmentStatusDisplay.ready"/>
+				<entry key="SENT" value="consignmentStatusDisplay.sent"/>
+				<entry key="RECEIVED" value="consignmentStatusDisplay.received"/>
+				<entry key="SHIPPED" value="consignmentStatusDisplay.shipped"/>
+				<entry key="PART_SHIPPED" value="consignmentStatusDisplay.partShipped"/>
+				<entry key="NOT_SHIPPED" value="consignmentStatusDisplay.notShipped"/>
+				<entry key="PAYMENT_CAPTURED" value="consignmentStatusDisplay.paymentCaptured"/>
+				<entry key="PAYMENT_NOT_CAPTURED" value="consignmentStatusDisplay.paymentNotCaptured"/>
+				<entry key="PAYMENT_FAILED" value="consignmentStatusDisplay.paymentFailed"/>
+			</map>
+		</property>
+		<property name="defaultStatus" value="consignmentStatusDisplay.processing"/>
+	</bean>
+
+	<alias alias="tbsPointOfServiceService" name="defaultTbsPointOfServiceService"/>
+	<bean id="defaultTbsPointOfServiceService" class="uk.co.thebodyshop.core.storelocator.pos.impl.DefaultTbsPointOfServiceService">
+		<property name="configurationService" ref="configurationService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+	
+	<alias name="tbsCommerceCartRestorationStrategy" alias="commerceCartRestorationStrategy"/>
+    <bean id="tbsCommerceCartRestorationStrategy" parent="defaultCommerceCartRestorationStrategy" class="uk.co.thebodyshop.core.cart.strategies.TbsCommerceCartRestorationStrategy"/>
+
+	<bean id="AbstractOrder_eligibleForGiftWrapAttributeHandler" class="uk.co.thebodyshop.core.dynamic.handler.OrderGiftWrapEligibilityAttributeHandler"/>
+
+	<alias name="defaultGiftWrapService" alias="giftWrapService"/>
+	<bean id="defaultGiftWrapService" class="uk.co.thebodyshop.core.services.impl.DefaultGiftWrapService">
+		<constructor-arg name="modelService" ref="modelService"/>
+		<constructor-arg name="commercePriceService" ref="commercePriceService"/>
+	</bean>
+
+	<alias name="defaultTbsCalculationService" alias="calculationService"/>
+	<bean id="defaultTbsCalculationService" class="uk.co.thebodyshop.core.order.impl.DefaultTbsCalculationService"
+			parent="defaultCalculationService">
+		<constructor-arg name="commonI18NService" ref="commonI18NService"/>
+		<constructor-arg name="orderRequiresCalculationStrategy" ref="orderRequiresCalculationStrategy"/>
+	</bean>
+
+	<alias name="tbsWeekdayOpeningDayListPopulator" alias="weekdayOpeningDayListPopulator"/>
+	<bean id="tbsWeekdayOpeningDayListPopulator"
+		  class="uk.co.thebodyshop.core.storelocator.converters.populator.TbsWeekdayOpeningDayListPopulator"
+		  parent="defaultOpeningDayPopulator">
+		<property name="weekDayConverter" ref="weekdayOpeningDayConverter"/>
+	</bean>
+
+	<bean id="tbsWeekdayOpeningDayPopulator"
+		  class="uk.co.thebodyshop.core.storelocator.converters.populator.TbsWeekdayOpeningDayPopulator"
+		  parent="defaultOpeningDayPopulator"/>
+
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="weekdayOpeningDayConverter"/>
+		<property name="add" ref="tbsWeekdayOpeningDayPopulator"/>
+	</bean>
+
+	<bean id="giftWrapCartCalculationMethodHook" class="uk.co.thebodyshop.core.order.hook.GiftWrapCartCalculationMethodHook">
+		<constructor-arg name="giftWrapService" ref="giftWrapService"/>
+	</bean>
+
+	<bean id="giftWrapCartCalculationMethodHookMergeDirective" depends-on="commerceCartCalculationMethodHooks" parent="listMergeDirective">
+        <property name="add" ref="giftWrapCartCalculationMethodHook"/>
+    </bean>
+
+	<import resource="theBodyShopcore-product-visibility-spring.xml"/>
+
+	<bean id="loyaltyPointsCalculationStrategy" class="uk.co.thebodyshop.core.loyalty.points.calculation.strategies.LoyaltyPointsCalculationStrategy" />
+
+	<alias alias="openingScheduleDao" name="defaultOpeningScheduleDao"/>
+	<bean id="defaultOpeningScheduleDao" class="uk.co.thebodyshop.core.daos.impl.DefaultOpeningScheduleDao">
+		<constructor-arg name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<alias alias="openingScheduleService" name="defaultOpeningScheduleService"/>
+	<bean id="defaultOpeningScheduleService" class="uk.co.thebodyshop.core.services.impl.DefaultOpeningScheduleService">
+		<constructor-arg name="openingScheduleDao" ref="openingScheduleDao"/>
+	</bean>
+
+	<bean id="orderEntryLoyaltyDiscountCalculationStrategy" class="uk.co.thebodyshop.core.loyalty.discount.calculation.strategy.OrderEntryLoyaltyDiscountCalculationStrategy">
+		<constructor-arg name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="orderEntryLoyaltyDiscountCalculationMethodHook" class="uk.co.thebodyshop.core.order.hook.OrderEntryLoyaltyDiscountCalculationMethodHook">
+		<constructor-arg name="orderEntryLoyaltyDiscountCalculationStrategy" ref="orderEntryLoyaltyDiscountCalculationStrategy"/>
+	</bean>
+
+	<bean id="orderEntryLoyaltyDiscountCalculationMethodHookMergeDirective" depends-on="commerceCartCalculationMethodHooks" parent="listMergeDirective">
+        <property name="add" ref="orderEntryLoyaltyDiscountCalculationMethodHook"/>
+    </bean>
+
+	<alias alias="storeLocatorFeatureDao" name="defaultStoreLocatorFeatureDao"/>
+	<bean id="defaultStoreLocatorFeatureDao" class="uk.co.thebodyshop.core.daos.impl.DefaultStoreLocatorFeatureDao">
+		<constructor-arg name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<alias alias="storeLocatorFeatureService" name="defaultStoreLocatorFeatureService" />
+	<bean id="defaultStoreLocatorFeatureService" class="uk.co.thebodyshop.core.services.impl.DefaultStoreLocatorFeatureService">
+		<constructor-arg name="storeLocatorFeatureDao" ref="storeLocatorFeatureDao"/>
+	</bean>
+	
+	<bean id="customerEmailStrategy" class="uk.co.thebodyshop.core.customer.strategy.DefaultCustomerEmailStrategy"/>
+
+	<alias alias="customerEmailResolutionService" name="tbsCustomerEmailResolutionService"/>
+	<bean id="tbsCustomerEmailResolutionService" class="uk.co.thebodyshop.core.customer.email.TbsCustomerEmailResolutionService" parent="defaultCustomerEmailResolutionService">
+		<property name="customerEmailStrategy" ref="customerEmailStrategy"/>
+	</bean>
+
+	<alias alias="tbsUserDao" name="defaultTbsUserDao"/>
+	<bean id="defaultTbsUserDao" class="uk.co.thebodyshop.core.daos.impl.DefaultTbsUserDao" parent="userDao">
+		<constructor-arg name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<alias alias="tbsUserService" name="defaultTbsUserService"/>
+	<bean id="defaultTbsUserService" class="uk.co.thebodyshop.core.services.impl.DefaultTbsUserService" parent="defaultUserService">
+	<constructor-arg name="tbsUserDao" ref="tbsUserDao"/>
+	</bean>
+	
+	<util:map id="userGroupLocaleMapping" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.util.List&lt;java.lang.String>"> 
+  		<entry key="ukproductmarketgroup">
+  			<util:list>
+            	<value>en</value>
+            	<value>en_GB</value>
+        	</util:list>
+        </entry>
+        <entry key="usproductmarketgroup">
+        	<util:list>
+            	<value>en</value>
+            	<value>en_US</value>
+        	</util:list>
+        </entry>
+        <entry key="deproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>de</value>
+        	</util:list>
+        </entry>
+        <entry key="dkproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>da</value>
+        	</util:list>
+        </entry>
+         <entry key="auproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>en_AU</value>
+        	</util:list>
+        </entry>
+        <entry  key="caproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>en_CA</value>
+        	</util:list>
+        </entry>
+        <entry key="esproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>es</value>
+        	</util:list>
+        </entry>
+        <entry  key="frproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>fr</value>
+        	</util:list>
+        </entry>
+        <entry key="nlproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>nl</value>
+        	</util:list>
+        </entry>
+        <entry key="seproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>sv</value>
+        	</util:list>
+        </entry>
+        <entry key="atproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>de_AT</value>
+        	</util:list>
+        </entry>
+        <entry key="hkproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>en_HK</value>
+        	</util:list>
+        </entry>
+        <entry key="sgproductmarketgroup">
+          	<util:list>
+            	<value>en</value>
+            	<value>en_SG</value>
+        	</util:list>
+        </entry>       
+	</util:map>
+
+</beans>

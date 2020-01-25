@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/theBodyShopcore"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/odata2services"/>
+	<classpathentry kind="lib" path="resources"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="gensrc">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
+	<classpathentry kind="output" path="eclipsebin/notused"/>
+</classpath>

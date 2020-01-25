@@ -1,0 +1,97 @@
+<?xml version="1.0" ?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://donateReward.v1.ws.mercury.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="DonateRewardImpl_CRM07Service" targetNamespace="http://donateReward.v1.ws.mercury.com">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://thebodyshop/donateVoucherSchema" version="1.0">
+
+  <xs:element name="DonateVoucherInput">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="unqualified" name="transactionDate" type="xs:date"></xs:element>
+        <xs:element form="unqualified" name="charityPartner" type="xs:string"></xs:element>
+        <xs:element form="unqualified" name="voucherNumber" type="xs:string"></xs:element>
+        <xs:element form="unqualified" minOccurs="0" name="storeID" type="xs:string"></xs:element>
+        <xs:element form="unqualified" minOccurs="0" name="market" type="xs:string"></xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DonateVoucherOutput">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="messageId" type="xs:string"></xs:element>
+        <xs:element minOccurs="0" name="requestId" type="xs:string"></xs:element>
+        <xs:element minOccurs="0" name="status" type="xs:string"></xs:element>
+        <xs:element minOccurs="0" name="statusMessage" type="xs:string"></xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://donateReward.v1.ws.mercury.com" xmlns:ns1="http://thebodyshop/donateVoucherSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://donateReward.v1.ws.mercury.com">
+  <xs:import namespace="http://thebodyshop/donateVoucherSchema"></xs:import>
+  <xs:element name="donateReward" type="tns:donateReward"></xs:element>
+  <xs:element name="donateRewardResponse" type="tns:donateRewardResponse"></xs:element>
+  <xs:complexType name="donateReward">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="request">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="transactionDate" type="xs:date"></xs:element>
+            <xs:element name="charityPartner" type="xs:string"></xs:element>
+            <xs:element name="voucherNumber" type="xs:string"></xs:element>
+            <xs:element minOccurs="0" name="storeID" type="xs:string"></xs:element>
+            <xs:element minOccurs="0" name="market" type="xs:string"></xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="messageid" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="donateRewardResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:hybrisResponse"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hybrisResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="messageId" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="requestId" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="status" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="statusMessage" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="donateRewardResponse">
+    <wsdl:part element="tns:donateRewardResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="donateReward">
+    <wsdl:part element="tns:donateReward" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DonateRewardI_CRM07">
+    <wsdl:operation name="donateReward">
+      <wsdl:input message="tns:donateReward" name="donateReward">
+    </wsdl:input>
+      <wsdl:output message="tns:donateRewardResponse" name="donateRewardResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DonateRewardImpl_CRM07ServiceSoapBinding" type="tns:DonateRewardI_CRM07">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="donateReward">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="donateReward">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="donateRewardResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DonateRewardImpl_CRM07Service">
+    <wsdl:port binding="tns:DonateRewardImpl_CRM07ServiceSoapBinding" name="DonateRewardImpl_CRM07Port">
+      <soap:address location="http://195.171.111.71:29114/v1/donateReward"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

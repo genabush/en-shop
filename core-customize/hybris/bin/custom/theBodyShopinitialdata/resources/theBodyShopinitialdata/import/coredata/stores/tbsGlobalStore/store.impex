@@ -1,0 +1,45 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Create the BaseStore
+#
+
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# 
+# Create the BaseStore
+#
+
+$productCatalog=tbsGlobalProductCatalog
+$currencies=GBP,USD
+$net=false
+$storeUid=tbsGlobalStore
+$storeName=Global Store
+$defaultCurrency=GBP
+$languages=en,en_GB
+$defaultLanguage=en
+$deliveryCountries=
+$billingCountries=
+$orderProcessCode=
+$pickupInStoreMode=
+$customerAllowedToIgnoreSuggestions=true
+$paymentProvider=Mockup
+$promoGrp=default
+$checkoutFlowGroup=
+$expressCheckoutEnabled=false
+$returnProcessCode=
+$lang=en
+
+INSERT_UPDATE PromotionGroup;Identifier[unique=true];
+;$promoGrp;
+
+# Base Store
+INSERT_UPDATE BaseStore;uid[unique=true];name[lang=$lang];catalogs(id);currencies(isocode);net;taxGroup(code);storelocatorDistanceUnit(code);defaultCurrency(isocode);languages(isocode);defaultLanguage(isocode);deliveryCountries(isocode);billingCountries(isocode);submitOrderProcessCode;pickupInStoreMode(code);customerAllowedToIgnoreSuggestions;paymentProvider;checkoutFlowGroup;expressCheckoutEnabled;maxRadiusForPoSSearch;createReturnProcessCode;defaultProductTaxGroup(code)
+;$storeUid;$storeName;$productCatalog;$currencies;$net;;;$defaultCurrency;$languages;$defaultLanguage;$deliveryCountries;$billingCountries;$orderProcessCode;$pickupInStoreMode;$customerAllowedToIgnoreSuggestions;$paymentProvider;$checkoutFlowGroup;$expressCheckoutEnabled;300;$returnProcessCode;
+
+INSERT_UPDATE BaseStore2WarehouseRel;source(uid)[unique=true];target(code)[unique=true]
+;$storeUid;default;
+
+INSERT_UPDATE BaseStore2DeliveryModeRel;source(uid)[unique=true];target(code)[unique=true]

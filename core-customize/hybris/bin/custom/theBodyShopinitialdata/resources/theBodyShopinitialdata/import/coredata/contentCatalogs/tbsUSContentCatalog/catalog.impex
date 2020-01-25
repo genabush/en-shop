@@ -1,0 +1,24 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the Content Catalog
+#
+$contentCatalog=tbsUSContentCatalog
+$globalContentCatalog=tbsGlobalContentCatalog
+$languages=en,en_US
+$lang=en_US
+
+# Content catalog for CMS contents
+INSERT_UPDATE ContentCatalog;id[unique=true];supercatalog(id)
+;$contentCatalog;$globalContentCatalog
+
+# Catalog versions for content catalogs
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;languages(isoCode)
+;$contentCatalog;Staged;false;$languages
+;$contentCatalog;Online;true;$languages
+
+###### Site Context ######
+INSERT_UPDATE CmsSiteContext;code[unique=true];name[lang=$lang]
+;LANGUAGE;"language"
+;CURRENCY;"currency"

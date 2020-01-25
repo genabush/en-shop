@@ -1,0 +1,152 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/posBenefitSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/posBenefitSchema" targetNamespace="http://thebodyshop/posBenefitSchema">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://thebodyshop/posBenefitSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/posBenefitSchema">
+            <xs:element name="AuthBenefitRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="BenefitCode" type="xs:string" />
+                        <xs:element name="BenefitType" type="tns:BenefitTypeEnum" />
+                        <xs:element minOccurs="0" name="AgentID" type="xs:string" />
+                        <xs:element minOccurs="0" name="StoreID" type="xs:string" />
+                        <xs:element minOccurs="0" name="DonateTo" type="xs:string" />
+                        <xs:element minOccurs="0" name="TransactionID" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CaptureBenefitRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="BenefitCode" type="xs:string" />
+                        <xs:element name="BenefitType" type="tns:BenefitTypeEnum" />
+                        <xs:element minOccurs="0" name="AgentID" type="xs:string" />
+                        <xs:element minOccurs="0" name="StoreID" type="xs:string" />
+                        <xs:element minOccurs="0" name="DonateTo" type="xs:string" />
+                        <xs:element minOccurs="0" name="TransactionID" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ReverseAuthBenefitRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="BenefitCode" type="xs:string" />
+                        <xs:element name="BenefitType" type="tns:BenefitTypeEnum" />
+                        <xs:element minOccurs="0" name="AgentID" type="xs:string" />
+                        <xs:element minOccurs="0" name="StoreID" type="xs:string" />
+                        <xs:element minOccurs="0" name="DonateTo" type="xs:string" />
+                        <xs:element minOccurs="0" name="TransactionID" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:simpleType name="BenefitTypeEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="AbsoluteMonetary" />
+                    <xs:enumeration value="Promotion" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="BenefitStatusEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Available" />
+                    <xs:enumeration value="Expired" />
+                    <xs:enumeration value="Used" />
+                    <xs:enumeration value="Donated" />
+                    <xs:enumeration value="Authorised" />
+                    <xs:enumeration value="Cancelled" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="AuthBenefitResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="AuthRef" type="xs:string" />
+                        <xs:element name="Status" type="tns:BenefitStatusEnum" />
+                        <xs:element minOccurs="0" name="Amount" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CaptureBenefitResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="AuthRef" type="xs:string" />
+                        <xs:element name="Status" type="tns:BenefitStatusEnum" />
+                        <xs:element minOccurs="0" name="Amount" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ReverseAuthBenefitResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="AuthRef" type="xs:string" />
+                        <xs:element name="Status" type="tns:BenefitStatusEnum" />
+                        <xs:element minOccurs="0" name="Amount" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="ReverseAuthBenefitResponse">
+        <wsdl:part element="tns:ReverseAuthBenefitResponse" name="ReverseAuthBenefitResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AuthBenefitResponse">
+        <wsdl:part element="tns:AuthBenefitResponse" name="AuthBenefitResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CaptureBenefitRequest">
+        <wsdl:part element="tns:CaptureBenefitRequest" name="CaptureBenefitRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AuthBenefitRequest">
+        <wsdl:part element="tns:AuthBenefitRequest" name="AuthBenefitRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ReverseAuthBenefitRequest">
+        <wsdl:part element="tns:ReverseAuthBenefitRequest" name="ReverseAuthBenefitRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CaptureBenefitResponse">
+        <wsdl:part element="tns:CaptureBenefitResponse" name="CaptureBenefitResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="PosBenefitService">
+        <wsdl:operation name="ReverseAuthBenefit">
+            <wsdl:input message="tns:ReverseAuthBenefitRequest" name="ReverseAuthBenefitRequest"></wsdl:input>
+            <wsdl:output message="tns:ReverseAuthBenefitResponse" name="ReverseAuthBenefitResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AuthBenefit">
+            <wsdl:input message="tns:AuthBenefitRequest" name="AuthBenefitRequest"></wsdl:input>
+            <wsdl:output message="tns:AuthBenefitResponse" name="AuthBenefitResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CaptureBenefit">
+            <wsdl:input message="tns:CaptureBenefitRequest" name="CaptureBenefitRequest"></wsdl:input>
+            <wsdl:output message="tns:CaptureBenefitResponse" name="CaptureBenefitResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PosBenefitServiceSoap11" type="tns:PosBenefitService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="ReverseAuthBenefit">
+            <soap:operation soapAction="" />
+            <wsdl:input name="ReverseAuthBenefitRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="ReverseAuthBenefitResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AuthBenefit">
+            <soap:operation soapAction="" />
+            <wsdl:input name="AuthBenefitRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="AuthBenefitResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CaptureBenefit">
+            <soap:operation soapAction="" />
+            <wsdl:input name="CaptureBenefitRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="CaptureBenefitResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PosBenefitService">
+        <wsdl:port binding="tns:PosBenefitServiceSoap11" name="PosBenefitServiceSoap11">
+            <soap:address location="http://thebodyshop.local:9001/tbsdataprocessing/endpoints" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

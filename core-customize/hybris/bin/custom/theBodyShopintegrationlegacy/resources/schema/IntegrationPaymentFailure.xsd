@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://paymentFailure.v1.ws.mercury.com" xmlns:tns="http://paymentFailure.v1.ws.mercury.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://thebodyshop/orderStatusUpdateSchema">
+	<xs:import schemaLocation="OrderUpdate.xsd" namespace="http://thebodyshop/orderStatusUpdateSchema"/>
+	<xs:complexType name="paymentFailure">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="request">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="Order" type="ns1:CCOrder"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="messageid" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="paymentFailureResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:hybrisResponse"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="hybrisResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="messageId" type="xs:string"/>
+			<xs:element minOccurs="0" name="requestId" type="xs:string"/>
+			<xs:element minOccurs="0" name="status" type="xs:string"/>
+			<xs:element minOccurs="0" name="statusMessage" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,85 @@
+.amp-dc-banner-with-bg {
+  max-width: map-get($container-max-widths, lg);
+
+  &__title {
+    margin-bottom: 5px;
+  }
+
+  &__content {
+    position: relative;
+    margin-top: 3.5rem;
+    margin-bottom: 4.125rem;
+    padding: 0 1rem;
+  }
+
+  &__content-inner {
+    padding: 3.625rem 4.375rem 3.31rem 1rem !important;
+    text-align: left;
+  }
+
+  &__media {
+    position: relative;
+    padding: 0 4.375rem;
+
+    img,
+    video {
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    .block-desktop-pos--left {
+      flex-direction: row;
+    }
+
+    .block-desktop-pos--right {
+      flex-direction: row-reverse;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    &__content-inner {
+      padding: 3rem 1rem 1rem !important;
+    }
+
+    &__content {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 0 !important;
+    }
+
+    .row {
+      margin: 0 !important;
+    }
+
+    .col-6 {
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+
+    .block-mobile-pos--top {
+      flex-direction: column;
+    }
+
+    .block-mobile-pos--bottom {
+      flex-direction: column-reverse;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    &__media {
+      height: 19.6rem;
+      padding: 0 !important;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    &__media {
+      height: 10.625rem;
+      padding: 0 !important;
+    }
+  }
+}

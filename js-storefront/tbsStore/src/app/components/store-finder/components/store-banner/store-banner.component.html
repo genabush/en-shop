@@ -1,0 +1,27 @@
+<div class="store-finder-banner-wrapper store-details">
+  <div class="store-finder-banner" [ngClass]="{ ' store-finder-banner--50-50': !!location?.imageUrl }">
+    <div class="store-finder-banner__split-part split-part--left store-details__split-part">
+      <div class="split-part-wrap">
+        <div class="store-finder-banner__text store-details__text">
+          <button
+            *ngIf="hasSearchResults$ | async"
+            class="btn btn--primary btn--invert store-details__btn-back"
+            (click)="goBack()"
+          >
+            <span class="icon icon--chevron-left"></span>
+          </button>
+          <h1>{{ location?.displayName }}</h1>
+          <div *ngIf="location?.description" class="store-finder-banner__text-desc">{{ location.description }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="store-finder-banner__split-part split-part--right" *ngIf="location?.imageUrl">
+      <div class="split-part-wrap">
+        <div
+          class="store-finder-banner__image"
+          [ngStyle]="{ 'background-image': 'url(' + location?.imageUrl + ')' }"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

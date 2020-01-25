@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd 
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	
+  <import resource="classpath:/thebodyshoployalty-integration/hot-folder-loyalty-cloud-spring.xml"/>
+	
+	<bean id="baseDirectoryTbs" class="java.lang.String">
+    <constructor-arg value="#{baseDirectory}/${tenantId}/tbs" />
+  </bean>
+	
+	<!-- Import processor for loyalty feed -->
+    
+	<bean id="loyaltyProcessor" class="uk.co.thebodyshop.loyalty.data.processing.LoyaltyFileProcessor" scope="tenant">
+		<constructor-arg name="modelService" ref="modelService"/>
+		<constructor-arg name="customerService" ref="customerService"/>
+		<constructor-arg name="timeService" ref="timeService"/>
+		<constructor-arg name="configurationService" ref="configurationService"/>
+		<constructor-arg name="loyaltyService" ref="loyaltyService"/>
+	</bean>
+
+	<!-- Configuration for the inbound channel adapter (incoming file folder and poll period) -->
+	
+	<file:inbound-channel-adapter id="incomingloyaltyFeedChannel" 
+	  comparator="fileNameComparator" 
+	  directory="#{baseDirectoryTbs}" 
+	  filename-regex="#{configurationService.configuration.getProperty('tbsdataprocessing.csv.loyaltyfeed.fillenamepattern')}" 
+	  auto-startup="#{configurationService.configuration.getProperty('tbsdataprocessing.csv.loyaltyfeed.autostartup')}">
+		<int:poller fixed-delay="#{configurationService.configuration.getProperty('tbsdataprocessing.csv.loyaltyfeed.basefolderpollperiod')}"/>
+	</file:inbound-channel-adapter>
+	
+	<!-- 2) move the file to processing folder -->
+	
+	<file:outbound-gateway id="loyaltyFileMover"
+	  request-channel="incomingloyaltyFeedChannel" 
+	  reply-channel="loyaltyFeedChannel"
+	  directory="#{baseDirectoryTbs}/processing" 
+	  delete-source-files="true"/>
+	
+	<!-- 3) execute the bean to process the file -->
+	
+	<int:service-activator input-channel="loyaltyFeedChannel" ref="loyaltyProcessor"/>
+	
+</beans>

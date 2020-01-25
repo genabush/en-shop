@@ -1,0 +1,40 @@
+<ng-container *ngIf="products && products.length > 0">
+  <app-wishlist-products-listing-refine [count]="products.length"></app-wishlist-products-listing-refine>
+
+  <div class="row product-row">
+    <ng-container *ngFor="let product of products">
+      <app-wishlist-product-item
+        (removeProductEmit)="triggerRemoveProduct($event)"
+        [product]="product"
+        [ngClass]="columnClass"
+      ></app-wishlist-product-item>
+    </ng-container>
+  </div>
+
+  <ng-template #deleteConfirmModal let-c="close" let-d="dismiss">
+    <button
+      type="button"
+      class="modal__close"
+      [attr.aria-label]="'common.closeBtn' | cxTranslate"
+      (click)="closeDeleteConfirmModal()"
+    >
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+
+    <div class="modal__body">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="modal__title">{{ 'wishlists.deleteModal.text' | cxTranslate }}</h2>
+          <button class="btn btn--primary" (click)="confirmDeletion()">
+            {{ 'wishlists.deleteModal.actions.confirm' | cxTranslate }}
+          </button>
+          <button class="btn btn--secondary" (click)="closeDeleteConfirmModal()">
+            {{ 'wishlists.deleteModal.actions.cancel' | cxTranslate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

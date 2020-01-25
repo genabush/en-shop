@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:ws="http://www.springframework.org/schema/integration/ws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/ws https://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd">
+
+
+    <bean id="outboundMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="checkForXmlRootElement" value="true" />
+        <property name="contextPaths">
+            <list>
+                <value>com.mercury.ws.v1.placeorder</value>
+                <value>uk.co.thebodyshop.integration.jaxb.order</value>
+                <value>com.mercury.ws.v1.paymentcapture</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="mercuryIntegrationMessageSender" class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+        <property name="connectionTimeout" value="#{configurationService.configuration.getString('outbound.sender.timeout')}" />
+        <property name="readTimeout" value="#{configurationService.configuration.getString('outbound.sender.readTimeout')}" />
+    </bean>
+
+    <!-- export order channel -->
+    <int:channel id="exportOrderChannel"/>
+
+    <int:gateway id="placeOrderGateway" service-interface="uk.co.thebodyshop.integration.gateways.PlaceOrderGateway" default-request-channel="exportOrderChannel"/>
+
+    <int:chain input-channel="exportOrderChannel">
+        <ws:outbound-gateway id="orderOutBoundGateway" uri="#{configurationService.configuration.getString('outbound.order.uri')}" message-sender="mercuryIntegrationMessageSender" reply-timeout="#{configurationService.configuration.getString('outbound.order.sender.timeout')}" marshaller="outboundMarshaller"/>
+    </int:chain>
+    
+    <!-- export order payment capture channel -->
+    <int:channel id="exportPaymentConfirmationChannel"/>
+
+    <int:gateway id="exportPaymentConfirmationGateway" service-interface="uk.co.thebodyshop.integration.gateways.ExportPaymentConfirmationGateway" default-request-channel="exportPaymentConfirmationChannel"/>
+
+    <int:chain input-channel="exportPaymentConfirmationChannel">
+        <ws:outbound-gateway id="exportPaymentConfirmationGateway" uri="#{configurationService.configuration.getString('outbound.order.payment.confirmation.uri')}" message-sender="mercuryIntegrationMessageSender" reply-timeout="#{configurationService.configuration.getString('outbound.order.payment.confirmation.timeout')}" marshaller="outboundMarshaller"/>
+    </int:chain>
+
+    <!-- RMS export order channel -->
+    <int:channel id="rmsExportOrderChannel"/>
+
+    <int:gateway id="rmsPlaceOrderGateway" service-interface="uk.co.thebodyshop.integration.gateways.PlaceOrderGateway" default-request-channel="rmsExportOrderChannel"/>
+
+    <int:chain input-channel="rmsExportOrderChannel">
+        <ws:outbound-gateway id="rmsOrderOutBoundGateway" uri="#{configurationService.configuration.getString('outbound.rms.order.uri')}" message-sender="mercuryIntegrationMessageSender" reply-timeout="#{configurationService.configuration.getString('outbound.order.sender.timeout')}" marshaller="outboundMarshaller"/>
+    </int:chain>
+
+    <!-- RMS export order payment capture channel -->
+    <int:channel id="rmsExportPaymentConfirmationChannel"/>
+
+    <int:gateway id="rmsExportPaymentConfirmationGateway" service-interface="uk.co.thebodyshop.integration.gateways.ExportPaymentConfirmationGateway" default-request-channel="rmsExportPaymentConfirmationChannel"/>
+
+    <int:chain input-channel="rmsExportPaymentConfirmationChannel">
+        <ws:outbound-gateway id="rmsExportPaymentConfirmationGateway" uri="#{configurationService.configuration.getString('outbound.rms.order.payment.confirmation.uri')}" message-sender="mercuryIntegrationMessageSender" reply-timeout="#{configurationService.configuration.getString('outbound.order.payment.confirmation.timeout')}" marshaller="outboundMarshaller"/>
+    </int:chain>
+
+</beans>

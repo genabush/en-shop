@@ -1,0 +1,18 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Import essential data for the Accelerator
+#
+INSERT_UPDATE ContentCatalogCode ; code[unique=true]   ; name[lang=en]               
+                                 ; tbsATContentCatalog ; Austria Content Catalog     ;  
+                                 ; tbsAUContnetCatalog ; Australia Content Catalog   ;  
+                                 ; tbsCAContentCatalog ; Canada Content Catalog      ;  
+                                 ; tbsDEContentCatalog ; Germany Content Catalog     ;  
+                                 ; tbsDKContentCatalog ; Denmark Content Catalog     ;  
+                                 ; tbsESContentCatalog ; Spain Content Catalog       ;  
+                                 ; tbsHKContentCatalog ; Hong Kong Content Catalog   ;  
+                                 ; tbsNLContentCatalog ; Netherlands Content Catalog ;  
+                                 ; tbsSEContentCatalog ; Sweden Content Catalog      ;  
+                                 ; tbsSGContentCatalog ; Singapore Content Catalog   ;  
+                                 ; tbsUKContentCatalog ; UK Content Catalog          ;  
+                                 ; tbsUSContentCatalog ; US Content Catalog          ;  

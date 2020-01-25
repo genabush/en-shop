@@ -1,0 +1,328 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+#% impex.setLocale( Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsESProductCatalog
+$productCatalogName=Spain Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$onlineDate=onlineDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-01-2019 06:30:00']
+
+$lang=es
+
+# Insert Products
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];$supercategories;type(code)[default=SIZE];$catalogVersion;$approved;$onlineDate
+;p003257;c00143;
+;p000341;c00149;
+;p002002;c00143;
+;p002445;c00143;
+;p003101;c00143;
+;p001102;c00143;
+;p002457;c00143;
+;p000971;c00143;
+;p003255;c00143;
+;p003254;c00143;
+;p003173;c00143;
+;p000694;c00143;
+;p002003;c00143;
+;p000936;c00145;
+;p002013;c00144;
+;p000810;c00144;
+;p002833;c00147;
+;p003268;c00147;
+;p002835;c00141;
+;p000664;c00148;
+;p003259;c00148;
+;p000067;c00140;
+;p000056;c00140;
+;p002017;c00140;
+;p000499;c00013;
+;p000253;c00013;
+;p000019;c00014;
+;p002347;c00014;
+;p002812;c00284;
+;p002419;c00024;
+;p000480;c00018;
+;p002863;c00019;
+;p000466;c00019;
+;p000644;c00019;
+;p000787;c00020,c00021;
+;p000676;c00020,c00021;
+;p000461;c00054;
+;p000111;c00054;
+;p000106;c00054;
+;p000795;c00056;
+;p000797;c00056;
+;p003200;c00047;
+;p000789;c00047;
+;p000063;c00047;
+;p003090;c00048;
+;p002733;c00048;
+;p000142;c00051;
+;p000120;c00051;
+;p002449;c00051;
+;p003091;c00050;
+;p000767;c00050;
+;p002453;c00050;
+;p000767;c00049;
+;p002144;c00065;
+;p002448;c00059;
+;p002145;c00059;
+;p003111;c00060;
+;p000360;c00060;COLOUR
+;p001081;c00061;
+;p002819;c00061;
+;p000467;c00061;
+;p000851;c00062;
+;p000436;c00064;
+;p000435;c00064;
+;p002668;c00064;
+;p000362;c00064;
+;p000726;c00064;
+;p002817;c00064;
+;p003237;c00063;
+;p002001;c00063;
+;p000048;c00065;
+;p002867;c00065;
+;p000042;c00065;
+;p002171;c00066;
+;p000657;c00066;COLOUR
+;p000069;c00066;
+;p000621;c00066;
+;p003235;c00067;
+;p000184;c00067;
+;p002818;c00067;
+;p000222;c00069;
+;p002437;c00069;
+;p001050;c00069;
+;p000269;c00146;
+;p003087;c00051;
+;p000247;c00014;
+;0000000000;;
+
+UPDATE Product;code[unique=true];name[lang=$lang];description[lang=$lang];doNotSearch[default=false];$catalogVersion;$onlineDate
+;"1030196";"All in One BB Cream 01 25ml";"Si no tienes tiempo que perder, nuestra All-in-One BB Cream es el producto que necesitas para conseguir resultados inmediatos. Esta eficaz BB cream multifunción que hidrata hasta 24 horas cumple todas las funciones para dejar un brillo maravilloso perfecto en tu piel. Extiéndela por el rostro para conseguir un acabado uniforme y fresco que se adapta a la perfección a tu tono de piel. Es como tu piel, pero mejor."
+;"1030226";"All in One BB Cream 02 25ml";"Si no tienes tiempo que perder, nuestra All-in-One BB Cream es el producto que necesitas para conseguir resultados inmediatos. Esta eficaz BB cream multifunción que hidrata hasta 24 horas cumple todas las funciones para dejar un brillo maravilloso perfecto en tu piel. Extiéndela por el rostro para conseguir un acabado uniforme y fresco que se adapta a la perfección a tu tono de piel. Es como tu piel, pero mejor."
+;"1030227";"All in One BB Cream 03 25ml";"Si no tienes tiempo que perder, nuestra All-in-One BB Cream es el producto que necesitas para conseguir resultados inmediatos. Esta eficaz BB cream multifunción que hidrata hasta 24 horas cumple todas las funciones para dejar un brillo maravilloso perfecto en tu piel. Extiéndela por el rostro para conseguir un acabado uniforme y fresco que se adapta a la perfección a tu tono de piel. Es como tu piel, pero mejor."
+;"1032512";"All in One BB Cream 04 30ml";"Si no tienes tiempo que perder, nuestra All-in-One BB Cream es el producto que necesitas para conseguir resultados inmediatos. Esta eficaz BB cream multifunción que hidrata hasta 24 horas cumple todas las funciones para dejar un brillo maravilloso perfecto en tu piel. Extiéndela por el rostro para conseguir un acabado uniforme y fresco que se adapta a la perfección a tu tono de piel. "
+;"1055790";"Manteca Corporal Karité 200ml";"Nuestra manteca de karité con un delicioso aroma a frutos secos se funde en tu piel para que disfrutes de una experiencia extremadamente hidratante. Deja una piel más suave, fresca e hidratada durante 24 horas tras cada uso."
+;"1059021";"Manteca Corporal Hidratante de Karité 50ml";"Nuestra manteca de karité con un delicioso aroma a frutos secos se funde en tu piel para que disfrutes de una experiencia extremadamente hidratante. Deja una piel más suave, fresca e hidratada durante 24 horas tras cada uso."
+;"1076327";"Manteca Corporal De Karité 400ml";"Nuestra manteca de karité con un delicioso aroma a frutos secos se funde en tu piel para que disfrutes de una experiencia extremadamente hidratante. Deja una piel más suave, fresca e hidratada durante 24 horas tras cada uso."
+;"p000019";"Manteca Corporal Hidratante De Karité";"Nuestra manteca de karité con un delicioso aroma a frutos secos se funde en tu piel para que disfrutes de una experiencia extremadamente hidratante. Deja una piel más suave, fresca e hidratada durante 24 horas tras cada uso."
+;"p000042";"Lightening Touch";"¿Madrugas mucho y te acuestas tarde? Usa nuestro corrector difusor de luz para iluminar la zona inferior del ojo minimizando el aspecto de ojeras y líneas de expresión. Con un pincel que facilite su aplicación, este corrector iluminador será el producto estrella de tu neceser de maquillaje."
+;"p000048";"All-In-One Face Base";"Gracias a su fácil aplicación y a su acabado suave aterciopelado, este maquillaje compacto es base y polvos todo en uno. La versatilidad de este producto permite usarlo de muchas formas para conseguir un acabado perfecto. "
+;"p000056";"Esponja de Limpieza Facial";"Elimina el maquillaje y limpia suavemente la piel con esta esponja limpiadora suave."
+;"p000063";"Cepillo De Modelado";"Este cepillo cuenta con tecnología para retener el calor del secador de pelo para conseguir un peinado eficaz.El mango tiene una forma especial que permite un agarre cómodo. El cepillado cuenta con una púas especiales que distribuyen los aceites naturales del cabello desde la raíz hasta la punta. "
+;"p000067";"Toallita De Muselina";"Elimina el maquillaje y limpia suavemente tu piel con nuestras toallitas de muselina superfinas, para que luzca más suave y tersa. Combínalas con tu limpiador preferido para obtener los mejores resultados."
+;"p000069";"Barras De Labios Colour Crush™";"Una sola pasada de nuestras barras de labios hidratantes y cremosas da a tus labios un estallido de color. Con un sutil aroma a rosas y aceite de marula de Comercio con Comunidades para hidratar. Querrás una de cada color."
+;"p000106";"Crema De Manos De Mango";"Esta crema de manos de uso diario es perfecta para hidratarte sobre la marcha, así que no puede faltar en tu bolso. Su fórmula ligera en crema gel de rápida absorción con el aroma tropical del mango protege y suaviza tus manos."
+;"p000111";"Crema De Manos De Coco";"Esta crema de manos de uso diario es perfecta para hidratarte sobre la marcha, así que no puede faltar en tu bolso. Su fórmula ligera en crema gel de rápida absorción con el aroma refrescante del coco protege y suaviza tus manos."
+;"p000120";"Cuidado Anticaspa Jengibre";"Refresca y calma tu cuero cabelludo con este champú revitalizante. Incluye además extracto de jengibre, extracto de corteza de abedul, extracto de sauce blanco y miel de Comercio con Comunidades de Etiopía."
+;"p000142";"Gel para Cabello y Cuerpo Arber";"No necesitarás ni champú y ni acondicionador con este gel dos en uno, que deja la piel y el cabello limpios y perfumados con la fragancia sensual de Arber."
+;"p000184";"Máscara Súper Volumen";"Usa está máscara que no se apelmaza para lucir un color y un volumen más intensos en las pestañas."
+;"p000222";"All-In-One Instablur™ Universal";"Este corrector controla los brillos, oculta las imperfecciones y reduce el aspecto de los poros para que luzcas una piel perfecta a diario. Con 5 propiedades realzadoras de la belleza y aceite de marula de Comercio con Comunidades, Instablur™ se puede utilizar como base perfeccionadora previa al maquillaje o se puede usar solo para difuminar las imperfecciones y matificar la piel. Instablur™ es el arma (de belleza) secreta que estabas esperando."
+;"p000253";"Baño de Burbujas Aceite de Argán";"Un baño de burbujas enriquecido con las propiedades súperhidratantes del aceite de argán. Sentirás tu piel mucho más suave tras cada baño."
+;"p000269";"Aceite Sólido Para Labios De Argán Salvaje";"Deja que este aceite sólido, enriquecido con el poder nutritivo del aceite de argán de Marruecos, se funda con tus labios para lucir un bonito brillo natural. Su fórmula hidratante intensa acondiciona y suaviza tus labios en cada uso."
+;"p000341";"Mascarilla de Noche Drops of Youth™";"Esta refrescante mascarilla facial de noche ha sido especialmente desarrollada para combatir los primeros signos de la edad. Su innovadora textura en gel efecto memoria se moldea en el rostro como una segunda piel. Proporciona una sensación de frescura al instante y un acabado suave. Despiértate con una sensación de piel renovada, tersa y revitalizada cada mañana."
+;"p000360";"All-In-One BB Cream";"Si no tienes tiempo que perder, nuestra All-in-One BB Cream es el producto que necesitas para conseguir resultados inmediatos. Esta eficaz BB cream multifunción que hidrata hasta 24 horas cumple todas las funciones para dejar un brillo maravilloso perfecto en tu piel. Extiéndela por el rostro para conseguir un acabado uniforme y fresco que se adapta a la perfección a tu tono de piel. "
+;"p000362";"Brow & Lash Gel";"Este gel transparente que incluye un cómodo aplicador controla las cejas rebeldes y las deja en su sitio. Úsalo en las pestañas para conseguir un look sin maquillaje natural y definido. "
+;"p000435";"Perfilador de Ojos Skinny";"Este perfilador de ojos preciso y eficaz es ideal para crear líneas fluidas que definan los ojos y añadan intensidad a tu look. Úsalo para realzar la línea de las pestañas con su tono azabache."
+;"p000436";"Gel Pen Liner";"Este perfilador de ojos cremoso se desliza por la piel creando una intensidad duradera que favorece y realza. Disponible en tres colores de gran pigmentación, nuestra fórmula resistente al agua dura horas."
+;"p000461";"Crema de Manos de Cáñamo";"Di adiós  a la piel áspera y protege tus manos de los elementos con esta crema calmante y nutritiva con cáñamo."
+;"p000466";"Desodorante Antitranspirante Activist";"Desodorante de larga duración y secado rápido. Para hombre. Con una esencia cálida y picante."
+;"p000467";"Spray Bronceador para Piernas Honey Bronze™ ";"Consigue un bronceado perfecto y uniforme en segundos con nuestro innovador spray bronceador. El gel en spray ligero y sin aceites es fácil de usar para que presumas de un bronceado natural e infalible."
+;"p000480";"Polvos Bronceadores Honey Bronze™ ";"Para conseguir el bronceado más natural, aplica nuestros polvos bronceadores enriquecidos con miel sobre la piel y presume de un resplandor dorado todo el año. Con tonos que se adaptan hasta a las pieles más claras, nuestros Polvos Bronceadores Honey Bronze™ te ofrecen un resplandor veraniego todo el año sin esfuerzo. Pasa la brocha sobre estos polvos compactos sin brillo para conseguir un look bronceado mate y uniforme."
+;"p000499";"Baño De Leche Y Miel De Egipto";"El Baño de Miel y Leche de Egipto es una leche vegetal en polvo relajante que ayuda a suavizar y nutrir la piel mientras disfrutas del baño. Un producto maravilloso para recrear todos los beneficios de un spa profesional en tu casa."
+;"p000621";"Perfilador De Labios";"Este suave lápiz define los labios y añade un acabado vibrante a tu color de labios."
+;"p000644";"Desodorante White Musk® ";"El desodorante White Musk® contiene una mezcla limpia, revitalizante y ligera de almizcle elaborado sin crueldad en animales, vetiver y sándalo. Combínalo con otros productos White Musk® para maximizar su fragancia."
+;"p000657";"Lip & Cheek Stain";"Este color líquido de doble función da a tus labios y mejillas un toque de color natural que se puede aplicar en capas. Úsalo bajo el brillo de labios para presumir de una boca preciosa y aplícalo a toquecitos sobre las mejillas para lucir un colorete natural."
+;"p000664";"Loción Esencial Drops of Youth™";"Esta loción esencial con una textura única en gel líquido, es un paso esencial después de limpiar la piel para prepararla para los siguientes pasos de la rutina facial. Sentirás la piel más suave al instante y profundamente hidratada. Enriquecida con una poderosa combinación de células madre vegetales de 3 plantas diferentes."
+;"p000676";"Spray Para Pies Refrescante De Menta";"Revitaliza y refresca los pies cansados y doloridos con este refrescante spray para pies. Rocía tus pies con este spray enriquecido con aceite esencial de menta inglesa para obtener alivio cuando lo necesites."
+;"p000694";"Mascarilla Hidratante Intensiva Vitamina E";"Mascarilla ligera y cremosa que restaura el nivel de hidratación natural de la piel. Alisa las arrugas provocadas por la deshidratación y deja la piel suave."
+;"p000726";"Brow & Liner Kit";"Elige nuestro Brow & Liner Kit, que incluye una brocha doble para crear unas cejas perfectas. Define, da forma, rellena y delinea tus cejas con estos tonos suaves, y obtén un resultado impecable."
+;"p000767";"Sérum para Cabello de Semilla de Uva";"Usa este sérum para suavizar tu pelo y aumentar su brillo. Para obtener mejores resultados, aplica un poco de producto por todo el cabello."
+;"p000787";"Protector de Pies Cáñamo";"Calma y suaviza las durezas de tus pies con nuestro Protector de Pies de Cáñamo intensivo. Esta crema imprescindible restaura los niveles de hidratación de las zonas extremadamente secas de la piel."
+;"p000789";"Peine para Desenredar";"Desenreda el pelo húmedo o seco sin esfuerzo con nuestro peine de púas anchas. La herramienta perfecta para distribuir un producto sobre tu pelo fácilmente."
+;"p000795";"Gel Purificante para Manos de Mandarina";"Disfruta de unas manos limpias y frescas con el afrutado Gel Purificante para Manos de Mandarina. Ideal para viajar o llevar en el bolso para usarlo sobre la marcha."
+;"p000797";"Gel Purificante Para Manos De Pomelo Rosa";"Disfruta de unas manos limpias y frescas con el Gel Purificante para Manos de Pomelo Rosa. Ideal para viajar o llevar en el bolso para usarlo sobre la marcha."
+;"p000810";"Crema Contorno de Ojos Vitamina E";"Crema hidratante que protege la piel frágil del contorno de los ojos, descongestiona y atenúa las arruguitas y las ojeras dejando la piel suave e hidratada."
+;"p000851";"Colorete All-In-One";"Usa este colorete en polvo para aplicar una o varias capas de color. Pasa la brocha por uno de los increíbles tonos y luce un resplandor radiante en las mejillas. Gracias a la vitamina E y al aceite de marula de Comercio con Comunidades, este producto maquilla y cuida de piel a la vez."
+;"p000936";"Desmaquillante de Ojos Suave de Camomila";"Elimina el maquillaje de la zona que rodea los ojos. El Desmaquillante de Ojos de la línea de Camomila limpia suavemente para dejar una piel suave y limpia."
+;"p000971";"Mascarilla de Arcilla Equilibrante de Algas Marinas";"Limpia la piel en profundidad con nuestra mascarilla de arcilla de algas marinas. Notarás una sensación refrescante, revitalizante y pura."
+;"p001050";"Instaglow CC Cream";"Un producto base de maquillaje con propiedades para el cuidado facial que aporta un aspecto saludable y luminoso a todos los tonos de piel y etnias. "
+;"p001081";"Drops Of Sun Honey Bronze";"Drops of Sun de Honey Bronze  es un  gel líquido sin brillo  y  con color que broncea tu cutis, aportando una luminosidad sana y natural.Conseguirás un bronceado natural al instante."
+;"p001102";"Mascarilla Exfoliante Facial 3 en 1 Árbol de Té";"Un producto 3 en 1 que podrás utilizar como lavado facial, mascarilla y/o exfoliante para compatir imperfecciones y el exceso de grasa."
+;"p002001";"Paleta de Sombras de Ojos Down to Earth";"Descubre una amplia gama de sombras de tonos neutros para destacar la belleza natural de la piel y el color de los ojos."
+;"p002002";"Mascarilla Cuidado Experto Purificante de Carbón del Himalaya";"Refina y reaviva tu piel con nuestra Mascarilla Cuidado Experto Purificante de Carbón del Himalaya. Inspirada en las tradiciones de Ayurvedic, esta mascarilla 100% vegana acaba con las imperfecciones y refina la apariencia de los poros para una piel de aspecto más sano."
+;"p002013";"Crema Gel Contorno Ojos Oils of Life";"Hecho a base de tres aceites de semilla conocidos por sus propiedades revitalizantes y reparadoras. Su textura gel es ultraligera. Revitaliza el contorno de los ojos y reduce los signos de la edad."
+;"p002017";"Cepillo Limpiador Súper Suave";"Este cepillo súper suave es perfecto para todos los tipos de piel. Hecho con fibras tan suaves como la seda, que son tan finas que alcanzarán, incluso, las zonas más difíciles."
+;"p002144";"Pincel Abanico";"Nos encanta este pincel. Es ideal para aplicar iluminador y colorete y está especialmente diseñado para que domines el arte de iluminar tu rostro con suavidad. Complementa nuestra gama de brochas y pinceles esenciales con este pincel experto que llevará tu look al siguiente nivel. Aunque el pelo del pincel es tan suave como la cola de una ardilla, no tienes nada de lo que preocuparte. Como es de esperar en The Body Shop, toda la línea está fabricada sin ningún tipo de crueldad en animales usando pelo sintético y madera de fuentes sostenibles para el mango. ¿Hemos dicho ya que toda la línea es 100% vegana?"
+;"p002145";"Brocha Oblicua para Colorete";"Nuestra brocha oblicua para colorete te ayudará a aplicar sombras, colorete e iluminador a la perfección ya que está especialmente diseñada para que domines las tendencias de maquillaje más actuales. Complementa nuestra gama de brochas y pinceles esenciales con esta brocha experta que llevará tu look al siguiente nivel. Aunque el pelo de la brocha es tan suave como la cola de una ardilla, no tienes nada de lo que preocuparte. Como es de esperar en The Body Shop, toda la línea está fabricada sin ningún tipo de crueldad en animales usando pelo sintético y madera de fuentes sostenibles para el mango. ¿Hemos dicho ya que toda la línea es 100% vegana?"
+;"p002171";"Gloss Mate";"Especialmente formulado para que sea tan fácil de aplicar como un gloss, este gloss mate proporciona el acabado cremoso, intenso y aterciopelado de una barra de labios mate. Nuestro gloss mate, disponible en 17 tonos, es ligero, suave y de larga duración. Además, como todo nuestro maquillaje sin crueldad en animales también es vegetariano."
+;"p002347";"Hidratante Corporal de Leche de Almendras y Miel";"Esta rica manteca corporal, enriquecida en aceites naturales, ha sido concebida para calmar y proteger la piel sensible. Di adiós a la tirantez y el picor en tu piel con 48 horas de intensa hidratación."
+;"p002419";"Aceite Reafirmante de Lima Kafir Spa of the World™";"Nuestro aceite corporal contiene lima kafir, muy valorada por las mujeres tailandesas debido a su estimulante y edificante aroma, ideal para reactivar los sentidos tras los fríos meses de invierno. Descubre un aceite tonificante y reafirmante, de rápida absorción en la piel, que además de lima de kafir contiene aceite de marula de Comercio con Comunidades para nutrir tu piel."
+;"p002437";"Drops of Glow Lustre Finish Creator";"Te presentamos tu nueva obsesión para strobing, el Drops of Glow Lustre Finish Creator. Un producto muy versátil que puedes usar solo o mezclándolo con tus productos de belleza favoritos para añadir luminosidad en cualquier lugar y en cualquier momento. Úsalo con tu base de maquillaje para lucir un rostro radiante y de aspecto sano o simplemente añádelo a tu hidratante de día, iluminarás tu rostro con solo unas gotas. Ilumina el arco de cupido, define los pómulos, acentúa los ojos aplicándolo sobre la sombra de ojos... las posibilidades son casi infinitas."
+;"p002445";"Mascarilla de Noche Anti-Imperfecciones Árbol de Té";"Despiértate con una piel sin imperfecciones! Nuestra Mascarilla de Noche Anti-imperfecciones Árbol de Té está especialmente formulada para tratar la piel grasa y las imperfecciones mientras duermes. Está enriquecida con ácido salicílico y aceite de árbol de té de Comercio con Comunidades. Esta mascarilla sin aclarado para piel grasa reduce las imperfecciones* y te ayuda a "
+;"p002448";"Esponja Blender";"Olvídate de las líneas y consigue un maquillaje uniforme con nuestra Esponja Blender multiusos. Su material y su forma te permiten aplicar la base de forma uniforme y sin esfuerzo en todas las áreas del rosto. Úsala con nuestra nueva Matte Clay Foundation para un acabado perfecto."
+;"p002449";"Champú purificante fuji green tea™";;
+;"p002453";"Aceite nutritivo de coco pre-champú";"Este producto combina aceite virgen de coco orgánico de Comercio con Comunidades y aceite de soja de Brasil, está enriquecido con aceite de pracaxi de Brasil y es 100% vegano. Puedes usar este tratamiento antes de tu ritual de cuidado del cabello, dejarlo actuar toda la noche o aplicarlo directamente en las puntas secas para darle un aspecto más fuerte y suave al cabello."
+;"p002457";"Mascarilla Purificante Antipolución de Té Matcha Japonés";"Enriquecido con té matcha de Kakegawa, Japón, extracto de diente de león y aloe vera de Comercio con Comunidades de Méjico, nuestra fórmula cremosa, 100% vegana,  exfolia y libera a tu piel de los restos de contaminantes provocados por la polución y de las impurezas del día a día"
+;"p002668";"Lápiz de Cejas Brow Sculpt";"Luce unas cejas perfectas con nuestro nuevo Brow Sculpt con una textura 3 en 1 que combina polvos, cera y máscara. Este lápiz te ayudará a conseguir una cejas de ensueño ya sea con un look natural o un look más atrevido. Disponible en 3 tonos."
+;"p002733";"Acondicionador Brillo de Fresa";"Dale vida al cabello apagado con el Acondicionador Brillo de Fresa. Luce una melena más suave, más brillante y con un dulce aroma a fresas italianas. Su fórmula sin siliconas y 100% vegana facilita el desenredado, hidrata el cabello y lo perfuma con una deliciosa fragancia."
+;"p000042v";"Lightening Touch 200ml";"¿Madrugas mucho y te acuestas tarde? Usa nuestro corrector difusor de luz para iluminar la zona inferior del ojo minimizando el aspecto de ojeras y líneas de expresión. Con un pincel que facilite su aplicación, este corrector iluminador será el producto estrella de tu neceser de maquillaje."
+;"p000048v";"All-In-One Face Base 200ml";"Gracias a su fácil aplicación y a su acabado suave aterciopelado, este maquillaje compacto es base y polvos todo en uno. La versatilidad de este producto permite usarlo de muchas formas para conseguir un acabado perfecto. "
+;"p000056v";"Esponja de Limpieza Facial 200ml";"Elimina el maquillaje y limpia suavemente la piel con esta esponja limpiadora suave."
+;"p000063v";"Cepillo De Modelado 200ml";"Este cepillo cuenta con tecnología para retener el calor del secador de pelo para conseguir un peinado eficaz.El mango tiene una forma especial que permite un agarre cómodo. El cepillado cuenta con una púas especiales que distribuyen los aceites naturales del cabello desde la raíz hasta la punta. "
+;"p000067v";"Toallita De Muselina 200ml";"Elimina el maquillaje y limpia suavemente tu piel con nuestras toallitas de muselina superfinas, para que luzca más suave y tersa. Combínalas con tu limpiador preferido para obtener los mejores resultados."
+;"p000069v";"Barras De Labios Colour Crush™ 200ml";"Una sola pasada de nuestras barras de labios hidratantes y cremosas da a tus labios un estallido de color. Con un sutil aroma a rosas y aceite de marula de Comercio con Comunidades para hidratar. Querrás una de cada color."
+;"p000106v";"Crema De Manos De Mango 200ml";"Esta crema de manos de uso diario es perfecta para hidratarte sobre la marcha, así que no puede faltar en tu bolso. Su fórmula ligera en crema gel de rápida absorción con el aroma tropical del mango protege y suaviza tus manos."
+;"p000111v";"Crema De Manos De Coco 200ml";"Esta crema de manos de uso diario es perfecta para hidratarte sobre la marcha, así que no puede faltar en tu bolso. Su fórmula ligera en crema gel de rápida absorción con el aroma refrescante del coco protege y suaviza tus manos."
+;"p000120v";"Cuidado Anticaspa Jengibre 200ml";"Refresca y calma tu cuero cabelludo con este champú revitalizante. Incluye además extracto de jengibre, extracto de corteza de abedul, extracto de sauce blanco y miel de Comercio con Comunidades de Etiopía."
+;"p000142v";"Gel para Cabello y Cuerpo Arber 200ml";"No necesitarás ni champú y ni acondicionador con este gel dos en uno, que deja la piel y el cabello limpios y perfumados con la fragancia sensual de Arber."
+;"p000184v";"Máscara Súper Volumen 200ml";"Usa está máscara que no se apelmaza para lucir un color y un volumen más intensos en las pestañas."
+;"p000222v";"All-In-One Instablur™ Universal 200ml";"Este corrector controla los brillos, oculta las imperfecciones y reduce el aspecto de los poros para que luzcas una piel perfecta a diario. Con 5 propiedades realzadoras de la belleza y aceite de marula de Comercio con Comunidades, Instablur™ se puede utilizar como base perfeccionadora previa al maquillaje o se puede usar solo para difuminar las imperfecciones y matificar la piel. Instablur™ es el arma (de belleza) secreta que estabas esperando."
+;"p000253v";"Baño de Burbujas Aceite de Argán 200ml";"Un baño de burbujas enriquecido con las propiedades súperhidratantes del aceite de argán. Sentirás tu piel mucho más suave tras cada baño."
+;"p000269v";"Aceite Sólido Para Labios De Argán Salvaje 200ml";"Deja que este aceite sólido, enriquecido con el poder nutritivo del aceite de argán de Marruecos, se funda con tus labios para lucir un bonito brillo natural. Su fórmula hidratante intensa acondiciona y suaviza tus labios en cada uso."
+;"p000341v";"Mascarilla de Noche Drops of Youth™ 200ml";"Esta refrescante mascarilla facial de noche ha sido especialmente desarrollada para combatir los primeros signos de la edad. Su innovadora textura en gel efecto memoria se moldea en el rostro como una segunda piel. Proporciona una sensación de frescura al instante y un acabado suave. Despiértate con una sensación de piel renovada, tersa y revitalizada cada mañana."
+;"p000362v";"Brow & Lash Gel 200ml";"Este gel transparente que incluye un cómodo aplicador controla las cejas rebeldes y las deja en su sitio. Úsalo en las pestañas para conseguir un look sin maquillaje natural y definido. "
+;"p000435v";"Perfilador de Ojos Skinny 200ml";"Este perfilador de ojos preciso y eficaz es ideal para crear líneas fluidas que definan los ojos y añadan intensidad a tu look. Úsalo para realzar la línea de las pestañas con su tono azabache."
+;"p000436v";"Gel Pen Liner 200ml";"Este perfilador de ojos cremoso se desliza por la piel creando una intensidad duradera que favorece y realza. Disponible en tres colores de gran pigmentación, nuestra fórmula resistente al agua dura horas."
+;"p000461v";"Crema de Manos de Cáñamo 200ml";"Di adiós  a la piel áspera y protege tus manos de los elementos con esta crema calmante y nutritiva con cáñamo."
+;"p000466v";"Desodorante Antitranspirante Activist 200ml";"Desodorante de larga duración y secado rápido. Para hombre. Con una esencia cálida y picante."
+;"p000467v";"Spray Bronceador para Piernas Honey Bronze™ 200ml";"Consigue un bronceado perfecto y uniforme en segundos con nuestro innovador spray bronceador. El gel en spray ligero y sin aceites es fácil de usar para que presumas de un bronceado natural e infalible."
+;"p000480v";"Polvos Bronceadores Honey Bronze™ 200ml";"Para conseguir el bronceado más natural, aplica nuestros polvos bronceadores enriquecidos con miel sobre la piel y presume de un resplandor dorado todo el año. Con tonos que se adaptan hasta a las pieles más claras, nuestros Polvos Bronceadores Honey Bronze™ te ofrecen un resplandor veraniego todo el año sin esfuerzo. Pasa la brocha sobre estos polvos compactos sin brillo para conseguir un look bronceado mate y uniforme."
+;"p000499v";"Baño De Leche Y Miel De Egipto 200ml";"El Baño de Miel y Leche de Egipto es una leche vegetal en polvo relajante que ayuda a suavizar y nutrir la piel mientras disfrutas del baño. Un producto maravilloso para recrear todos los beneficios de un spa profesional en tu casa."
+;"p000621v";"Perfilador De Labios 200ml";"Este suave lápiz define los labios y añade un acabado vibrante a tu color de labios."
+;"p000644v";"Desodorante White Musk® 200ml";"El desodorante White Musk® contiene una mezcla limpia, revitalizante y ligera de almizcle elaborado sin crueldad en animales, vetiver y sándalo. Combínalo con otros productos White Musk® para maximizar su fragancia."
+;"p000664v";"Loción Esencial Drops of Youth™ 200ml";"Esta loción esencial con una textura única en gel líquido, es un paso esencial después de limpiar la piel para prepararla para los siguientes pasos de la rutina facial. Sentirás la piel más suave al instante y profundamente hidratada. Enriquecida con una poderosa combinación de células madre vegetales de 3 plantas diferentes."
+;"p000676v";"Spray Para Pies Refrescante De Menta 200ml";"Revitaliza y refresca los pies cansados y doloridos con este refrescante spray para pies. Rocía tus pies con este spray enriquecido con aceite esencial de menta inglesa para obtener alivio cuando lo necesites."
+;"p000694v";"Mascarilla Hidratante Intensiva Vitamina E 200ml";"Mascarilla ligera y cremosa que restaura el nivel de hidratación natural de la piel. Alisa las arrugas provocadas por la deshidratación y deja la piel suave."
+;"p000726v";"Brow & Liner Kit 200ml";"Elige nuestro Brow & Liner Kit, que incluye una brocha doble para crear unas cejas perfectas. Define, da forma, rellena y delinea tus cejas con estos tonos suaves, y obtén un resultado impecable."
+;"p000767v";"Sérum para Cabello de Semilla de Uva 200ml";"Usa este sérum para suavizar tu pelo y aumentar su brillo. Para obtener mejores resultados, aplica un poco de producto por todo el cabello."
+;"p000787v";"Protector de Pies Cáñamo 200ml";"Calma y suaviza las durezas de tus pies con nuestro Protector de Pies de Cáñamo intensivo. Esta crema imprescindible restaura los niveles de hidratación de las zonas extremadamente secas de la piel."
+;"p000789v";"Peine para Desenredar 200ml";"Desenreda el pelo húmedo o seco sin esfuerzo con nuestro peine de púas anchas. La herramienta perfecta para distribuir un producto sobre tu pelo fácilmente."
+;"p000795v";"Gel Purificante para Manos de Mandarina 200ml";"Disfruta de unas manos limpias y frescas con el afrutado Gel Purificante para Manos de Mandarina. Ideal para viajar o llevar en el bolso para usarlo sobre la marcha."
+;"p000797v";"Gel Purificante Para Manos De Pomelo Rosa 200ml";"Disfruta de unas manos limpias y frescas con el Gel Purificante para Manos de Pomelo Rosa. Ideal para viajar o llevar en el bolso para usarlo sobre la marcha."
+;"p000810v";"Crema Contorno de Ojos Vitamina E 200ml";"Crema hidratante que protege la piel frágil del contorno de los ojos, descongestiona y atenúa las arruguitas y las ojeras dejando la piel suave e hidratada."
+;"p000851v";"Colorete All-In-One 200ml";"Usa este colorete en polvo para aplicar una o varias capas de color. Pasa la brocha por uno de los increíbles tonos y luce un resplandor radiante en las mejillas. Gracias a la vitamina E y al aceite de marula de Comercio con Comunidades, este producto maquilla y cuida de piel a la vez."
+;"p000936v";"Desmaquillante de Ojos Suave de Camomila 200ml";"Elimina el maquillaje de la zona que rodea los ojos. El Desmaquillante de Ojos de la línea de Camomila limpia suavemente para dejar una piel suave y limpia."
+;"p000971v";"Mascarilla de Arcilla Equilibrante de Algas Marinas 200ml";"Limpia la piel en profundidad con nuestra mascarilla de arcilla de algas marinas. Notarás una sensación refrescante, revitalizante y pura."
+;"p001050v";"Instaglow CC Cream 200ml";"Un producto base de maquillaje con propiedades para el cuidado facial que aporta un aspecto saludable y luminoso a todos los tonos de piel y etnias. "
+;"p001081v";"Drops Of Sun Honey Bronze 200ml";"Drops of Sun de Honey Bronze  es un  gel líquido sin brillo  y  con color que broncea tu cutis, aportando una luminosidad sana y natural.Conseguirás un bronceado natural al instante."
+;"p001102v";"Mascarilla Exfoliante Facial 3 en 1 Árbol de Té 200ml";"Un producto 3 en 1 que podrás utilizar como lavado facial, mascarilla y/o exfoliante para compatir imperfecciones y el exceso de grasa."
+;"p002001v";"Paleta de Sombras de Ojos Down to Earth 200ml";"Descubre una amplia gama de sombras de tonos neutros para destacar la belleza natural de la piel y el color de los ojos."
+;"p002002v";"Mascarilla Cuidado Experto Purificante de Carbón del Himalaya 200ml";"Refina y reaviva tu piel con nuestra Mascarilla Cuidado Experto Purificante de Carbón del Himalaya. Inspirada en las tradiciones de Ayurvedic, esta mascarilla 100% vegana acaba con las imperfecciones y refina la apariencia de los poros para una piel de aspecto más sano."
+;"p002013v";"Crema Gel Contorno Ojos Oils of Life 200ml";"Hecho a base de tres aceites de semilla conocidos por sus propiedades revitalizantes y reparadoras. Su textura gel es ultraligera. Revitaliza el contorno de los ojos y reduce los signos de la edad."
+;"p002017v";"Cepillo Limpiador Súper Suave 200ml";"Este cepillo súper suave es perfecto para todos los tipos de piel. Hecho con fibras tan suaves como la seda, que son tan finas que alcanzarán, incluso, las zonas más difíciles."
+;"p002144v";"Pincel Abanico 200ml";"Nos encanta este pincel. Es ideal para aplicar iluminador y colorete y está especialmente diseñado para que domines el arte de iluminar tu rostro con suavidad. Complementa nuestra gama de brochas y pinceles esenciales con este pincel experto que llevará tu look al siguiente nivel. Aunque el pelo del pincel es tan suave como la cola de una ardilla, no tienes nada de lo que preocuparte. Como es de esperar en The Body Shop, toda la línea está fabricada sin ningún tipo de crueldad en animales usando pelo sintético y madera de fuentes sostenibles para el mango. ¿Hemos dicho ya que toda la línea es 100% vegana?"
+;"p002145v";"Brocha Oblicua para Colorete 200ml";"Nuestra brocha oblicua para colorete te ayudará a aplicar sombras, colorete e iluminador a la perfección ya que está especialmente diseñada para que domines las tendencias de maquillaje más actuales. Complementa nuestra gama de brochas y pinceles esenciales con esta brocha experta que llevará tu look al siguiente nivel. Aunque el pelo de la brocha es tan suave como la cola de una ardilla, no tienes nada de lo que preocuparte. Como es de esperar en The Body Shop, toda la línea está fabricada sin ningún tipo de crueldad en animales usando pelo sintético y madera de fuentes sostenibles para el mango. ¿Hemos dicho ya que toda la línea es 100% vegana?"
+;"p002171v";"Gloss Mate 200ml";"Especialmente formulado para que sea tan fácil de aplicar como un gloss, este gloss mate proporciona el acabado cremoso, intenso y aterciopelado de una barra de labios mate. Nuestro gloss mate, disponible en 17 tonos, es ligero, suave y de larga duración. Además, como todo nuestro maquillaje sin crueldad en animales también es vegetariano."
+;"p002347v";"Hidratante Corporal de Leche de Almendras y Miel 200ml";"Esta rica manteca corporal, enriquecida en aceites naturales, ha sido concebida para calmar y proteger la piel sensible. Di adiós a la tirantez y el picor en tu piel con 48 horas de intensa hidratación."
+;"p002419v";"Aceite Reafirmante de Lima Kafir Spa of the World™ 200ml";"Nuestro aceite corporal contiene lima kafir, muy valorada por las mujeres tailandesas debido a su estimulante y edificante aroma, ideal para reactivar los sentidos tras los fríos meses de invierno. Descubre un aceite tonificante y reafirmante, de rápida absorción en la piel, que además de lima de kafir contiene aceite de marula de Comercio con Comunidades para nutrir tu piel."
+;"p002437v";"Drops of Glow Lustre Finish Creator 200ml";"Te presentamos tu nueva obsesión para strobing, el Drops of Glow Lustre Finish Creator. Un producto muy versátil que puedes usar solo o mezclándolo con tus productos de belleza favoritos para añadir luminosidad en cualquier lugar y en cualquier momento. Úsalo con tu base de maquillaje para lucir un rostro radiante y de aspecto sano o simplemente añádelo a tu hidratante de día, iluminarás tu rostro con solo unas gotas. Ilumina el arco de cupido, define los pómulos, acentúa los ojos aplicándolo sobre la sombra de ojos... las posibilidades son casi infinitas."
+;"p002445v";"Mascarilla de Noche Anti-Imperfecciones Árbol de Té 200ml";"Despiértate con una piel sin imperfecciones! Nuestra Mascarilla de Noche Anti-imperfecciones Árbol de Té está especialmente formulada para tratar la piel grasa y las imperfecciones mientras duermes. Está enriquecida con ácido salicílico y aceite de árbol de té de Comercio con Comunidades. Esta mascarilla sin aclarado para piel grasa reduce las imperfecciones* y te ayuda a "
+;"p002448v";"Esponja Blender 200ml";"Olvídate de las líneas y consigue un maquillaje uniforme con nuestra Esponja Blender multiusos. Su material y su forma te permiten aplicar la base de forma uniforme y sin esfuerzo en todas las áreas del rosto. Úsala con nuestra nueva Matte Clay Foundation para un acabado perfecto."
+;"p002449v";"Champú purificante fuji green tea™ 200ml";;
+;"p002453v";"Aceite nutritivo de coco pre-champú 200ml";"Este producto combina aceite virgen de coco orgánico de Comercio con Comunidades y aceite de soja de Brasil, está enriquecido con aceite de pracaxi de Brasil y es 100% vegano. Puedes usar este tratamiento antes de tu ritual de cuidado del cabello, dejarlo actuar toda la noche o aplicarlo directamente en las puntas secas para darle un aspecto más fuerte y suave al cabello."
+;"p002457v";"Mascarilla Purificante Antipolución de Té Matcha Japonés 200ml";"Enriquecido con té matcha de Kakegawa, Japón, extracto de diente de león y aloe vera de Comercio con Comunidades de Méjico, nuestra fórmula cremosa, 100% vegana,  exfolia y libera a tu piel de los restos de contaminantes provocados por la polución y de las impurezas del día a día"
+;"p002668v";"Lápiz de Cejas Brow Sculpt 200ml";"Luce unas cejas perfectas con nuestro nuevo Brow Sculpt con una textura 3 en 1 que combina polvos, cera y máscara. Este lápiz te ayudará a conseguir una cejas de ensueño ya sea con un look natural o un look más atrevido. Disponible en 3 tonos."
+;"p002733v";"Acondicionador Brillo de Fresa 200ml";"Dale vida al cabello apagado con el Acondicionador Brillo de Fresa. Luce una melena más suave, más brillante y con un dulce aroma a fresas italianas. Su fórmula sin siliconas y 100% vegana facilita el desenredado, hidrata el cabello y lo perfuma con una deliciosa fragancia."
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+# Update review ratings
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];reviewRating;type(code)[default=SIZE];$catalogVersion;$approved
+;p003257;2.8
+;p000341;5.0
+;p002002;1.2
+;p002445;4.3
+;p003101;3.3
+;p001102;2.0
+;p002457;2.5
+;p000971;4.5
+;p003255;3.2
+;p003254;2.1
+;p003173;4.3
+;p000694;1.5
+;p002003;2.3
+;p000936;4.4
+;p002013;3.0
+;p000810;1.2
+;p002833;1.4
+;p003268;1.6
+;p002835;1.8
+;p000664;2.0
+;p003259;2.2
+;p000067;2.4
+;p000056;2.6
+;p002017;2.8
+;p000499;3.0
+;p000253;3.2
+;p000019;3.4
+;p002347;3.6
+;p002812;3.8
+;p002419;4.0
+;p000480;4.2
+;p002863;4.4
+;p000466;4.6
+;p000644;4.8
+;p000787;5.0
+;p000676;1.1
+;p000461;1.3
+;p000111;1.5
+;p000106;1.7
+;p000795;1.9
+;p000797;2.1
+;p003200;2.3
+;p000789;2.5
+;p000063;2.7
+;p003090;2.9
+;p002733;3.1
+;p000142;3.3
+;p000120;3.5
+;p002449;3.7
+;p003091;3.9
+;p000767;4.1
+;p002453;4.3
+;p002144;4.7
+;p002448;4.9
+;p002145;1.0
+;p003111;1.3
+;p000360;1.6;COLOUR
+;p001081;1.9
+;p002819;2.2
+;p000467;2.5
+;p000851;2.8
+;p000436;3.1
+;p000435;3.4
+;p002668;3.7
+;p000362;4.0
+;p000726;4.3
+;p002817;4.6
+;p003237;4.9
+;p002001;1.0
+;p000048;1.2
+;p002867;1.4
+;p000042;1.6
+;p002171;1.8
+;p000069;2.2
+;p000621;2.4
+;p003235;2.6
+;p000184;2.8
+;p002818;3.0
+;p000222;3.2
+;p002437;3.4
+;p001050;3.6
+;p000269;3.8
+;p003087;3.2
+;p000657;3.3;COLOUR
+;p000247;4.8

@@ -1,0 +1,51 @@
+.promotions {
+  width: 100%;
+  position: relative;
+
+  &__inner {
+    transition: all 1s ease-in-out;
+    padding: 10px;
+    text-align: center;
+    color: var(--cx-color-core-primary);
+    background-color: var(--cx-color-info);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &--wrap {
+      flex-wrap: wrap;
+    }
+  }
+
+  &__highlight {
+    font-family: $links-font-family;
+    padding-bottom: 2px;
+    position: relative;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--cx-color-core-secondary);
+    border-bottom: 1px solid var(--cx-color-core-secondary);
+  }
+
+  &__dismiss {
+    align-self: auto;
+    position: absolute;
+    right: 30px;
+    display: flex;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &--totals {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    align-items: center;
+  }
+}
+
+app-promotion-free-delivery {
+  width: 100%;
+}

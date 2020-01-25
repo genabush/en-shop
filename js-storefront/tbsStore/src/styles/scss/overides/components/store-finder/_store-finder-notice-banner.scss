@@ -1,0 +1,29 @@
+.notice-banner {
+  @include media-breakpoint-down(md) {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  background-color: #f2d4d2;
+  &__text-content {
+    text-align: center;
+    margin: 0 10px 0 0;
+    @include media-breakpoint-up(md) {
+      margin: 2rem 4rem 2rem 2rem;
+    }
+  }
+  &__heading {
+    display: block;
+    text-transform: uppercase;
+    color: $danger-content;
+  }
+  &__text {
+    margin-bottom: 0;
+  }
+  &__img {
+    margin-top: -62px;
+    max-width: 84px;
+    margin-bottom: -13px;
+  }
+}

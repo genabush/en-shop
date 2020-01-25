@@ -1,0 +1,14 @@
+<div class="mb-4 collection-point-tab">
+  <h3 class="cx-checkout-title d-flex mb-3">{{ 'collectionPoint.title' | cxTranslate }}</h3>
+  <app-custom-cis-finder [ngClass]="{ 'd-none': cisInfo$ | async }" [events]="eventsSubject"></app-custom-cis-finder>
+
+  <app-collection-point-item
+    *ngIf="cisInfo$ | async as cis"
+    [data]="cis"
+    [dataType]="'cis'"
+    [showInfoModalBtn]="true"
+    [showInfoBtn]="false"
+    [showChangeBtn]="true"
+    (changeCollectionPointEmit)="onChangeCollectionPoint()"
+  ></app-collection-point-item>
+</div>

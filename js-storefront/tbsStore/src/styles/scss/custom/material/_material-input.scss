@@ -1,0 +1,160 @@
+$textarea-height-sm: 10rem;
+$textarea-height: 6.5rem;
+
+.mat-form-field-type-mat-input {
+  &.mat-input {
+    &-primary {
+      .mat-form-control {
+        font-family: $work-sans;
+        color: $core-primary;
+      }
+
+      .mat-form-field-flex {
+        background: $base-nourishing-white;
+        padding: 0.45rem 1rem 0 1rem;
+        height: $mat-form-field-height;
+      }
+
+      .mat-form-field-underline {
+        background-color: rgba($core-primary, 0.4);
+
+        .mat-form-field-ripple {
+          background-color: $core-primary;
+        }
+      }
+
+      &.mat-form-field-invalid {
+        margin-bottom: 1.6rem;
+        .mat-form-field-underline {
+          background-color: rgba($danger, 0.4);
+
+          .mat-form-field-ripple {
+            background-color: $danger;
+          }
+        }
+
+        .mat-form-field-label {
+          color: $danger;
+        }
+      }
+      .mat-error,
+      .mat-hint {
+        font-family: $work-sans;
+        color: $base-metal;
+      }
+      &-readonly {
+        pointer-events: none;
+        .mat-form-field-flex {
+          background-color: var(--cx-color-base-silver);
+        }
+      }
+      .mat-input-element:-moz-read-only {
+        color: var(--cx-color-core-primary);
+        background-color: var(--cx-color-base-silver);
+      }
+      .mat-input-element:read-only {
+        color: var(--cx-color-core-primary);
+        background-color: var(--cx-color-base-silver);
+      }
+    }
+
+    &-tertiary {
+      .mat-form-field-underline {
+        background-color: rgba($core-tertiary, 0.4);
+
+        .mat-form-field-ripple {
+          background-color: $core-tertiary;
+        }
+      }
+    }
+
+    // Eg. Footer signup newsletter
+    &-quaternary {
+      .mat-form-control {
+        font-family: $work-sans;
+        color: #c5ccc1;
+        font-weight: 300;
+      }
+
+      .mat-form-field-label.mat-form-field-empty,
+      .mat-form-field.mat-primary .mat-form-field-label.mat-form-field-empty {
+        color: $misc-field-hint;
+      }
+
+      .mat-form-field-infix {
+        border-top: 0.85rem solid transparent;
+      }
+
+      .mat-form-field-flex {
+        background: $misc-field-bg;
+        padding: 0.45rem 1rem 0 1rem;
+        height: $mat-form-field-height;
+        border-radius: 0;
+      }
+
+      .mat-form-field-underline {
+        background-color: $border-colour-3;
+        .mat-form-field-ripple {
+          background-color: $border-colour-3;
+        }
+      }
+    }
+  }
+
+  .mat-form-field {
+    &-infix {
+      padding: 0;
+      border-top: 0.95rem solid transparent;
+    }
+
+    &-label-wrapper {
+      top: -0.95rem;
+      padding-top: 0.95rem;
+    }
+
+    &-wrapper {
+      padding: 0;
+      height: $mat-form-field-height;
+    }
+
+    &-underline {
+      -webkit-transform: scaleY(1);
+      transform: scaleY(1);
+    }
+
+    &-subscript-wrapper {
+      padding: 0.5rem 0 0 0 !important;
+      line-height: 1.2;
+    }
+  }
+  &.mat-input-textarea {
+    max-height: $textarea-height-sm;
+    .mat-form-field {
+      max-height: $textarea-height-sm;
+      &-wrapper {
+        height: $textarea-height-sm;
+      }
+      &-flex {
+        height: $textarea-height-sm;
+      }
+    }
+    @include media-breakpoint-up(md) {
+      max-height: $textarea-height;
+
+      .mat-form-field {
+        max-height: $textarea-height;
+        &-wrapper {
+          height: $textarea-height;
+        }
+        &-flex {
+          height: $textarea-height;
+        }
+      }
+      .mat-input-element {
+        height: $textarea-height;
+        overflow: auto;
+        resize: none;
+      }
+    }
+  }
+}

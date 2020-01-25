@@ -1,0 +1,45 @@
+
+<div class="amp-dc-simple-banner {{#if backgroundPalette}}bg--{{backgroundPalette}} {{#if backgroundPaletteOpacity}} bg--{{backgroundPalette}}-{{backgroundPaletteOpacity.value}}{{/if}}{{/if}}" 
+style="{{#with bg}}background: url('https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}') 50% 50% / cover no-repeat!important{{else}}background-color:{{backgroundColour}}!important{{/with}}">
+      
+   
+    <div class="amp-dc-simple-banner__content">
+ 
+        {{#each mediaField}}
+        
+            <div class="amp-dc-simple-banner__media">
+                {{#if (test this.[@type] (toRegex ".*/image"))}}
+                    <img src="https://{{image.defaultHost}}/i/{{image.endpoint}}/{{image.name}}"/>
+                {{/if}}
+                {{#if (test this.[@type] (toRegex ".*/video"))}}
+                    <video controls autoplay loop src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{video.name}}/mp4_720p">
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_480p" data-res="Medium" data-bitrate="689" label="Medium" type="video/mpeg4" codecs="h264" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_240p" data-res="Low" data-bitrate="325" label="Low" type="video/mpeg4" codecs="h264" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_720p" data-res="High" data-bitrate="2000" label="High" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_480p" data-res="Medium" data-bitrate="624" label="Medium" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_240p" data-res="Low" data-bitrate="325" label="Low" type="video/webm" codecs="vp8" />
+                        <source src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_720p?protocol=https" data-res="High" data-bitrate="2119" label="High" type="video/mpeg4" codecs="h264" />
+                    </video>
+                {{/if}}
+            </div>
+            
+        {{/each}}
+        
+        <div class="amp-dc-simple-banner__text-content  txt--center {{#if textBackgroundPalette}}bg--{{textBackgroundPalette}} {{#if textBackgroundPaletteOpacity}}bg--{{textBackgroundPalette}}-{{textBackgroundPaletteOpacity.value}}{{/if}}{{/if}}" style="{{#if textBackgroundPalette}}{{else}}background-color:{{textBackgroundColour}}!important{{/if}}; color:{{textColour}}!important">
+             {{#if heading2}}
+                <h2 class="amp-dc-simple-banner__h2 font--{{heading2Font}} {{#with heading2Colour}}txt--{{colour}}{{/with}}">{{heading2}}</h2>
+            {{/if}}
+    
+            {{#if bodyCopy}}
+                <div class="amp-dc-simple-banner__body {{#with bodyCopyColour}}txt--{{colour}}{{/with}}">{{bodyCopy}}</div>
+            {{/if}}
+    
+            {{#if ctaUrl}}
+                <a href="{{ctaUrl}}" class="amp-dc-simple-banner__btn btn {{#contains ctaStyle "secondary"}}btn--secondary{{else}}btn--primary{{/contains}}{{#contains ctaStyle "light"}} btn--invert{{/contains}}" {{#is ctaBehaviour 'new-tab'}} target="_blank"{{/is}}>{{ctaCopy}}</a>
+            {{/if}}
+        </div>
+            
+    </div>
+</div>
+        
+   

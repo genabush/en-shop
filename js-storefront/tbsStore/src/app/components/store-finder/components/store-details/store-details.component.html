@@ -1,0 +1,100 @@
+<ng-container *ngIf="location || (!(isLoading$ | async) && (location$ | async)) as location; else loading">
+  <app-store-banner [location]="location"></app-store-banner>
+  <app-notice-banner [data]="location"></app-notice-banner>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <agm-map
+          [latitude]="location.geoPoint.latitude"
+          [longitude]="location.geoPoint.longitude"
+          [usePanning]="true"
+          [zoom]="12"
+          [disableDefaultUI]="false"
+        >
+          <agm-marker
+            [latitude]="location.geoPoint.latitude"
+            [longitude]="location.geoPoint.longitude"
+            [iconUrl]="mapIcons.primary"
+          >
+          </agm-marker>
+        </agm-map>
+      </div>
+    </div>
+
+    <div class="row " *ngIf="location?.features && location?.features?.entry?.length > 0">
+      <div class="col-12 ">
+        <div class="store-details-features">
+          <div
+            [attr.aria-label]="'storeFinder.storeFeatures.title' | cxTranslate"
+            class="store-details-features__title"
+          >
+            {{ 'storeFinder.storeFeatures.title' | cxTranslate }}
+          </div>
+          <div class="store-details-features__item" *ngFor="let feature of location.features.entry">
+            <span [attr.aria-label]="feature.value" class="icon {{ 'icon--' + feature.key }}"></span>
+            {{ feature.value }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-12">
+        <div class="store-details-wrapper mb-2">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <app-opening-hours
+                *ngIf="location.openingHours && location.openingHours.weekDayOpeningList.length"
+                [data]="location.openingHours.weekDayOpeningList"
+              ></app-opening-hours>
+            </div>
+            <div class="col-12 col-md-4">
+              <app-opening-hours
+                *ngIf="location.openingHours && location.openingHours.specialDayOpeningList.length"
+                [data]="location.openingHours && location.openingHours.specialDayOpeningList"
+              ></app-opening-hours>
+            </div>
+            <div class="col-12 col-md-4">
+              <div
+                [attr.aria-label]="'storeFinder.contactDetails' | cxTranslate"
+                class="store-details__section-heading store-details__section-heading--blue"
+              >
+                <span class="icon icon--location"></span>{{ 'storeFinder.contactDetails' | cxTranslate }}
+              </div>
+              <div class="store-details__section-content">
+                <div class="store-details" *ngIf="location?.address && location?.displayName">
+                  <div [attr.aria-label]="location.displayName" class="store-details__name">
+                    {{ location.displayName }}
+                  </div>
+                  <div [attr.aria-label]="location.address.formattedAddress" class="store-details__address">
+                    {{ location.address.formattedAddress }}
+                  </div>
+                  <a
+                    [attr.aria-label]="'tel:' + location.address.phone"
+                    href="{{ 'tel:' + location.address.phone }}"
+                    class="store-details__phone"
+                    >{{ location.address.phone }}</a
+                  >
+                  <a
+                    *ngIf="searchedLocation$ | async as searchedLocation"
+                    href="https://maps.google.com?saddr={{ searchedLocation?.lat }}, {{
+                      searchedLocation?.lng
+                    }}&daddr={{ location.geoPoint.latitude }},{{ location.geoPoint.longitude }}"
+                    target="_blank"
+                    class="btn btn--primary"
+                    [attr.aria-label]="'storeFinder.directions' | cxTranslate"
+                  >
+                    {{ 'storeFinder.directions' | cxTranslate }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="cx-spinner"><cx-spinner></cx-spinner></div>
+</ng-template>

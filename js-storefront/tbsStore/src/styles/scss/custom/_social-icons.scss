@@ -1,0 +1,19 @@
+.social-icons {
+  @extend .list-unstyled;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  &__link {
+    padding: 0 10px;
+    display: flex;
+  }
+  &__icon {
+    font-size: 22px;
+    @include media-breakpoint-up(md) {
+      font-size: 24px;
+    }
+    color: var(--cx-color-background);
+  }
+}

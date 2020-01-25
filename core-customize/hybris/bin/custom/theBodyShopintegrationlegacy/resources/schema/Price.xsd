@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/priceSchema" xmlns:tns="http://thebodyshop/priceSchema" elementFormDefault="qualified">
+
+	<xs:element name="PriceRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Price" type="tns:Price" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Price">
+		<xs:sequence>
+			<xs:element name="ArticleId">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1" />
+						<xs:maxLength value="18" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Value">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:maxInclusive value="999999999999" /> 
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Currency">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Z]{3}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Type" type="tns:PriceTypeEnum" />
+			<xs:element name="Market" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="PriceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="statusCode" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>The response of Price Feed Request</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+                <xs:element name="messageId" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>The Hybris Id of the Price Feed</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="PriceTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RRP" />
+			<xs:enumeration value="COST" />
+		</xs:restriction>
+	</xs:simpleType>
+  
+</xs:schema>

@@ -1,0 +1,57 @@
+<h3 class="cx-checkout-title d-none d-lg-block d-xl-block">
+  {{ 'checkoutAddress.billingAdress' | cxTranslate }}
+</h3>
+<div class="form-group mt-3" *ngIf="checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY">
+  <mat-checkbox
+    class="mat-checkbox-primary"
+    type="checkbox"
+    [attr.aria-label]="'addressForm.saveToAccount' | cxTranslate"
+    [checked]="sameAsShippingAddress"
+    (change)="toggleShippingAddressEvent.emit()"
+    >{{ 'addressForm.sameAsShippingAddress' | cxTranslate }}</mat-checkbox
+  >
+</div>
+<ng-container
+  *ngIf="
+    checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY && sameAsShippingAddress && shippingAddress$
+      | async as shippingAddress;
+    else billingAddressForm
+  "
+>
+  <div class="mat-select-trigger col-12 col-lg-6 mb-4 px-0">
+    <div class="cx-card-address-option w-100">
+      <div class="cx-address-card-inner h-100" *ngIf="shippingAddress">
+        <cx-card
+          [border]="true"
+          [fitToContainer]="true"
+          [content]="[shippingAddress] | addressSelectCard: { formControlValue: undefined, regions: regionsList }"
+        ></cx-card>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #billingAddressForm>
+  <!-- BILLING ADDRESS CARDS LIST -->
+  <ng-container>
+    <cx-checkout-address-cards
+      [selectedAddress]="selectedBillingAddress"
+      [userAddresses]="existingAddresses$.value"
+      [isLoadingAddresses]="isLoadingAddresses | async"
+      (addressSelectEmit)="addressSelectedEvent.emit($event)"
+      (addressAddEmit)="addressAddEvent.emit()"
+      class="d-flex flex-row mb-0 col-12 col-lg-6 px-0 pr-lg-3"
+    ></cx-checkout-address-cards>
+    <div class="cx-checkout-btns col-12 col-lg-6 text-right">
+      <button
+        type="button"
+        class="mat-form-field-address-btn-edit"
+        *ngIf="selectedBillingAddress"
+        (click)="addressEditEvent.emit()"
+      >
+        <span class="icon icon--edit"></span>
+        {{ 'common.edit' | cxTranslate }}
+      </button>
+    </div>
+  </ng-container>
+</ng-template>

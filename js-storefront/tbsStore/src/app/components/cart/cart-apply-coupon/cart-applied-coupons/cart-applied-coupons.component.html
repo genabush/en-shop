@@ -1,0 +1,91 @@
+<div *ngIf="isReadOnly; else editableCoupons">
+  <div *ngIf="vouchers.length > 0">
+    <div [attr.aria-label]="'voucher.vouchersApplied' | cxTranslate" class="cx-applied-coupon-title">
+      {{ 'voucher.vouchersApplied' | cxTranslate }}
+    </div>
+  </div>
+  <div *ngFor="let voucher of vouchers" class="coupon-summary cx-coupon-card textonly" role="filter">
+    <span [attr.aria-label]="voucher.voucherCode" class="cx-applied-coupon-code">{{ voucher.voucherCode }}</span>
+  </div>
+</div>
+
+<ng-template #editableCoupons>
+  <div class="cx-cart-coupon__voucher-wrapper-row row p-3">
+    <div
+      *ngFor="let voucher of sortedVouchers"
+      class="col-sm-12 col-md-6 col-lg-12 cx-coupon-card-grid p-3"
+      role="filter"
+    >
+      <div class="cx-coupon-apply cx-coupon-card cx-coupon-list-wrap">
+        <span [attr.aria-label]="voucher.voucherCode" class="cx-cart-coupon-code">{{ voucher.voucherCode }}</span>
+        <button
+          type="button"
+          class="close link"
+          aria-label="Close"
+          (click)="openRemovalModal(voucher.voucherCode)"
+          [disabled]="cartIsLoading"
+          [class.disabled]="cartIsLoading"
+        >
+          <span aria-hidden="true">
+            <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- REMOVE COUPON MODAL -->
+<ng-template #removeCouponModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h2 [attr.aria-label]="'cart.promoVouchers.removeModalTitle'" class="modal-title mt-3">
+      {{ 'cart.promoVouchers.removeModalTitle' | cxTranslate }}
+    </h2>
+
+    <button
+      type="button"
+      class="btn close"
+      [attr.aria-label]="'common.closeBtn' | cxTranslate"
+      (click)="closeRemovalModal()"
+    >
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12 px-0">
+        <form id="remove-voucher-form" [formGroup]="removeModalForm" (submit)="removeModalSubmit($event)">
+          <p [attr.aria-label]="'cart.promoVouchers.removeModalParagraph' | cxTranslate" class="mt-3">
+            {{ 'cart.promoVouchers.removeModalParagraph' | cxTranslate }}
+          </p>
+          <div class="d-flex flex-column flex-lg-row flex-wrap">
+            <div class="col-12 col-lg-6 pl-lg-0">
+              <button
+                role="button"
+                type="button"
+                class="btn btn--secondary w-100"
+                [attr.aria-label]="'common.cancelBtn' | cxTranslate"
+                (click)="closeRemovalModal()"
+              >
+                {{ 'common.cancelBtn' | cxTranslate }}
+              </button>
+            </div>
+            <div class="mt-2 mt-lg-0 col-12 col-lg-6 pr-lg-0">
+              <button
+                role="button"
+                type="submit"
+                class="btn btn--primary w-100"
+                [attr.aria-label]="'common.removeBtn' | cxTranslate"
+                title="{{ 'common.removeBtn' | cxTranslate }}"
+              >
+                {{ 'common.removeBtn' | cxTranslate }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

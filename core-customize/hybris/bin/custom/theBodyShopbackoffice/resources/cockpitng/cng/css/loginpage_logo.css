@@ -1,0 +1,9 @@
+@IMPORT url("login.css");
+
+.login-wrapper:before {
+    content: '';
+    display: block;
+    background: url("images/tbs-logo.png") no-repeat transparent center;
+    background-size: contain;
+    height: 100px;
+    margin-bottom: 60px; }

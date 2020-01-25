@@ -1,0 +1,16 @@
+<div *ngIf="crumbs$ | async as crumbs" [ngClass]="classes">
+  <nav class="breadcrumbs-content mx-auto text-left" *ngIf="crumbs?.length > 0">
+    <span *ngFor="let crumb of crumbs">
+      <a
+        role="link"
+        [routerLink]="crumb.link"
+        [innerHTML]="crumb.label"
+        title="{{ crumb.label }}"
+        [attr.aria-label]="crumb.label"
+      ></a>
+    </span>
+    <ng-container *ngIf="title$ | async as title">
+      <span class="breadcrumbs-title pl-2" *ngIf="title !== 'Homepage'">{{ title }}</span>
+    </ng-container>
+  </nav>
+</div>

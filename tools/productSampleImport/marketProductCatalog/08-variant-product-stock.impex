@@ -1,0 +1,67 @@
+#Accepted Values are tbsATProductCatalog, tbsAUProductCatalog, tbsCAProductCatalog, tbsDEProductCatalog, tbsDKProductCatalog, tbsESProductCatalog, tbsFRProductCatalog, tbsHKProductCatalog, tbsNLProductCatalog, tbsSEProductCatalog, tbsSGProductCatalog, tbsUKProductCatalog, tbsUSProductCatalog
+$productCatalog=tbsUKProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+#Accepted Values are DC01, DC11, DC02, DC14, DC29, default
+#default	-	Default Warehouse
+#DC01	-	UK DC
+#DC11	-	Germany DC
+#DC02	-	USA DC
+#DC14	-	Mexico DC
+#DC29	-	Australia DC
+$warehouse=DC01
+
+INSERT_UPDATE StockLevel ; productCode[unique=true] ; available ; warehouse(code)[unique=true] ; inStockStatus(code) ; maxPreOrder ; maxStockLevelHistoryCount ; overSelling ; preOrder ; reserved
+                         ; p000326v                 ; 10        ; DC01                         ; notSpecified        ; 0           ; 0                         ; 0           ; 0        ; 0       
+
+
+						;1019272					;100		;DC01							;notSpecified		;0				;0							;0				;0		;0;
+						;1019402;100;DC01;notSpecified;0;0;0;0;0;
+						;1000701;100;DC01;notSpecified;0;0;0;0;0;
+						;1094741;100;DC01;notSpecified;0;0;0;0;0;
+						;1094150;100;DC01;notSpecified;0;0;0;0;0;
+						;1094166;100;DC01;notSpecified;0;0;0;0;0;
+						;1019212;100;DC01;notSpecified;0;0;0;0;0;
+						;1019213;100;DC01;notSpecified;0;0;0;0;0;
+						;1094320;100;DC01;notSpecified;0;0;0;0;0;
+						;1094162;100;DC01;notSpecified;0;0;0;0;0;
+						;1092127;100;DC01;notSpecified;0;0;0;0;0;
+						;1092126;100;DC01;notSpecified;0;0;0;0;0;
+						;1094191;100;DC01;notSpecified;0;0;0;0;0;
+						;1094319;100;DC01;notSpecified;0;0;0;0;0;
+						;1097406;100;DC01;notSpecified;0;0;0;0;0;
+						;1097409;100;DC01;notSpecified;0;0;0;0;0;
+						;1094138;100;DC01;notSpecified;0;0;0;0;0;
+						;1094188;100;DC01;notSpecified;0;0;0;0;0;
+						;1097159;100;DC01;notSpecified;0;0;0;0;0;
+						;1097168;100;DC01;notSpecified;0;0;0;0;0;
+						;1093652;100;DC01;notSpecified;0;0;0;0;0;
+						;1094168;100;DC01;notSpecified;0;0;0;0;0;
+						;1094137;100;DC01;notSpecified;0;0;0;0;0;
+						;1094176;100;DC01;notSpecified;0;0;0;0;0;
+						;1094311;100;DC01;notSpecified;0;0;0;0;0;
+						;1097418;100;DC01;notSpecified;0;0;0;0;0;
+						;1097419;100;DC01;notSpecified;0;0;0;0;0;
+						;1096984;100;DC01;notSpecified;0;0;0;0;0;
+						;1097082;100;DC01;notSpecified;0;0;0;0;0;
+						;1016297;100;DC01;notSpecified;0;0;0;0;0;
+						;1016301;100;DC01;notSpecified;0;0;0;0;0;
+						;1018251;100;DC01;notSpecified;0;0;0;0;0;
+						;1096700;100;DC01;notSpecified;0;0;0;0;0;
+						;1094133;100;DC01;notSpecified;0;0;0;0;0;
+						;1093344;100;DC01;notSpecified;0;0;0;0;0;
+						;1093345;100;DC01;notSpecified;0;0;0;0;0;
+						;1094164;100;DC01;notSpecified;0;0;0;0;0;
+						;1096603;100;DC01;notSpecified;0;0;0;0;0;
+						;1096910;100;DC01;notSpecified;0;0;0;0;0;
+						;1094144;100;DC01;notSpecified;0;0;0;0;0;
+						;1048512;100;DC01;notSpecified;0;0;0;0;0;
+						;1096032;100;DC01;notSpecified;0;0;0;0;0;
+						;1093493;100;DC01;notSpecified;0;0;0;0;0;
+						;1094341;100;DC01;notSpecified;0;0;0;0;0;
+						;1096108;100;DC01;notSpecified;0;0;0;0;0;
+						;1096010;100;DC01;notSpecified;0;0;0;0;0;
+						;1089009;100;DC01;notSpecified;0;0;0;0;0;
+						;1087379;100;DC01;notSpecified;0;0;0;0;0;
+						;1086850;100;DC01;notSpecified;0;0;0;0;0;
+						;1052006;100;DC01;notSpecified;0;0;0;0;0;

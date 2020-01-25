@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/>
+
+	<!-- Consignment Process Actions -->
+
+	<bean id="sendConsignmentToWarehouseAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendConsignmentToWarehouseAction"  parent="abstractAction">
+		<property name="process2WarehouseAdapter" ref="process2WarehouseAdapter"/>
+	</bean>
+
+	<bean id="waitBeforeTransmissionAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.WaitBeforeTransmissionAction"  parent="abstractAction"/>
+
+	<bean id="receiveConsignmentStatusAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.ReceiveConsignmentStatusAction"  parent="abstractAction"/>
+
+	<bean id="confirmConsignmentPickupAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.ConfirmConsignmentPickupAction"  parent="abstractAction"/>
+
+	<bean id="sendDeliveryMessageAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendDeliveryMessageAction"  parent="abstractAction">
+		<property name="eventService" ref="eventService"/>
+	</bean>
+
+	<bean id="sendReadyForPickupMessageAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendReadyForPickupMessageAction"  parent="abstractAction">
+		<property name="eventService" ref="eventService"/>
+	</bean>
+	
+	<bean id="sendPickedUpMessageAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendPickedUpMessageAction"  parent="abstractAction">
+		<property name="eventService" ref="eventService"/>
+	</bean>
+
+	<bean id="cancelConsignmentAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.CancelConsignmentAction"  parent="abstractAction"/>
+
+	<bean id="sendCancelMessageAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendCancelMessageAction"  parent="abstractAction"/>
+
+	<bean id="subprocessEndAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SubprocessEndAction"  parent="abstractAction">
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<bean id="allowShipmentAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.AllowShipmentAction"  parent="abstractAction">
+		<property name="process2WarehouseAdapter" ref="process2WarehouseAdapter"/>
+	</bean>
+
+	<bean id="abstractLimitedRetryAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.AbstractLimitedRetryAction" abstract="true" parent="abstractAction">
+		<property name="failAfterAllRetries" value="true"/>
+		<property name="retryMethod" value="EXPONENTIAL"/>
+	</bean>
+
+	<bean id="sendConsignmentToEccAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendConsignmentAction" parent="abstractLimitedRetryAction">
+		<constructor-arg name="placeOrderConverter" ref="placeOrderConverter"/>
+		<constructor-arg name="orderSendResponseAction" ref="orderSendResponseAction"/>
+		<constructor-arg name="clickAndCollectConsignmentPredicate" ref="clickAndCollectConsignmentPredicate"/>
+		<property name="maxRetries" value="#{configurationService.configuration.getInt('order.outbound.retry.max')}"/>
+		<property name="retryDelay" value="#{configurationService.configuration.getLong('order.outbound.retry.delay')}"/>
+	</bean>
+	
+	<bean id="sendCaptureToErpAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendConsignmentCaptureAction" parent="abstractLimitedRetryAction">
+		<constructor-arg name="orderSendPaymentConverter" ref="orderSendPaymentConverter"/>
+		<constructor-arg name="orderSendCaptureAction" ref="orderSendCaptureAction"/>
+		<property name="maxRetries" value="#{configurationService.configuration.getInt('order.outbound.retry.max')}"/>
+		<property name="retryDelay" value="#{configurationService.configuration.getLong('order.outbound.retry.delay')}"/>
+	</bean>
+
+	<bean id="checkConsignmentStatusAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.CheckConsignmentStatusAction" parent="abstractAction"/>
+	
+	<bean id="takePaymentAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.TakePaymentAction"  parent="abstractAction">
+		<property name="tbsPaymentService" ref="paymentService"/>
+		<property name="captureAmountCalculationStrategy" ref="captureAmountCalculationStrategy"/>
+		<property name="loyaltyService" ref="loyaltyService"/>
+    </bean>
+    
+    <bean id="checkCaptureAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.CheckCaptureAction"  parent="abstractAction">
+		<property name="tbsAcceleratorCheckoutService" ref="tbsAcceleratorCheckoutService"/>
+		<property name="tbsPaymentService" ref="paymentService"/>
+    </bean>
+    
+	<bean id="recapturePaymentAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.RecapturePaymentAction"  parent="abstractAction">
+		<property name="recapturePrimaryPaymentStrategy" ref="recapturePrimaryPaymentStrategy"/>
+	</bean>
+	
+	<bean id="refundPaymentAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.RefundPaymentAction"  parent="abstractAction">
+		<constructor-arg name="loyaltyService" ref="loyaltyService"/>
+	</bean>
+
+	<bean id="fulfillStockAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.FulfillStockAction" parent="abstractAction">
+		<constructor-arg name="tbsCommerceStockService" ref="tbsCommerceStockService"/>
+	</bean>
+	
+	<bean id="resetFulfilledStockAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.ResetFulfilledStockAction" parent="abstractAction">
+		<constructor-arg name="tbsCommerceStockService" ref="tbsCommerceStockService"/>
+	</bean>
+</beans>

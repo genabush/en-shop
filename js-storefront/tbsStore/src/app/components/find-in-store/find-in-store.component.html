@@ -1,0 +1,130 @@
+<div
+  tabindex="0"
+  [attr.aria-label]="'findInStore.label' | cxTranslate"
+  class="find-in-store__trigger product-actions__trigger"
+  (click)="openFindInStoreModal()"
+>
+  <span class="icon icon--location"></span>
+  {{ 'findInStore.label' | cxTranslate }}
+</div>
+
+<ng-template #findInStoreModal let-c="close" let-d="dismiss" id="find-in-store-modal">
+  <div class="modal-header flex-column">
+    <div class="row justify-content-between w-100 pl-4 pr-0 m-0">
+      <h2 class="modal-title h2--alt">{{ 'findInStore.modal.title' | cxTranslate }}</h2>
+      <button
+        type="button"
+        class="close"
+        [attr.aria-label]="'common.closeBtn' | cxTranslate"
+        (click)="closeFindInStoreModal()"
+      >
+        <span aria-hidden="true">
+          <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="findInStoreForm" (ngSubmit)="onSubmit($event)" class="mt-4 mb-4 address-finder">
+      <mat-form-field appearance="fill" class="mat-input-primary address-finder__input">
+        <mat-label class="address-finder__label"> {{ 'addressFinder.label' | cxTranslate }}</mat-label>
+        <input
+          matInput
+          class="mat-form-control address-finder__input"
+          type="text"
+          placeholder=""
+          formControlName="location"
+          name="location"
+        />
+      </mat-form-field>
+      <span (click)="getGeolocation()" class="address-finder__geo-btn d-flex align-items-center justify-content-center">
+        <span class="icon icon--locator"></span>
+      </span>
+      <button mat-button matSuffix mat-stroked-button type="submit" class="btn btn--primary address-finder__submit-btn">
+        <span class="icon icon--search"></span>
+      </button>
+    </form>
+    <p class="alert alert-danger" *ngIf="showErrorMsg">
+      {{ 'addressFinder.error' | cxTranslate }}
+    </p>
+    <div *ngIf="listOfStores.length > 0" class="collection-point__search-results">
+      <h3 class="collection-point__title mb-4" tabindex="0" [attr.aria-label]="'addressFinder.tabsTitle' | cxTranslate">
+        {{ 'addressFinder.tabsTitle' | cxTranslate }}
+      </h3>
+      <div class="collection-point__nav">
+        <div class=" collection-point__total-count">
+          {{ 'addressFinder.searchCount' | cxTranslate: { count: listOfStores.length } }}
+        </div>
+        <ul class="collection-point__tabs nav nav-tabs">
+          <li
+            class="collection-point__tabs-item nav-item"
+            [ngClass]="{ active: listViewType === 'list' }"
+            (click)="toggleListView('list')"
+          >
+            {{ 'addressFinder.tabsListTitle' | cxTranslate }}
+          </li>
+          <li
+            class="collection-point__tabs-item nav-item"
+            [ngClass]="{ active: listViewType === 'map' }"
+            (click)="toggleListView('map')"
+          >
+            {{ 'addressFinder.tabsMapTitle' | cxTranslate }}
+          </li>
+        </ul>
+      </div>
+      <div class="collection-point__list-view">
+        <div class="collection-point__list-view-list" *ngIf="listViewType === 'list'">
+          <div class="row">
+            <div class="col-12 col-md-4 mb-4" *ngFor="let store of listOfStores">
+              <app-collection-point-item
+                [data]="store"
+                [showOpeningHrs]="false"
+                [showInfoBtn]="true"
+                [showSelectBtn]="false"
+                [showStockStatus]="true"
+                (displayInfoEmit)="onInfoEmit($event)"
+              ></app-collection-point-item>
+            </div>
+          </div>
+        </div>
+        <div class="collection-point__list-view-map" *ngIf="listViewType === 'map'">
+          <agm-map
+            [latitude]="mapCenter?.lat"
+            [longitude]="mapCenter?.lng"
+            [usePanning]="true"
+            [zoom]="mapZoom"
+            [disableDefaultUI]="false"
+          >
+            <!--Searched location-->
+            <agm-marker
+              [latitude]="location?.lat"
+              [longitude]="location?.lng"
+              [iconUrl]="mapIcons.currentLocation"
+              [markerClickable]="false"
+            >
+            </agm-marker>
+
+            <!-- Search results-->
+            <agm-marker
+              *ngFor="let store of listOfStores; let i = index"
+              [latitude]="store.geoPoint.latitude"
+              [longitude]="store.geoPoint.longitude"
+              [markerClickable]="true"
+              (markerClick)="markerClicked(store)"
+              [iconUrl]="store.isActive ? mapIcons.secondary : mapIcons.secondaryInactive"
+            >
+            </agm-marker>
+          </agm-map>
+          <app-map-info-window
+            [storeInfo]="storeInfo"
+            [showDirectionsBtn]="true"
+            [showStockStatus]="true"
+            [searchedLocation]="location"
+            (closeInfoEmit)="onInfoCloseEmit()"
+            *ngIf="storeInfo"
+          ></app-map-info-window>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,28 @@
+.hero {
+  padding: 90px 20px;
+  background: var(--cx-color-core-primary);
+  color: var(--cx-color-base-nourishing-white);
+  h2,
+  h3 {
+    color: var(--cx-color-base-nourishing-white);
+  }
+
+  &__subheading {
+    font-family: $recoleta-semi-bold;
+  }
+
+  &__intro {
+    font-family: $work-sans-medium;
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  &--pale {
+    background: var(--cx-color-base-nourishing-white);
+    color: var(--cx-color-core-primary);
+    h2,
+    h3 {
+      color: var(--cx-color-core-primary);
+    }
+  }
+}

@@ -1,0 +1,517 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsHKContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:hk.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsHKProductCatalog
+$productCatalogName=HK Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-hk;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;hkroot;;hkroot;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;HKStoreFinderLink;HK Store Finder Link;/store-finder;HKStoreFinderLink;HKStoreFinderLink;;;;
+;;HKLoginLink;HK Login Link;/login;HKLoginLink;HKLoginLink;;;;
+;;HKBodyCategoryLink;HK Body Category Link;/Body/c/c00001;HKBodyCategoryLink;HKBodyCategoryLink;;c00001;;
+;;HKBodyTreatsCategoryLink;HK Body Treats Category Link;/Body/Bath-Treats/c/c00013;HKBodyTreatsCategoryLink;HKBodyTreatsCategoryLink;;c00013;;
+;;HKBodyButtersCategoryLink;HK Body Butters Category Link;/Body/Body-Butters/c/c00014;HKBodyButtersCategoryLink;HKBodyButtersCategoryLink;;c00014;;
+;;HKBodyYogurtsCategoryLink;HK Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;HKBodyYogurtsCategoryLink;HKBodyYogurtsCategoryLink;;c00284;;
+;;HKBodyMassageOilsCategoryLink;HK Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;HKBodyMassageOilsCategoryLink;HKBodyMassageOilsCategoryLink;;c00024;;
+;;HKBodyBronzingCategoryLink;HK Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;HKBodyBronzingCategoryLink;HKBodyBronzingCategoryLink;;c00018;;
+;;HKDeodorantCategoryLink;HK Deodorant Category Link;/Body/Deodorant/c/c00019;HKDeodorantCategoryLink;HKDeodorantCategoryLink;;c00019;;
+;;HKFootCareCategoryLink;HK Foot Care Category Link;/Body/Foot-Care/c/c00020;HKFootCareCategoryLink;HKFootCareCategoryLink;;c00020;;
+;;HKTravelSizesCategoryLink;HK Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;HKTravelSizesCategoryLink;HKTravelSizesCategoryLink;;c00021;;
+;;HKFaceCategoryLink;HK Face Category Link;/Face/c/c00010;HKFaceCategoryLink;HKFaceCategoryLink;;c00010;;
+;;HKFaceMasksCategoryLink;HK Face Masks Category Link;/Face/Face-Masks/c/c00143;HKFaceMasksCategoryLink;HKFaceMasksCategoryLink;;c00143;;
+;;HKMakeUpRemoversCategoryLink;HK Make-up Removers Link;/Face/Make-up-Removers/c/c00145;HKMakeUpRemoversCategoryLink;HKMakeUpRemoversCategoryLink;;c00145;;
+;;HKEyeCareCategoryLink;HK Eye Care CategoryLink;/Face/Eye-Care/c/c00144;HKEyeCareCategoryLink;HKEyeCareCategoryLink;;c00144;;
+;;HKNightTimeTreatmentsCategoryLink;HK Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;HKNightTimeTreatmentsCategoryLink;HKNightTimeTreatmentsCategoryLink;;c00149;;
+;;HKLipBalmCategoryLink;HK Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;HKLipBalmCategoryLink;HKLipBalmCategoryLink;;c00146;;
+;;HKMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;HKMenShavingCategoryLink;HKMenShavingCategoryLink;;c00147;;
+;;HKCleansersAndTonersCategoryLink;HK Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;HKCleansersAndTonersCategoryLink;HKCleansersAndTonersCategoryLink;;c00141;;
+;;HKMoisturisersCategoryLink;HK Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;HKMoisturisersCategoryLink;HKMoisturisersCategoryLink;;c00148;;
+;;HKAccessoriesCategoryLink;HK Accessories CategoryLink;/Face/Accessories/c/c00140;HKAccessoriesCategoryLink;HKAccessoriesCategoryLink;;c00140;;
+;;HKFaceScrubsCategoryLink;HK Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;HKFaceScrubsCategoryLink;HKFaceScrubsCategoryLink;;c00275;;
+;;HKHandsCategoryLink;HK Hands CategoryLink;/Hands/c/c00006;HKHandsCategoryLink;HKHandsCategoryLink;;c00006;;
+;;HKHandsMoisturisersCategoryLink;HK Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;HKHandsMoisturisersCategoryLink;HKHandsMoisturisersCategoryLink;;c00054;;
+;;HKHandWashCategoryLink;HK Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;HKHandWashCategoryLink;HKHandWashCategoryLink;;c00056;;
+;;HKTargetedTreatmentCategoryLink;HK Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;HKTargetedTreatmentCategoryLink;HKTargetedTreatmentCategoryLink;;c00055;;
+;;HKHairCategoryLink;HK Hair Category Link;/Hair/c/c00005;HKHairCategoryLink;HKHairCategoryLink;;c00005;;
+;;HKBrushesAndCombsCategoryLink;HK Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;HKBrushesAndCombsCategoryLink;HKBrushesAndCombsCategoryLink;;c00047;;
+;;HKConditionerCategoryLink;HK Conditioner Category Link;/Hair/Conditioner/c/c00048;HKConditionerCategoryLink;HKConditionerCategoryLink;;c00048;;
+;;HKShampooCategoryLink;HK Shampoo Category Link;/Hair/Shampoo/c/c00051;HKShampooCategoryLink;HKShampooCategoryLink;;c00051;;
+;;HKTreatmentCategoryLink;HK Treatment Category Link;/Hair/Treatment/c/c00050;HKTreatmentCategoryLink;HKTreatmentCategoryLink;;c00050;;
+;;HKStylingCategoryLink;HK Styling Category Link;/Hair/Styling/c/c00049;HKStylingCategoryLink;HKStylingCategoryLink;;c00049;;
+;;HKMakeUpCategoryLink;HK Make-up Category Link;/Make-up/c/c00007;HKMakeUpCategoryLink;HKMakeUpCategoryLink;;c00007;;
+;;HKFoundationsConcealersCategoryLink;HK Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;HKFoundationsConcealersCategoryLink;HKFoundationsConcealersCategoryLink;;c00065;;
+;;HKBrushesAndToolsCategoryLink;HK Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;HKBrushesAndToolsCategoryLink;HKBrushesAndToolsCategoryLink;;c00059;;
+;;HKBBCreamsCategoryLink;HK BB Creams Category Link;/Make-up/BB-Creams/c/c00060;HKBBCreamsCategoryLink;HKBBCreamsCategoryLink;;c00060;;
+;;HKBronzingCategoryLink;HK Bronzing Category Link;/Make-up/Bronzing/c/c00061;HKBronzingCategoryLink;HK BronzingCategoryLink;;c00061;;
+;;HKCheeksCategoryLink;HK Cheeks Category Link;/Make-up/Cheeks/c/c00062;HKCheeksCategoryLink;HKCheeksCategoryLink;;c00062;;HK
+;;HKEyeLinersCategoryLink;HK Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;HKEyeLinersCategoryLink;HKEyeLinersCategoryLink;;c00064;;
+;;HKEyeShadowCategoryLink;HK Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;HKEyeShadowCategoryLink;HKEyeShadowCategoryLink;;c00063;;
+;;HKLipsCategoryLink;HK Lips Category Link;/Make-up/Lips/c/c00066;HKLipsCategoryLink;HKLipsCategoryLink;;c00066;;
+;;HKMascaraCategoryLink;HK Mascara Category Link;/Make-up/Mascara/c/c00067;HKMascaraCategoryLink;HKMascaraCategoryLink;;c00067;;
+;;HKPrimersCategoryLink;HK Primers Category Link;/Make-up/Primers/c/c00069;HKPrimersCategoryLink;HKPrimersCategoryLink;;c00069;;
+;;HKDeliveryLink;HK Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";HKDeliveryLink;HKDeliveryLink;newWindow;;;
+;;HKReturnsLink;HK Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";HKReturnsLink;HKReturnsLink;newWindow;;;
+;;HKFAQLink;HK FAQ Link;/faq;HKFAQLink;HKFAQLink;;;;
+;;HKTermsAndConditionsLink;HK TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";HKTermsAndConditionsLink;HKTermsAndConditionsLink;newWindow;
+;;HKPrivacyPolicyLink;HK PrivacyPolicy Link;/privacy-policy;HKPrivacyPolicyLink;HKPrivacyPolicyLink;newWindow;
+;;HKSitemapLink;HK Sitemap Link;/sitemap;HKSitemapLink;HKSitemapLink;newWindow;
+;;HKStoresLink;HK Stores Link;"https://www.thebodyshop.com/store-finder";HKStoresLink;HKStoresLink;newWindow;
+;;HKLoveYourBodyClubLink;HK Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";HKLoveYourBodyClubLink;HKLoveYourBodyClubLink;newWindow;
+;;HKStudentDiscountLink;HK Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";HKStudentDiscountLink;HKStudentDiscountLink;newWindow;
+;;HKGiftCardsLink;HK Gift Cards Link;/gift-card-balance;HKGiftCardsLink;HKGiftCardsLink;newWindow;
+;;HKAboutUsLink;HK About us Link;"https://www.thebodyshop.com/about-us";HKAboutUsLink;HKAboutUsLink;newWindow;
+;;HKTheBodyShopAtHomeLink;HK The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";HKTheBodyShopAtHomeLink;HKTheBodyShopAtHomeLink;newWindow;
+;;HKAffiliatesLink;HK Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";HKAffiliatesLink;HKAffiliatesLink;newWindow;
+;;HKGenderPayGapLink;HK Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";HKGenderPayGapLink;HKGenderPayGapLink;newWindow;
+;;HKModernSlaveryStatementLink;HK Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";HKModernSlaveryStatementLink;HKModernSlaveryStatementLink;newWindow;
+;;HKAgainstAnimalTestingLink;HK Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";HKAgainstAnimalTestingLink;HKAgainstAnimalTestingLink;newWindow;
+;;HKTaxStrategyLink;HK Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";HKTaxStrategyLink;HKTaxStrategyLink;newWindow;
+;;HKCareersLink;HK Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";HKCareersLink;HKCareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsHKRootNode					 ;                         ; TBS HK Root Node                   ; hkroot                        ;                                                               																										; TbsHKRootNode
+                                ; TbsHKNavNode                   ;                         ; TBS HK Site Nav Node               ; TbsHKRootNode                 ;                                              																										; TbsHKNavNode
+                                ; TbsHKCategoryNavNode           ;                         ; TBS HK Category Navigation         ; TbsHKNavNode                  ;                                                               																										; TbsHKCategoryNavNode
+                                ; TbsHKDiscoverNavNode           ;                         ; TBS HK Discover Navigation         ; TbsHKNavNode                  ;                                                               																										; TbsHKDiscoverNavNode
+                                ; TbsHKFooterNavNode             ;                         ; TBS HK Footer Navigation           ; TbsHKNavNode                  ;                                                               																										; TbsHKFooterNavNode
+                                ; HKUsefullInformationNavNode    ;                         ; HK Useful Information   			; TbsHKFooterNavNode            ; HKDeliveryLink,HKReturnsLink,HKFAQLink,HKTermsAndConditionsLink,HKPrivacyPolicyLink,HKSitemapLink                                										; HKUsefullInformationNavNode
+                                ; HKWaysToShopNavNode 		     ;                         ; HK Ways To Shop 					; TbsHKFooterNavNode            ; HKStoresLink,HKLoveYourBodyClubLink,HKStudentDiscountLink,HKGiftCardsLink                                  															; HKWaysToShopNavNode
+                                ; HKAboutUsNavNode               ;                         ; HK About Us               			; TbsHKFooterNavNode            ; HKAboutUsLink,HKTheBodyShopAtHomeLink,HKAffiliatesLink,HKGenderPayGapLink,HKModernSlaveryStatementLink,HKAgainstAnimalTestingLink,HKTaxStrategyLink,HKCareersLink 	; HKAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsHKCategoryNavNode;;Tbs HK Categories;TbsHKNavNode;HKBodyCategoryNavNode,HKFaceCategoryNavNode,HKHandsCategoryNavNode,HKHairCategoryNavNode,HKMakeUpCategoryNavNode;TbsHKCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; HKBodyCategoryNavNode;;HK Body Nav Node;Body;HKBodyByProductTypeNavNode,HKBodyBySkinTypeNavNode;;HKBodyCategoryNavNode
+                               ; HKFaceCategoryNavNode;;HK Face Nav Node;Face;HKFaceByProductTypeNavNode,HKFaceBySkinTypeNavNode;;HKFaceCategoryNavNode
+                               ; HKHandsCategoryNavNode;;HK Hands Nav Node;Hands;HKHandsByProductTypeNavNode,HKHandsBySkinTypeNavNode;;HKHandsCategoryNavNode
+                               ; HKHairCategoryNavNode;;HK Hair Nav Node;Hair;HKHairByProductTypeNavNode,HKHairByHairConcernTypeNavNode;;HKHairCategoryNavNode
+                               ; HKMakeUpCategoryNavNode;;HK MakeUp Nav Node;MakeUp;HKMakeUpByProductTypeNavNode,HKMakeUpBySkinTypeNavNode;;HKMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;HKBodyByProductTypeNavNode;;HK Body By Product Type;HKBodyTreatsCategoryNavNode,HKBodyButtersCategoryNavNode,HKBodyYogurtsCategoryNavNode,HKBodyMassageOilsCategoryNavNode,HKFootCareCategoryNavNode;;HKBodyByProductTypeNavNode;
+                               ;HKBodyBySkinTypeNavNode;;HK Body By Skin Type;HKDeodorantCategoryNavNode,HKBodyBronzingCategoryNavNode,HKTravelSizesCategoryNavNode,HKBodyAllCategoryNavNode;;HKBodyBySkinTypeNavNode;
+
+#Face_Category_NavNodes
+                               ;HKFaceByProductTypeNavNode;;HK Face By Product Type;HKFaceMasksCategoryNavNode,HKMakeUpRemoversCategoryNavNode,HKEyeCareCategoryNavNode,HKNightTimeTreatmentsCategoryNavNode,HKMenShavingCategoryNavNode;;HKFaceByProductTypeNavNode;
+                               ;HKFaceBySkinTypeNavNode;;HK Face By Skin Type;HKLipBalmCategoryNavNode,HKCleansersAndTonersNavNode,HKMoisturisersCategoryNavNode,HKAccessoriesCategoryNavNode,HKFaceScrubsCategoryNavNode,HKFaceAllCategoryNavNode;;HKFaceBySkinTypeNavNode;
+
+#Hands_Category_NavNodes
+                               ;HKHandsByProductTypeNavNode;;HK Hands By Product Type;HKHandsMoisturisersCategoryNavNode,HKHandWashCategoryNavNode;;HKHandsByProductTypeNavNode;
+                               ;HKHandsBySkinTypeNavNode;;HK Hands By Skin Type;HKTargetedTreatmentCategoryNavNode,HKHandsAllCategoryNavNode;;HKHandsBySkinTypeNavNode;
+
+#Hair_Category_NavNodes
+                               ;HKHairByProductTypeNavNode;;HK Hair By Product Type;HKBrushesAndCombsCategoryNavNode,HKConditionerCategoryNavNode,HKShampooCategoryNavNode;;HKHairByProductTypeNavNode;
+                               ;HKHairByHairConcernTypeNavNode;;HK Hair By Hair Concern Type;HKTreatmentCategoryNavNode,HKStylingCategoryNavNode,HKHairAllCategoryNavNode;;HKHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;HKMakeUpByProductTypeNavNode;;HK MakeUp By Product Type;HKFoundationsConcealersCategoryNavNode,HKBrushesAndToolsCategoryNavNode,HKBBCreamsCategoryNavNode,HKBronzingCategoryNavNode,HKCheeksCategoryNavNode;;HKMakeUpByProductTypeNavNode;
+                               ;HKMakeUpBySkinTypeNavNode;;HK MakeUp By Skin Type;HKEyeLinersCategoryNavNode,HKEyeShadowCategoryNavNode,HKLipsCategoryNavNode,HKMascaraCategoryNavNode,HKPrimersCategoryNavNode,HKMakeUpAllCategoryNavNode;;HKMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;HKBodyTreatsCategoryNavNode;;HK Body Treats;;HKBodyTreatsCategoryNavNode
+                               ;HKBodyButtersCategoryNavNode;;HK Body Butters;;HKBodyButtersCategoryNavNode
+                               ;HKBodyYogurtsCategoryNavNode;;HK Body Yogurts;;HKBodyYogurtsCategoryNavNode
+                               ;HKBodyMassageOilsCategoryNavNode;;HK Body Massage Oils;;HKBodyMassageOilsCategoryNavNode
+                               ;HKFootCareCategoryNavNode;;HK Foot Care;;HKFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;HKBodyAllCategoryNavNode;;HK Body All Categories;;HKBodyAllCategoryNavNode
+                               ;HKBodyBronzingCategoryNavNode;;HK Body Bronzing;;HKBodyBronzingCategoryNavNode
+                               ;HKTravelSizesCategoryNavNode;;HK Travel Sizes;;HKTravelSizesCategoryNavNode
+                               ;HKDeodorantCategoryNavNode;;HK Deodorant;;HKDeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;HKFaceMasksCategoryNavNode;;HK Face Masks;;HKFaceMasksCategoryNavNode
+                               ;HKMakeUpRemoversCategoryNavNode;;HK Make-up Removers;;HKMakeUpRemoversCategoryNavNode
+                               ;HKEyeCareCategoryNavNode;;HK Eye Care;;HKEyeCareCategoryNavNode
+                               ;HKNightTimeTreatmentsCategoryNavNode;;HK Night Time Treatments;;HKNightTimeTreatmentsCategoryNavNode
+                               ;HKMenShavingCategoryNavNode;;HK Men's Shaving ;;HKMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;HKLipBalmCategoryNavNode;;HK Lip Balm;;HKLipBalmCategoryNavNode
+                               ;HKCleansersAndTonersNavNode;;HK Cleansers and Toners;;HKCleansersAndTonersNavNode
+                               ;HKMoisturisersCategoryNavNode;;HK Moisturisers;;HKMoisturisersCategoryNavNode
+                               ;HKAccessoriesCategoryNavNode;;HK Accessories;;HKAccessoriesCategoryNavNode
+                               ;HKFaceScrubsCategoryNavNode;;HK Face Scrubs;;HKFaceScrubsCategoryNavNode
+                               ;HKFaceAllCategoryNavNode;;HK Face All Categories;;HKFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;HKHandsMoisturisersCategoryNavNode;;HK Hands Moisturisers;;HKHandsMoisturisersCategoryNavNode
+                               ;HKHandWashCategoryNavNode;;HK Hand Wash;;HKHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;HKTargetedTreatmentCategoryNavNode;;HK Targeted Treatment;;HKTargetedTreatmentCategoryNavNode
+                               ;HKHandsAllCategoryNavNode;;HK Hands All Categories;;HKHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;HKBrushesAndCombsCategoryNavNode;;HK Brushes And Combs;;HKBrushesAndCombsCategoryNavNode
+                               ;HKConditionerCategoryNavNode;;HK Conditioner;;HKConditionerCategoryNavNode
+                               ;HKShampooCategoryNavNode;;HK Shampoo;;HKShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;HKTreatmentCategoryNavNode;;HK Treatment;;HKTreatmentCategoryNavNode
+                               ;HKStylingCategoryNavNode;;HK Styling;;HKStylingCategoryNavNode
+                               ;HKHairAllCategoryNavNode;;HK Hair All Categories;;HKHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;HKFoundationsConcealersCategoryNavNode;;HK Foundations Concealers;;HKFoundationsConcealersCategoryNavNode
+                               ;HKBrushesAndToolsCategoryNavNode;;HK Brushes and Tools;;HKBrushesAndToolsCategoryNavNode
+                               ;HKBBCreamsCategoryNavNode;;HK BB Creams;;HKBBCreamsCategoryNavNode
+                               ;HKBronzingCategoryNavNode;;HK Bronzing;;HKBronzingCategoryNavNode
+                               ;HKCheeksCategoryNavNode;;HK Cheeks;;HKCheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;HKEyeLinersCategoryNavNode;;HK Eye Liners;;HKEyeLinersCategoryNavNode
+                               ;HKEyeShadowCategoryNavNode;;HK Eye Shadow;;HKEyeShadowCategoryNavNode
+                               ;HKLipsCategoryNavNode;;HK Lips;;HKLipsCategoryNavNode
+                               ;HKMascaraCategoryNavNode;;HK Mascara;;HKMascaraCategoryNavNode
+                               ;HKPrimersCategoryNavNode;;HK Primers;;HKPrimersCategoryNavNode
+                               ;HKMakeUpAllCategoryNavNode;;HK Make-up All Categories;;HKMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;HKBodyAllCategoryNavNodeEntry;;HKBodyAllCategoryNavNodeEntry;HKBodyAllCategoryNavNode;HKBodyCategoryLink
+;HKBodyTreatsCategoryNavNodeEntry;;HKBodyTreatsCategoryNavNodeEntry;HKBodyTreatsCategoryNavNode;HKBodyTreatsCategoryLink;HK
+;HKBodyButtersCategoryNavNodeEntry;;HKBodyButtersCategoryNavNodeEntry;HKBodyButtersCategoryNavNode;HKBodyButtersCategoryLink;HK
+;HKBodyYogurtsCategoryNavNodeEntry;;HKBodyYogurtsCategoryNavNodeEntry;HKBodyYogurtsCategoryNavNode;HKBodyYogurtsCategoryLink
+;HKBodyMassageOilsCategoryNavNodeEntry;;HKBodyMassageOilsCategoryNavNodeEntry;HKBodyMassageOilsCategoryNavNode;HKBodyMassageOilsCategoryLink
+;HKBodyBronzingCategoryNavNodeEntry;;HKBodyBronzingCategoryNavNodeEntry;HKBodyBronzingCategoryNavNode;HKBodyBronzingCategoryLink
+;HKDeodorantCategoryNavNodeEntry;;HKDeodorantCategoryNavNodeEntry;HKDeodorantCategoryNavNode;HKDeodorantCategoryLink
+;HKTravelSizesCategoryNavNodeEntry;;HKTravelSizesCategoryNavNodeEntry;HKTravelSizesCategoryNavNode;HKTravelSizesCategoryLink
+;HKFootCareCategoryNavNodeEntry;;HKFootCareCategoryNavNodeEntry;HKFootCareCategoryNavNode;HKFootCareCategoryLink
+;HKFaceAllCategoryNavNodeEntry;;HKFaceAllCategoryNavNodeEntry;HKFaceAllCategoryNavNode;HKFaceCategoryLink;HK
+;HKFaceMasksCategoryNavNodeEntry;;HKFaceMasksCategoryNavNodeEntry;HKFaceMasksCategoryNavNode;HKFaceMasksCategoryLink;HK
+;HKMakeUpRemoversCategoryNavNodeEntry;;HKMakeUpRemoversCategoryNavNodeEntry;HKMakeUpRemoversCategoryNavNode;HKMakeUpRemoversCategoryLink;HK
+;HKEyeCareCategoryNavNodeEntry;;HKEyeCareCategoryNavNodeEntry;HKEyeCareCategoryNavNode;HKEyeCareCategoryLink
+;HKNightTimeTreatmentsCategoryNavNodeEntry;;HKNightTimeTreatmentsCategoryNavNodeEntry;HKNightTimeTreatmentsCategoryNavNode;HKNightTimeTreatmentsCategoryLink
+;HKMenShavingCategoryNavNodeEntry;;HKMenShavingCategoryNavNodeEntry;HKMenShavingCategoryNavNode;HKMenShavingCategoryLink
+;HKLipBalmCategoryNavNodeEntry;;HKLipBalmCategoryNavNodeEntry;HKLipBalmCategoryNavNode;HKLipBalmCategoryLink
+;HKCleansersAndTonersNavNodeEntry;;HKCleansersAndTonersNavNodeEntry;HKCleansersAndTonersNavNode;HKCleansersAndTonersCategoryLink
+;HKMoisturisersCategoryNavNodeEntry;;HKMoisturisersCategoryNavNodeEntry;HKMoisturisersCategoryNavNode;HKMoisturisersCategoryLink
+;HKAccessoriesCategoryNavNodeEntry;;HKAccessoriesCategoryNavNodeEntry;HKAccessoriesCategoryNavNode;HKAccessoriesCategoryLink
+;HKFaceScrubsCategoryNavNodeEntry;;HKFaceScrubsCategoryNavNodeEntry;HKFaceScrubsCategoryNavNode;HKFaceScrubsCategoryLink
+;HKHandsAllCategoryNavNodeEntry;;HKHandsAllCategoryNavNodeEntry;HKHandsAllCategoryNavNode;HKHandsCategoryLink
+;HKHandsMoisturisersCategoryNavNodeEntry;;HKHandsMoisturisersCategoryNavNodeEntry;HKHandsMoisturisersCategoryNavNode;HKHandsMoisturisersCategoryLink
+;HKHandWashCategoryNavNodeEntry;;HKHandWashCategoryNavNodeEntry;HKHandWashCategoryNavNode;HKHandWashCategoryLink
+;HKTargetedTreatmentCategoryNavNodeEntry;;HKTargetedTreatmentCategoryNavNodeEntry;HKTargetedTreatmentCategoryNavNode;HKTargetedTreatmentCategoryLink
+;HKHairAllCategoryNavNodeEntry;;HKHairAllCategoryNavNodeEntry;HKHairAllCategoryNavNode;HKHairCategoryLink
+;HKBrushesAndCombsCategoryNavNodeEntry;;HKBrushesAndCombsCategoryNavNodeEntry;HKBrushesAndCombsCategoryNavNode;HKBrushesAndCombsCategoryLink
+;HKConditionerCategoryNavNodeEntry;;HKConditionerCategoryNavNodeEntry;HKConditionerCategoryNavNode;HKConditionerCategoryLink
+;HKShampooCategoryNavNodeEntry;;HKShampooCategoryNavNodeEntry;HKShampooCategoryNavNode;HKShampooCategoryLink
+;HKTreatmentCategoryNavNodeEntry;;HKTreatmentCategoryNavNodeEntry;HKTreatmentCategoryNavNode;HKTreatmentCategoryLink
+;HKStylingCategoryNavNodeEntry;;HKStylingCategoryNavNodeEntry;HKStylingCategoryNavNode;HKStylingCategoryLink
+;HKMakeUpAllCategoryNavNodeEntry;;HKMakeUpAllCategoryNavNodeEntry;HKMakeUpAllCategoryNavNode;HKMakeUpCategoryLink
+;HKFoundationsConcealersCategoryNavNodeEntry;;HKFoundationsConcealersCategoryNavNodeEntry;HKFoundationsConcealersCategoryNavNode;HKFoundationsConcealersCategoryLink
+;HKBrushesAndToolsCategoryNavNodeEntry;;HKBrushesAndToolsCategoryNavNodeEntry;HKBrushesAndToolsCategoryNavNode;HKBrushesAndToolsCategoryLink
+;HKBBCreamsCategoryNavNodeEntry;;HKBBCreamsCategoryNavNodeEntry;HKBBCreamsCategoryNavNode;HKBBCreamsCategoryLink
+;HKBronzingCategoryNavNodeEntry;;HKBronzingCategoryNavNodeEntry;HKBronzingCategoryNavNode;HKBronzingCategoryLink
+;HKCheeksCategoryNavNodeEntry;;HKCheeksCategoryNavNodeEntry;HKCheeksCategoryNavNode;HKCheeksCategoryLink
+;HKEyeLinersCategoryNavNodeEntry;;HKEyeLinersCategoryNavNodeEntry;HKEyeLinersCategoryNavNode;HKEyeLinersCategoryLink
+;HKEyeShadowCategoryNavNodeEntry;;HKEyeShadowCategoryNavNodeEntry;HKEyeShadowCategoryNavNode;HKEyeShadowCategoryLink
+;HKLipsCategoryNavNodeEntry;;HKLipsCategoryNavNodeEntry;HKLipsCategoryNavNode;HKLipsCategoryLink
+;HKMascaraCategoryNavNodeEntry;;HKMascaraCategoryNavNodeEntry;HKMascaraCategoryNavNode;HKMascaraCategoryLink
+;HKPrimersCategoryNavNodeEntry;;HKPrimersCategoryNavNodeEntry;HKPrimersCategoryNavNode;HKPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsHKDiscoverNavNode;;Tbs HK Discover;TbsHKNavNode;HKDiscoverPartyNavNode,HKDiscoverTipsAndAdviceNavNode,HKDiscoverAboutUsNavNode;TbsHKDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; HKDiscoverPartyNavNode;;HK Party Nav Node;Party;HK_Discover_TheBodyShopAtHomeNavNode;;HKDiscoverPartyNavNode
+                               ; HKDiscoverTipsAndAdviceNavNode;;HK Tips & Advice Nav Node;Tips & Advice;HKSkincareArticlesNavNode,HKBodyCareArticlesNavNode,HKMake-UpAeticlesNavNode,HKLifeStyleArticlesNavNode,HKIngredientBenefitsNavNode;;HKDiscoverTipsAndAdviceNavNode
+                               ; HKDiscoverAboutUsNavNode;;HK About us Nav Node;About Us;HKWhoWeAreNavNode,HKLoyaltyProgramNavNode,HKSustainabilityNavNode,HKPlasticsNavNode;;HKDiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#HK_Discover_Party_NavNodes
+                               ;HK_Discover_TheBodyShopAtHomeNavNode;;HK BodyShop AtHome;HKBeYourOwnBossNavNode,HKHostAPartyNavNode;;HK_Discover_TheBodyShopAtHomeNavNode ;
+
+#HK_Discover_Tips_And_Advice_NavNode
+
+                               ;HKSkincareArticlesNavNode;;HK Skin Care Articles;HKHowToReduceBlackheadsNavNode,HKSummerSkincareNavNode,HKHowToGetRidOfDarkCirclesNavNode,HKBestFaceMoisturisersNavNode,HKHowToKeepSkinLookingYouthfulNavNode,HKGymSkincareTipsNavNode;;HKSkincareArticlesNavNode ;
+                               ;HKBodyCareArticlesNavNode;;HK Body Care Articles;HKBenefitsOfDryBrushingNavNode,HKUnderstandingDrySkinNavNode,HKBestBodyExfoliatorsNavNode;;HKBodyCareArticlesNavNode ;
+                               ;HKMake-UpAeticlesNavNode;;HK Make-Up Articles;HKHowToFindTheRightFoundationNavNode,HKHowToApplyFoundationNavNode,HKHowToShapeEyebrowsNavNode,HKHowToGetASunKissedGlowNavNode;;HKMake-UpAeticlesNavNode ;
+                               ;HKLifeStyleArticlesNavNode;;HK LifeStyle Articles;HKBestVeganCitiesInTheHKNavNode,HKLongHaulFlightTipsNavNode,HKGymSkincareRoutineNavNode,HKChildhoodDreamsNavNode,HKPixieGeldof’sTravelEssentialsNavNode;;HKLifeStyleArticlesNavNode ;
+                               ;HKIngredientBenefitsNavNode;;HK Ingedients Benefits;HKBenefitsOfCharcoalNavNode,HKHyaluronicAcidBenefitsNavNode,HKDiscoverAllIngredientsNavNode,HKSourcingOurIngredientsNavNode;;HKIngredientBenefitsNavNode ;
+
+#HK_Discover_AboutUs_NavNode
+
+                               ;HKWhoWeAreNavNode;;HK Who We Are;HKOurHeritageNavNode,HKForeverAgainstAnimalTestingNavNode,HKLatestNewsNavNode,HKNatura_CoNavNode,HKB_CorpNavNode,HKEducationalProgrammeNavNode,HKDonateMenstrualProductsNavNode,HKVegetarianBeautyNavNode;;HKWhoWeAreNavNode ;
+                               ;HKLoyaltyProgramNavNode;;HK Loyalty Program;HK_Loyalty_JoinNowNavNode;;HKLoyaltyProgramNavNode;
+                               ;HKSustainabilityNavNode;;HK Sustainability;HKOurCommitmentNavNode,HKCommunityTradeNavNode,HKBio-BridgesNavNode,HKReducingEnvironmentalFootprintNavNode,HKEmpoweringWomenNavNode,HKModernSlaveryNavNode;;HKSustainabilityNavNode;
+                               ;HKPlasticsNavNode;;HK Plastics;HKPlasticRecyclingInTheHKNavNode,HKTerraCycleInterviewNavNode,HKReturnRecycleRepeatNavNode,HKCommunityTradePlasticsNavNode,HKPackagingAtTheBodyShopNavNode;;HKPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;HKBeYourOwnBossNavNode;;HK Be your own boss;;HKBeYourOwnBossNavNode
+                               ;HKHostAPartyNavNode;;HK Host a party;;HKHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;HKHowToReduceBlackheadsNavNode;;HK How to reduce Blackheads;;HKHowToReduceBlackheadsNavNode
+                               ;HKSummerSkincareNavNode;;HK Summer Skincare;;HKSummerSkincareNavNode
+                               ;HKHowToGetRidOfDarkCirclesNavNode;;HK How To Get Rid Of Dark Circles;;HKHowToGetRidOfDarkCirclesNavNode
+                               ;HKBestFaceMoisturisersNavNode;;HK Best Face Moisturisers;;HKBestFaceMoisturisersNavNode
+                               ;HKHowToKeepSkinLookingYouthfulNavNode;;HK How To Keep Skin Looking Youthful;;HKHowToKeepSkinLookingYouthfulNavNode
+                               ;HKGymSkincareTipsNavNode;;HK Gym Skincare Tips;;HKGymSkincareTipsNavNode
+
+#Child_Nodes_HKBodyCareArticles_NavNode
+
+                               ;HKBenefitsOfDryBrushingNavNode;;HK Benefits Of Dry Brushing;;HKBenefitsOfDryBrushingNavNode
+                               ;HKUnderstandingDrySkinNavNode;;HK Understanding Dry Skin;;HKUnderstandingDrySkinNavNode
+                               ;HKBestBodyExfoliatorsNavNode;;HK Best Body Exfoliators;;HKBestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;HKHowToFindTheRightFoundationNavNode;;HK How to find the right foundation;;HKHowToFindTheRightFoundationNavNode
+                               ;HKHowToApplyFoundationNavNode;;HK How to apply foundation;;HKHowToApplyFoundationNavNode
+                               ;HKHowToShapeEyebrowsNavNode;;HK How to shape eyebrows;;HKHowToShapeEyebrowsNavNode
+                               ;HKHowToGetASunKissedGlowNavNode;;HK How to get a sun kissed glow;;HKHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;HKBestVeganCitiesInTheHKNavNode;;Best Vegan Cities in the HK;;HKBestVeganCitiesInTheHKNavNode
+                               ;HKLongHaulFlightTipsNavNode;;HK Long haul flight tips;;HKLongHaulFlightTipsNavNode
+                               ;HKGymSkincareRoutineNavNode;;HK Gym skincare routine;;HKGymSkincareRoutineNavNode
+                               ;HKChildhoodDreamsNavNode;;HK Childhood Dreams;;HKChildhoodDreamsNavNode
+                               ;HKPixieGeldof’sTravelEssentialsNavNode;;HK Pixie Geldof’s Travel Essentials;;HKPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;HKBenefitsOfCharcoalNavNode;;HK Benefits of charcoal;;HKBenefitsOfCharcoalNavNode
+                               ;HKHyaluronicAcidBenefitsNavNode;;HK Hyaluronic Acid Benefits;;HKHyaluronicAcidBenefitsNavNode
+                               ;HKDiscoverAllIngredientsNavNode;;HK Discover all ingredients;;HKDiscoverAllIngredientsNavNode
+                               ;HKSourcingOurIngredientsNavNode;;HK Sourcing our ingredients;;HKSourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_HKWhoWeAreNavNode
+                               ;HKOurHeritageNavNode;;HK Our Heritage;;HKOurHeritageNavNode
+                               ;HKForeverAgainstAnimalTestingNavNode;;HK Forever Against Animal Testing;;HKForeverAgainstAnimalTestingNavNode
+                               ;HKB_CorpNavNode;;HK B Corp;;HKB_CorpNavNode
+                               ;HKLatestNewsNavNode;;HK Latest News;;HKLatestNewsNavNode
+                               ;HKNatura_CoNavNode;;HK Natura & co;;HKNatura_CoNavNode
+                               ;HKEducationalProgrammeNavNode;;HK Educational Programme;;HKEducationalProgrammeNavNode
+                               ;HKDonateMenstrualProductsNavNode;;HK Donate Menstrual Products;;HKDonateMenstrualProductsNavNode
+                               ;HKVegetarianBeautyNavNode;;HK Vegetarian Beauty;;HKVegetarianBeautyNavNode
+
+#Child_Nodes_HKLoyaltyProgramNavNode
+                               ;HK_Loyalty_JoinNowNavNode;;HK Join Now;;HK_Loyalty_JoinNowNavNode
+
+#Child_Nodes_HKSustainabilityNavNode
+                               ;HKOurCommitmentNavNode;;HK Our Commitment;;HKOurCommitmentNavNode
+                               ;HKCommunityTradeNavNode;;HK Community Trade;;HKCommunityTradeNavNode
+                               ;HKBio-BridgesNavNode;;HK Bio-Bridges;;HKBio-BridgesNavNode
+                               ;HKReducingEnvironmentalFootprintNavNode;;HK Reducing Environmental Footprint;;HKReducingEnvironmentalFootprintNavNode
+                               ;HKEmpoweringWomenNavNode;;HK EmpoweringWomen;;HKEmpoweringWomenNavNode
+                               ;HKModernSlaveryNavNode;;HK ModernSlavery;;HKModernSlaveryNavNode
+
+#Child_Nodes_HKPlasticsNavNode
+                               ;HKPlasticRecyclingInTheHKNavNode;;HK Plastic Recycling In The HK;;HKPlasticRecyclingInTheHKNavNode
+                               ;HKTerraCycleInterviewNavNode;;HK Terra Cycle Interview;;HKTerraCycleInterviewNavNode
+                               ;HKReturnRecycleRepeatNavNode;;HK Return Recycle Repeat;;HKReturnRecycleRepeatNavNode
+                               ;HKCommunityTradePlasticsNavNode;;HK Community Trade Plastics;;HKCommunityTradePlasticsNavNode
+                               ;HKPackagingAtTheBodyShopNavNode;;HK Packaging At The Body Shop;;HKPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;HKBeYourOwnBossLink;HK Be your own boss Link;/;HKBeYourOwnBossLink;HKBeYourOwnBossLink;;;;
+                              ;;HKHostAPartyNavNodeLink;HK Host a party Link;/;HKHostAPartyNavNodeLink;HKHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;HKSummerSkincareLink;HK Summer Skincare Link;/;HKSummerSkincareLink;HKSummerSkincareLink;;;;
+                              ;;HKHowToReduceBlackheadsLink;HK How to reduce blackheads Link;/;HKHowToReduceBlackheadsLink;HKHowToReduceBlackheadsLink;;;;
+                              ;;HKHowToGetRidOfDarkCirclesLink;HK How to get rid of dark circles Link;/;HKHowToGetRidOfDarkCirclesLink;HKHowToGetRidOfDarkCirclesLink;;;;
+                              ;;HKBestFaceMoisturisersLink;HK Best Face Moisturisers Link;/;HKBestFaceMoisturisersLink;HKBestFaceMoisturisersLink;;;;
+                              ;;HKHowToKeepSkinLookingYouthfulLink;HK How to keep skin looking youthful Link;/;HKHowToKeepSkinLookingYouthfulLink;HKHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;HKGymSkincareTipsLink;HK Gym Skincare Tips Link;/;HKGymSkincareTipsLink;HKGymSkincareTipsLink;;;;
+
+                              ;;HKBenefitsOfDryBrushingLink;HK Benefits of dry brushing Link;/;HKBenefitsOfDryBrushingLink;HKBenefitsOfDryBrushingLink;;;;
+                              ;;HKUnderstandingDrySkinLink;HK Understanding dry skin Link;/;HKUnderstandingDrySkinLink;HKUnderstandingDrySkinLink;;;;
+                              ;;HKBestBodyExfoliatorsLink;HK Best body exfoliators Link;/;HKBestBodyExfoliatorsLink;HKBestBodyExfoliatorsLink;;;;
+
+                              ;;HKHowToFindTheRightFoundationLink;HK How to find the right foundation Link;/;HKHowToFindTheRightFoundationLink;HKHowToFindTheRightFoundationLink;;;;
+                              ;;HKHowToApplyFoundationLink;HK How to apply foundation Link;/;HKHowToApplyFoundationLink;HKHowToApplyFoundationLink;;;;
+                              ;;HKHowToShapeEyebrowsLink;HK How to shape eyebrows youthful Link;/;HKHowToShapeEyebrowsLink;HKHowToShapeEyebrowsLink;;;;
+                              ;;HKHowToGetASunKissedGlowLink;HK How to get a sun kissed glow Link;/;HKHowToGetASunKissedGlowLink;HKHowToGetASunKissedGlowLink;;;;
+
+                              ;;HKBestVeganCitiesInTheHKLink;Best Vegan Cities in the HK Link;/;HKBestVeganCitiesInTheHKLink;HKBestVeganCitiesInTheHKLink;;;;
+                              ;;HKLongHaulFlightTipsLink;HK Long haul flight tips Link;/;HKLongHaulFlightTipsLink;HKLongHaulFlightTipsLink;;;;
+                              ;;HKGymSkincareRoutineLink;HK Gym skincare routine Link;/;HKGymSkincareRoutineLink;HKGymSkincareRoutineLink;;;;
+                              ;;HKChildhoodDreamsLink;HK Childhood Dreams Link;/;HKChildhoodDreamsLink;HKChildhoodDreamsLink;;;;
+                              ;;HKPixieGeldof’sTravelEssentialsLink;HK Pixie Geldof’s Travel Essentials Link;/;HKPixieGeldof’sTravelEssentialsLink;HKPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;HKBenefitsOfCharcoalLink;HK Benefits of charcoal Link;/;HKBenefitsOfCharcoalLink;HKBenefitsOfCharcoalLink;;;;
+                              ;;HKHyaluronicAcidBenefitsLink;HK Hyaluronic Acid Benefits Link;/;HKHyaluronicAcidBenefitsLink;HKHyaluronicAcidBenefitsLink;;;;
+                              ;;HKDiscoverAllIngredientsLink;HK Discover all ingredients Link;/;HKDiscoverAllIngredientsLink;HKDiscoverAllIngredientsLink;;;;
+                              ;;HKSourcingOurIngredientsLink;HK Sourcing our ingredients Link;/;HKSourcingOurIngredientsLink;HKSourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;HKOurHeritageLink;HK Our Heritage Link;/;HKOurHeritageLink;HKOurHeritageLink;;;;
+                              ;;HKForeverAgainstAnimalTestingLink;HK How to reduce blackheads Link;/;HKForeverAgainstAnimalTestingLink;HKForeverAgainstAnimalTestingLink;;;;
+                              ;;HKB_CorpLink;HK B Corp Link;/;HKB_CorpLink;HKB_CorpLink;;;;
+                              ;;HKLatestNewsLink;HK Latest News Link;/;HKLatestNewsLink;HKLatestNewsLink;;;;
+                              ;;HKNatura_CoLink;HK Natura & co Link;/;HKNatura_CoLink;HKNatura_CoLink;;;;
+                              ;;HKEducationalProgrammeLink;HK Educational PRogramme Link;/;HKEducationalProgrammeLink;HKEducationalProgrammeLink;;;;
+                              ;;HKDonateMenstrualProductsLink;HK Donate Menstrual Products Link;/;HKDonateMenstrualProductsLink;HKDonateMenstrualProductsLink;;;;
+                              ;;HKVegetarianBeautyLink;HK Vegetarian Beauty Link;/;HKVegetarianBeautyLink;HKVegetarianBeautyLink;;;;
+
+                              ;;HK_Loyalty_JoinNowLink;HK Join Now Link;/;HK_Loyalty_JoinNowLink;HK_Loyalty_JoinNowLink;;;;
+
+                              ;;HKOurCommitmentLink;HK Our Commitment Link;/;HKOurCommitmentLink;HKOurCommitmentLink;;;;
+                              ;;HKCommunityTradeLink;HK Community Trade Link;/;HKCommunityTradeLink;HKCommunityTradeLink;;;;
+                              ;;HKBio-BridgesLink;HK Bio-Bridges Link;/;HKBio-BridgesLink;HKBio-BridgesLink;;;;
+                              ;;HKReducingEnvironmentalFootprintLink;HK Reducing Environmental Footprint Link;/;HKReducingEnvironmentalFootprintLink;HKReducingEnvironmentalFootprintLink;;;;
+                              ;;HKEmpoweringWomenLink;HK Empowering Women Link;/;HKEmpoweringWomenLink;HKEmpoweringWomenLink;;;;
+                              ;;HKModernSlaveryLink;HK Modern Slavery Link;/;HKModernSlaveryLink;HKModernSlaveryLink;;;;
+
+                              ;;HKPlasticRecyclingInTheHKLink;Plastic recycling in the HK Link;/;HKPlasticRecyclingInTheHKLink;HKPlasticRecyclingInTheHKLink;;;;
+                              ;;HKTerraCycleInterviewLink;HK TerraCycle Interview Link;/;HKTerraCycleInterviewLink;HKTerraCycleInterviewLink;;;;
+                              ;;HKReturnRecycleRepeatNavNodeLink;HK Return. Recycle. Repeat Link;/;HKReturnRecycleRepeatNavNodeLink;HKReturnRecycleRepeatNavNodeLink;;;;
+                              ;;HKCommunityTradePlasticsLink;HK Community Trade Plastics Link;/;HKCommunityTradePlasticsLink;HKCommunityTradePlasticsLink;;;;
+                              ;;HKPackagingAtTheBodyShopLink;HK Packaging at The Body Shop Link;/;HKPackagingAtTheBodyShopLink;HKPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;HKBeYourOwnBossNavNodeEntry;;HKBeYourOwnBossNavNodeEntry;HKBeYourOwnBossNavNode;HKBeYourOwnBossLink
+                                ;HKHostAPartyNavNodeEntry;;HKHostAPartyNavNodeEntry;HKHostAPartyNavNode;HKHostAPartyNavNodeLink
+
+#Entry_HKSkincareArticlesNavNode
+                                ;HKHowToReduceBlackheadsNavNodeEntry;;HKHowToReduceBlackheadsNavNodeEntry;HKHowToReduceBlackheadsNavNode;HKHowToReduceBlackheadsLink
+                                ;HKSummerSkincareNavNodeEntry;;HKSummerSkincareNavNodeEntry;HKSummerSkincareNavNode;HKSummerSkincareLink
+                                ;HKHowToGetRidOfDarkCirclesNavNodeEntry;;HKHowToGetRidOfDarkCirclesNavNodeEntry;HKHowToGetRidOfDarkCirclesNavNode;HKHowToGetRidOfDarkCirclesLink
+                                ;HKBestFaceMoisturisersNavNodeEntry;;HKBestFaceMoisturisersNavNodeEntry;HKBestFaceMoisturisersNavNode;HKBestFaceMoisturisersLink
+                                ;HKHowToKeepSkinLookingYouthfulNavNodeEntry;;HKHowToKeepSkinLookingYouthfulNavNodeEntry;HKHowToKeepSkinLookingYouthfulNavNode;HKHowToKeepSkinLookingYouthfulLink
+                                ;HKGymSkincareTipsNavNodeEntry;;HKGymSkincareTipsNavNodeEntry;HKGymSkincareTipsNavNode;HKGymSkincareTipsLink
+
+#Entry_HKBodyCareArticlesNavNode
+                                ;HKBenefitsOfDryBrushingNavNodeEntry;;HKBenefitsOfDryBrushingNavNodeEntry;HKBenefitsOfDryBrushingNavNode;HKBenefitsOfDryBrushingLink
+                                ;HKUnderstandingDrySkinNavNodeEntry;;HKUnderstandingDrySkinNavNodeEntry;HKUnderstandingDrySkinNavNode;HKUnderstandingDrySkinLink
+                                ;HKBestBodyExfoliatorsNavNodeEntry;;HKBestBodyExfoliatorsNavNodeEntry;HKBestBodyExfoliatorsNavNode;HKBestBodyExfoliatorsLink
+
+#Entry_HKMake-UpAeticlesNavNode
+                                ;HKHowToFindTheRightFoundationNavNodeEntry;;HKHowToFindTheRightFoundationNavNodeEntry;HKHowToFindTheRightFoundationNavNode;HKHowToFindTheRightFoundationLink
+                                ;HKHowToApplyFoundationNavNodeEntry;;HKHowToApplyFoundationNavNodeEntry;HKHowToApplyFoundationNavNode;HKHowToApplyFoundationLink
+                                ;HKHowToShapeEyebrowsNavNodeEntry;;HKHowToShapeEyebrowsNavNodeEntry;HKHowToShapeEyebrowsNavNode;HKHowToShapeEyebrowsLink
+                                ;HKHowToGetASunKissedGlowNavNodeEntry;;HKHowToGetASunKissedGlowNavNodeEntry;HKHowToGetASunKissedGlowNavNode;HKHowToGetASunKissedGlowLink
+
+#Entry_HKLifeStyleArticlesNavNode
+                                ;HKBestVeganCitiesInTheHKNavNodeEntry;;HKBestVeganCitiesInTheHKNavNodeEntry;HKBestVeganCitiesInTheHKNavNode;HKBestVeganCitiesInTheHKLink
+                                ;HKLongHaulFlightTipsNavNodeEntry;;HKLongHaulFlightTipsNavNodeEntry;HKLongHaulFlightTipsNavNode;HKLongHaulFlightTipsLink
+                                ;HKGymSkincareRoutineNavNodeEntry;;HKGymSkincareRoutineNavNodeEntry;HKGymSkincareRoutineNavNode;HKGymSkincareRoutineLink
+                                ;HKChildhoodDreamsNavNodeEntry;;HKChildhoodDreamsNavNodeEntry;HKChildhoodDreamsNavNode;HKChildhoodDreamsLink
+                                ;HKPixieGeldof’sTravelEssentialsNavNodeEntry;;HKPixieGeldof’sTravelEssentialsNavNodeEntry;HKPixieGeldof’sTravelEssentialsNavNode;HKPixieGeldof’sTravelEssentialsLink
+
+#Entry_HKIngredientBenefitsNavNode
+
+                                ;HKBenefitsOfCharcoalNavNodeEntry;;HKBenefitsOfCharcoalNavNodeEntry;HKBenefitsOfCharcoalNavNode;HKBenefitsOfCharcoalLink
+                                ;HKHyaluronicAcidBenefitsNavNodeEntry;;HKHyaluronicAcidBenefitsNavNodeEntry;HKHyaluronicAcidBenefitsNavNode;HKHyaluronicAcidBenefitsLink
+                                ;HKDiscoverAllIngredientsNavNodeEntry;;HKDiscoverAllIngredientsNavNodeEntry;HKDiscoverAllIngredientsNavNode;HKDiscoverAllIngredientsLink
+                                ;HKSourcingOurIngredientsNavNodeEntry;;HKSourcingOurIngredientsNavNodeEntry;HKSourcingOurIngredientsNavNode;HKSourcingOurIngredientsLink
+
+#Entry_HKWhoWeAre_NavNode
+                                ;HKOurHeritageNavNodeEntry;;HKOurHeritageNavNodeEntry;HKOurHeritageNavNode;HKOurHeritageLink
+                                ;HKForeverAgainstAnimalTestingNavNodeEntry;;HKForeverAgainstAnimalTestingNavNodeEntry;HKForeverAgainstAnimalTestingNavNode;HKForeverAgainstAnimalTestingLink
+                                ;HKB_CorpNavNodeEntry;;HKB_CorpNavNodeEntry;HKB_CorpNavNode;HKB_CorpLink
+                                ;HKLatestNewsNavNodeEntry;;HKLatestNewsNavNodeEntry;HKLatestNewsNavNode;HKLatestNewsLink
+                                ;HKNatura_CoNavNodeEntry;;HKNatura_CoNavNodeEntry;HKNatura_CoNavNode;HKNatura_CoLink
+                                ;HKEducationalProgrammeNavNodeEntry;;HKEducationalProgrammeNavNodeEntry;HKEducationalProgrammeNavNode;HKEducationalProgrammeLink
+                                ;HKDonateMenstrualProductsNavNodeEntry;;HKDonateMenstrualProductsNavNodeEntry;HKDonateMenstrualProductsNavNode;HKDonateMenstrualProductsLink
+                                ;HKVegetarianBeautyNavNodeEntry;;HKVegetarianBeautyNavNodeEntry;HKVegetarianBeautyNavNode;HKVegetarianBeautyLink
+
+#Entry_HKLoyaltyProgramNavNode
+                                ;HK_Loyalty_JoinNowNavNodeEntry;;HK_Loyalty_JoinNowNavNodeEntry;HK_Loyalty_JoinNowNavNode;HK_Loyalty_JoinNowLink
+
+#Entry_HKSustainabilityNavNode
+                                ;HKOurCommitmentNavNodeEntry;;HKOurCommitmentNavNodeEntry;HKOurCommitmentNavNode;HKOurCommitmentLink
+                                ;HKCommunityTradeNavNodeEntry;;HKCommunityTradeNavNodeEntry;HKCommunityTradeNavNode;HKCommunityTradeLink
+                                ;HKBio-BridgesNavNodeEntry;;HKBio-BridgesNavNodeEntry;HKBio-BridgesNavNode;HKBio-BridgesLink
+                                ;HKReducingEnvironmentalFootprintNavNodeEntry;;HKReducingEnvironmentalFootprintNavNodeEntry;HKReducingEnvironmentalFootprintNavNode;HKReducingEnvironmentalFootprintLink
+                                ;HKEmpoweringWomenNavNodeEntry;;HKEmpoweringWomenNavNodeEntry;HKEmpoweringWomenNavNode;HKEmpoweringWomenLink
+                                ;HKModernSlaveryNavNodeEntry;;HKModernSlaveryNavNodeEntry;HKModernSlaveryNavNode;HKModernSlaveryLink
+
+#Child_Nodes_HKPlasticsNavNode
+                                ;HKPlasticRecyclingInTheHKNavNodeEntry;;HKPlasticRecyclingInTheHKNavNodeEntry;HKPlasticRecyclingInTheHKNavNode;HKPlasticRecyclingInTheHKLink
+                                ;HKTerraCycleInterviewNavNodeEntry;;HKTerraCycleInterviewNavNodeEntry;HKTerraCycleInterviewNavNode;HKTerraCycleInterviewLink
+                                ;HKReturnRecycleRepeatNavNodeEntry;;HKReturnRecycleRepeatNavNodeEntry;HKReturnRecycleRepeatNavNode;HKReturnRecycleRepeatNavNodeLink
+                                ;HKCommunityTradePlasticsNavNodeEntry;;HKCommunityTradePlasticsNavNodeEntry;HKCommunityTradePlasticsNavNode;HKCommunityTradePlasticsLink
+                                ;HKPackagingAtTheBodyShopNavNodeEntry;;HKPackagingAtTheBodyShopNavNodeEntry;HKPackagingAtTheBodyShopNavNode;HKPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;HKUsefullInformationNavNode;;HK Useful Information;HKUsefullInformationNavNode;HKDeliveryNavNode,HKReturnsNavNode,HKFAQNavNode,HKTermsAndConditionsNavNode,HKPrivacyPolicyNavNode,HKSitemapNavNode
+;HKWaysToShopNavNode;;HK Ways to Shop;HKWaysToShopNavNode;HKStoresNavNode,HKLoveYourBodyClubNavNode,HKStudentDiscountNavNode,HKGiftCardsNavNode
+;HKAboutUsNavNode;;HK About Us;HKAboutUsNavNode;HKAboutUsInternalNavNode,HKTheBodyShopAtHomeNavNode,HKAffiliatesNavNode,HKGenderPayGapNavNode,HKModernSlaveryStatementNavNode,HKAgainstAnimalTestingNavNode,HKTaxStrategyNavNode,HKCareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;HKDeliveryNavNode;;HKDeliveryNavNode;HKDeliveryNavNode;
+;HKReturnsNavNode;;HKReturnsNavNode;HKReturnsNavNode;
+;HKFAQNavNode;;HKFAQ Page;HKFAQNavNode
+;HKTermsAndConditionsNavNode;;HKTermsAndConditionsNavNode;HKTermsAndConditionsNavNode;
+;HKPrivacyPolicyNavNode;;HKPrivacyPolicyNavNode;HKPrivacyPolicyNavNode;
+;HKSitemapNavNode;;HKSitemapNavNode;HKSitemapNavNode;
+;HKStoresNavNode;;HKStoresNavNode;HKStoresNavNode;
+;HKLoveYourBodyClubNavNode;;HKLoveYourBodyClubNavNode;HKLoveYourBodyClubNavNode;
+;HKStudentDiscountNavNode;;HKStudentDiscountNavNode;HKStudentDiscountNavNode;
+;HKGiftCardsNavNode;;HKGiftCardsNavNode;HKGiftCardsNavNode;
+;HKAboutUsInternalNavNode;;HKAboutUsInternalNavNode;HKAboutUsInternalNavNode
+;HKTheBodyShopAtHomeNavNode;;HKTheBodyShopAtHomeNavNode;HKTheBodyShopAtHomeNavNode
+;HKAffiliatesNavNode;;HKAffiliatesNavNode;HKAffiliatesNavNode
+;HKGenderPayGapNavNode;;HKGenderPayGapNavNode;HKGenderPayGapNavNode
+;HKModernSlaveryStatementNavNode;;HKModernSlaveryStatementNavNode;HKModernSlaveryStatementNavNode
+;HKAgainstAnimalTestingNavNode;;HKAgainstAnimalTestingNavNode;HKAgainstAnimalTestingNavNode
+;HKTaxStrategyNavNode;;HKTaxStrategyNavNode;HKTaxStrategyNavNode
+;HKCareersNavNode;;HKCareersNavNode;HKCareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;HKDeliveryNavNodeEntry;;HKDeliveryNavNodeEntry;HKDeliveryNavNode;HKDeliveryLink;
+;HKReturnsNavNodeEntry;;HKReturnsNavNodeEntry;HKReturnsNavNode;HKReturnsLink;
+;HKFAQNavNodeEntry;;HK FAQ Navigation Node Entry;HKFAQNavNode;HKFAQLink;
+;HKTermsAndConditionsNavNodeEntry;;HKTermsAndConditionsNavNodeEntry;HKTermsAndConditionsNavNode;HKTermsAndConditionsLink;
+;HKPrivacyPolicyNavNodeEntry;;HKPrivacyPolicyNavNodeEntry;HKPrivacyPolicyNavNode;HKPrivacyPolicyLink;
+;HKSitemapNavNodeEntry;;HKSitemapNavNodeEntry;HKSitemapNavNode;HKSitemapLink;
+;HKStoresNavNodeEntry;;HKStoresNavNodeEntry;HKStoresNavNode;HKStoresLink;
+;HKLoveYourBodyClubNavNodeEntry;;HKLoveYourBodyClubNavNodeEntry;HKLoveYourBodyClubNavNode;HKLoveYourBodyClubLink;
+;HKStudentDiscountNavNodeEntry;;HKStudentDiscountNavNodeEntry;HKStudentDiscountNavNode;HKStudentDiscountLink;
+;HKGiftCardsNavNodeEntry;;HKGiftCardsNavNodeEntry;HKGiftCardsNavNode;HKGiftCardsLink;
+;HKAboutUsInternalNavNodeEntry;;HKAboutUsInternalNavNodeEntry;HKAboutUsInternalNavNode;HKAboutUsLink;
+;HKTheBodyShopAtHomeNavNodeEntry;;HKTheBodyShopAtHomeNavNodeEntry;HKTheBodyShopAtHomeNavNode;HKTheBodyShopAtHomeLink;
+;HKAffiliatesNavNodeEntry;;HKAffiliatesNavNodeEntry;HKAffiliatesNavNode;HKAffiliatesLink;
+;HKGenderPayGapNavNodeEntry;;HKGenderPayGapNavNodeEntry;HKGenderPayGapNavNode;HKGenderPayGapLink;
+;HKModernSlaveryStatementNavNodeEntry;;HKModernSlaveryStatementNavNodeEntry;HKModernSlaveryStatementNavNode;HKModernSlaveryStatementLink;
+;HKAgainstAnimalTestingNavNodeEntry;;HKAgainstAnimalTestingNavNodeEntry;HKAgainstAnimalTestingNavNode;HKAgainstAnimalTestingLink;
+;HKTaxStrategyNavNodeEntry;;HKTaxStrategyNavNodeEntry;HKTaxStrategyNavNode;HKTaxStrategyLink;
+;HKCareersNavNodeEntry;;HKCareersNavNodeEntry;HKCareersNavNode;HKCareersLink;
+
+##CategoryBannerCMSComponent Start ##
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;HKCategoryBannerCMSComponent;HK CategoryBanner CMSComponent;HKCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-HKCategorybannerSlot;HKCategory Banner Slot;true;HKCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-HKCategoryPage;Section1;;Section1Slot-HKCategorybannerSlot;;;
+##CategorybannerCMSComponent End ##

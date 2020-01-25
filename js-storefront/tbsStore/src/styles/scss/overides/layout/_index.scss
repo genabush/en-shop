@@ -1,0 +1,100 @@
+@import '../../overides/layout/page-templates/common-template';
+@import '~@spartacus/styles/scss/layout/page-templates/landing-page-2';
+@import '~@spartacus/styles/scss/layout/page-templates/content-page-1';
+@import '~@spartacus/styles/scss/layout/page-templates/category-page';
+@import '../../overides/layout/page-templates/product-detail';
+@import '~@spartacus/styles/scss/layout/page-templates/product-list';
+@import '~@spartacus/styles/scss/layout/page-templates/search-results-list';
+@import '~@spartacus/styles/scss/layout/page-templates/cart-page';
+@import '~@spartacus/styles/scss/layout/page-templates/login-page';
+@import '~@spartacus/styles/scss/layout/page-templates/error-page';
+@import '~@spartacus/styles/scss/layout/page-templates/order-detail-page';
+@import '~@spartacus/styles/scss/layout/page-templates/multistep-checkout-page';
+
+cx-page-layout {
+  @extend %cx-page-layout !optional;
+}
+
+cx-page-slot {
+  @extend %cx-page-slot !optional;
+}
+
+cx-paragraph {
+  @extend %cx-paragraph !optional;
+}
+
+cx-category-navigation {
+  @extend %cx-category-navigation !optional;
+}
+
+.LandingPage1Template {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  max-width: 100%;
+  margin: auto;
+}
+
+.ContentPage1Template {
+  @extend %ContentPage1Template !optional;
+}
+
+// .CategoryPageTemplate {
+//   @extend %CategoryPageTemplate !optional;
+// }
+
+.ProductListPageTemplate {
+  @extend %ProductListPageTemplate !optional;
+}
+
+.SearchResultsListPageTemplate {
+  @import '../../custom/third-party/swiper.scss';
+}
+
+.ProductDetailsPageTemplate {
+  @extend %ProductDetailsPageTemplate !optional;
+}
+
+.CartPageTemplate {
+  @extend %CartPageTemplate !optional;
+}
+
+.LoginPageTemplate {
+  @extend %LoginPageTemplate !optional;
+}
+
+.AccountPageTemplate {
+  --cx-max-width: 100%;
+  @extend %LoginPageTemplate !optional;
+
+  cx-page-slot {
+    max-width: map-get($container-max-widths, lg);
+  }
+}
+
+.MultiStepCheckoutSummaryPageTemplate {
+  @extend %MultiStepCheckoutSummaryPageTemplate !optional;
+  @import '../../overides/layout/page-templates/multi-checkout';
+}
+
+.ErrorPageTemplate {
+  @extend %ErrorPageTemplate !optional;
+}
+
+// Position on file TBC - what used to be in <root>/style.scss
+app-custom-product-list-item .cx-product-name {
+  font-size: var(--cx-font-size, 1rem) !important;
+  font-weight: var(--cx-font-weight-bold) !important;
+  line-height: var(--cx-line-height, 1.2222222222) !important;
+  text-align: left !important;
+  display: block !important;
+  margin: 0 0 3px 0 !important;
+  color: var(--cx-color-dark) !important;
+  text-decoration: none !important;
+}
+
+app-custom-product-list-item .cx-product-name:hover {
+  cursor: pointer;
+}

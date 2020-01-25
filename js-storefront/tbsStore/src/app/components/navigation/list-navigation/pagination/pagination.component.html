@@ -1,0 +1,45 @@
+<ul class="pagination" *ngIf="showPagination()">
+  <!-- Previous -->
+  <li class="pagination__section pagination__section--prev" [ngClass]="{ disabled: onFirstPage() || !hasPages() }">
+    <button
+      tabindex="0"
+      class="pagination__link pagination__link--prev"
+      (click)="clickPageNo(getPagePrevious())"
+      (keyup.enter)="clickPageNo(getPagePrevious())"
+    >
+      <span class="sr-only">{{ 'pagination.prev' | cxTranslate }}</span>
+    </button>
+  </li>
+
+  <!-- Content -->
+  <li class="pagination__section pagination__section--content">
+    <ul class="pagination__list">
+      <!-- Page Index -->
+      <li class="pagination__item" *ngFor="let page of getPageIndicies(); let i = index">
+        <a class="pagination__link" *ngIf="showDots(i)">...</a>
+        <button
+          tabindex="0"
+          class="pagination__link"
+          [ngClass]="{ 'pagination__link--active': onPageIndex(i), 'pagination__link--disabled': showDots(i) }"
+          *ngIf="!hidePageIndex(i)"
+          (click)="clickPageNo(i + 1)"
+          (keyup.enter)="clickPageNo(i + 1)"
+        >
+          {{ i + 1 }}
+        </button>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Next -->
+  <li class="pagination__section pagination__section--next" [ngClass]="{ disabled: onLastPage() || !hasPages() }">
+    <button
+      tabindex="0"
+      class="pagination__link pagination__link--next"
+      (click)="clickPageNo(getPageNext())"
+      (keyup.enter)="clickPageNo(getPageNext())"
+    >
+      <span class="sr-only">{{ 'pagination.next' | cxTranslate }}</span>
+    </button>
+  </li>
+</ul>

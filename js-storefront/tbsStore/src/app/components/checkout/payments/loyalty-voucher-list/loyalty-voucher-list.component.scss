@@ -1,0 +1,13 @@
+@import './src/styles/scss/themes/tbs/_typography';
+
+.info {
+  color: var(--cx-color-core-primary);
+  &__rewards {
+    font-weight: $work-sans-bold;
+  }
+}
+.vouchers-list {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--cx-color-inverse);
+}

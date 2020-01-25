@@ -1,0 +1,17 @@
+<div class="amp-dc-splitBlock {{#if ./split}}amp-dc-splitBlock--{{ ./split }}{{else}} full-size{{/if}} ">
+    {{#each content}}
+        <div class="amp-dc-split-part amp-dc-split-part--{{@index}}">
+            <div class="amp-dc-split-part-wrap">
+                {{#if (test this.[@type] (toRegex ".*/image")) }}
+                    {{> image-partial}}
+                {{/if}}
+                {{#if (test this.[@type] (toRegex ".*/video")) }}
+                    video todo
+                {{/if}}
+                {{#if (test this.[@type] (toRegex ".*/text")) }}
+                   {{> text-partial}}
+                {{/if}}
+            </div>
+        </div>
+    {{/each}}
+</div>

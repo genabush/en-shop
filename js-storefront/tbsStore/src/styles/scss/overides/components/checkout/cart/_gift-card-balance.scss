@@ -1,0 +1,50 @@
+.gift-card-form {
+  margin: 3rem auto;
+
+  &__inner {
+    max-width: 50%;
+    margin: auto;
+
+    @include media-breakpoint-down(md) {
+      max-width: 100%;
+    }
+  }
+
+  &__field {
+    &-control {
+      position: relative;
+      display: block;
+      margin: 0 5px;
+
+      @include media-breakpoint-down(md) {
+        margin: 0;
+      }
+    }
+
+    &-label {
+      float: none;
+      display: block;
+    }
+
+    .btn-block {
+      margin-top: 33px;
+
+      &:disabled {
+        cursor: no-drop;
+      }
+    }
+
+    .input {
+      height: 30px;
+    }
+
+    .btn {
+      height: 30px;
+      padding: 2px 5px;
+    }
+  }
+
+  .warning {
+    color: red;
+  }
+}

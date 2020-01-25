@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/>
+
+	<!-- Consignment Process Actions -->
+
+	<bean id="sendConsignmentToRMSAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendConsignmentAction" parent="abstractLimitedRetryAction">
+		<constructor-arg name="placeOrderConverter" ref="placeOrderConverter"/>
+		<constructor-arg name="orderSendResponseAction" ref="rmsOrderSendResponseAction"/>
+		<constructor-arg name="clickAndCollectConsignmentPredicate" ref="clickAndCollectConsignmentPredicate"/>
+		<property name="maxRetries" value="#{configurationService.configuration.getInt('order.rms.outbound.retry.max')}"/>
+		<property name="retryDelay" value="#{configurationService.configuration.getLong('order.rms.outbound.retry.delay')}"/>
+	</bean>
+	
+	<bean id="sendCaptureToRMSAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.SendConsignmentCaptureAction" parent="abstractLimitedRetryAction">
+		<constructor-arg name="orderSendPaymentConverter" ref="orderSendPaymentConverter"/>
+		<constructor-arg name="orderSendCaptureAction" ref="rmsOrderSendCaptureAction"/>
+		<property name="maxRetries" value="#{configurationService.configuration.getInt('order.rms.outbound.retry.max')}"/>
+		<property name="retryDelay" value="#{configurationService.configuration.getLong('order.rms.outbound.retry.delay')}"/>
+	</bean>
+
+	<bean id="checkConsignmentClickAndCollectAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.CheckConsignmentClickAndCollectAction" parent="abstractAction">
+		<property name="consignmentStatusesToWait">
+			<list value-type="de.hybris.platform.basecommerce.enums.ConsignmentStatus">
+				<value>AWAIT_FOR_COLLECTION</value>
+				<value>READY_FOR_COLLECTION</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="reduceCisOpenOrderCountAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.ReduceCisOpenOrderCountAction" parent="abstractAction">
+		<property name="tbsAcceleratorCheckoutService" ref="tbsAcceleratorCheckoutService" />
+	</bean>
+	
+	<bean id="releaseStockAction" class="uk.co.thebodyshop.fulfilmentprocess.actions.consignment.ReleaseStockAction" parent="abstractAction">
+		<property name="tbsCommerceStockService" ref="tbsCommerceStockService" />
+	</bean>
+
+</beans>

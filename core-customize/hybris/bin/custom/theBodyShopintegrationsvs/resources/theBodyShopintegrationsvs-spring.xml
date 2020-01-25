@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<!-- KEY GENERATORS -->
+	<bean id="svsGiftCardStanGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator" init-method="init">
+		<property name="key" value="STAN" />
+		<property name="digits" value="6" />
+		<property name="start" value="000000" />
+		<property name="type" value="numeric" />
+	</bean>
+
+	<bean id="svsGiftCardTransactionIDGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator" init-method="init">
+		<property name="key" value="SVS_TRANSACTION_ID" />
+		<property name="digits" value="10" />
+		<property name="start" value="0000000000" />
+		<property name="type" value="numeric" />
+	</bean>
+
+	<!-- WEB SERVERS -->
+	<bean id="authenticationSOAPHandler" class="uk.co.thebodyshop.integration.svs.soap.ClientAuthenticationSOAPHandler">
+		<property name="username" value="#{configurationService.configuration.getString('svsgiftcard.username')}" />
+		<property name="password" value="#{configurationService.configuration.getString('svsgiftcard.password')}" />
+	</bean>
+
+	<bean id="handlerResolver" class="uk.co.thebodyshop.integration.svs.soap.DefaultHandlerResolver">
+		<property name="handlerList">
+			<list>
+				<ref bean="authenticationSOAPHandler" />
+				<bean class="uk.co.thebodyshop.integration.svs.soap.SOAPRequestResponseSpitter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="svsGiftCardWS" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="com.svs.svsxml.service.SVSXMLWay" />
+		<property name="wsdlDocumentUrl" value="#{configurationService.configuration.getString('svsgiftcard.wsdl')}" />
+		<property name="namespaceUri" value="http://service.svsxml.svs.com" />
+		<property name="serviceName" value="SVSXMLWayService" />
+		<property name="portName" value="SVSXMLWay" />
+		<property name="handlerResolver" ref="handlerResolver" />
+	</bean>
+
+	<!-- SERVICES -->
+	<alias name="defaultSvsService" alias="svsService" />
+	<bean id="defaultSvsService" class="uk.co.thebodyshop.integration.svs.services.impl.DefaultSvsService" />
+
+	<!-- FACADES -->
+	<alias name="defaultGiftCardFacade" alias="giftCardFacade" />
+	<bean id="defaultGiftCardFacade" class="uk.co.thebodyshop.integration.svs.facades.impl.DefaultGiftCardFacade" />
+
+	<!-- POPULATORS -->
+	<alias name="defaultAppliedOrderGiftCardPopulator" alias="orderAppliedGiftCardPopulator" />
+	<bean id="defaultAppliedOrderGiftCardPopulator" class="uk.co.thebodyshop.integration.svs.populators.OrderAppliedGiftCardPopulator" />
+	
+	<bean parent="modifyPopulatorList">
+        <property name="list" ref="cartConverter"/>
+        <property name="add" ref="orderAppliedGiftCardPopulator"/>
+    </bean>
+
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="extendedCartConverter"/>
+        <property name="add" ref="orderAppliedGiftCardPopulator"/>
+    </bean>
+
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="orderConverter"/>
+        <property name="add" ref="orderAppliedGiftCardPopulator"/>
+    </bean>
+
+	<!-- MODEL FOR REVERSE POPULATORS -->
+	<bean id="giftCardModel" class="uk.co.thebodyshop.integration.svs.model.GiftCardModel" scope="prototype" />
+	
+    <!-- Dynamic attributes -->
+    <bean id="amountGiftCardsForOrderAttributeHandler" class="uk.co.thebodyshop.integration.svs.order.dynamicattributes.AmountGiftCardsForOrderAttributeHandler" />
+    
+    <!-- Cart calculation Hook -->
+    <alias name="defaultTbsCartCalculationMethodHook" alias="tbsCartCalculationMethodHook"/>
+    <bean id="defaultTbsCartCalculationMethodHook" class="uk.co.thebodyshop.integration.svs.cart.hooks.TbsCartCalculationMethodHook">
+		<constructor-arg name="giftCardFacade" ref="giftCardFacade"/>
+    </bean>
+
+    <bean id="tbsCartCalculationMethodHookMergeDirective" depends-on="commerceCartCalculationMethodHooks" parent="listMergeDirective">
+        <property name="add" ref="tbsCartCalculationMethodHook"/>
+    </bean>
+</beans>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/posBenefitSchema" xmlns:tns="http://thebodyshop/posBenefitSchema" elementFormDefault="qualified">
+
+    <xs:element name="AuthBenefitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BenefitCode" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="BenefitType" type="tns:BenefitTypeEnum" minOccurs="1" maxOccurs="1" />
+                <xs:element name="AgentID" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="StoreID" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="DonateTo" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="TransactionID" type="xs:string" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CaptureBenefitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BenefitCode" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="BenefitType" type="tns:BenefitTypeEnum" minOccurs="1" maxOccurs="1" />
+                <xs:element name="AgentID" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="StoreID" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="DonateTo" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="TransactionID" type="xs:string" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ReverseAuthBenefitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BenefitCode" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="BenefitType" type="tns:BenefitTypeEnum" minOccurs="1" maxOccurs="1" />
+                <xs:element name="AgentID" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="StoreID" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="DonateTo" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="TransactionID" type="xs:string" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="BenefitTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AbsoluteMonetary" />
+            <xs:enumeration value="Promotion" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="BenefitStatusEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Available" />
+            <xs:enumeration value="Expired" />
+            <xs:enumeration value="Used" />
+            <xs:enumeration value="Donated" />
+            <xs:enumeration value="Authorised" />
+            <xs:enumeration value="Cancelled" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="StatusTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUCCESS" />
+            <xs:enumeration value="FAILURE" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ResponseStatus">
+        <xs:sequence>
+            <xs:element name="status" type="tns:StatusTypeEnum" />
+            <xs:element name="statusMessage" type="xs:string" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="AuthBenefitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />
+                <xs:element name="Status" type="tns:BenefitStatusEnum" minOccurs="0" maxOccurs="1" />
+                <xs:element name="Amount" type="xs:string" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CaptureBenefitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />
+                <xs:element name="Status" type="tns:BenefitStatusEnum" minOccurs="0" maxOccurs="1" />
+                <xs:element name="Amount" type="xs:string" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ReverseAuthBenefitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseStatus" type="tns:ResponseStatus" minOccurs="1" maxOccurs="1" />
+                <xs:element name="Status" type="tns:BenefitStatusEnum" minOccurs="0" maxOccurs="1" />
+                <xs:element name="Amount" type="xs:string" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

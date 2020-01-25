@@ -1,0 +1,59 @@
+<form class="d-flex flex-row flex-wrap gift-card-form field flex-grow-1" [formGroup]="formGroup" novalidate>
+  <ng-container *ngIf="!(addedGiftCardResponse$ | async)?.success">
+    <mat-form-field appearance="fill" class="mat-input-primary col-12 col-lg-4 px-0 pr-lg-3">
+      <mat-label>{{ 'gift.card.number' | cxTranslate }}</mat-label>
+      <input matInput formControlName="giftCardNumber" id="cardNumber" type="text" minlength="19" maxlength="19" />
+      <mat-error *ngIf="showValidationError && formGroup.controls['giftCardNumber']?.errors">{{
+        'gift.validation.cardNumber' | cxTranslate
+      }}</mat-error>
+      <mat-error *ngIf="formGroup.controls['giftCardNumber']?.errors?.minlength">{{
+        'gift.validation.cardNumberMinLength' | cxTranslate
+      }}</mat-error>
+      <mat-error *ngIf="formGroup.controls['giftCardNumber']?.errors?.numbers">{{
+        'gift.validation.cardNumberNumbersOnly' | cxTranslate
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="mat-input-primary col-12 col-lg-3 px-0 px-lg-3">
+      <mat-label>4 {{ 'gift.form.digitalCode' | cxTranslate }}</mat-label>
+      <input matInput formControlName="giftCardPin" id="code" type="text" minlength="4" maxlength="4" />
+      <mat-error *ngIf="showValidationError && formGroup.controls['giftCardPin']?.errors"
+        >{{ 'gift.validation.cardPin' | cxTranslate }}'</mat-error
+      >
+      <mat-error *ngIf="formGroup.controls['giftCardPin']?.errors?.minlength">{{
+        'gift.validation.cardPinMinLength' | cxTranslate
+      }}</mat-error>
+      <mat-error *ngIf="formGroup.controls['giftCardPin']?.errors?.numbers">{{
+        'gift.validation.cardPinNumbersOnly' | cxTranslate
+      }}</mat-error>
+    </mat-form-field>
+
+    <button
+      type="button"
+      class="mb-0 mb-sm-3 btn btn-primary h-100 p-4 col-12 col-lg-3"
+      [disabled]="
+        !!formGroup.controls['giftCardPin'].errors ||
+        !!formGroup.controls['giftCardNumber'].errors ||
+        formGroup.controls['giftCardNumber'].pristine ||
+        formGroup.controls['giftCardPin'].pristine
+      "
+      (click)="addGiftCard()"
+    >
+      {{ 'gift.form.addButton' | cxTranslate }}
+    </button>
+  </ng-container>
+  <ng-container *ngIf="addedGiftCardResponse$ | async as giftCard">
+    <div *ngIf="giftCard?.success" class="row">
+      <div class="col-lg-8">
+        {{ 'gift.card.value' | cxTranslate }} {{ giftCard.giftCardAppliedAmount }},
+        {{ 'gift.form.number' | cxTranslate }} -
+        {{ giftCard.giftCardNumber }}
+      </div>
+      <button class="btn btn-primary" (click)="removeGiftCard(giftCard.giftCardNumber)">
+        {{ 'gift.form.removeButton' | cxTranslate }}
+      </button>
+    </div>
+  </ng-container>
+</form>
+<div class="warning" *ngIf="(addedGiftCardResponse$ | async)?.errorMessage">
+  {{ (addedGiftCardResponse$ | async)?.errorMessage | cxTranslate }}
+</div>

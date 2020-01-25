@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/productSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/productSchema" targetNamespace="http://thebodyshop/productSchema">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/productSchema" xmlns:tns="http://thebodyshop/productSchema">
+			<xs:element name="ProductRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="Product" type="tns:Product" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:simpleType name="prodName">
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1" />
+					<xs:maxLength value="255" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="prodDesc">
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1" />
+					<xs:maxLength value="40" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="prodBrandDesc">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="30" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="prodFormatDesc">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="30" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="prodLifecycleCodeDesc">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="30" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Product">
+				<xs:sequence>
+					<xs:element name="ArticleId">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="1" />
+								<xs:maxLength value="18" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Type">
+						<xs:simpleType>
+							<xs:restriction base="tns:ProductTypeEnum">
+								<xs:pattern value="[A-Z]{4}" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="Name">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="lang" type="xs:string" use="required" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="Description">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="lang" type="xs:string" use="required" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Ean">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="1" />
+								<xs:maxLength value="18" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Gtin">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="1" />
+								<xs:maxLength value="18" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="PlanArticle">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="1" />
+								<xs:maxLength value="5" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" name="BrandCode">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="5" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="BrandDescription">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="lang" type="xs:string" use="required" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" name="FormatCode">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="5" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="FormatDescription">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="lang" type="xs:string" use="required" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element default="false" minOccurs="0" name="Hazardous" type="xs:boolean" />
+					<xs:element minOccurs="0" name="HazardousClass">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="6" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="Category" type="tns:Category" />
+					<xs:element minOccurs="0" name="UnitCode">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="3" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element default="0.00" minOccurs="0" name="UnitValue">
+						<xs:simpleType>
+							<xs:restriction base="xs:double">
+								<xs:maxInclusive value="9999999999999" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" name="MllVariant">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="5" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" name="ArticleLifecycleCode">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="5" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="ArticleLifecycleDescription">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="lang" type="xs:string" use="required" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="catDesc">
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1" />
+					<xs:maxLength value="60" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Category">
+				<xs:sequence>
+					<xs:element name="CategoryCode">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="1" />
+								<xs:maxLength value="9" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="CategoryDescription">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="lang" type="xs:string" use="required" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="statusCode" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>The response of Product Request</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="messageId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>The Hybris Id of the Feed</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:simpleType name="ProductTypeEnum">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="YRTG" />
+					<xs:enumeration value="YSVC" />
+					<xs:enumeration value="YGCA" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ProductResponse">
+		<wsdl:part element="tns:ProductResponse" name="ProductResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ProductRequest">
+		<wsdl:part element="tns:ProductRequest" name="ProductRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ProductService">
+		<wsdl:operation name="Product">
+			<wsdl:input message="tns:ProductRequest" name="ProductRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:ProductResponse" name="ProductResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ProductServiceSoap11" type="tns:ProductService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Product">
+			<soap:operation soapAction="" />
+			<wsdl:input name="ProductRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="ProductResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ProductService">
+		<wsdl:port binding="tns:ProductServiceSoap11" name="ProductServiceSoap11">
+			<soap:address location="https://thebodyshop.local:9002/tbsdataprocessing/endpoints" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

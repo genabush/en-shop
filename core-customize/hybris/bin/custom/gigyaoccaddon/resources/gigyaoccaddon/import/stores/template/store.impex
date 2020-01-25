@@ -1,0 +1,50 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS Site configuration
+#
+
+######
+## PARAMETERS REQUIRED FOR THIS SCRIPT
+##
+##   * contentCatalog   - content catalog id
+##   * productCatalog   = product catalog id
+##   * storeUid - site id
+##   * storeUid - id of the store
+##   * channel - site channel
+#######
+#$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$defaultLanguage=en
+$webServiceSiteUid=$siteUidWS
+
+$gigyaConfig=gigya_$siteUid
+
+$gigyaApiKey=gigya.apikey.$siteUid
+
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+
+$gigyaKey=$config-gigya.apikey.$siteUid
+$gigyaSecret=$config-gigya.userSecret
+$gigyaUserKey=$config-gigya.userKey
+
+
+INSERT_UPDATE GigyaConfig;code[unique=true];gigyaApiKey;gigyaDataCenter;gigyaUserSecret;gigyaUserKey;
+"#%beforeEach:
+String gigyaConfig = line.get(Integer.valueOf(1));
+String siteId = gigyaConfig.split(""_"")[1];
+String apiKey = ""gigya.apikey.""+siteId;
+String gigyaKey = Config.getParameter(apiKey);
+line.put(Integer.valueOf(2),gigyaKey);
+String gigyaDatacenter = Config.getParameter(""gigya.europe.sites"").contains(siteId) ? Config.getParameter(""gigya.datacenter.europe"") : null;
+gigyaDatacenter = Config.getParameter(""gigya.us.sites"").contains(siteId) ? Config.getParameter(""gigya.datacenter.us"") : gigyaDatacenter;
+gigyaDatacenter = Config.getParameter(""gigya.au.sites"").contains(siteId) ? Config.getParameter(""gigya.datacenter.au"") : gigyaDatacenter;
+if(gigyaDatacenter != null)
+{
+line.put(Integer.valueOf(3),gigyaDatacenter);
+}
+";
+;$gigyaConfig;$gigyaKey;eu1.gigya.com;$gigyaSecret;$gigyaUserKey
+
+UPDATE CMSSite;uid[unique=true];gigyaConfig(code)
+;$siteUid;$gigyaConfig;

@@ -1,0 +1,5 @@
+@import '~@spartacus/styles/scss/theme/sparta/variables';
+
+%cx-billing-address-form {
+  @include checkout-media-style();
+}

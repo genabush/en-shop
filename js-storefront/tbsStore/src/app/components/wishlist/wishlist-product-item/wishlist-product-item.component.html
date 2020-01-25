@@ -1,0 +1,54 @@
+<div class="product-tile product-tile--wishlist">
+  <ng-container *ngIf="product && product.variantOptions">
+    <a (click)="triggerRemoveProduct(product.code)" class="product-tile__remove">
+      <span class="sr-only">{{ 'common.removeBtn' | cxTranslate }}</span>
+      <cx-icon [type]="iconTypes.CLOSE" class="icon icon--close"></cx-icon>
+    </a>
+    <div class="product-tile__image-wrapper">
+      <a
+        [attr.aria-label]="product.name"
+        [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+        class="product-tile__image-container"
+      >
+        <cx-media
+          *ngIf="product.variantOptions && product.variantOptions[0].images; else noProductImage"
+          class="product-tile__image"
+          [container]="product.variantOptions[0].images[0]"
+          format="product"
+          [alt]="product.name"
+        ></cx-media>
+        <ng-template #noProductImage>
+          <cx-media class="product-tile__image" [container]="[]" format="product" [alt]="product.name"></cx-media>
+        </ng-template>
+      </a>
+    </div>
+
+    <a
+      [routerLink]="{ cxRoute: 'product', params: product } | cxUrl"
+      class="product-tile__name"
+      [innerHTML]="product.name"
+    ></a>
+
+    <div *ngIf="product.variantOptions" class="product-tile__size product-tile__size--lg">
+      {{ product.variantOptions[0]?.size }}
+    </div>
+
+    <div class="product-tile__price-container">
+      <div class="product-tile__price" [attr.aria-label]="'product.productPrice' | cxTranslate">
+        {{ product.price?.formattedValue }}
+      </div>
+      <div *ngIf="product.variantOptions" class="product-tile__size">
+        {{ product.variantOptions[0]?.size }}
+      </div>
+    </div>
+
+    <div class="product-tile__cta-container">
+      <cx-add-to-cart [showNotifyMe]="true" [hideFav]="true" [variant]="product"></cx-add-to-cart>
+    </div>
+
+    <p class="my-2">
+      {{ 'wishlists.added' | cxTranslate }}
+      <span [attr.date-added]="product.wishlistCreationDate">{{ product.wishlistCreationDate | cxDate }}</span>
+    </p>
+  </ng-container>
+</div>

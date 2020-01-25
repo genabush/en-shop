@@ -1,0 +1,517 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsNLContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:nl.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsNLProductCatalog
+$productCatalogName=Netherlands Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-nl;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;nlroot;;nlroot;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;NLStoreFinderLink;NL Store Finder Link;/store-finder;NLStoreFinderLink;NLStoreFinderLink;;;;
+;;NLLoginLink;NL Login Link;/login;NLLoginLink;NLLoginLink;;;;
+;;NLBodyCategoryLink;NL Body Category Link;/Body/c/c00001;NLBodyCategoryLink;NLBodyCategoryLink;;c00001;;
+;;NLBodyTreatsCategoryLink;NL Body Treats Category Link;/Body/Bath-Treats/c/c00013;NLBodyTreatsCategoryLink;NLBodyTreatsCategoryLink;;c00013;;
+;;NLBodyButtersCategoryLink;NL Body Butters Category Link;/Body/Body-Butters/c/c00014;NLBodyButtersCategoryLink;NLBodyButtersCategoryLink;;c00014;;
+;;NLBodyYogurtsCategoryLink;NL Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;NLBodyYogurtsCategoryLink;NLBodyYogurtsCategoryLink;;c00284;;
+;;NLBodyMassageOilsCategoryLink;NL Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;NLBodyMassageOilsCategoryLink;NLBodyMassageOilsCategoryLink;;c00024;;
+;;NLBodyBronzingCategoryLink;NL Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;NLBodyBronzingCategoryLink;NLBodyBronzingCategoryLink;;c00018;;
+;;NLDeodorantCategoryLink;NL Deodorant Category Link;/Body/Deodorant/c/c00019;NLDeodorantCategoryLink;NLDeodorantCategoryLink;;c00019;;
+;;NLFootCareCategoryLink;NL Foot Care Category Link;/Body/Foot-Care/c/c00020;NLFootCareCategoryLink;NLFootCareCategoryLink;;c00020;;
+;;NLTravelSizesCategoryLink;NL Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;NLTravelSizesCategoryLink;NLTravelSizesCategoryLink;;c00021;;
+;;NLFaceCategoryLink;NL Face Category Link;/Face/c/c00010;NLFaceCategoryLink;NLFaceCategoryLink;;c00010;;
+;;NLFaceMasksCategoryLink;NL Face Masks Category Link;/Face/Face-Masks/c/c00143;NLFaceMasksCategoryLink;NLFaceMasksCategoryLink;;c00143;;
+;;NLMakeUpRemoversCategoryLink;NL Make-up Removers Link;/Face/Make-up-Removers/c/c00145;NLMakeUpRemoversCategoryLink;NLMakeUpRemoversCategoryLink;;c00145;;
+;;NLEyeCareCategoryLink;NL Eye Care CategoryLink;/Face/Eye-Care/c/c00144;NLEyeCareCategoryLink;NLEyeCareCategoryLink;;c00144;;
+;;NLNightTimeTreatmentsCategoryLink;NL Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;NLNightTimeTreatmentsCategoryLink;NLNightTimeTreatmentsCategoryLink;;c00149;;
+;;NLLipBalmCategoryLink;NL Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;NLLipBalmCategoryLink;NLLipBalmCategoryLink;;c00146;;
+;;NLMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;NLMenShavingCategoryLink;NLMenShavingCategoryLink;;c00147;;
+;;NLCleansersAndTonersCategoryLink;NL Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;NLCleansersAndTonersCategoryLink;NLCleansersAndTonersCategoryLink;;c00141;;
+;;NLMoisturisersCategoryLink;NL Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;NLMoisturisersCategoryLink;NLMoisturisersCategoryLink;;c00148;;
+;;NLAccessoriesCategoryLink;NL Accessories CategoryLink;/Face/Accessories/c/c00140;NLAccessoriesCategoryLink;NLAccessoriesCategoryLink;;c00140;;
+;;NLFaceScrubsCategoryLink;NL Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;NLFaceScrubsCategoryLink;NLFaceScrubsCategoryLink;;c00275;;
+;;NLHandsCategoryLink;NL Hands CategoryLink;/Hands/c/c00006;NLHandsCategoryLink;NLHandsCategoryLink;;c00006;;
+;;NLHandsMoisturisersCategoryLink;NL Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;NLHandsMoisturisersCategoryLink;NLHandsMoisturisersCategoryLink;;c00054;;
+;;NLHandWashCategoryLink;NL Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;NLHandWashCategoryLink;NLHandWashCategoryLink;;c00056;;
+;;NLTargetedTreatmentCategoryLink;NL Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;NLTargetedTreatmentCategoryLink;NLTargetedTreatmentCategoryLink;;c00055;;
+;;NLHairCategoryLink;NL Hair Category Link;/Hair/c/c00005;NLHairCategoryLink;NLHairCategoryLink;;c00005;;
+;;NLBrushesAndCombsCategoryLink;NL Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;NLBrushesAndCombsCategoryLink;NLBrushesAndCombsCategoryLink;;c00047;;
+;;NLConditionerCategoryLink;NL Conditioner Category Link;/Hair/Conditioner/c/c00048;NLConditionerCategoryLink;NLConditionerCategoryLink;;c00048;;
+;;NLShampooCategoryLink;NL Shampoo Category Link;/Hair/Shampoo/c/c00051;NLShampooCategoryLink;NLShampooCategoryLink;;c00051;;
+;;NLTreatmentCategoryLink;NL Treatment Category Link;/Hair/Treatment/c/c00050;NLTreatmentCategoryLink;NLTreatmentCategoryLink;;c00050;;
+;;NLStylingCategoryLink;NL Styling Category Link;/Hair/Styling/c/c00049;NLStylingCategoryLink;NLStylingCategoryLink;;c00049;;
+;;NLMakeUpCategoryLink;NL Make-up Category Link;/Make-up/c/c00007;NLMakeUpCategoryLink;NLMakeUpCategoryLink;;c00007;;
+;;NLFoundationsConcealersCategoryLink;NL Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;NLFoundationsConcealersCategoryLink;NLFoundationsConcealersCategoryLink;;c00065;;
+;;NLBrushesAndToolsCategoryLink;NL Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;NLBrushesAndToolsCategoryLink;NLBrushesAndToolsCategoryLink;;c00059;;
+;;NLBBCreamsCategoryLink;NL BB Creams Category Link;/Make-up/BB-Creams/c/c00060;NLBBCreamsCategoryLink;NLBBCreamsCategoryLink;;c00060;;
+;;NLBronzingCategoryLink;NL Bronzing Category Link;/Make-up/Bronzing/c/c00061;NLBronzingCategoryLink;NL BronzingCategoryLink;;c00061;;
+;;NLCheeksCategoryLink;NL Cheeks Category Link;/Make-up/Cheeks/c/c00062;NLCheeksCategoryLink;NLCheeksCategoryLink;;c00062;;NL
+;;NLEyeLinersCategoryLink;NL Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;NLEyeLinersCategoryLink;NLEyeLinersCategoryLink;;c00064;;
+;;NLEyeShadowCategoryLink;NL Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;NLEyeShadowCategoryLink;NLEyeShadowCategoryLink;;c00063;;
+;;NLLipsCategoryLink;NL Lips Category Link;/Make-up/Lips/c/c00066;NLLipsCategoryLink;NLLipsCategoryLink;;c00066;;
+;;NLMascaraCategoryLink;NL Mascara Category Link;/Make-up/Mascara/c/c00067;NLMascaraCategoryLink;NLMascaraCategoryLink;;c00067;;
+;;NLPrimersCategoryLink;NL Primers Category Link;/Make-up/Primers/c/c00069;NLPrimersCategoryLink;NLPrimersCategoryLink;;c00069;;
+;;NLDeliveryLink;NL Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";NLDeliveryLink;NLDeliveryLink;newWindow;;;
+;;NLReturnsLink;NL Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";NLReturnsLink;NLReturnsLink;newWindow;;;
+;;NLFAQLink;NL FAQ Link;/faq;NLFAQLink;NLFAQLink;;;;
+;;NLTermsAndConditionsLink;NL TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";NLTermsAndConditionsLink;NLTermsAndConditionsLink;newWindow;
+;;NLPrivacyPolicyLink;NL PrivacyPolicy Link;/privacy-policy;NLPrivacyPolicyLink;NLPrivacyPolicyLink;newWindow;
+;;NLSitemapLink;NL Sitemap Link;/sitemap;NLSitemapLink;NLSitemapLink;newWindow;
+;;NLStoresLink;NL Stores Link;"https://www.thebodyshop.com/store-finder";NLStoresLink;NLStoresLink;newWindow;
+;;NLLoveYourBodyClubLink;NL Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";NLLoveYourBodyClubLink;NLLoveYourBodyClubLink;newWindow;
+;;NLStudentDiscountLink;NL Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";NLStudentDiscountLink;NLStudentDiscountLink;newWindow;
+;;NLGiftCardsLink;NL Gift Cards Link;/gift-card-balance;NLGiftCardsLink;NLGiftCardsLink;newWindow;
+;;NLAboutUsLink;NL About us Link;"https://www.thebodyshop.com/about-us";NLAboutUsLink;NLAboutUsLink;newWindow;
+;;NLTheBodyShopAtHomeLink;NL The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";NLTheBodyShopAtHomeLink;NLTheBodyShopAtHomeLink;newWindow;
+;;NLAffiliatesLink;NL Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";NLAffiliatesLink;NLAffiliatesLink;newWindow;
+;;NLGenderPayGapLink;NL Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";NLGenderPayGapLink;NLGenderPayGapLink;newWindow;
+;;NLModernSlaveryStatementLink;NL Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";NLModernSlaveryStatementLink;NLModernSlaveryStatementLink;newWindow;
+;;NLAgainstAnimalTestingLink;NL Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";NLAgainstAnimalTestingLink;NLAgainstAnimalTestingLink;newWindow;
+;;NLTaxStrategyLink;NL Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";NLTaxStrategyLink;NLTaxStrategyLink;newWindow;
+;;NLCareersLink;NL Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";NLCareersLink;NLCareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsNLRootNode					 ;                         ; TBS NL Root Node                   ; nlroot                        ;                                                               																										; TbsNLRootNode
+                                ; TbsNLNavNode                   ;                         ; TBS NL Site Nav Node               ; TbsNLRootNode                 ;                                              																										; TbsNLNavNode
+                                ; TbsNLCategoryNavNode           ;                         ; TBS NL Category Navigation         ; TbsNLNavNode                  ;                                                               																										; TbsNLCategoryNavNode
+                                ; TbsNLDiscoverNavNode           ;                         ; TBS NL Discover Navigation         ; TbsNLNavNode                  ;                                                               																										; TbsNLDiscoverNavNode
+                                ; TbsNLFooterNavNode             ;                         ; TBS NL Footer Navigation           ; TbsNLNavNode                  ;                                                               																										; TbsNLFooterNavNode
+                                ; NLUsefullInformationNavNode    ;                         ; NL Useful Information   			; TbsNLFooterNavNode            ; NLDeliveryLink,NLReturnsLink,NLFAQLink,NLTermsAndConditionsLink,NLPrivacyPolicyLink,NLSitemapLink                                										; NLUsefullInformationNavNode
+                                ; NLWaysToShopNavNode 		     ;                         ; NL Ways To Shop 					; TbsNLFooterNavNode            ; NLStoresLink,NLLoveYourBodyClubLink,NLStudentDiscountLink,NLGiftCardsLink                                  															; NLWaysToShopNavNode
+                                ; NLAboutUsNavNode               ;                         ; NL About Us               			; TbsNLFooterNavNode            ; NLAboutUsLink,NLTheBodyShopAtHomeLink,NLAffiliatesLink,NLGenderPayGapLink,NLModernSlaveryStatementLink,NLAgainstAnimalTestingLink,NLTaxStrategyLink,NLCareersLink 	; NLAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsNLCategoryNavNode;;Tbs NL Categories;TbsNLNavNode;NLBodyCategoryNavNode,NLFaceCategoryNavNode,NLHandsCategoryNavNode,NLHairCategoryNavNode,NLMakeUpCategoryNavNode;TbsNLCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; NLBodyCategoryNavNode;;NL Body Nav Node;Body;NLBodyByProductTypeNavNode,NLBodyBySkinTypeNavNode;;NLBodyCategoryNavNode
+                               ; NLFaceCategoryNavNode;;NL Face Nav Node;Face;NLFaceByProductTypeNavNode,NLFaceBySkinTypeNavNode;;NLFaceCategoryNavNode
+                               ; NLHandsCategoryNavNode;;NL Hands Nav Node;Hands;NLHandsByProductTypeNavNode,NLHandsBySkinTypeNavNode;;NLHandsCategoryNavNode
+                               ; NLHairCategoryNavNode;;NL Hair Nav Node;Hair;NLHairByProductTypeNavNode,NLHairByHairConcernTypeNavNode;;NLHairCategoryNavNode
+                               ; NLMakeUpCategoryNavNode;;NL MakeUp Nav Node;MakeUp;NLMakeUpByProductTypeNavNode,NLMakeUpBySkinTypeNavNode;;NLMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;NLBodyByProductTypeNavNode;;NL Body By Product Type;NLBodyTreatsCategoryNavNode,NLBodyButtersCategoryNavNode,NLBodyYogurtsCategoryNavNode,NLBodyMassageOilsCategoryNavNode,NLFootCareCategoryNavNode;;NLBodyByProductTypeNavNode;
+                               ;NLBodyBySkinTypeNavNode;;NL Body By Skin Type;NLDeodorantCategoryNavNode,NLBodyBronzingCategoryNavNode,NLTravelSizesCategoryNavNode,NLBodyAllCategoryNavNode;;NLBodyBySkinTypeNavNode;
+
+#Face_Category_NavNodes
+                               ;NLFaceByProductTypeNavNode;;NL Face By Product Type;NLFaceMasksCategoryNavNode,NLMakeUpRemoversCategoryNavNode,NLEyeCareCategoryNavNode,NLNightTimeTreatmentsCategoryNavNode,NLMenShavingCategoryNavNode;;NLFaceByProductTypeNavNode;
+                               ;NLFaceBySkinTypeNavNode;;NL Face By Skin Type;NLLipBalmCategoryNavNode,NLCleansersAndTonersNavNode,NLMoisturisersCategoryNavNode,NLAccessoriesCategoryNavNode,NLFaceScrubsCategoryNavNode,NLFaceAllCategoryNavNode;;NLFaceBySkinTypeNavNode;
+
+#Hands_Category_NavNodes
+                               ;NLHandsByProductTypeNavNode;;NL Hands By Product Type;NLHandsMoisturisersCategoryNavNode,NLHandWashCategoryNavNode;;NLHandsByProductTypeNavNode;
+                               ;NLHandsBySkinTypeNavNode;;NL Hands By Skin Type;NLTargetedTreatmentCategoryNavNode,NLHandsAllCategoryNavNode;;NLHandsBySkinTypeNavNode;
+
+#Hair_Category_NavNodes
+                               ;NLHairByProductTypeNavNode;;NL Hair By Product Type;NLBrushesAndCombsCategoryNavNode,NLConditionerCategoryNavNode,NLShampooCategoryNavNode;;NLHairByProductTypeNavNode;
+                               ;NLHairByHairConcernTypeNavNode;;NL Hair By Hair Concern Type;NLTreatmentCategoryNavNode,NLStylingCategoryNavNode,NLHairAllCategoryNavNode;;NLHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;NLMakeUpByProductTypeNavNode;;NL MakeUp By Product Type;NLFoundationsConcealersCategoryNavNode,NLBrushesAndToolsCategoryNavNode,NLBBCreamsCategoryNavNode,NLBronzingCategoryNavNode,NLCheeksCategoryNavNode;;NLMakeUpByProductTypeNavNode;
+                               ;NLMakeUpBySkinTypeNavNode;;NL MakeUp By Skin Type;NLEyeLinersCategoryNavNode,NLEyeShadowCategoryNavNode,NLLipsCategoryNavNode,NLMascaraCategoryNavNode,NLPrimersCategoryNavNode,NLMakeUpAllCategoryNavNode;;NLMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;NLBodyTreatsCategoryNavNode;;NL Body Treats;;NLBodyTreatsCategoryNavNode
+                               ;NLBodyButtersCategoryNavNode;;NL Body Butters;;NLBodyButtersCategoryNavNode
+                               ;NLBodyYogurtsCategoryNavNode;;NL Body Yogurts;;NLBodyYogurtsCategoryNavNode
+                               ;NLBodyMassageOilsCategoryNavNode;;NL Body Massage Oils;;NLBodyMassageOilsCategoryNavNode
+                               ;NLFootCareCategoryNavNode;;NL Foot Care;;NLFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;NLBodyAllCategoryNavNode;;NL Body All Categories;;NLBodyAllCategoryNavNode
+                               ;NLBodyBronzingCategoryNavNode;;NL Body Bronzing;;NLBodyBronzingCategoryNavNode
+                               ;NLTravelSizesCategoryNavNode;;NL Travel Sizes;;NLTravelSizesCategoryNavNode
+                               ;NLDeodorantCategoryNavNode;;NL Deodorant;;NLDeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;NLFaceMasksCategoryNavNode;;NL Face Masks;;NLFaceMasksCategoryNavNode
+                               ;NLMakeUpRemoversCategoryNavNode;;NL Make-up Removers;;NLMakeUpRemoversCategoryNavNode
+                               ;NLEyeCareCategoryNavNode;;NL Eye Care;;NLEyeCareCategoryNavNode
+                               ;NLNightTimeTreatmentsCategoryNavNode;;NL Night Time Treatments;;NLNightTimeTreatmentsCategoryNavNode
+                               ;NLMenShavingCategoryNavNode;;NL Men's Shaving ;;NLMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;NLLipBalmCategoryNavNode;;NL Lip Balm;;NLLipBalmCategoryNavNode
+                               ;NLCleansersAndTonersNavNode;;NL Cleansers and Toners;;NLCleansersAndTonersNavNode
+                               ;NLMoisturisersCategoryNavNode;;NL Moisturisers;;NLMoisturisersCategoryNavNode
+                               ;NLAccessoriesCategoryNavNode;;NL Accessories;;NLAccessoriesCategoryNavNode
+                               ;NLFaceScrubsCategoryNavNode;;NL Face Scrubs;;NLFaceScrubsCategoryNavNode
+                               ;NLFaceAllCategoryNavNode;;NL Face All Categories;;NLFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;NLHandsMoisturisersCategoryNavNode;;NL Hands Moisturisers;;NLHandsMoisturisersCategoryNavNode
+                               ;NLHandWashCategoryNavNode;;NL Hand Wash;;NLHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;NLTargetedTreatmentCategoryNavNode;;NL Targeted Treatment;;NLTargetedTreatmentCategoryNavNode
+                               ;NLHandsAllCategoryNavNode;;NL Hands All Categories;;NLHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;NLBrushesAndCombsCategoryNavNode;;NL Brushes And Combs;;NLBrushesAndCombsCategoryNavNode
+                               ;NLConditionerCategoryNavNode;;NL Conditioner;;NLConditionerCategoryNavNode
+                               ;NLShampooCategoryNavNode;;NL Shampoo;;NLShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;NLTreatmentCategoryNavNode;;NL Treatment;;NLTreatmentCategoryNavNode
+                               ;NLStylingCategoryNavNode;;NL Styling;;NLStylingCategoryNavNode
+                               ;NLHairAllCategoryNavNode;;NL Hair All Categories;;NLHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;NLFoundationsConcealersCategoryNavNode;;NL Foundations Concealers;;NLFoundationsConcealersCategoryNavNode
+                               ;NLBrushesAndToolsCategoryNavNode;;NL Brushes and Tools;;NLBrushesAndToolsCategoryNavNode
+                               ;NLBBCreamsCategoryNavNode;;NL BB Creams;;NLBBCreamsCategoryNavNode
+                               ;NLBronzingCategoryNavNode;;NL Bronzing;;NLBronzingCategoryNavNode
+                               ;NLCheeksCategoryNavNode;;NL Cheeks;;NLCheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;NLEyeLinersCategoryNavNode;;NL Eye Liners;;NLEyeLinersCategoryNavNode
+                               ;NLEyeShadowCategoryNavNode;;NL Eye Shadow;;NLEyeShadowCategoryNavNode
+                               ;NLLipsCategoryNavNode;;NL Lips;;NLLipsCategoryNavNode
+                               ;NLMascaraCategoryNavNode;;NL Mascara;;NLMascaraCategoryNavNode
+                               ;NLPrimersCategoryNavNode;;NL Primers;;NLPrimersCategoryNavNode
+                               ;NLMakeUpAllCategoryNavNode;;NL Make-up All Categories;;NLMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;NLBodyAllCategoryNavNodeEntry;;NLBodyAllCategoryNavNodeEntry;NLBodyAllCategoryNavNode;NLBodyCategoryLink
+;NLBodyTreatsCategoryNavNodeEntry;;NLBodyTreatsCategoryNavNodeEntry;NLBodyTreatsCategoryNavNode;NLBodyTreatsCategoryLink;NL
+;NLBodyButtersCategoryNavNodeEntry;;NLBodyButtersCategoryNavNodeEntry;NLBodyButtersCategoryNavNode;NLBodyButtersCategoryLink;NL
+;NLBodyYogurtsCategoryNavNodeEntry;;NLBodyYogurtsCategoryNavNodeEntry;NLBodyYogurtsCategoryNavNode;NLBodyYogurtsCategoryLink
+;NLBodyMassageOilsCategoryNavNodeEntry;;NLBodyMassageOilsCategoryNavNodeEntry;NLBodyMassageOilsCategoryNavNode;NLBodyMassageOilsCategoryLink
+;NLBodyBronzingCategoryNavNodeEntry;;NLBodyBronzingCategoryNavNodeEntry;NLBodyBronzingCategoryNavNode;NLBodyBronzingCategoryLink
+;NLDeodorantCategoryNavNodeEntry;;NLDeodorantCategoryNavNodeEntry;NLDeodorantCategoryNavNode;NLDeodorantCategoryLink
+;NLTravelSizesCategoryNavNodeEntry;;NLTravelSizesCategoryNavNodeEntry;NLTravelSizesCategoryNavNode;NLTravelSizesCategoryLink
+;NLFootCareCategoryNavNodeEntry;;NLFootCareCategoryNavNodeEntry;NLFootCareCategoryNavNode;NLFootCareCategoryLink
+;NLFaceAllCategoryNavNodeEntry;;NLFaceAllCategoryNavNodeEntry;NLFaceAllCategoryNavNode;NLFaceCategoryLink;NL
+;NLFaceMasksCategoryNavNodeEntry;;NLFaceMasksCategoryNavNodeEntry;NLFaceMasksCategoryNavNode;NLFaceMasksCategoryLink;NL
+;NLMakeUpRemoversCategoryNavNodeEntry;;NLMakeUpRemoversCategoryNavNodeEntry;NLMakeUpRemoversCategoryNavNode;NLMakeUpRemoversCategoryLink;NL
+;NLEyeCareCategoryNavNodeEntry;;NLEyeCareCategoryNavNodeEntry;NLEyeCareCategoryNavNode;NLEyeCareCategoryLink
+;NLNightTimeTreatmentsCategoryNavNodeEntry;;NLNightTimeTreatmentsCategoryNavNodeEntry;NLNightTimeTreatmentsCategoryNavNode;NLNightTimeTreatmentsCategoryLink
+;NLMenShavingCategoryNavNodeEntry;;NLMenShavingCategoryNavNodeEntry;NLMenShavingCategoryNavNode;NLMenShavingCategoryLink
+;NLLipBalmCategoryNavNodeEntry;;NLLipBalmCategoryNavNodeEntry;NLLipBalmCategoryNavNode;NLLipBalmCategoryLink
+;NLCleansersAndTonersNavNodeEntry;;NLCleansersAndTonersNavNodeEntry;NLCleansersAndTonersNavNode;NLCleansersAndTonersCategoryLink
+;NLMoisturisersCategoryNavNodeEntry;;NLMoisturisersCategoryNavNodeEntry;NLMoisturisersCategoryNavNode;NLMoisturisersCategoryLink
+;NLAccessoriesCategoryNavNodeEntry;;NLAccessoriesCategoryNavNodeEntry;NLAccessoriesCategoryNavNode;NLAccessoriesCategoryLink
+;NLFaceScrubsCategoryNavNodeEntry;;NLFaceScrubsCategoryNavNodeEntry;NLFaceScrubsCategoryNavNode;NLFaceScrubsCategoryLink
+;NLHandsAllCategoryNavNodeEntry;;NLHandsAllCategoryNavNodeEntry;NLHandsAllCategoryNavNode;NLHandsCategoryLink
+;NLHandsMoisturisersCategoryNavNodeEntry;;NLHandsMoisturisersCategoryNavNodeEntry;NLHandsMoisturisersCategoryNavNode;NLHandsMoisturisersCategoryLink
+;NLHandWashCategoryNavNodeEntry;;NLHandWashCategoryNavNodeEntry;NLHandWashCategoryNavNode;NLHandWashCategoryLink
+;NLTargetedTreatmentCategoryNavNodeEntry;;NLTargetedTreatmentCategoryNavNodeEntry;NLTargetedTreatmentCategoryNavNode;NLTargetedTreatmentCategoryLink
+;NLHairAllCategoryNavNodeEntry;;NLHairAllCategoryNavNodeEntry;NLHairAllCategoryNavNode;NLHairCategoryLink
+;NLBrushesAndCombsCategoryNavNodeEntry;;NLBrushesAndCombsCategoryNavNodeEntry;NLBrushesAndCombsCategoryNavNode;NLBrushesAndCombsCategoryLink
+;NLConditionerCategoryNavNodeEntry;;NLConditionerCategoryNavNodeEntry;NLConditionerCategoryNavNode;NLConditionerCategoryLink
+;NLShampooCategoryNavNodeEntry;;NLShampooCategoryNavNodeEntry;NLShampooCategoryNavNode;NLShampooCategoryLink
+;NLTreatmentCategoryNavNodeEntry;;NLTreatmentCategoryNavNodeEntry;NLTreatmentCategoryNavNode;NLTreatmentCategoryLink
+;NLStylingCategoryNavNodeEntry;;NLStylingCategoryNavNodeEntry;NLStylingCategoryNavNode;NLStylingCategoryLink
+;NLMakeUpAllCategoryNavNodeEntry;;NLMakeUpAllCategoryNavNodeEntry;NLMakeUpAllCategoryNavNode;NLMakeUpCategoryLink
+;NLFoundationsConcealersCategoryNavNodeEntry;;NLFoundationsConcealersCategoryNavNodeEntry;NLFoundationsConcealersCategoryNavNode;NLFoundationsConcealersCategoryLink
+;NLBrushesAndToolsCategoryNavNodeEntry;;NLBrushesAndToolsCategoryNavNodeEntry;NLBrushesAndToolsCategoryNavNode;NLBrushesAndToolsCategoryLink
+;NLBBCreamsCategoryNavNodeEntry;;NLBBCreamsCategoryNavNodeEntry;NLBBCreamsCategoryNavNode;NLBBCreamsCategoryLink
+;NLBronzingCategoryNavNodeEntry;;NLBronzingCategoryNavNodeEntry;NLBronzingCategoryNavNode;NLBronzingCategoryLink
+;NLCheeksCategoryNavNodeEntry;;NLCheeksCategoryNavNodeEntry;NLCheeksCategoryNavNode;NLCheeksCategoryLink
+;NLEyeLinersCategoryNavNodeEntry;;NLEyeLinersCategoryNavNodeEntry;NLEyeLinersCategoryNavNode;NLEyeLinersCategoryLink
+;NLEyeShadowCategoryNavNodeEntry;;NLEyeShadowCategoryNavNodeEntry;NLEyeShadowCategoryNavNode;NLEyeShadowCategoryLink
+;NLLipsCategoryNavNodeEntry;;NLLipsCategoryNavNodeEntry;NLLipsCategoryNavNode;NLLipsCategoryLink
+;NLMascaraCategoryNavNodeEntry;;NLMascaraCategoryNavNodeEntry;NLMascaraCategoryNavNode;NLMascaraCategoryLink
+;NLPrimersCategoryNavNodeEntry;;NLPrimersCategoryNavNodeEntry;NLPrimersCategoryNavNode;NLPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsNLDiscoverNavNode;;Tbs NL Discover;TbsNLNavNode;NLDiscoverPartyNavNode,NLDiscoverTipsAndAdviceNavNode,NLDiscoverAboutUsNavNode;TbsNLDiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; NLDiscoverPartyNavNode;;NL Party Nav Node;Party;NL_Discover_TheBodyShopAtHomeNavNode;;NLDiscoverPartyNavNode
+                               ; NLDiscoverTipsAndAdviceNavNode;;NL Tips & Advice Nav Node;Tips & Advice;NLSkincareArticlesNavNode,NLBodyCareArticlesNavNode,NLMake-UpAeticlesNavNode,NLLifeStyleArticlesNavNode,NLIngredientBenefitsNavNode;;NLDiscoverTipsAndAdviceNavNode
+                               ; NLDiscoverAboutUsNavNode;;NL About us Nav Node;About Us;NLWhoWeAreNavNode,NLLoyaltyProgramNavNode,NLSustainabilityNavNode,NLPlasticsNavNode;;NLDiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#NL_Discover_Party_NavNodes
+                               ;NL_Discover_TheBodyShopAtHomeNavNode;;NL BodyShop AtHome;NLBeYourOwnBossNavNode,NLHostAPartyNavNode;;NL_Discover_TheBodyShopAtHomeNavNode ;
+
+#NL_Discover_Tips_And_Advice_NavNode
+
+                               ;NLSkincareArticlesNavNode;;NL Skin Care Articles;NLHowToReduceBlackheadsNavNode,NLSummerSkincareNavNode,NLHowToGetRidOfDarkCirclesNavNode,NLBestFaceMoisturisersNavNode,NLHowToKeepSkinLookingYouthfulNavNode,NLGymSkincareTipsNavNode;;NLSkincareArticlesNavNode ;
+                               ;NLBodyCareArticlesNavNode;;NL Body Care Articles;NLBenefitsOfDryBrushingNavNode,NLUnderstandingDrySkinNavNode,NLBestBodyExfoliatorsNavNode;;NLBodyCareArticlesNavNode ;
+                               ;NLMake-UpAeticlesNavNode;;NL Make-Up Articles;NLHowToFindTheRightFoundationNavNode,NLHowToApplyFoundationNavNode,NLHowToShapeEyebrowsNavNode,NLHowToGetASunKissedGlowNavNode;;NLMake-UpAeticlesNavNode ;
+                               ;NLLifeStyleArticlesNavNode;;NL LifeStyle Articles;NLBestVeganCitiesInTheNLNavNode,NLLongHaulFlightTipsNavNode,NLGymSkincareRoutineNavNode,NLChildhoodDreamsNavNode,NLPixieGeldof’sTravelEssentialsNavNode;;NLLifeStyleArticlesNavNode ;
+                               ;NLIngredientBenefitsNavNode;;NL Ingedients Benefits;NLBenefitsOfCharcoalNavNode,NLHyaluronicAcidBenefitsNavNode,NLDiscoverAllIngredientsNavNode,NLSourcingOurIngredientsNavNode;;NLIngredientBenefitsNavNode ;
+
+#NL_Discover_AboutUs_NavNode
+
+                               ;NLWhoWeAreNavNode;;NL Who We Are;NLOurHeritageNavNode,NLForeverAgainstAnimalTestingNavNode,NLLatestNewsNavNode,NLNatura_CoNavNode,NLB_CorpNavNode,NLEducationalProgrammeNavNode,NLDonateMenstrualProductsNavNode,NLVegetarianBeautyNavNode;;NLWhoWeAreNavNode ;
+                               ;NLLoyaltyProgramNavNode;;NL Loyalty Program;NL_Loyalty_JoinNowNavNode;;NLLoyaltyProgramNavNode;
+                               ;NLSustainabilityNavNode;;NL Sustainability;NLOurCommitmentNavNode,NLCommunityTradeNavNode,NLBio-BridgesNavNode,NLReducingEnvironmentalFootprintNavNode,NLEmpoweringWomenNavNode,NLModernSlaveryNavNode;;NLSustainabilityNavNode;
+                               ;NLPlasticsNavNode;;NL Plastics;NLPlasticRecyclingInTheNLNavNode,NLTerraCycleInterviewNavNode,NLReturnRecycleRepeatNavNode,NLCommunityTradePlasticsNavNode,NLPackagingAtTheBodyShopNavNode;;NLPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;NLBeYourOwnBossNavNode;;NL Be your own boss;;NLBeYourOwnBossNavNode
+                               ;NLHostAPartyNavNode;;NL Host a party;;NLHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;NLHowToReduceBlackheadsNavNode;;NL How to reduce Blackheads;;NLHowToReduceBlackheadsNavNode
+                               ;NLSummerSkincareNavNode;;NL Summer Skincare;;NLSummerSkincareNavNode
+                               ;NLHowToGetRidOfDarkCirclesNavNode;;NL How To Get Rid Of Dark Circles;;NLHowToGetRidOfDarkCirclesNavNode
+                               ;NLBestFaceMoisturisersNavNode;;NL Best Face Moisturisers;;NLBestFaceMoisturisersNavNode
+                               ;NLHowToKeepSkinLookingYouthfulNavNode;;NL How To Keep Skin Looking Youthful;;NLHowToKeepSkinLookingYouthfulNavNode
+                               ;NLGymSkincareTipsNavNode;;NL Gym Skincare Tips;;NLGymSkincareTipsNavNode
+
+#Child_Nodes_NLBodyCareArticles_NavNode
+
+                               ;NLBenefitsOfDryBrushingNavNode;;NL Benefits Of Dry Brushing;;NLBenefitsOfDryBrushingNavNode
+                               ;NLUnderstandingDrySkinNavNode;;NL Understanding Dry Skin;;NLUnderstandingDrySkinNavNode
+                               ;NLBestBodyExfoliatorsNavNode;;NL Best Body Exfoliators;;NLBestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;NLHowToFindTheRightFoundationNavNode;;NL How to find the right foundation;;NLHowToFindTheRightFoundationNavNode
+                               ;NLHowToApplyFoundationNavNode;;NL How to apply foundation;;NLHowToApplyFoundationNavNode
+                               ;NLHowToShapeEyebrowsNavNode;;NL How to shape eyebrows;;NLHowToShapeEyebrowsNavNode
+                               ;NLHowToGetASunKissedGlowNavNode;;NL How to get a sun kissed glow;;NLHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;NLBestVeganCitiesInTheNLNavNode;;Best Vegan Cities in the NL;;NLBestVeganCitiesInTheNLNavNode
+                               ;NLLongHaulFlightTipsNavNode;;NL Long haul flight tips;;NLLongHaulFlightTipsNavNode
+                               ;NLGymSkincareRoutineNavNode;;NL Gym skincare routine;;NLGymSkincareRoutineNavNode
+                               ;NLChildhoodDreamsNavNode;;NL Childhood Dreams;;NLChildhoodDreamsNavNode
+                               ;NLPixieGeldof’sTravelEssentialsNavNode;;NL Pixie Geldof’s Travel Essentials;;NLPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;NLBenefitsOfCharcoalNavNode;;NL Benefits of charcoal;;NLBenefitsOfCharcoalNavNode
+                               ;NLHyaluronicAcidBenefitsNavNode;;NL Hyaluronic Acid Benefits;;NLHyaluronicAcidBenefitsNavNode
+                               ;NLDiscoverAllIngredientsNavNode;;NL Discover all ingredients;;NLDiscoverAllIngredientsNavNode
+                               ;NLSourcingOurIngredientsNavNode;;NL Sourcing our ingredients;;NLSourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_NLWhoWeAreNavNode
+                               ;NLOurHeritageNavNode;;NL Our Heritage;;NLOurHeritageNavNode
+                               ;NLForeverAgainstAnimalTestingNavNode;;NL Forever Against Animal Testing;;NLForeverAgainstAnimalTestingNavNode
+                               ;NLB_CorpNavNode;;NL B Corp;;NLB_CorpNavNode
+                               ;NLLatestNewsNavNode;;NL Latest News;;NLLatestNewsNavNode
+                               ;NLNatura_CoNavNode;;NL Natura & co;;NLNatura_CoNavNode
+                               ;NLEducationalProgrammeNavNode;;NL Educational Programme;;NLEducationalProgrammeNavNode
+                               ;NLDonateMenstrualProductsNavNode;;NL Donate Menstrual Products;;NLDonateMenstrualProductsNavNode
+                               ;NLVegetarianBeautyNavNode;;NL Vegetarian Beauty;;NLVegetarianBeautyNavNode
+
+#Child_Nodes_NLLoyaltyProgramNavNode
+                               ;NL_Loyalty_JoinNowNavNode;;NL Join Now;;NL_Loyalty_JoinNowNavNode
+
+#Child_Nodes_NLSustainabilityNavNode
+                               ;NLOurCommitmentNavNode;;NL Our Commitment;;NLOurCommitmentNavNode
+                               ;NLCommunityTradeNavNode;;NL Community Trade;;NLCommunityTradeNavNode
+                               ;NLBio-BridgesNavNode;;NL Bio-Bridges;;NLBio-BridgesNavNode
+                               ;NLReducingEnvironmentalFootprintNavNode;;NL Reducing Environmental Footprint;;NLReducingEnvironmentalFootprintNavNode
+                               ;NLEmpoweringWomenNavNode;;NL EmpoweringWomen;;NLEmpoweringWomenNavNode
+                               ;NLModernSlaveryNavNode;;NL ModernSlavery;;NLModernSlaveryNavNode
+
+#Child_Nodes_NLPlasticsNavNode
+                               ;NLPlasticRecyclingInTheNLNavNode;;NL Plastic Recycling In The NL;;NLPlasticRecyclingInTheNLNavNode
+                               ;NLTerraCycleInterviewNavNode;;NL Terra Cycle Interview;;NLTerraCycleInterviewNavNode
+                               ;NLReturnRecycleRepeatNavNode;;NL Return Recycle Repeat;;NLReturnRecycleRepeatNavNode
+                               ;NLCommunityTradePlasticsNavNode;;NL Community Trade Plastics;;NLCommunityTradePlasticsNavNode
+                               ;NLPackagingAtTheBodyShopNavNode;;NL Packaging At The Body Shop;;NLPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;NLBeYourOwnBossLink;NL Be your own boss Link;/;NLBeYourOwnBossLink;NLBeYourOwnBossLink;;;;
+                              ;;NLHostAPartyNavNodeLink;NL Host a party Link;/;NLHostAPartyNavNodeLink;NLHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;NLSummerSkincareLink;NL Summer Skincare Link;/;NLSummerSkincareLink;NLSummerSkincareLink;;;;
+                              ;;NLHowToReduceBlackheadsLink;NL How to reduce blackheads Link;/;NLHowToReduceBlackheadsLink;NLHowToReduceBlackheadsLink;;;;
+                              ;;NLHowToGetRidOfDarkCirclesLink;NL How to get rid of dark circles Link;/;NLHowToGetRidOfDarkCirclesLink;NLHowToGetRidOfDarkCirclesLink;;;;
+                              ;;NLBestFaceMoisturisersLink;NL Best Face Moisturisers Link;/;NLBestFaceMoisturisersLink;NLBestFaceMoisturisersLink;;;;
+                              ;;NLHowToKeepSkinLookingYouthfulLink;NL How to keep skin looking youthful Link;/;NLHowToKeepSkinLookingYouthfulLink;NLHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;NLGymSkincareTipsLink;NL Gym Skincare Tips Link;/;NLGymSkincareTipsLink;NLGymSkincareTipsLink;;;;
+
+                              ;;NLBenefitsOfDryBrushingLink;NL Benefits of dry brushing Link;/;NLBenefitsOfDryBrushingLink;NLBenefitsOfDryBrushingLink;;;;
+                              ;;NLUnderstandingDrySkinLink;NL Understanding dry skin Link;/;NLUnderstandingDrySkinLink;NLUnderstandingDrySkinLink;;;;
+                              ;;NLBestBodyExfoliatorsLink;NL Best body exfoliators Link;/;NLBestBodyExfoliatorsLink;NLBestBodyExfoliatorsLink;;;;
+
+                              ;;NLHowToFindTheRightFoundationLink;NL How to find the right foundation Link;/;NLHowToFindTheRightFoundationLink;NLHowToFindTheRightFoundationLink;;;;
+                              ;;NLHowToApplyFoundationLink;NL How to apply foundation Link;/;NLHowToApplyFoundationLink;NLHowToApplyFoundationLink;;;;
+                              ;;NLHowToShapeEyebrowsLink;NL How to shape eyebrows youthful Link;/;NLHowToShapeEyebrowsLink;NLHowToShapeEyebrowsLink;;;;
+                              ;;NLHowToGetASunKissedGlowLink;NL How to get a sun kissed glow Link;/;NLHowToGetASunKissedGlowLink;NLHowToGetASunKissedGlowLink;;;;
+
+                              ;;NLBestVeganCitiesInTheNLLink;Best Vegan Cities in the NL Link;/;NLBestVeganCitiesInTheNLLink;NLBestVeganCitiesInTheNLLink;;;;
+                              ;;NLLongHaulFlightTipsLink;NL Long haul flight tips Link;/;NLLongHaulFlightTipsLink;NLLongHaulFlightTipsLink;;;;
+                              ;;NLGymSkincareRoutineLink;NL Gym skincare routine Link;/;NLGymSkincareRoutineLink;NLGymSkincareRoutineLink;;;;
+                              ;;NLChildhoodDreamsLink;NL Childhood Dreams Link;/;NLChildhoodDreamsLink;NLChildhoodDreamsLink;;;;
+                              ;;NLPixieGeldof’sTravelEssentialsLink;NL Pixie Geldof’s Travel Essentials Link;/;NLPixieGeldof’sTravelEssentialsLink;NLPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;NLBenefitsOfCharcoalLink;NL Benefits of charcoal Link;/;NLBenefitsOfCharcoalLink;NLBenefitsOfCharcoalLink;;;;
+                              ;;NLHyaluronicAcidBenefitsLink;NL Hyaluronic Acid Benefits Link;/;NLHyaluronicAcidBenefitsLink;NLHyaluronicAcidBenefitsLink;;;;
+                              ;;NLDiscoverAllIngredientsLink;NL Discover all ingredients Link;/;NLDiscoverAllIngredientsLink;NLDiscoverAllIngredientsLink;;;;
+                              ;;NLSourcingOurIngredientsLink;NL Sourcing our ingredients Link;/;NLSourcingOurIngredientsLink;NLSourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;NLOurHeritageLink;NL Our Heritage Link;/;NLOurHeritageLink;NLOurHeritageLink;;;;
+                              ;;NLForeverAgainstAnimalTestingLink;NL How to reduce blackheads Link;/;NLForeverAgainstAnimalTestingLink;NLForeverAgainstAnimalTestingLink;;;;
+                              ;;NLB_CorpLink;NL B Corp Link;/;NLB_CorpLink;NLB_CorpLink;;;;
+                              ;;NLLatestNewsLink;NL Latest News Link;/;NLLatestNewsLink;NLLatestNewsLink;;;;
+                              ;;NLNatura_CoLink;NL Natura & co Link;/;NLNatura_CoLink;NLNatura_CoLink;;;;
+                              ;;NLEducationalProgrammeLink;NL Educational PRogramme Link;/;NLEducationalProgrammeLink;NLEducationalProgrammeLink;;;;
+                              ;;NLDonateMenstrualProductsLink;NL Donate Menstrual Products Link;/;NLDonateMenstrualProductsLink;NLDonateMenstrualProductsLink;;;;
+                              ;;NLVegetarianBeautyLink;NL Vegetarian Beauty Link;/;NLVegetarianBeautyLink;NLVegetarianBeautyLink;;;;
+
+                              ;;NL_Loyalty_JoinNowLink;NL Join Now Link;/;NL_Loyalty_JoinNowLink;NL_Loyalty_JoinNowLink;;;;
+
+                              ;;NLOurCommitmentLink;NL Our Commitment Link;/;NLOurCommitmentLink;NLOurCommitmentLink;;;;
+                              ;;NLCommunityTradeLink;NL Community Trade Link;/;NLCommunityTradeLink;NLCommunityTradeLink;;;;
+                              ;;NLBio-BridgesLink;NL Bio-Bridges Link;/;NLBio-BridgesLink;NLBio-BridgesLink;;;;
+                              ;;NLReducingEnvironmentalFootprintLink;NL Reducing Environmental Footprint Link;/;NLReducingEnvironmentalFootprintLink;NLReducingEnvironmentalFootprintLink;;;;
+                              ;;NLEmpoweringWomenLink;NL Empowering Women Link;/;NLEmpoweringWomenLink;NLEmpoweringWomenLink;;;;
+                              ;;NLModernSlaveryLink;NL Modern Slavery Link;/;NLModernSlaveryLink;NLModernSlaveryLink;;;;
+
+                              ;;NLPlasticRecyclingInTheNLLink;Plastic recycling in the NL Link;/;NLPlasticRecyclingInTheNLLink;NLPlasticRecyclingInTheNLLink;;;;
+                              ;;NLTerraCycleInterviewLink;NL TerraCycle Interview Link;/;NLTerraCycleInterviewLink;NLTerraCycleInterviewLink;;;;
+                              ;;NLReturnRecycleRepeatNavNodeLink;NL Return. Recycle. Repeat Link;/;NLReturnRecycleRepeatNavNodeLink;NLReturnRecycleRepeatNavNodeLink;;;;
+                              ;;NLCommunityTradePlasticsLink;NL Community Trade Plastics Link;/;NLCommunityTradePlasticsLink;NLCommunityTradePlasticsLink;;;;
+                              ;;NLPackagingAtTheBodyShopLink;NL Packaging at The Body Shop Link;/;NLPackagingAtTheBodyShopLink;NLPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;NLBeYourOwnBossNavNodeEntry;;NLBeYourOwnBossNavNodeEntry;NLBeYourOwnBossNavNode;NLBeYourOwnBossLink
+                                ;NLHostAPartyNavNodeEntry;;NLHostAPartyNavNodeEntry;NLHostAPartyNavNode;NLHostAPartyNavNodeLink
+
+#Entry_NLSkincareArticlesNavNode
+                                ;NLHowToReduceBlackheadsNavNodeEntry;;NLHowToReduceBlackheadsNavNodeEntry;NLHowToReduceBlackheadsNavNode;NLHowToReduceBlackheadsLink
+                                ;NLSummerSkincareNavNodeEntry;;NLSummerSkincareNavNodeEntry;NLSummerSkincareNavNode;NLSummerSkincareLink
+                                ;NLHowToGetRidOfDarkCirclesNavNodeEntry;;NLHowToGetRidOfDarkCirclesNavNodeEntry;NLHowToGetRidOfDarkCirclesNavNode;NLHowToGetRidOfDarkCirclesLink
+                                ;NLBestFaceMoisturisersNavNodeEntry;;NLBestFaceMoisturisersNavNodeEntry;NLBestFaceMoisturisersNavNode;NLBestFaceMoisturisersLink
+                                ;NLHowToKeepSkinLookingYouthfulNavNodeEntry;;NLHowToKeepSkinLookingYouthfulNavNodeEntry;NLHowToKeepSkinLookingYouthfulNavNode;NLHowToKeepSkinLookingYouthfulLink
+                                ;NLGymSkincareTipsNavNodeEntry;;NLGymSkincareTipsNavNodeEntry;NLGymSkincareTipsNavNode;NLGymSkincareTipsLink
+
+#Entry_NLBodyCareArticlesNavNode
+                                ;NLBenefitsOfDryBrushingNavNodeEntry;;NLBenefitsOfDryBrushingNavNodeEntry;NLBenefitsOfDryBrushingNavNode;NLBenefitsOfDryBrushingLink
+                                ;NLUnderstandingDrySkinNavNodeEntry;;NLUnderstandingDrySkinNavNodeEntry;NLUnderstandingDrySkinNavNode;NLUnderstandingDrySkinLink
+                                ;NLBestBodyExfoliatorsNavNodeEntry;;NLBestBodyExfoliatorsNavNodeEntry;NLBestBodyExfoliatorsNavNode;NLBestBodyExfoliatorsLink
+
+#Entry_NLMake-UpAeticlesNavNode
+                                ;NLHowToFindTheRightFoundationNavNodeEntry;;NLHowToFindTheRightFoundationNavNodeEntry;NLHowToFindTheRightFoundationNavNode;NLHowToFindTheRightFoundationLink
+                                ;NLHowToApplyFoundationNavNodeEntry;;NLHowToApplyFoundationNavNodeEntry;NLHowToApplyFoundationNavNode;NLHowToApplyFoundationLink
+                                ;NLHowToShapeEyebrowsNavNodeEntry;;NLHowToShapeEyebrowsNavNodeEntry;NLHowToShapeEyebrowsNavNode;NLHowToShapeEyebrowsLink
+                                ;NLHowToGetASunKissedGlowNavNodeEntry;;NLHowToGetASunKissedGlowNavNodeEntry;NLHowToGetASunKissedGlowNavNode;NLHowToGetASunKissedGlowLink
+
+#Entry_NLLifeStyleArticlesNavNode
+                                ;NLBestVeganCitiesInTheNLNavNodeEntry;;NLBestVeganCitiesInTheNLNavNodeEntry;NLBestVeganCitiesInTheNLNavNode;NLBestVeganCitiesInTheNLLink
+                                ;NLLongHaulFlightTipsNavNodeEntry;;NLLongHaulFlightTipsNavNodeEntry;NLLongHaulFlightTipsNavNode;NLLongHaulFlightTipsLink
+                                ;NLGymSkincareRoutineNavNodeEntry;;NLGymSkincareRoutineNavNodeEntry;NLGymSkincareRoutineNavNode;NLGymSkincareRoutineLink
+                                ;NLChildhoodDreamsNavNodeEntry;;NLChildhoodDreamsNavNodeEntry;NLChildhoodDreamsNavNode;NLChildhoodDreamsLink
+                                ;NLPixieGeldof’sTravelEssentialsNavNodeEntry;;NLPixieGeldof’sTravelEssentialsNavNodeEntry;NLPixieGeldof’sTravelEssentialsNavNode;NLPixieGeldof’sTravelEssentialsLink
+
+#Entry_NLIngredientBenefitsNavNode
+
+                                ;NLBenefitsOfCharcoalNavNodeEntry;;NLBenefitsOfCharcoalNavNodeEntry;NLBenefitsOfCharcoalNavNode;NLBenefitsOfCharcoalLink
+                                ;NLHyaluronicAcidBenefitsNavNodeEntry;;NLHyaluronicAcidBenefitsNavNodeEntry;NLHyaluronicAcidBenefitsNavNode;NLHyaluronicAcidBenefitsLink
+                                ;NLDiscoverAllIngredientsNavNodeEntry;;NLDiscoverAllIngredientsNavNodeEntry;NLDiscoverAllIngredientsNavNode;NLDiscoverAllIngredientsLink
+                                ;NLSourcingOurIngredientsNavNodeEntry;;NLSourcingOurIngredientsNavNodeEntry;NLSourcingOurIngredientsNavNode;NLSourcingOurIngredientsLink
+
+#Entry_NLWhoWeAre_NavNode
+                                ;NLOurHeritageNavNodeEntry;;NLOurHeritageNavNodeEntry;NLOurHeritageNavNode;NLOurHeritageLink
+                                ;NLForeverAgainstAnimalTestingNavNodeEntry;;NLForeverAgainstAnimalTestingNavNodeEntry;NLForeverAgainstAnimalTestingNavNode;NLForeverAgainstAnimalTestingLink
+                                ;NLB_CorpNavNodeEntry;;NLB_CorpNavNodeEntry;NLB_CorpNavNode;NLB_CorpLink
+                                ;NLLatestNewsNavNodeEntry;;NLLatestNewsNavNodeEntry;NLLatestNewsNavNode;NLLatestNewsLink
+                                ;NLNatura_CoNavNodeEntry;;NLNatura_CoNavNodeEntry;NLNatura_CoNavNode;NLNatura_CoLink
+                                ;NLEducationalProgrammeNavNodeEntry;;NLEducationalProgrammeNavNodeEntry;NLEducationalProgrammeNavNode;NLEducationalProgrammeLink
+                                ;NLDonateMenstrualProductsNavNodeEntry;;NLDonateMenstrualProductsNavNodeEntry;NLDonateMenstrualProductsNavNode;NLDonateMenstrualProductsLink
+                                ;NLVegetarianBeautyNavNodeEntry;;NLVegetarianBeautyNavNodeEntry;NLVegetarianBeautyNavNode;NLVegetarianBeautyLink
+
+#Entry_NLLoyaltyProgramNavNode
+                                ;NL_Loyalty_JoinNowNavNodeEntry;;NL_Loyalty_JoinNowNavNodeEntry;NL_Loyalty_JoinNowNavNode;NL_Loyalty_JoinNowLink
+
+#Entry_NLSustainabilityNavNode
+                                ;NLOurCommitmentNavNodeEntry;;NLOurCommitmentNavNodeEntry;NLOurCommitmentNavNode;NLOurCommitmentLink
+                                ;NLCommunityTradeNavNodeEntry;;NLCommunityTradeNavNodeEntry;NLCommunityTradeNavNode;NLCommunityTradeLink
+                                ;NLBio-BridgesNavNodeEntry;;NLBio-BridgesNavNodeEntry;NLBio-BridgesNavNode;NLBio-BridgesLink
+                                ;NLReducingEnvironmentalFootprintNavNodeEntry;;NLReducingEnvironmentalFootprintNavNodeEntry;NLReducingEnvironmentalFootprintNavNode;NLReducingEnvironmentalFootprintLink
+                                ;NLEmpoweringWomenNavNodeEntry;;NLEmpoweringWomenNavNodeEntry;NLEmpoweringWomenNavNode;NLEmpoweringWomenLink
+                                ;NLModernSlaveryNavNodeEntry;;NLModernSlaveryNavNodeEntry;NLModernSlaveryNavNode;NLModernSlaveryLink
+
+#Child_Nodes_NLPlasticsNavNode
+                                ;NLPlasticRecyclingInTheNLNavNodeEntry;;NLPlasticRecyclingInTheNLNavNodeEntry;NLPlasticRecyclingInTheNLNavNode;NLPlasticRecyclingInTheNLLink
+                                ;NLTerraCycleInterviewNavNodeEntry;;NLTerraCycleInterviewNavNodeEntry;NLTerraCycleInterviewNavNode;NLTerraCycleInterviewLink
+                                ;NLReturnRecycleRepeatNavNodeEntry;;NLReturnRecycleRepeatNavNodeEntry;NLReturnRecycleRepeatNavNode;NLReturnRecycleRepeatNavNodeLink
+                                ;NLCommunityTradePlasticsNavNodeEntry;;NLCommunityTradePlasticsNavNodeEntry;NLCommunityTradePlasticsNavNode;NLCommunityTradePlasticsLink
+                                ;NLPackagingAtTheBodyShopNavNodeEntry;;NLPackagingAtTheBodyShopNavNodeEntry;NLPackagingAtTheBodyShopNavNode;NLPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;NLUsefullInformationNavNode;;NL Useful Information;NLUsefullInformationNavNode;NLDeliveryNavNode,NLReturnsNavNode,NLFAQNavNode,NLTermsAndConditionsNavNode,NLPrivacyPolicyNavNode,NLSitemapNavNode
+;NLWaysToShopNavNode;;NL Ways to Shop;NLWaysToShopNavNode;NLStoresNavNode,NLLoveYourBodyClubNavNode,NLStudentDiscountNavNode,NLGiftCardsNavNode
+;NLAboutUsNavNode;;NL About Us;NLAboutUsNavNode;NLAboutUsInternalNavNode,NLTheBodyShopAtHomeNavNode,NLAffiliatesNavNode,NLGenderPayGapNavNode,NLModernSlaveryStatementNavNode,NLAgainstAnimalTestingNavNode,NLTaxStrategyNavNode,NLCareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;NLDeliveryNavNode;;NLDeliveryNavNode;NLDeliveryNavNode;
+;NLReturnsNavNode;;NLReturnsNavNode;NLReturnsNavNode;
+;NLFAQNavNode;;NLFAQ Page;NLFAQNavNode
+;NLTermsAndConditionsNavNode;;NLTermsAndConditionsNavNode;NLTermsAndConditionsNavNode;
+;NLPrivacyPolicyNavNode;;NLPrivacyPolicyNavNode;NLPrivacyPolicyNavNode;
+;NLSitemapNavNode;;NLSitemapNavNode;NLSitemapNavNode;
+;NLStoresNavNode;;NLStoresNavNode;NLStoresNavNode;
+;NLLoveYourBodyClubNavNode;;NLLoveYourBodyClubNavNode;NLLoveYourBodyClubNavNode;
+;NLStudentDiscountNavNode;;NLStudentDiscountNavNode;NLStudentDiscountNavNode;
+;NLGiftCardsNavNode;;NLGiftCardsNavNode;NLGiftCardsNavNode;
+;NLAboutUsInternalNavNode;;NLAboutUsInternalNavNode;NLAboutUsInternalNavNode
+;NLTheBodyShopAtHomeNavNode;;NLTheBodyShopAtHomeNavNode;NLTheBodyShopAtHomeNavNode
+;NLAffiliatesNavNode;;NLAffiliatesNavNode;NLAffiliatesNavNode
+;NLGenderPayGapNavNode;;NLGenderPayGapNavNode;NLGenderPayGapNavNode
+;NLModernSlaveryStatementNavNode;;NLModernSlaveryStatementNavNode;NLModernSlaveryStatementNavNode
+;NLAgainstAnimalTestingNavNode;;NLAgainstAnimalTestingNavNode;NLAgainstAnimalTestingNavNode
+;NLTaxStrategyNavNode;;NLTaxStrategyNavNode;NLTaxStrategyNavNode
+;NLCareersNavNode;;NLCareersNavNode;NLCareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;NLDeliveryNavNodeEntry;;NLDeliveryNavNodeEntry;NLDeliveryNavNode;NLDeliveryLink;
+;NLReturnsNavNodeEntry;;NLReturnsNavNodeEntry;NLReturnsNavNode;NLReturnsLink;
+;NLFAQNavNodeEntry;;NL FAQ Navigation Node Entry;NLFAQNavNode;NLFAQLink;
+;NLTermsAndConditionsNavNodeEntry;;NLTermsAndConditionsNavNodeEntry;NLTermsAndConditionsNavNode;NLTermsAndConditionsLink;
+;NLPrivacyPolicyNavNodeEntry;;NLPrivacyPolicyNavNodeEntry;NLPrivacyPolicyNavNode;NLPrivacyPolicyLink;
+;NLSitemapNavNodeEntry;;NLSitemapNavNodeEntry;NLSitemapNavNode;NLSitemapLink;
+;NLStoresNavNodeEntry;;NLStoresNavNodeEntry;NLStoresNavNode;NLStoresLink;
+;NLLoveYourBodyClubNavNodeEntry;;NLLoveYourBodyClubNavNodeEntry;NLLoveYourBodyClubNavNode;NLLoveYourBodyClubLink;
+;NLStudentDiscountNavNodeEntry;;NLStudentDiscountNavNodeEntry;NLStudentDiscountNavNode;NLStudentDiscountLink;
+;NLGiftCardsNavNodeEntry;;NLGiftCardsNavNodeEntry;NLGiftCardsNavNode;NLGiftCardsLink;
+;NLAboutUsInternalNavNodeEntry;;NLAboutUsInternalNavNodeEntry;NLAboutUsInternalNavNode;NLAboutUsLink;
+;NLTheBodyShopAtHomeNavNodeEntry;;NLTheBodyShopAtHomeNavNodeEntry;NLTheBodyShopAtHomeNavNode;NLTheBodyShopAtHomeLink;
+;NLAffiliatesNavNodeEntry;;NLAffiliatesNavNodeEntry;NLAffiliatesNavNode;NLAffiliatesLink;
+;NLGenderPayGapNavNodeEntry;;NLGenderPayGapNavNodeEntry;NLGenderPayGapNavNode;NLGenderPayGapLink;
+;NLModernSlaveryStatementNavNodeEntry;;NLModernSlaveryStatementNavNodeEntry;NLModernSlaveryStatementNavNode;NLModernSlaveryStatementLink;
+;NLAgainstAnimalTestingNavNodeEntry;;NLAgainstAnimalTestingNavNodeEntry;NLAgainstAnimalTestingNavNode;NLAgainstAnimalTestingLink;
+;NLTaxStrategyNavNodeEntry;;NLTaxStrategyNavNodeEntry;NLTaxStrategyNavNode;NLTaxStrategyLink;
+;NLCareersNavNodeEntry;;NLCareersNavNodeEntry;NLCareersNavNode;NLCareersLink;
+
+##CategoryBannerCMSComponent Start ##
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;NLCategoryBannerCMSComponent;NL CategoryBanner CMSComponent;NLCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-NLCategorybannerSlot;NLCategory Banner Slot;true;NLCategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-NLCategoryPage;Section1;;Section1Slot-NLCategorybannerSlot;;;
+##CategorybannerCMSComponent End ##

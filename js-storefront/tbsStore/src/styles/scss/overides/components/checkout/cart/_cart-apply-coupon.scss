@@ -1,0 +1,79 @@
+cx-cart-apply-coupon {
+  margin-bottom: 3rem;
+}
+.cx-cart-apply-coupon {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  padding-top: 3rem;
+
+  @include media-breakpoint-down(sm) {
+    padding-top: 6rem;
+  }
+
+  .mat-error {
+    font-size: 0.875rem;
+    color: var(--cx-color-base-metal);
+  }
+}
+
+.cx-cart-coupon {
+  &__wrapper {
+    background-color: #cde7e8;
+    padding: 1rem;
+  }
+  &__title {
+    font-family: $work-sans;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    text-transform: capitalize;
+    max-height: 3rem;
+    @include media-breakpoint-down(sm) {
+      padding-right: 6.25rem;
+      &::after {
+        content: '';
+        background-image: url('https://i1.adis.ws/i/thebodyshop/tbs_hoou_illustration.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        position: absolute;
+        height: 10.0625rem;
+        width: 8rem;
+        bottom: -1rem;
+        right: -0.25rem;
+      }
+    }
+  }
+  &__disclaimer {
+    font-size: 0.875rem;
+    max-width: 21.875rem;
+  }
+  &__promo-image {
+    bottom: 0;
+    right: 2rem;
+    height: 15.375rem;
+    width: auto;
+  }
+  &__voucher-wrapper {
+    &-row {
+      background-color: #cde7e8;
+      button.link {
+        @include type('8');
+        line-height: 2;
+        text-decoration: none;
+        color: var(--cx-color-core-primary);
+      }
+      &:first-of-type() {
+        border-top: 1px solid rgba($core-primary, 0.4);
+      }
+    }
+  }
+}

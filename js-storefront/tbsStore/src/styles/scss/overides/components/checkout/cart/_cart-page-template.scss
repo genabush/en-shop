@@ -1,0 +1,21 @@
+.CartPageTemplate {
+  @extend .row;
+
+  .TopContent {
+    @extend .col-lg-7;
+    padding-left: 0;
+
+    @include media-breakpoint-down(md) {
+      padding-right: 0;
+    }
+  }
+
+  .CenterRightContentSlot {
+    @extend .col-lg-5;
+    padding-right: 0;
+
+    @include media-breakpoint-down(md) {
+      padding-left: 0;
+    }
+  }
+}

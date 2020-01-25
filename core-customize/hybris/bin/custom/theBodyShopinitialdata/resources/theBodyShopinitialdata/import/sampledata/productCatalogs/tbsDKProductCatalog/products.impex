@@ -1,0 +1,317 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+#% impex.setLocale( Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsDKProductCatalog
+$productCatalogName=Denmark Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$onlineDate=onlineDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-01-2019 06:30:00']
+
+$lang=da
+
+# Insert Products
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];$supercategories;type(code)[default=SIZE];$catalogVersion;$approved;$onlineDate
+;p003257;c00143;
+;p000341;c00149;
+;p002002;c00143;
+;p002445;c00143;
+;p003101;c00143;
+;p001102;c00143;
+;p002457;c00143;
+;p000971;c00143;
+;p003255;c00143;
+;p003254;c00143;
+;p003173;c00143;
+;p000694;c00143;
+;p002003;c00143;
+;p000936;c00145;
+;p002013;c00144;
+;p000810;c00144;
+;p002833;c00147;
+;p003268;c00147;
+;p002835;c00141;
+;p000664;c00148;
+;p003259;c00148;
+;p000067;c00140;
+;p000056;c00140;
+;p002017;c00140;
+;p000499;c00013;
+;p000253;c00013;
+;p000019;c00014;
+;p002347;c00014;
+;p002812;c00284;
+;p002419;c00024;
+;p000480;c00018;
+;p002863;c00019;
+;p000466;c00019;
+;p000644;c00019;
+;p000787;c00020,c00021;
+;p000676;c00020,c00021;
+;p000461;c00054;
+;p000111;c00054;
+;p000106;c00054;
+;p000795;c00056;
+;p000797;c00056;
+;p003200;c00047;
+;p000789;c00047;
+;p000063;c00047;
+;p003090;c00048;
+;p002733;c00048;
+;p000142;c00051;
+;p000120;c00051;
+;p002449;c00051;
+;p003091;c00050;
+;p000767;c00050;
+;p002453;c00050;
+;p000767;c00049;
+;p002144;c00065;
+;p002448;c00059;
+;p002145;c00059;
+;p003111;c00060;
+;p000360;c00060;COLOUR
+;p001081;c00061;
+;p002819;c00061;
+;p000467;c00061;
+;p000851;c00062;
+;p000436;c00064;
+;p000435;c00064;
+;p002668;c00064;
+;p000362;c00064;
+;p000726;c00064;
+;p002817;c00064;
+;p003237;c00063;
+;p002001;c00063;
+;p000048;c00065;
+;p002867;c00065;
+;p000042;c00065;
+;p002171;c00066;
+;p000657;c00066;COLOUR
+;p000069;c00066;
+;p000621;c00066;
+;p003235;c00067;
+;p000184;c00067;
+;p002818;c00067;
+;p000222;c00069;
+;p002437;c00069;
+;p001050;c00069;
+;p000269;c00146;
+;p003087;c00051;
+;p000247;c00014;
+;0000000000;;
+
+UPDATE Product;code[unique=true];name[lang=$lang];description[lang=$lang];doNotSearch[default=false];$catalogVersion;$onlineDate
+;"1030196";"BB Cream 02 25ml";"Når du ikke har et øjebliks tid, så er vores alt-i-en BB-cream et uundværligt produkt, der giver superhurtige resultater. Vores BB-Cream tilsat 24-timers fugtning står klar til at gøre det hele og efterlader din hud med glød og (næsten) billedskøn. Bland den ind i din hud, så den tilpasser sig, og få et funklende og jævnt resultat, der passer helt perfekt til din hudfarve. Det er din hud, bare bedre."
+;"1030226";"BB Cream 02 25ml";"Når du ikke har et øjebliks tid, så er vores alt-i-en BB-cream et uundværligt produkt, der giver superhurtige resultater. Vores BB-Cream tilsat 24-timers fugtning står klar til at gøre det hele og efterlader din hud med glød og (næsten) billedskøn. Bland den ind i din hud, så den tilpasser sig, og få et funklende og jævnt resultat, der passer helt perfekt til din hudfarve. Det er din hud, bare bedre."
+;"1030227";"BB Cream 03 25ml";"Når du ikke har et øjebliks tid, så er vores alt-i-en BB-cream et uundværligt produkt, der giver superhurtige resultater. Vores BB-Cream tilsat 24-timers fugtning står klar til at gøre det hele og efterlader din hud med glød og (næsten) billedskøn. Bland den ind i din hud, så den tilpasser sig, og få et funklende og jævnt resultat, der passer helt perfekt til din hudfarve. Det er din hud, bare bedre."
+;"1032512";"BB Cream 04 30ml";"Når du ikke har et øjebliks tid, så er vores alt-i-en BB-cream et uundværligt produkt, der giver superhurtige resultater. Vores BB-Cream tilsat 24-timers fugtning står klar til at gøre det hele og efterlader din hud med glød og (næsten) billedskøn. Bland den ind i din hud, så den tilpasser sig, og få et funklende og jævnt resultat, der passer helt perfekt til din hudfarve. Det er din hud, bare bedre."
+;"1059021";"Shea Nourishing Body Butter 50ml";"Oplev følelsen af at være velplejet med vores lækre, nøddeagtige sheasmør, der vil føles naturlig på huden. Giver blødere, friskere, velplejet hud hele dagen, efter hvert brug."
+;"1055790";"Shea Nourishing Body Butter 200ml";"Oplev følelsen af at være velplejet med vores lækre, nøddeagtige sheasmør, der vil føles naturlig på huden. Giver blødere, friskere, velplejet hud hele dagen, efter hvert brug."
+;"1076327";"Shea Nourishing Body Butter 400ml";"Oplev følelsen af at være velplejet med vores lækre, nøddeagtige sheasmør, der vil føles naturlig på huden. Giver blødere, friskere, velplejet hud hele dagen, efter hvert brug."
+;"p000019";"Shea Nourishing Body Butter";"Oplev følelsen af at være velplejet med vores lækre, nøddeagtige sheasmør, der vil føles naturlig på huden. Giver blødere, friskere, velplejet hud hele dagen, efter hvert brug."
+;"p000048";"All-In-One Face Base";"Denne kompaktæske er nem at blande og har en fløjlsblød finish. Den er både en effektiv foundation og pudder. Disse alsidige produkter kan bruges på flere måder og giver dig et perfekt resultat. Fugt svampen, der følger med æsken, for en bedre dækning. Ønsker du, at makeuppen skal holde længere? Påfør vores All-in-One Face Base på din hud med vores Face & Body Brush til foundation, eller børst det på et rent ansigt for et let, jævnt resultat. Dette er multitasking, når det er bedst."
+;"p000056";;"Rens din hud og fjern makeup med denne bløde rensesvamp. "
+;"p000063";"Styling Hairbrush";"Red ud eller løft, mens du føntørrer håret. De tætte børstehår giver et effetkivt hold og kontrol mens de stimulerer hovedbunden. Regelmæssig børstning fordeler hårets naturlige olier fra rod til spids.Til alle hårtyper"
+;"p000067";"Muslin Cloth";"Fjern blidt makeuppen, og rens din hud med vores superfine klud i musselinstof, og huden vil føles blødere og glattere. Sammen med vores yndlingsrenseprodukt kan du opnå optimale resultater."
+;"p000069";"Colour Crush™ Lipsticks";"Et lille strøg af vores cremede, nærende læbestift giver dine læber et dejligt skud af farve. Med en diskret rosenduft og Community Trade marulaolie fugter den læberne. Ønsk dig hele farvepaletten."
+;"p000106";"Mango Hand Cream";"Denne håndcreme er det helt uundværlig i håndtasken og fugter perfekt, når du er på farten. Denne lette gel-creme tilsat duften af frisk, tropisk mango absorberer hurtigt og blødgør og beskytter dine hænder."
+;"p000111";"Coconut Hand Cream";"Denne håndcreme er det helt uundværlig i håndtasken og fugter perfekt, når du er på farten. Denne lette gel-creme tilsat duften af frisk kokosnød absorberer hurtigt og blødgør og beskytter dine hænder."
+;"p000120";"Ginger Anti Dandruff Scalp Care";"Opfrisk og lindr din hovedbund med denne forfriskende shampoo. Komplet med ingefærekstrakt, birkebarkekstrakt, hvid pilebarkekstrakt og Community Trade honning fra Etiopien."
+;"p000142";"Arber Hair & Body Wash";"Der er ikke brug for både shampoo og balsam med denne opfriskende top-til-tå vask, der efterlader huden med en let træagtig og sensuel duft. Økologisk kamille blødgør og plejer."
+;"p000184";"Mascara Super Volume";"Giv dine vipper en dosis intens farve og ekstra volumen med et strøg med en børste med vores ikke-klumpende mascara."
+;"p000222";"All-In-One Instablur™ Universal";"Denne hudkontrollerende, poredækkende hudperfektionist skjuler urenheder og giver billedskøn hud hver gang. Komplet med 5 hudfarvenuancer og Community Trade marulaolie. Påfør Instablur™ som en udglattende base før din foundation, eller brug den alene, og udvisk urenheder og gør huden mat. Instablur™ er med sikkerhed dit hemmelige (skønheds) våben."
+;"p000253";"Wild Argan Oil Bubbling Bath";"Dyk ned i varme, velduftende bobler med masser af plejende arganolie,  og gør dig klar til at slappe helt af. Din hud vil føles dejligt blød efter hvert dyp."
+;"p000269";"Wild Argan Solid Oil Lips";"Lad vores faste olie smelte sig ind i dine læber, og opnå en smuk, naturlig glans, mens dine læber plejes af rig, nærende arganolie fra Marokko. Denne kraftigt fugtende formel vil pleje og blødgøre dine læber ved hvert brug."
+;"p000341";"Drops Of Youth™ Bouncy Sleeping Mask";"Denne opfriskende ansigtsmaske er fremstillet til målrettet at bekæmpe alderstegn på huden, så den føles blødere, glattere og renset i dybden."
+;"p000360";"All-In-One BB Cream";"Når du ikke har et øjebliks tid, så er vores alt-i-en BB-cream et uundværligt produkt, der giver superhurtige resultater. Vores BB-Cream tilsat 24-timers fugtning står klar til at gøre det hele og efterlader din hud med glød og (næsten) billedskøn. Bland den ind i din hud, så den tilpasser sig, og få et funklende og jævnt resultat, der passer helt perfekt til din hudfarve. Det er din hud, bare bedre."
+;"p000362";"Brow & Lash Gel";"Komplet med en praktisk, lille børste - denne gennemsigtige gelé vil tæmme uregerlige bryn og holde dem på plads. Brug på dine vipper for et naturligt men sofistikeret no-makeup look. Nemt."
+;"p000435";"Skinny Felt Liner";"Vores præcise, enkle eyeliner-pen er ideel til at skabe flydende linjer, der definerer øjnene og tilføjer intensitet til dit look. Anvend en kulsort farve til at fremhæve din vippekant."
+;"p000436";"Gel Pen Liner";"Denne cremede, bløde eyeliner glider ind i huden, og skaber en langvarig, stærk intensitet. Den findes i tre kraftige farver, og den vandfaste formel vil holde i timevis."
+;"p000461";"Hemp Hand Protector";"Vores bedstsælgende håndcreme. Vink farvel  til hård hud, og beskyt dine hænder mod hverdagens strabadser med vores lindrende og plejende creme med hamp"
+;"p000466";"Hurtig tørrende, langtidsvirkende deodorant til mænd med en varm krydret duft. "
+;"p000467";"Honey Bronze™ Tinted Leg Mist";"Opnå et fejlfrit, solbrændt udseende på få sekunder med vores innovative bronzingspray. Vores lette, oliefri, gel-spray er nem at bruge, og giver dig en naturlig sommerglød, som ingen vil fatte mistanke til."
+;"p000480";"Honey Bronze™ Bronzing Powder";"Spray vores sol-kyssede, honningrige bronzingpudder over din hud, og få en naturlig, klar og gylden glød hele året rundt. Med farvenuancer der passer til selv den lyseste hudfarve gør vores Honey Bronze™ Bronzing Powder din 'ferie-kulør' til dit mindste problem. Påfør denne glitterfri, faste pudder for en jævn, gylden, mat overflade."
+;"p000499";"Spa Of The World™ Egyptian Milk & Honey Bath";"Et afslappende bad med blødgørende mælk og honning, kendt som det skønhedsritual Kleopatra anvendte i det gamle Egypten. Når du hælder en skefuld af det cremede velduftende pulver ind under den løbende hane, vil duften på et øjeblik få dig til at føle dig fuldstændigt afslappet. For at opnå et rent forkælende bad, som var en tidligere dronning værdig, hælder du fem skefulde pulver under varmt rindende vand og rører det rundt, til det er opløst."
+;"p000621";;"Denne Lip Liner markerer læberne og hjælper med at holde læbestiften på indersiden af læbelinjen. "
+;"p000644";"White Musk® deodorant";"White Musk® For Men Deodorant er en ren cruelty-free musk. Beriget med sandeltræ. Kan bruges sammen med andre White Musk® til mænd for at opbygge duften. "
+;"p000657";"Lip & Cheek Stain";"Denne dobbeltvirkende flydende farve giver læber og kinder et naturligt strøg af opbyggelig farve. Brug vores lipgloss, og få den ultimative trutmund, eller dup den på kinderne for en naturlig, frisk glød."
+;"p000664";"Drops Of Youth™ Youth Essence-Lotion ";"<p>Drops Of Youth&trade Essence Lotion er det vigtige f&oslash rste trin efter du renser og toner for at aktivere huden til de n&aelig ste trin i hudplejerutinen.&nbsp Indeholder Edelweiss fra toppen af alperne ved Trentino-Alto i Italien. Edelweiss er kendt for sine beskyttende egenskaber. Strandmandstro fra sydlige Bretagnekysts sandstrande er kendt for sine opstrammende egenskaber. Strandfennikel fra det nordlige Bretagnes klippefyldte kystlinje kendt for sine hudfornyende egenskaber.</p>"
+;"p000676";"Peppermint Cooling Foot Spray";"Genopliv og opfrisk trætte og ømme fødder med vores afkølende foot spray. Denne foot spray med engelsk æterisk pebermynteolie sprayes på fødderne og gør dem mintfriske, når du behøver det."
+;"p000694";"Vitamin E Sink In Moisture Sleeping Mask";"Lad din hud absorbere masser af antioxidant E-vitamin. Bring huden tilbage til dens fugtbalance med denne intensive, fugtgivende ansigtsmaske."
+;"p000726";"Brow & Liner Kit";"Vælg vores smarte Brow & Liner Kit, der indeholder en dobbelt børste, så du kan skabe de perfekte bryn. Definér, form, udfyld og optegn med silkebløde nuancer for et fejlfrit resultat."
+;"p000767";"Grapeseed Hair Serum";"Blødgør dit hår, og øg glansen med denne blanke serum. Fordel en lille mængde i håret for de bedste resultater."
+;"p000787";"Hemp Hard Working Foot Protector";"Giv lindring til dine fødder med vores effektivt bearbejdende Hemp Foot Cream, der hjælper med at blødgøre hård hud fra top til tå. Denne creme er et sandt skønhedsprodukt og hjælper med at genoprette hudens fugtbalance, mens den fugter ultratør hud."
+;"p000789";"Detangling Comb";"Red filtret hår, både tørt og vådt, helt uden problemer med vores bredtandede kam. Dette fantastiske redskab fordeler perfekt produkterne i dit hår, helt enkelt."
+;"p000797";"Pink Grapefruit Hand Cleanse Gel";"Hold dine hænder friske og rene hele dagen med vores Pink Grapefruit hand cleanse gel. Perfekt til håndtasken og rensning, når du er på farten."
+;"p000810";"Vitamin E Eye Cream";"<b>Sheasmør</b> fra Ghana er en af naturens mest effektive fugtgivere. Ghanesiske kvinder har brugt det i århundreder, for at beskytte huden mod de tørre ørkenvinde i Sahara. Så hvem bedre at handle med end Tungteiya Shea Butter Association i det nordlige Ghana - en forening bestående af ca. 400 kvinder fra 10 forskellige byer, der sikres en fair pris for deres produkt. Siden handlen med The Body Shop startede, har kvindernes liv ændret sig dramatisk. Vandrør og brønde sparer mange timer, da vandet ikke længere skal hentes langt væk, boligforholdene er forbedrede, de har fået bedre adgang til medicin, samt mad og har opnået et bedre selvværd. Ikke mindst er de nu i stand til at sende deres børn, specielt døtrene, i skole."
+;"p000851";"All-In-One Cheek Colour";"Vælg vores superfine pudderbørste til farver, der kan blandes og opbygges. Børst én af de fantastiske nuancer på huden, og få øjeblikkeligt en funklende glød. Med E-vitamin og Community Trade marulaolie er det makeup og hudpleje i ét."
+;"p000936";"Camomile Gentle Eye Make-Up Remover";"Smelt øjenmakeuppen væk. Vores øjenmakeupfjerner med kamille renser blidt og efterlader huden glat og ren. "
+;"p000971";"Seaweed Oil Balancing Clay Mask";"Rens din hud i dybden med vores rensende og afbalancerende muddermaske med tangolie. Din hud vil føles frisk, opkvikket og ren."
+;"p001050";"Instaglow CC Cream SPF 20";"Instaglow CC Cream SPF20 PA+++ Bright Glow er en sammensætning af hvide pigmenter og lilla perler til lys hudtoner, der neutraliserer gullig hud og giver et lyst skær. Cremen er beriget med 100% økologisk Comunity Trade aloe vera og ginseng, som genskaber en sund huds naturlige glød."
+;"p001081";"Honey Bronze™ Drops Of Sun";"Ønsker du dig en sund glød uanset vejret, emn uden at gå på krompomis med din hudpleje? Tilføj blot en dråbe til din fugtighedscreme, og glæd dig over en øjeblikkeligt fugtet hud med en smuk, solbrun glød. <br/>Beriget med Comunity Trade honning fra Etiopien."
+;"p001102";;"Et 3-i-1 produkt, som kan anvendes som vask, scrub eller maske til at bekæmpe bumser og overskydende olie. "
+;"p002001";;"Vores Down To Earth Palette giver dig mulighed for uendeligt mange looks. Farverne er inspireret af jordens rigeste, naturlige farver, og er beriget med Community Trade marulanøddeolie, babassuolie og sesamolie.Den plejende formulering forhindrer, at den klumper og hjælper med at opnå et look, der holder længe."
+;"p002002";;"Masken er god til huden der har brug for at slippe af med urenheder og toksiner for at fremme en sund og ungdommelig glød. Masken er inspireret af ayurvedisk traditioner, og dens prikkede mudderkonsistens indeholder kraftfulde ingredienser: Bambuskul fra foden af Himalayas bjerge. Kendt for at fjerne urenheder og overskydende olie fra huden.Blade fra grøn te fra Japan, som er rige på antioxidanter og catechiner, eksfolierer huden effektivt. Økologisk Community Trade Tea Tree olie fra Kenya, som er kendt for at gøre huden mere klar. "
+;"p002144";;"Vi er store fans (undskyld ordspillet) af denne diskrete pensel, som er ideel til blushers og highlighters. Vores kollektion af essentielle makeuppensler har et lag af kul, er designet til at udføre de hotteste trends og løfter din makeup til et nyt niveau. De føles blødere end egernhaler - men frygt ikke! De er ligesom resten sortimentet fra The Body Shop 100% fri for dyremishandling - lige fra de syntetiske hår til de bæredygtige FSC træskafter. Derudover er de 100% veganske. "
+;"p002145";;"En perfekt skygge, blusher og highlighter begynder med vores superbløde Angled Make-up Brush. Vores kollektion af essentielle makeuppensler har et lag af kul, er designet til at udføre de hotteste trends og løfter din makeup til et nyt niveau. De føles blødere end egernhaler - men frygt ikke! De er ligesom resten sortimentet fra The Body Shop 100% fri for dyremishandling - lige fra de syntetiske hår til de bæredygtige FSC træskafter. Deruodver er de 100% veganske. "
+;"p002171";"Matte Lip Liquid ";"Her får du en af vinterens hotteste læbetrend - Matte Lip Liquid. Den er skabt til at lægge sig let på læberne - ligesom en gloss. Den efterlader en cremet farve og en fløjlsblød finish. Den fås i 12 spændende farver. Vores nye flydende læbestift er desuden let, utrolig blød og holder i lang tid. Ligesom resten af vores makeup er den vegetarisk og fri for dyremishandling."
+;"p002347";;"Denne skønne Body Butter er blevet formuleret til at pleje, genopbygge og beskytte tør og følsom hud. Den giver intens fugt i op til 48 timer og hjælper med at berolige stram og kløende hud. Den er beriget med økologisk mandelmælk fra Spanien og Community Trade honning fra Etiopien. Almond Milk & Honey er udviklet til følsom, tør hud. "
+;"p002437";;"Mød dit nye strobingprodukt med mangeanvendelsesmuligheder, Drops of Glow Lustre Finish Creator. Et smart produkt til kvinden på farten, da du kan bruge det alene eller sammen med dine andre yndlingsprodukter og få et fantastisk skær hvor som helst og når som helst. Brug den til at give den foundation en sund glød eller skab et dugfriskt look sammen med din dagcreme. Med dette produkt er du kun en dråbe væk fra at lyse dit look mere op. Highlight din amorbue, marker dine kindben, fremhæv dine øjne ved at bruge den som topcoat på øjenskyggen - mulighederne er mange."
+;"p002445";;"Vågn op med en klarere hud! Vores frisk og  Tea Tree Anti-Imperfection Night Mask. ader huden ånde og er særligt formuleret til at pleje fedtet hud og bumser, mens du sover. Den indeholder salicylsyre og Community Trade tea tree olie. Den 100% veganske leave-on maske til fedtet hud reducerer antallet og størrelsen på bumser* og giver en klarere og glatter hud, der ser sundere ud. "
+;"p002449";;"Beriget med revitaliserende, japansk grøn te. Vores opfriskende shampoo renser og fjerner urenheder og bader dit hår og hovedbund i en styrkende, frisk følelse."
+;"p002453";;"Indeholder en blanding af Community Trade økologisk jomfrukokosolie fra Samoa og sojaolie fra Brasilien. Vores 100% veganske og velduftende behandling er beriget med brasiliansk pracaxiolie og kan bruges før dit hårplejeritual, kan sidde natten over eller masseres ind i tørre spidser, så dine lokker bliver stærkere, glattere og blødere. "
+;"p002457";;"Vores lækre og cremede, 100% veganske maske er beriget med grøn matcha te fra Kakegawa i Japan, mælkebøtteekstrakt og beroligende Community Trade aloe vera fra Mexico. Den renser i dybden, eksfolierer blidt og fjerner den ugentlige ophobning af byens forurenende partikler og hverdagens urenheder"
+;"p002668";"Brow Sculpt";"Få smukke, fyldige bryn medvores nye Brow Sculpt. Produktet er et smart 3-i-1 produkt, som kombinerer pudder, voks og mascara. Du kan let skabe dit drømmebryn - uanset om du vil have det naturligt eller stort og vovet. Fås i tre nuancer. "
+;"p002733";"Strawberry Clearly Glossing Conditioner";"Genopliv trist hår med vores Strawberry Clearly Glossing Conditioner. Den efterlader dit hår mere blødt, glansfuldt og med en dejlig duft at friske, italienske jordbær. Den er 100% vegansk, er formuleret uden silikone og modvirker filtring. Den giver håret fugt og vidunderlig duft. "
+;"p000048v";"All-In-One Face Base 200ml";"Denne kompaktæske er nem at blande og har en fløjlsblød finish. Den er både en effektiv foundation og pudder. Disse alsidige produkter kan bruges på flere måder og giver dig et perfekt resultat. Fugt svampen, der følger med æsken, for en bedre dækning. Ønsker du, at makeuppen skal holde længere? Påfør vores All-in-One Face Base på din hud med vores Face & Body Brush til foundation, eller børst det på et rent ansigt for et let, jævnt resultat. Dette er multitasking, når det er bedst."
+;"p000056v";"Facial Cleansing Sponge 200ml";"Rens din hud og fjern makeup med denne bløde rensesvamp. "
+;"p000063v";"Styling Hairbrush 200ml";"Red ud eller løft, mens du føntørrer håret. De tætte børstehår giver et effetkivt hold og kontrol mens de stimulerer hovedbunden. Regelmæssig børstning fordeler hårets naturlige olier fra rod til spids.Til alle hårtyper"
+;"p000067v";"Muslin Cloth 200ml";"Fjern blidt makeuppen, og rens din hud med vores superfine klud i musselinstof, og huden vil føles blødere og glattere. Sammen med vores yndlingsrenseprodukt kan du opnå optimale resultater."
+;"p000069v";"Colour Crush™ Lipsticks 200ml";"Et lille strøg af vores cremede, nærende læbestift giver dine læber et dejligt skud af farve. Med en diskret rosenduft og Community Trade marulaolie fugter den læberne. Ønsk dig hele farvepaletten."
+;"p000106v";"Mango Hand Cream 200ml";"Denne håndcreme er det helt uundværlig i håndtasken og fugter perfekt, når du er på farten. Denne lette gel-creme tilsat duften af frisk, tropisk mango absorberer hurtigt og blødgør og beskytter dine hænder."
+;"p000111v";"Coconut Hand Cream 200ml";"Denne håndcreme er det helt uundværlig i håndtasken og fugter perfekt, når du er på farten. Denne lette gel-creme tilsat duften af frisk kokosnød absorberer hurtigt og blødgør og beskytter dine hænder."
+;"p000120v";"Ginger Anti Dandruff Scalp Care 200ml";"Opfrisk og lindr din hovedbund med denne forfriskende shampoo. Komplet med ingefærekstrakt, birkebarkekstrakt, hvid pilebarkekstrakt og Community Trade honning fra Etiopien."
+;"p000142v";"Arber Hair & Body Wash 200ml";"Der er ikke brug for både shampoo og balsam med denne opfriskende top-til-tå vask, der efterlader huden med en let træagtig og sensuel duft. Økologisk kamille blødgør og plejer."
+;"p000184v";"Mascara Super Volume 200ml";"Giv dine vipper en dosis intens farve og ekstra volumen med et strøg med en børste med vores ikke-klumpende mascara."
+;"p000222v";"All-In-One Instablur™ Universal 200ml";"Denne hudkontrollerende, poredækkende hudperfektionist skjuler urenheder og giver billedskøn hud hver gang. Komplet med 5 hudfarvenuancer og Community Trade marulaolie. Påfør Instablur™ som en udglattende base før din foundation, eller brug den alene, og udvisk urenheder og gør huden mat. Instablur™ er med sikkerhed dit hemmelige (skønheds) våben."
+;"p000253v";"Wild Argan Oil Bubbling Bath 200ml";"Dyk ned i varme, velduftende bobler med masser af plejende arganolie,  og gør dig klar til at slappe helt af. Din hud vil føles dejligt blød efter hvert dyp."
+;"p000269v";"Wild Argan Solid Oil Lips 200ml";"Lad vores faste olie smelte sig ind i dine læber, og opnå en smuk, naturlig glans, mens dine læber plejes af rig, nærende arganolie fra Marokko. Denne kraftigt fugtende formel vil pleje og blødgøre dine læber ved hvert brug."
+;"p000341v";"Drops Of Youth™ Bouncy Sleeping Mask 200ml";"Denne opfriskende ansigtsmaske er fremstillet til målrettet at bekæmpe alderstegn på huden, så den føles blødere, glattere og renset i dybden."
+;"p000362v";"Brow & Lash Gel 200ml";"Komplet med en praktisk, lille børste - denne gennemsigtige gelé vil tæmme uregerlige bryn og holde dem på plads. Brug på dine vipper for et naturligt men sofistikeret no-makeup look. Nemt."
+;"p000435v";"Skinny Felt Liner 200ml";"Vores præcise, enkle eyeliner-pen er ideel til at skabe flydende linjer, der definerer øjnene og tilføjer intensitet til dit look. Anvend en kulsort farve til at fremhæve din vippekant."
+;"p000436v";"Gel Pen Liner 200ml";"Denne cremede, bløde eyeliner glider ind i huden, og skaber en langvarig, stærk intensitet. Den findes i tre kraftige farver, og den vandfaste formel vil holde i timevis."
+;"p000461v";"Hemp Hand Protector 200ml";"Vores bedstsælgende håndcreme. Vink farvel  til hård hud, og beskyt dine hænder mod hverdagens strabadser med vores lindrende og plejende creme med hamp"
+;"p000466v";"Activist™ Anti-Perspirant Deodorant 200ml";"Hurtig tørrende, langtidsvirkende deodorant til mænd med en varm krydret duft. "
+;"p000467v";"Honey Bronze™ Tinted Leg Mist 200ml";"Opnå et fejlfrit, solbrændt udseende på få sekunder med vores innovative bronzingspray. Vores lette, oliefri, gel-spray er nem at bruge, og giver dig en naturlig sommerglød, som ingen vil fatte mistanke til."
+;"p000480v";"Honey Bronze™ Bronzing Powder 200ml";"Spray vores sol-kyssede, honningrige bronzingpudder over din hud, og få en naturlig, klar og gylden glød hele året rundt. Med farvenuancer der passer til selv den lyseste hudfarve gør vores Honey Bronze™ Bronzing Powder din 'ferie-kulør' til dit mindste problem. Påfør denne glitterfri, faste pudder for en jævn, gylden, mat overflade."
+;"p000499v";"Spa Of The World™ Egyptian Milk & Honey Bath 200ml";"Et afslappende bad med blødgørende mælk og honning, kendt som det skønhedsritual Kleopatra anvendte i det gamle Egypten. Når du hælder en skefuld af det cremede velduftende pulver ind under den løbende hane, vil duften på et øjeblik få dig til at føle dig fuldstændigt afslappet. For at opnå et rent forkælende bad, som var en tidligere dronning værdig, hælder du fem skefulde pulver under varmt rindende vand og rører det rundt, til det er opløst."
+;"p000621v";"Lip Liner 200ml";"Denne Lip Liner markerer læberne og hjælper med at holde læbestiften på indersiden af læbelinjen. "
+;"p000644v";"White Musk® deodorant 200ml";"White Musk® For Men Deodorant er en ren cruelty-free musk. Beriget med sandeltræ. Kan bruges sammen med andre White Musk® til mænd for at opbygge duften. "
+;"p000664v";"Drops Of Youth™ Youth Essence-Lotion 200ml";"<p>Drops Of Youth&trade Essence Lotion er det vigtige f&oslash rste trin efter du renser og toner for at aktivere huden til de n&aelig ste trin i hudplejerutinen.&nbsp Indeholder Edelweiss fra toppen af alperne ved Trentino-Alto i Italien. Edelweiss er kendt for sine beskyttende egenskaber. Strandmandstro fra sydlige Bretagnekysts sandstrande er kendt for sine opstrammende egenskaber. Strandfennikel fra det nordlige Bretagnes klippefyldte kystlinje kendt for sine hudfornyende egenskaber.</p>"
+;"p000676v";"Peppermint Cooling Foot Spray 200ml";"Genopliv og opfrisk trætte og ømme fødder med vores afkølende foot spray. Denne foot spray med engelsk æterisk pebermynteolie sprayes på fødderne og gør dem mintfriske, når du behøver det."
+;"p000694v";"Vitamin E Sink In Moisture Sleeping Mask 200ml";"Lad din hud absorbere masser af antioxidant E-vitamin. Bring huden tilbage til dens fugtbalance med denne intensive, fugtgivende ansigtsmaske."
+;"p000726v";"Brow & Liner Kit 200ml";"Vælg vores smarte Brow & Liner Kit, der indeholder en dobbelt børste, så du kan skabe de perfekte bryn. Definér, form, udfyld og optegn med silkebløde nuancer for et fejlfrit resultat."
+;"p000767v";"Grapeseed Hair Serum 200ml";"Blødgør dit hår, og øg glansen med denne blanke serum. Fordel en lille mængde i håret for de bedste resultater."
+;"p000787v";"Hemp Hard Working Foot Protector 200ml";"Giv lindring til dine fødder med vores effektivt bearbejdende Hemp Foot Cream, der hjælper med at blødgøre hård hud fra top til tå. Denne creme er et sandt skønhedsprodukt og hjælper med at genoprette hudens fugtbalance, mens den fugter ultratør hud."
+;"p000789v";"Detangling Comb 200ml";"Red filtret hår, både tørt og vådt, helt uden problemer med vores bredtandede kam. Dette fantastiske redskab fordeler perfekt produkterne i dit hår, helt enkelt."
+;"p000797v";"Pink Grapefruit Hand Cleanse Gel 200ml";"Hold dine hænder friske og rene hele dagen med vores Pink Grapefruit hand cleanse gel. Perfekt til håndtasken og rensning, når du er på farten."
+;"p000810v";"Vitamin E Eye Cream 200ml";"<b>Sheasmør</b> fra Ghana er en af naturens mest effektive fugtgivere. Ghanesiske kvinder har brugt det i århundreder, for at beskytte huden mod de tørre ørkenvinde i Sahara. Så hvem bedre at handle med end Tungteiya Shea Butter Association i det nordlige Ghana - en forening bestående af ca. 400 kvinder fra 10 forskellige byer, der sikres en fair pris for deres produkt. Siden handlen med The Body Shop startede, har kvindernes liv ændret sig dramatisk. Vandrør og brønde sparer mange timer, da vandet ikke længere skal hentes langt væk, boligforholdene er forbedrede, de har fået bedre adgang til medicin, samt mad og har opnået et bedre selvværd. Ikke mindst er de nu i stand til at sende deres børn, specielt døtrene, i skole."
+;"p000851v";"All-In-One Cheek Colour 200ml";"Vælg vores superfine pudderbørste til farver, der kan blandes og opbygges. Børst én af de fantastiske nuancer på huden, og få øjeblikkeligt en funklende glød. Med E-vitamin og Community Trade marulaolie er det makeup og hudpleje i ét."
+;"p000936v";"Camomile Gentle Eye Make-Up Remover 200ml";"Smelt øjenmakeuppen væk. Vores øjenmakeupfjerner med kamille renser blidt og efterlader huden glat og ren. "
+;"p000971v";"Seaweed Oil Balancing Clay Mask 200ml";"Rens din hud i dybden med vores rensende og afbalancerende muddermaske med tangolie. Din hud vil føles frisk, opkvikket og ren."
+;"p001050v";"Instaglow CC Cream SPF 20 200ml";"Instaglow CC Cream SPF20 PA+++ Bright Glow er en sammensætning af hvide pigmenter og lilla perler til lys hudtoner, der neutraliserer gullig hud og giver et lyst skær. Cremen er beriget med 100% økologisk Comunity Trade aloe vera og ginseng, som genskaber en sund huds naturlige glød."
+;"p001081v";"Honey Bronze™ Drops Of Sun 200ml";"Ønsker du dig en sund glød uanset vejret, emn uden at gå på krompomis med din hudpleje? Tilføj blot en dråbe til din fugtighedscreme, og glæd dig over en øjeblikkeligt fugtet hud med en smuk, solbrun glød. <br/>Beriget med Comunity Trade honning fra Etiopien."
+;"p001102v";"Tea Tree 3-in-1 Wash Scrub Mask 200ml";"Et 3-i-1 produkt, som kan anvendes som vask, scrub eller maske til at bekæmpe bumser og overskydende olie. "
+;"p002001v";"Down To Earth Quad Eye Shadow 200ml";"Vores Down To Earth Palette giver dig mulighed for uendeligt mange looks. Farverne er inspireret af jordens rigeste, naturlige farver, og er beriget med Community Trade marulanøddeolie, babassuolie og sesamolie.Den plejende formulering forhindrer, at den klumper og hjælper med at opnå et look, der holder længe."
+;"p002002v";"Himalayan Charcoal Purifying Glow Mask 200ml";"Masken er god til huden der har brug for at slippe af med urenheder og toksiner for at fremme en sund og ungdommelig glød. Masken er inspireret af ayurvedisk traditioner, og dens prikkede mudderkonsistens indeholder kraftfulde ingredienser: Bambuskul fra foden af Himalayas bjerge. Kendt for at fjerne urenheder og overskydende olie fra huden.Blade fra grøn te fra Japan, som er rige på antioxidanter og catechiner, eksfolierer huden effektivt. Økologisk Community Trade Tea Tree olie fra Kenya, som er kendt for at gøre huden mere klar. "
+;"p002144v";"Fan Brush 200ml";"Vi er store fans (undskyld ordspillet) af denne diskrete pensel, som er ideel til blushers og highlighters. Vores kollektion af essentielle makeuppensler har et lag af kul, er designet til at udføre de hotteste trends og løfter din makeup til et nyt niveau. De føles blødere end egernhaler - men frygt ikke! De er ligesom resten sortimentet fra The Body Shop 100% fri for dyremishandling - lige fra de syntetiske hår til de bæredygtige FSC træskafter. Derudover er de 100% veganske. "
+;"p002145v";"Slanted Blusher Brush 200ml";"En perfekt skygge, blusher og highlighter begynder med vores superbløde Angled Make-up Brush. Vores kollektion af essentielle makeuppensler har et lag af kul, er designet til at udføre de hotteste trends og løfter din makeup til et nyt niveau. De føles blødere end egernhaler - men frygt ikke! De er ligesom resten sortimentet fra The Body Shop 100% fri for dyremishandling - lige fra de syntetiske hår til de bæredygtige FSC træskafter. Deruodver er de 100% veganske. "
+;"p002171v";"Matte Lip Liquid 200ml";"Her får du en af vinterens hotteste læbetrend - Matte Lip Liquid. Den er skabt til at lægge sig let på læberne - ligesom en gloss. Den efterlader en cremet farve og en fløjlsblød finish. Den fås i 12 spændende farver. Vores nye flydende læbestift er desuden let, utrolig blød og holder i lang tid. Ligesom resten af vores makeup er den vegetarisk og fri for dyremishandling."
+;"p002347v";;"Denne skønne Body Butter er blevet formuleret til at pleje, genopbygge og beskytte tør og følsom hud. Den giver intens fugt i op til 48 timer og hjælper med at berolige stram og kløende hud. Den er beriget med økologisk mandelmælk fra Spanien og Community Trade honning fra Etiopien. Almond Milk & Honey er udviklet til følsom, tør hud. "
+;"p002437v";"Drops of Glow Lustre Finish Creator 200ml";"Mød dit nye strobingprodukt med mangeanvendelsesmuligheder, Drops of Glow Lustre Finish Creator. Et smart produkt til kvinden på farten, da du kan bruge det alene eller sammen med dine andre yndlingsprodukter og få et fantastisk skær hvor som helst og når som helst. Brug den til at give den foundation en sund glød eller skab et dugfriskt look sammen med din dagcreme. Med dette produkt er du kun en dråbe væk fra at lyse dit look mere op. Highlight din amorbue, marker dine kindben, fremhæv dine øjne ved at bruge den som topcoat på øjenskyggen - mulighederne er mange."
+;"p002445v";"Tea Tree Anti-Imperfection Night Mask 200ml";"Vågn op med en klarere hud! Vores frisk og  Tea Tree Anti-Imperfection Night Mask. ader huden ånde og er særligt formuleret til at pleje fedtet hud og bumser, mens du sover. Den indeholder salicylsyre og Community Trade tea tree olie. Den 100% veganske leave-on maske til fedtet hud reducerer antallet og størrelsen på bumser* og giver en klarere og glatter hud, der ser sundere ud. "
+;"p002449v";"Fuji Green Tea™ Refreshingly Purifying Shampoo 200ml";"Beriget med revitaliserende, japansk grøn te. Vores opfriskende shampoo renser og fjerner urenheder og bader dit hår og hovedbund i en styrkende, frisk følelse."
+;"p002453v";"Coconut Oil Brilliantly Nourishing Pre-Shampoo Hair Oil 200ml";"Indeholder en blanding af Community Trade økologisk jomfrukokosolie fra Samoa og sojaolie fra Brasilien. Vores 100% veganske og velduftende behandling er beriget med brasiliansk pracaxiolie og kan bruges før dit hårplejeritual, kan sidde natten over eller masseres ind i tørre spidser, så dine lokker bliver stærkere, glattere og blødere. "
+;"p002457v";"Japanese Matcha Tea Pollution Clearing Mask 200ml";"Vores lækre og cremede, 100% veganske maske er beriget med grøn matcha te fra Kakegawa i Japan, mælkebøtteekstrakt og beroligende Community Trade aloe vera fra Mexico. Den renser i dybden, eksfolierer blidt og fjerner den ugentlige ophobning af byens forurenende partikler og hverdagens urenheder"
+;"p002668v";"Brow Sculpt 200ml";"Få smukke, fyldige bryn medvores nye Brow Sculpt. Produktet er et smart 3-i-1 produkt, som kombinerer pudder, voks og mascara. Du kan let skabe dit drømmebryn - uanset om du vil have det naturligt eller stort og vovet. Fås i tre nuancer. "
+;"p002733v";"Strawberry Clearly Glossing Conditioner 200ml";"Genopliv trist hår med vores Strawberry Clearly Glossing Conditioner. Den efterlader dit hår mere blødt, glansfuldt og med en dejlig duft at friske, italienske jordbær. Den er 100% vegansk, er formuleret uden silikone og modvirker filtring. Den giver håret fugt og vidunderlig duft. "
+
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+# Update review ratings
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];reviewRating;type(code)[default=SIZE];$catalogVersion;$approved
+;p003257;2.8
+;p000341;5.0
+;p002002;1.2
+;p002445;4.3
+;p003101;3.3
+;p001102;2.0
+;p002457;2.5
+;p000971;4.5
+;p003255;3.2
+;p003254;2.1
+;p003173;4.3
+;p000694;1.5
+;p002003;2.3
+;p000936;4.4
+;p002013;3.0
+;p000810;1.2
+;p002833;1.4
+;p003268;1.6
+;p002835;1.8
+;p000664;2.0
+;p003259;2.2
+;p000067;2.4
+;p000056;2.6
+;p002017;2.8
+;p000499;3.0
+;p000253;3.2
+;p000019;3.4
+;p002347;3.6
+;p002812;3.8
+;p002419;4.0
+;p000480;4.2
+;p002863;4.4
+;p000466;4.6
+;p000644;4.8
+;p000787;5.0
+;p000676;1.1
+;p000461;1.3
+;p000111;1.5
+;p000106;1.7
+;p000795;1.9
+;p000797;2.1
+;p003200;2.3
+;p000789;2.5
+;p000063;2.7
+;p003090;2.9
+;p002733;3.1
+;p000142;3.3
+;p000120;3.5
+;p002449;3.7
+;p003091;3.9
+;p000767;4.1
+;p002453;4.3
+;p002144;4.7
+;p002448;4.9
+;p002145;1.0
+;p003111;1.3
+;p000360;1.6;COLOUR
+;p001081;1.9
+;p002819;2.2
+;p000467;2.5
+;p000851;2.8
+;p000436;3.1
+;p000435;3.4
+;p002668;3.7
+;p000362;4.0
+;p000726;4.3
+;p002817;4.6
+;p003237;4.9
+;p002001;1.0
+;p000048;1.2
+;p002867;1.4
+;p000042;1.6
+;p002171;1.8
+;p000069;2.2
+;p000621;2.4
+;p003235;2.6
+;p000184;2.8
+;p002818;3.0
+;p000222;3.2
+;p002437;3.4
+;p001050;3.6
+;p000269;3.8
+;p003087;3.2
+;p000657;3.3;COLOUR
+;p000247;4.8

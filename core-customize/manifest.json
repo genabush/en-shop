@@ -1,0 +1,182 @@
+{
+  "commerceSuiteVersion": "1905",
+  "useCloudExtensionPack": true,
+  "extensions": ["modeltacceleratorservices", "azurecloudhotfolder"],
+  "useConfig": {
+    "properties": [
+      {
+        "location": "hybris/config/local-sap-cloud.properties"
+      }
+    ],
+    "extensions": {
+      "location": "hybris/config/localextensions.xml"
+    },
+    "solr": {
+      "location": "hybris/config/solr"
+    }
+  },
+  "properties": [
+    {
+      "key": "tomcat.generaloptions.jvmsettings",
+      "value": "-Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=GB -Duser.region=GB -Duser.timezone=UTC"
+    }
+  ],
+  "storefrontAddons": [
+    {
+      "addon": "cmsoccaddon",
+      "storefront": "theBodyShop",
+      "template": "ycommercewebservices"
+    },
+    {
+      "addon": "acceleratorwebservicesaddon",
+      "storefront": "theBodyShop",
+      "template": "ycommercewebservices"
+    },
+    {
+      "addon": "gigyaoccaddon",
+      "storefront": "theBodyShop",
+      "template": "ycommercewebservices"
+    }
+  ],
+  "aspects": [
+    {
+      "name": "backoffice",
+      "properties": [
+        {
+          "key": "xss.filter.header.X-Frame-Options",
+          "value": ""
+        }
+      ],
+      "webapps": [
+        {
+          "name": "hac",
+          "contextPath": "/hac"
+        },
+        {
+          "name": "mediaweb",
+          "contextPath": "/medias"
+        },
+        {
+          "name": "backoffice",
+          "contextPath": "/backoffice"
+        },
+        {
+          "name": "smartedit",
+          "contextPath": "/smartedit"
+        },
+        {
+          "name": "cmssmartedit",
+          "contextPath": "/cmssmartedit"
+        },
+        {
+          "name": "theBodyShopsmartedit",
+          "contextPath": "/theBodyShopsmartedit"
+        },
+        {
+          "name": "smarteditwebservices",
+          "contextPath": "/smarteditwebservices"
+        },
+        {
+          "name": "cmssmarteditwebservices",
+          "contextPath": "/cmssmarteditwebservices"
+        },
+        {
+          "name": "oauth2",
+          "contextPath": "/authorizationserver"
+        },
+        {
+          "name": "cmswebservices",
+          "contextPath": "/cmswebservices"
+        },
+        {
+          "name": "previewwebservices",
+          "contextPath": "/previewwebservices"
+        },
+        {
+          "name": "permissionswebservices",
+          "contextPath": "/permissionswebservices"
+        },
+        {
+          "name": "theBodyShopsewebservices",
+          "contextPath": "/theBodyShopsewebservices"
+        }
+      ]
+    },
+    {
+      "name": "api",
+      "webapps": [
+        {
+          "name": "hac",
+          "contextPath": "/hac"
+        },
+        {
+          "name": "mediaweb",
+          "contextPath": "/medias"
+        },
+        {
+          "name": "theBodyShop",
+          "contextPath": "/rest"
+        },
+        {
+          "name": "acceleratorservices",
+          "contextPath": "/acceleratorservices"
+        },
+        {
+          "name": "oauth2",
+          "contextPath": "/authorizationserver"
+        }
+      ]
+    },
+    {
+      "name": "backgroundProcessing",
+      "properties": [
+        {
+          "key": "cluster.node.groups",
+          "value": "integration,yHotfolderCandidate"
+        },
+        {
+          "key": "azure.hotfolder.storage.container.hotfolder",
+          "value": "${tenantId}/tbs"
+        },
+        {
+          "key": "cloud.hotfolder.default.mapping.root.dir",
+          "value": "tbs"
+        },
+        {
+          "key": "tbsdataprocessing.csv.loyaltyfeed.autostartup",
+          "value": "true"
+        },
+        {
+          "key": "tbsdataprocessing.csv.pointofservice.autostartup",
+          "value": "true"
+        },
+        {
+          "key": "tbsdataprocessing.csv.openingschedule.autostartup",
+          "value": "true"
+        }
+      ],
+      "webapps": [
+        {
+          "name": "hac",
+          "contextPath": "/hac"
+        },
+        {
+          "name": "theBodyShopintegrationmocks",
+          "contextPath": "/theBodyShopintegrationmocks"
+        },
+        {
+          "name": "theBodyShopintegrationlegacy",
+          "contextPath": "/theBodyShopintegrationlegacy"
+        },
+        {
+          "name": "odata2webservices",
+          "contextPath": "/odata2webservices"
+        },
+        {
+          "name": "adyenv6notification",
+          "contextPath": "/adyenv6notification"
+        }
+      ]
+    }
+  ]
+}

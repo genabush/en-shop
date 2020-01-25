@@ -1,0 +1,12 @@
+<div
+  role="alert"
+  [ngClass]="{
+    alert: true,
+    'alert-info': type === 'info',
+    'alert-success': type === 'success',
+    'alert-warning': type === 'warning',
+    'alert-danger': type === 'danger'
+  }"
+>
+  {{ content }}
+</div>

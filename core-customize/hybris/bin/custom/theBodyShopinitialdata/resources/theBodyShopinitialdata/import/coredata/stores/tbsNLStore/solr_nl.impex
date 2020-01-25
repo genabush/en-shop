@@ -1,0 +1,61 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the Solr configuration for the store
+#
+
+# Index Type
+$solrIndexedType=tbsNLStoreIndex
+$solrIndexedTypeBase=tbsNLStoreBaseIndex
+
+# Language
+$lang=nl
+
+# Solr Indexed Property
+UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+ ;$solrIndexedType;allPromotions;"Werbeaktion"
+ ;$solrIndexedType;availableInStores;"Händler"
+ ;$solrIndexedType;category;"Kategorie"
+ ;$solrIndexedType;code;"Code"
+ ;$solrIndexedType;description;"Beschreibung"
+ ;$solrIndexedType;name;"Name"
+ ;$solrIndexedType;price;"Preis"
+ ;$solrIndexedType;summary;"Zusammenfassung"
+
+# Define the available sorts
+UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang]
+#;$solrIndexedType;name-asc;"Name (ascending)"
+#;$solrIndexedType;name-desc;"Name (descending)"
+;$solrIndexedType;price-asc;"Prijs (laagste eerst)"
+;$solrIndexedType;price-desc;"Prijs (hoogste eerst)"
+;$solrIndexedType;relevance;"Bestseller"
+;$solrIndexedType;newIn;"New In (recent first)"
+#;$solrIndexedType;topRated;"Top Rated"
+
+
+
+
+
+
+
+# Solr Indexed Property
+UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+;$solrIndexedTypeBase;allPromotions;"Werbeaktion"
+;$solrIndexedTypeBase;availableInStores;"Händler"
+;$solrIndexedTypeBase;category;"Kategorie"
+;$solrIndexedTypeBase;code;"Code"
+;$solrIndexedTypeBase;description;"Beschreibung"
+;$solrIndexedTypeBase;name;"Name"
+;$solrIndexedTypeBase;price;"Preis"
+;$solrIndexedTypeBase;summary;"Zusammenfassung"
+
+# Define the available sorts
+UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang]
+#;$solrIndexedTypeBase;name-asc;"Name (ascending)"
+#;$solrIndexedTypeBase;name-desc;"Name (descending)"
+;$solrIndexedTypeBase;price-asc;"Prijs (laagste eerst)"
+;$solrIndexedTypeBase;price-desc;"Prijs (hoogste eerst)"
+;$solrIndexedTypeBase;relevance;"Bestseller"
+;$solrIndexedTypeBase;newIn;"New In (recent first)"
+#;$solrIndexedTypeBase;topRated;"Top Rated"

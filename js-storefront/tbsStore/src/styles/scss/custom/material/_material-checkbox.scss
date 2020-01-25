@@ -1,0 +1,26 @@
+.mat-checkbox {
+  &-primary {
+    color: $core-primary;
+    .mat-checkbox {
+      &-checkmark-path {
+        stroke: $core-primary;
+      }
+    }
+  }
+  .mat-checkbox {
+    &-label {
+      margin-left: 0.0125rem;
+      white-space: pre-wrap;
+      font-family: $work-sans-medium;
+      line-height: 1.2;
+    }
+  }
+  &-disabled {
+    color: $base-grey;
+    .mat-checkbox {
+      &-checkmark-path {
+        stroke: $base-grey;
+      }
+    }
+  }
+}

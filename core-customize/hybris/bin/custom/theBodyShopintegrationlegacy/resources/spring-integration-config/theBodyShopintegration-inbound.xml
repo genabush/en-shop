@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:int-xml="http://www.springframework.org/schema/integration/xml"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans.xsd 
+         http://www.springframework.org/schema/integration 
+         http://www.springframework.org/schema/integration/spring-integration.xsd
+         http://www.springframework.org/schema/util 
+         http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/integration 
+       	 http://www.springframework.org/schema/integration/spring-integration-5.1.3.xsd
+         http://www.springframework.org/schema/integration/xml
+         http://www.springframework.org/schema/integration/xml/spring-integration-xml-5.1.xsd">
+
+    <!-- ************** JAXB configuration ****************************** -->
+
+    <!-- Map of XML Schemas -->
+    <util:map id="tbsNamespaceMap">
+        <entry key="priceNs" value="http://thebodyshop/priceSchema" />
+        <entry key="productNs" value="http://thebodyshop/productSchema" />
+        <entry key="communicationPreferenceNs" value="http://thebodyshop/communicationPreferenceSchema" />
+        <entry key="orderShipmentConfirmationNs" value="http://thebodyshop/orderShipmentConfirmationSchema" />
+    </util:map>
+
+    <!-- Unmarshalling messages into POJO -->
+    <int-xml:unmarshalling-transformer input-channel="marshallingTransformerStringResultFactory" output-channel="unmarshalledItemsChannel" unmarshaller="marshaller" />
+
+    <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="checkForXmlRootElement" value="true" />
+        <property name="contextPaths">
+            <list>
+                <value>uk.co.thebodyshop.integration.jaxb.product</value>
+                <value>uk.co.thebodyshop.integration.jaxb.price</value>
+                <value>uk.co.thebodyshop.integration.jaxb.customer.communicationpreference</value>
+                <value>uk.co.thebodyshop.integration.jaxb.order.shipmentconfirmation</value>
+                <value>uk.co.thebodyshop.integration.jaxb.customer.identifier</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Route message to appropriate channel depending on payload -->
+    <int:payload-type-router input-channel="unmarshalledItemsChannel">
+        <int:mapping type="uk.co.thebodyshop.integration.jaxb.order.shipmentconfirmation.OrderShipmentConfirmationRequest" channel="orderShipmentConfirmationRequestImportChannel"/>
+    </int:payload-type-router>
+
+    <!-- ************** XML File Processing for orderShipmentConfirmation Feed. ****************************** -->
+
+    <!-- 1) Store the message in persistent message store -->
+    <int:channel id="orderShipmentConfirmationXmlProcessingChannel">
+        <int:queue message-store="store" />
+    </int:channel>
+
+    <!-- 2a) Check in, Enrich the headers, Check out -->
+    <!-- (This is the entry point for WebService requests) -->
+    <int:chain input-channel="orderShipmentConfirmationXmlProcessingChannel" output-channel="marshallingTransformerStringResultFactory" auto-startup="${theBodyShopintegrationlegacy.spring.integration.enabled}">
+        <int:claim-check-in message-store="simpleMessageStore" />
+        <int:header-enricher>
+            <int:header name="CLAIM_CHECK_ID" expression="payload" />
+            <int:header name="MESSAGE_ID" expression="headers.id" />
+            <int:header name="FEED_ID" value="ORDER_SHIPMENT_CONFIRMATION_FEED" />
+        </int:header-enricher>
+        <int:claim-check-out message-store="simpleMessageStore" />
+        <int:poller ref="messageStorePoller"/>
+    </int:chain>
+
+    <!-- Import the order shipment confirmation -->
+    <int:service-activator input-channel="orderShipmentConfirmationRequestImportChannel" output-channel="commonOutputChannel" ref="orderShipmentConfirmationAction" method="execute" auto-startup="${theBodyShopintegrationlegacy.spring.integration.enabled}"/>
+
+    <bean id="abstractFeedImportAction" class="uk.co.thebodyshop.integration.ws.inbound.actions.AbstractFeedImportAction" abstract="true">
+        <property name="modelService" ref="modelService"/>
+        <property name="enumerationService" ref="enumerationService"/>
+    </bean>
+
+    <bean id="orderShipmentConfirmationAction" class="uk.co.thebodyshop.integration.ws.inbound.actions.OrderShipmentConfirmationImportAction" parent="abstractFeedImportAction">
+        <constructor-arg name="tbsOrderService" ref="tbsOrderService"/>
+        <constructor-arg name="orderStatusesForShipment" ref="orderStatusesForShipment"/>
+        <constructor-arg name="businessProcessService" ref="businessProcessService"/>
+        <constructor-arg name="consignmentStatusStrategy" ref="consignmentStatusStrategy"/>
+        <constructor-arg name="clickAndCollectConsignmentPredicate" ref="clickAndCollectConsignmentPredicate"/>
+    </bean>
+
+    <!-- Log the message to console, TODO save it to the DB-->
+
+    <int-xml:marshalling-transformer marshaller="marshaller" result-type="StringResult" input-channel="commonOutputChannel" output-channel="loggerChannel"/>
+
+    <int:channel id="loggerChannel">
+        <int:interceptors>
+            <int:wire-tap channel="loggerChannel"/>
+        </int:interceptors>
+    </int:channel>
+
+    <int:logging-channel-adapter channel="loggerChannel" level="DEBUG"/>
+
+    <int:chain input-channel="loggerChannel" output-channel="nullChannel">
+        <int:claim-check-out message-store="simpleMessageStore" remove-message="true"/>
+    </int:chain>
+
+    <!--TODO add all the other statuses -->
+    <util:list value-type="de.hybris.platform.core.enums.OrderStatus" id="orderStatusesForShipment">
+        <value>SENT_TO_SAP</value>
+        <value>FRAUD_CHECKED</value>
+        <value>WAIT_FRAUD_MANUAL_CHECK</value>
+        <value>ORDER_CONFIRMED</value>
+        <value>READY_FOR_PICKING</value>
+        <value>ORDER_SPLIT</value>
+    </util:list>
+</beans>

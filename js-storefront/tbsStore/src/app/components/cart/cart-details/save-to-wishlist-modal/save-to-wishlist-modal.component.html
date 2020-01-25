@@ -1,0 +1,53 @@
+<ng-template #saveToWishlistModal>
+  <ng-container>
+    <button
+      type="button"
+      class="btn modal__close"
+      [attr.aria-label]="'common.closeBtn' | cxTranslate"
+      (click)="closeModal()"
+    >
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+
+    <div class="modal__body">
+      <div class="row">
+        <div class="col-12">
+          <h2>{{ 'cart.cartToWishlistModal.message' | cxTranslate }}</h2>
+        </div>
+
+        <div class="col-12">
+          <div class="cx-dialog-row p-0">
+            <div class="cx-dialog-buttons">
+              <div class="row">
+                <div class="col-md-6 col-12 mb-2">
+                  <a
+                    [routerLink]="['../my-account/wishlist']"
+                    class="btn btn--primary w-100"
+                    [attr.aria-label]="'cart.cartToWishlistModal.buttonTextViewFavourites' | cxTranslate"
+                    cxAutoFocus
+                    (click)="closeModal()"
+                  >
+                    {{ 'cart.cartToWishlistModal.buttonTextViewFavourites' | cxTranslate }}
+                  </a>
+                </div>
+
+                <div class="col-md-6 col-12">
+                  <a
+                    [routerLink]="['/']"
+                    class="btn btn--secondary w-100"
+                    [attr.aria-label]="'cart.cartToWishlistModal.buttonTextViewContinueShopping' | cxTranslate"
+                    (click)="closeModal()"
+                  >
+                    {{ 'cart.cartToWishlistModal.buttonTextViewContinueShopping' | cxTranslate }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

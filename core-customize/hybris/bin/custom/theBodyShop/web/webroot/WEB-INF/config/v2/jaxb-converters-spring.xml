@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<util:list id="messageConvertersV2">
+		<ref bean="customJsonHttpMessageConverter"/>
+		<ref bean="customXmlHttpMessageConverter"/>
+		<ref bean="customjackson2HttpMessageConverter"/>
+	</util:list>
+	
+	<bean id="customjackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                        <property name="serializationInclusion" value="NON_NULL" />
+                        <property name="featuresToDisable">
+                            <array>
+                                <util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_NULL_MAP_VALUES"/>
+                            </array>
+                        </property>
+                        <!--  Adding this to accept JSON body properties case insensitive -->
+                        <property name="featuresToEnable">
+                        		<array>
+                        			<util:constant static-field="com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES"/>
+                        		</array>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+	<bean id="customJsonHttpMessageConverter" parent="jsonHttpMessageConverter">
+		<property name="jaxbContextFactory" ref="customJaxbContextFactory" />
+	</bean>
+		
+	<bean id="customXmlHttpMessageConverter" parent="xmlHttpMessageConverter">
+		<property name="jaxbContextFactory" ref="customJaxbContextFactory" />
+	</bean>
+
+	<bean id="customJaxbContextFactory" parent="jaxbContextFactory">
+		<property name="metadataSourceFactory" ref="customMetadataSourceFactory" />
+		<property name="typeAdapters">
+			<list>
+				<value>de.hybris.platform.webservicescommons.jaxb.adapters.DateAdapter</value>
+				<value>de.hybris.platform.webservicescommons.jaxb.adapters.StringMapAdapter</value>
+				<value>de.hybris.platform.webservicescommons.jaxb.adapters.XSSStringAdapter</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="customMetadataSourceFactory" parent="metadataSourceFactory">
+		<property name="nameProvider" ref="customMetadataNameProvider" />
+	</bean>
+	
+	<bean id="customMetadataNameProvider" parent="metadataNameProvider"></bean>
+
+</beans>

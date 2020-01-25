@@ -1,0 +1,160 @@
+<div class="cx-summary-partials" *ngIf="cart">
+  <!-- SUB TOTAL -->
+  <div class="cx-summary-row cx-summary-subtotal">
+    <div [attr.aria-label]="'common.subTotal' | cxTranslate" class="col-6 cx-summary-label">
+      {{ 'common.subTotal' | cxTranslate }}
+    </div>
+    <div [attr.aria-label]="cart.subTotal?.formattedValue" class="col-6 cx-summary-amount">
+      {{ cart.subTotal?.formattedValue }}
+    </div>
+  </div>
+  <!-- DISCOUNTS -->
+  <div class="cx-summary-row" *ngIf="cart?.totalDiscounts?.value > 0">
+    <div [attr.aria-label]="'orderSummary.discounts' | cxTranslate" class="cx-summary-label-heading w-100">
+      {{ 'orderSummary.discounts' | cxTranslate }}
+    </div>
+    <div [attr.aria-label]="'orderCost.discount' | cxTranslate" class="col-6 cx-summary-amount text-left">
+      {{ 'orderCost.discount' | cxTranslate }}
+    </div>
+    <div [attr.aria-label]="cart?.totalDiscounts?.formattedValue" class="col-6 cx-summary-amount">
+      - {{ cart.totalDiscounts?.formattedValue }}
+    </div>
+  </div>
+  <!-- GIFT CARDS -->
+  <div class="cx-summary-row" *ngIf="cart?.totalGiftCardsValue?.value > 0">
+    <div [attr.aria-label]="'orderSummary.giftCards.title' | cxTranslate" class="cx-summary-label-heading w-100">
+      {{ 'orderSummary.giftCards.title' | cxTranslate }}
+    </div>
+    <div [attr.aria-label]="'orderSummary.giftCards.subTitle' | cxTranslate" class="col-6 cx-summary-amount text-left">
+      {{ 'orderSummary.giftCards.subTitle' | cxTranslate }}
+    </div>
+    <div [attr.aria-label]="cart?.totalGiftCardsValue?.formattedValue" class="col-6 cx-summary-amount">
+      - {{ cart.totalGiftCardsValue?.formattedValue }}
+    </div>
+  </div>
+  <!-- LOYALTY POINTS -->
+  <div class="cx-summary-row" *ngIf="cart.loyaltyPoints > 0">
+    <cx-cart-loyalty-points [cart]="cart"></cx-cart-loyalty-points>
+  </div>
+  <!-- DELIVERY -->
+  <div class="cx-summary-row" *ngIf="!isCheckout">
+    <div [attr.aria-label]="'orderSummary.delivery.title' | cxTranslate" class="cx-summary-label-heading w-100">
+      {{ 'orderSummary.delivery.title' | cxTranslate }}
+    </div>
+    <p [attr.aria-label]="'orderSummary.delivery.subTitle' | cxTranslate" class="w-100 mb-0">
+      {{ 'orderSummary.delivery.subTitle' | cxTranslate }}
+    </p>
+    <ul class="w-100">
+      <li [attr.aria-label]="'orderSummary.delivery.eligibility.standard' | cxTranslate">
+        {{ 'orderSummary.delivery.eligibility.standard' | cxTranslate }}
+      </li>
+      <li
+        [attr.aria-label]="'orderSummary.delivery.eligibility.cis' | cxTranslate"
+        *ngIf="cart.eligibleForCollectInStore"
+      >
+        {{ 'orderSummary.delivery.eligibility.cis' | cxTranslate }}
+      </li>
+      <li
+        [attr.aria-label]="'orderSummary.delivery.eligibility.cp' | cxTranslate"
+        *ngIf="cart.eligibleForCollectionPoint"
+      >
+        {{ 'orderSummary.delivery.eligibility.cp' | cxTranslate }}
+      </li>
+    </ul>
+    <div class="d-flex flex-wrap flex-lg-nowrap justify-content-between w-100">
+      <div
+        *ngIf="cart"
+        class="cx-summary-delivery-action d-flex flex-row flex-nowrap flex-grow-1 align-items-center mr-lg-2 px-4 py-3"
+      >
+        <app-promotion-free-delivery
+          [promotions]="getAllPromotionsForCart(cart)"
+          [totals]="true"
+        ></app-promotion-free-delivery>
+      </div>
+      <div
+        class="cx-summary-delivery-action d-flex flex-row flex-nowrap flex-grow-1 align-items-center mt-3 mt-lg-0 ml-lg-2 px-4 py-3"
+      >
+        <span class="icon icon--box"></span>
+        <p class="m-0">
+          Select your preferred
+          <a
+            role="link"
+            tabIndex="0"
+            class="cx-summary-delivery-action-link"
+            (click)="viewCollectionOptions($event)"
+            title="{{ 'orderSummary.deliveryOptionsLink' | cxTranslate }}"
+            [attr.aria-label]="'orderSummary.deliveryOptionsLink' | cxTranslate"
+            ><strong>delivery or collection option</strong></a
+          >
+          at checkout
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="cx-summary-row">
+    <div class="col-6 cx-summary-label">
+      {{ 'orderCost.estimatedShipping' | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.deliveryCost?.formattedValue ? cart.deliveryCost.formattedValue : 'TBD' }}
+    </div>
+  </div> -->
+  <!-- <div class="cx-summary-row" *ngIf="cart.net">
+    <div class="col-6 cx-summary-label">
+      {{ 'orderCost.salesTax' | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.totalTax?.formattedValue }}
+    </div>
+  </div> -->
+  <!-- BASKET  -->
+  <div class="cx-summary-row cx-summary-total m-0 border-0">
+    <div [attr.aria-label]="'orderSummary.total' | cxTranslate" class="col-6 cx-summary-label">
+      {{ 'orderSummary.total' | cxTranslate }}
+    </div>
+
+    <div
+      [attr.aria-label]="cart?.totalPriceWithOutDeliveryCost?.formattedValue"
+      class="col-6 cx-summary-amount"
+      *ngIf="cart"
+    >
+      {{ cart?.totalPriceWithOutDeliveryCost?.formattedValue }}
+    </div>
+    <div [attr.aria-label]="cart?.outstandingAmount?.formattedValue" class="col-6 cx-summary-amount" *ngIf="!cart">
+      {{ cart?.outstandingAmount?.formattedValue }}
+    </div>
+  </div>
+  <!-- TODO CHECKOUT  -->
+
+  <!-- <div class="cx-summary-row" *ngIf="!cart.net">
+    {{ 'orderCost.grossTax' | cxTranslate }}
+    {{ cart.totalTax?.formattedValue }}.
+  </div> -->
+</div>
+
+<!--
+<cx-promotions
+  *ngIf="cart"
+  [promotions]="cart.appliedOrderPromotions"
+></cx-promotions>
+-->
+
+<ng-template #orderSummaryDeliveryModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h2 class="modal-title mt-3">
+      {{ 'orderSummary.delivery.modalTitle' | cxTranslate }}
+    </h2>
+    <button type="button" class="btn close" aria-label="Close" (click)="closeDeliveryModal()">
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12 px-0">
+        <cx-cart-delivery-options-cards [deliveryModes]="deliveryModes"></cx-cart-delivery-options-cards>
+      </div>
+    </div>
+  </div>
+</ng-template>

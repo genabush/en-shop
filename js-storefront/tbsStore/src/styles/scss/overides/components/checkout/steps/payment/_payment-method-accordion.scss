@@ -1,0 +1,13 @@
+.payment-method {
+  &-accordion {
+    .card {
+      margin-bottom: 1px !important;
+      &-header {
+        padding: 0.25rem 0.25rem 0.25rem 1.5rem !important;
+      }
+      &-body {
+        padding: 1rem 3rem 2rem;
+      }
+    }
+  }
+}

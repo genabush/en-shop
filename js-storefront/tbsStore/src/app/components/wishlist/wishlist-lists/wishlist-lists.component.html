@@ -1,0 +1,25 @@
+<ng-container *ngIf="lists">
+  <h3 class="wishlists__header pt-3 pb-3">
+    {{ 'wishlists.count' | cxTranslate: { wishlistCount: lists.length } }}
+  </h3>
+  <ul class="wishlists__list list-unstyled">
+    <li class="wishlists__list-item" *ngFor="let list of lists">
+      <a class="wishlists__link" href="{{ 'my-account/wishlist/' + list.wishlistId }}">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <span class="h4 wishlists__name">
+              {{ list.wishlistName }}
+            </span>
+            <span class="wishlists__counter">
+              <span class="wishlists__counter-value">{{ list.products?.length || 0 }}</span>
+              <span class="wishlists__counter-unit">{{ 'wishlists.items' | cxTranslate }}</span>
+            </span>
+          </div>
+          <div class="col-12 col-md-6 text-md-right">
+            <span class="wishlists__timestamp">{{ list.created }}</span>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</ng-container>

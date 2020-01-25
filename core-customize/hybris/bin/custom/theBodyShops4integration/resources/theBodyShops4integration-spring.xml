@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="theBodyShops4integrationSystemSetup" class="uk.co.thebodyshop.integration.s4.setup.TheBodyShops4integrationSystemSetup" parent="abstractCoreSystemSetup" />
+
+	<bean id="integrationS4ProductPostPersistHook" class="uk.co.thebodyshop.integration.s4.persistHooks.IntegrationS4ProductPostPersistHook">
+		<property name="modelService" ref="modelService" />
+		<property name="tbsCatalogVersionService" ref="tbsCatalogVersionService" />
+		<property name="productService" ref="productService" />
+		<property name="searchRestrictionService" ref="searchRestrictionService" />
+		<property name="configurationService" ref="configurationService" />
+		<property name="integrationVariantProductConverter" ref="integrationVariantProductConverter" />
+	</bean>
+
+	<bean id="integrationS4PricePostPersistHook" class="uk.co.thebodyshop.integration.s4.persistHooks.IntegrationS4PricePostPersistHook">
+		<property name="modelService" ref="modelService" />
+		<property name="tbsCatalogVersionService" ref="tbsCatalogVersionService" />
+		<property name="productService" ref="productService" />
+		<property name="searchRestrictionService" ref="searchRestrictionService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="countryCatalogIdMap" ref="countryCatalogIdMap" />
+		<property name="countryBaseStoreIdMap" ref="countryBaseStoreIdMap" />
+		<property name="integrationPriceConverter" ref="integrationPriceConverter" />
+	</bean>
+
+	<bean id="integrationS4StockPostPersistHook" class="uk.co.thebodyshop.integration.s4.persistHooks.IntegrationS4StockPostPersistHook">
+		<constructor-arg name="modelService" ref="modelService" />
+		<constructor-arg name="searchRestrictionService" ref="searchRestrictionService" />
+		<constructor-arg name="warehouseService" ref="warehouseService" />
+		<constructor-arg name="stockLevelDao" ref="stockLevelDao" />
+		<constructor-arg name="eventService" ref="eventService" />
+	</bean>
+
+	<alias alias="integrationVariantProductConverter" name="defaultIntegrationVariantProductConverter" />
+	<bean id="defaultIntegrationVariantProductConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="uk.co.thebodyshop.core.model.TbsVariantProductModel" />
+		<property name="populators">
+			<list merge="false">
+				<ref bean="integrationVariantProductPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias alias="integrationVariantProductPopulator" name="defaultIntegrationVariantProductPopulator" />
+	<bean id="defaultIntegrationVariantProductPopulator" class="uk.co.thebodyshop.integration.s4.populators.IntegrationVariantProductPopulator">
+		<property name="unitService" ref="unitService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<alias alias="integrationPriceConverter" name="defaultIntegrationPriceConverter" />
+	<bean id="defaultIntegrationPriceConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.europe1.model.PriceRowModel" />
+		<property name="populators">
+			<list merge="false">
+				<ref bean="integrationPricePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias alias="integrationPricePopulator" name="defaultIntegrationPricePopulator" />
+	<bean id="defaultIntegrationPricePopulator" class="uk.co.thebodyshop.integration.s4.populators.IntegrationPricePopulator">
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+</beans>

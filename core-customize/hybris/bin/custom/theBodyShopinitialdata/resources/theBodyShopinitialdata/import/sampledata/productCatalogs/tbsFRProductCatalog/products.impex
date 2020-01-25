@@ -1,0 +1,315 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+#% impex.setLocale( Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsFRProductCatalog
+$productCatalogName=France Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$onlineDate=onlineDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-01-2019 06:30:00']
+
+$lang=fr
+
+# Insert Products
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];$supercategories;type(code)[default=SIZE];$catalogVersion;$approved;$onlineDate
+;p003257;c00143;
+;p000341;c00149;
+;p002002;c00143;
+;p002445;c00143;
+;p003101;c00143;
+;p001102;c00143;
+;p002457;c00143;
+;p000971;c00143;
+;p003255;c00143;
+;p003254;c00143;
+;p003173;c00143;
+;p000694;c00143;
+;p002003;c00143;
+;p000936;c00145;
+;p002013;c00144;
+;p000810;c00144;
+;p002833;c00147;
+;p003268;c00147;
+;p002835;c00141;
+;p000664;c00148;
+;p003259;c00148;
+;p000067;c00140;
+;p000056;c00140;
+;p002017;c00140;
+;p000499;c00013;
+;p000253;c00013;
+;p000019;c00014;
+;p002347;c00014;
+;p002812;c00284;
+;p002419;c00024;
+;p000480;c00018;
+;p002863;c00019;
+;p000466;c00019;
+;p000644;c00019;
+;p000787;c00020,c00021;
+;p000676;c00020,c00021;
+;p000461;c00054;
+;p000111;c00054;
+;p000106;c00054;
+;p000795;c00056;
+;p000797;c00056;
+;p003200;c00047;
+;p000789;c00047;
+;p000063;c00047;
+;p003090;c00048;
+;p002733;c00048;
+;p000142;c00051;
+;p000120;c00051;
+;p002449;c00051;
+;p003091;c00050;
+;p000767;c00050;
+;p002453;c00050;
+;p000767;c00049;
+;p002144;c00065;
+;p002448;c00059;
+;p002145;c00059;
+;p003111;c00060;
+;p000360;c00060;COLOUR
+;p001081;c00061;
+;p002819;c00061;
+;p000467;c00061;
+;p000851;c00062;
+;p000436;c00064;
+;p000435;c00064;
+;p002668;c00064;
+;p000362;c00064;
+;p000726;c00064;
+;p002817;c00064;
+;p003237;c00063;
+;p002001;c00063;
+;p000048;c00065;
+;p002867;c00065;
+;p000042;c00065;
+;p002171;c00066;
+;p000657;c00066;COLOUR
+;p000069;c00066;
+;p000621;c00066;
+;p003235;c00067;
+;p000184;c00067;
+;p002818;c00067;
+;p000222;c00069;
+;p002437;c00069;
+;p001050;c00069;
+;p000269;c00146;
+;p003087;c00051;
+;p000247;c00014;
+;0000000000;;
+
+UPDATE Product;code[unique=true];name[lang=$lang];description[lang=$lang];doNotSearch[default=false];$catalogVersion;$onlineDate
+;"1030196";"01 All-In-One BB Cream Lighter Skin Tones 25ml";"Pour toutes celles qui n’ont pas une minute à perdre, notre BB Cream All-in-One est la solution. Gorgé de principes hydratants 24 h, ce produit miracle polyvalent s’occupe de tout pour un teint de rêve. Mélangée à votre fond de teint, cette crème s’adapte parfaitement à votre carnation pour un résultat naturel zéro défaut. Vous trouviez votre peau quelconque ? Faites-en votre principal atout !"
+;"1030226";"02 All-In-One BB Cream Lighter Skin Tones 25ml";"Pour toutes celles qui n’ont pas une minute à perdre, notre BB Cream All-in-One est la solution. Gorgé de principes hydratants 24 h, ce produit miracle polyvalent s’occupe de tout pour un teint de rêve. Mélangée à votre fond de teint, cette crème s’adapte parfaitement à votre carnation pour un résultat naturel zéro défaut. Vous trouviez votre peau quelconque ? Faites-en votre principal atout !"
+;"1030227";"03 All-In-One BB Cream Lighter Skin Tones 25ml";"Pour toutes celles qui n’ont pas une minute à perdre, notre BB Cream All-in-One est la solution. Gorgé de principes hydratants 24 h, ce produit miracle polyvalent s’occupe de tout pour un teint de rêve. Mélangée à votre fond de teint, cette crème s’adapte parfaitement à votre carnation pour un résultat naturel zéro défaut. Vous trouviez votre peau quelconque ? Faites-en votre principal atout !"
+;"1032512";"04 All-In-One BB Cream Lighter Skin Tones 30ml";"Pour toutes celles qui n’ont pas une minute à perdre, notre BB Cream All-in-One est la solution. Gorgé de principes hydratants 24 h, ce produit miracle polyvalent s’occupe de tout pour un teint de rêve. Mélangée à votre fond de teint, cette crème s’adapte parfaitement à votre carnation pour un résultat naturel zéro défaut. Vous trouviez votre peau quelconque ? Faites-en votre principal atout !"
+;"1055790";"Beurre Corporel Karité 200ml";"Notre beurre corporel au karité délicatement noisetté pénètre facilement pour révéler une peau hydratée en profondeur. À chaque utilisation, retrouvez une peau douce et hydratée pour toute la journée."
+;"1059021";"Beurre Corporel Karité 50ml";"Notre beurre corporel au karité délicatement noisetté pénètre facilement pour révéler une peau hydratée en profondeur. À chaque utilisation, retrouvez une peau douce et hydratée pour toute la journée."
+;"1076327";"Beurre Corporel Karité 400ml";"Notre beurre corporel au karité délicatement noisetté pénètre facilement pour révéler une peau hydratée en profondeur. À chaque utilisation, retrouvez une peau douce et hydratée pour toute la journée. "
+;"p000019";"Beurre Corporel Karité";"Notre beurre corporel au karité délicatement noisetté pénètre facilement pour révéler une peau hydratée en profondeur. À chaque utilisation, retrouvez une peau douce et hydratée pour toute la journée."
+;"p000042";"Touche Lumière";"Vous êtes à la fois lève-tôt et couche-tard ? Avec notre correcteur lumière, éliminez les signes de fatigue en un geste. Il illumine le contour des yeux pour dissimuler les cernes et les ridules. Avec son pinceau applicateur, ce correcteur magique deviendra rapidement le héros de votre trousse à maquillage."
+;"p000048";"Fond de Teint All-In-One™";"Une texture poudre et crème pour un résultat soyeux. Polyvalente, elle s’utilise pour de multiples applications pour un teint impeccable. Imbibez l’éponge de produit et appliquez sur le visage pour une couvrance parfaite. Vous rêvez d’un maquillage qui tient toute la journée ? Appliquez notre base All-in-One à l’aide de notre Pinceau Visage et Corps pour fixer votre fond de teint ou sur peau nue pour un résultat léger. La polyvalence à son comble !"
+;"p000056";"Éponge Nettoyante pour le Visage";"Une éponge douce pour nettoyer et démaquiller en douceur."
+;"p000067";"Lingette en Mousseline";"Notre gant en mousseline nettoie et démaquille laissant la peau plus lisse et plus douce. Il s’utilise avec votre nettoyant préféré pour un résultat optimal."
+;"p000069";"Rouge à Lèvres Colour Crush™";"Un voile de notre rouge à lèvres crémeux et hydratant suffit pour déposer une touche de couleur éclatante sur vos lèvres. Avec son parfum subtil de rose et son huile de marula issue du commerce équitable, il hydrate en profondeur. Aucun doute, vous voudrez bientôt l’avoir dans toutes les teintes !"
+;"p000106";"Crème Mains Mangue";"Indispensable du sac à mains, cette crème pour les mains s’utilise au quotidien pour une hydratation instantanée. Délicatement parfumée à la mangue tropicale, sa formule gel-crème légère pénètre facilement et laisse la peau douce et parfaitement protégée."
+;"p000111";"Crème Mains Noix de Coco";"Indispensable du sac à mains, cette crème pour les mains s’utilise au quotidien pour une hydratation instantanée. Délicatement parfumée à la noix de coco, sa texture gel-crème légère pénètre facilement et laisse la peau douce et parfaitement protégée."
+;"p000120";"Shampooing Antipelliculaire Gingembre";"Pour une sensation de fraîcheur et apaiser votre cuir chevelu, notre shampooing revigorant n’a pas d’égal. Enrichi en extraits de gingembre, d’écorces de bouleau et de saule et fabriqué à partir de miel d’Éthiopie issu du commerce équitable."
+;"p000184";"Mascara Super Volume";"Grâce à sa formule anti-paquets, notre mascara super volume donne aux cils un volume longue tenue et une couleur intense."
+;"p000222";"Instablur™ All-In-One™ Universal";"Un perfecteur de teint polyvalent pour un teint sublimé à chaque utilisation. Il contrôle l’excès de sébum, atténue les imperfections, lisse les pores et dévoile un teint zéro défaut. En un seul geste, ce perfecteur Instablur™ 5 actions, composé d’huile de marula issue du commerce équitable, apporte tous les bénéfices du soin et du maquillage. Il s’applique en base avant le fond de teint ou seul pour un résultat matifié impeccable. Instablur™ deviendra bientôt votre arme beauté secrète !"
+;"p000269";"Huile Solide Lèvres Huile d'Argan Sauvage";"Cette huile solide fond sur les lèvres pour un résultat brillant et naturel grâce à sa formule nourrissante enrichie en huile d’argan du Maroc. Avec ses propriétés hautement hydratantes, elle prend soin et adoucit les lèvres à chaque utilisation."
+;"p000341";"Masque de Nuit Effet Rebond Drops of Youth™";"Ce masque pour le visage rafraîchissant lutte contre les premiers signes de vieillissement et laisse la peau plus douce, lisse et nettoyée en profondeur. "
+;"p000360";"BB Cream All-In-One™";"Pour toutes celles qui n’ont pas une minute à perdre, notre BB Cream All-in-One est la solution. Gorgé de principes hydratants 24 h, ce produit miracle polyvalent s’occupe de tout pour un teint de rêve. Mélangée à votre fond de teint, cette crème s’adapte parfaitement à votre carnation pour un résultat naturel zéro défaut. Vous trouviez votre peau quelconque ? Faites-en votre principal atout !"
+;"p000362";"Gel Cils Et Sourcils";"Fourni avec un pinceau applicateur facile d’utilisation, ce gel transparent vous aide à dompter les sourcils rebelles. Sur les cils, il crée un look naturel remarqué. Simple comme bonjour."
+;"p000435";"Eyeliner Feutre Fin Noir";"Un format stylo pour un maquillage de précision et un regard profond. Soulignez la ligne de vos cils d’un noir intense."
+;"p000436";"Eyeliner Stylo Gel Noir";"Avec sa formule onctueuse et son fini gel, cet eyeliner s’adapte à tous les looks. Pour créer des lignes marquées ou simplement souligner le regard, il ajoute une touche d’intensité qui dure toute la journée. Disponible en trois nuances, il propose aussi une formule résistante à l’eau pour repousser toutes vos limites."
+;"p000461";"Crème Mains Chanvre";"Notre best-seller pour les mains offrant jusqu'à 12 heures d'hydratation*. L'association d'huile de graines de chanvre, d'allantoïne et de panthénol apaisants rendent également aux ongles leur souplesse.*Hydratation des couches supérieures de l'épiderme."
+;"p000466";;"Retrouvez la senteur épicée et boisée Activist dans notre déodorant bille pour homme."
+;"p000467";"Brume Teintée Pour Les Jambes Honey Bronze™";"Arborez un teint hâlé zéro défaut en quelques secondes avec notre brume auto-bronzante innovante. Sa formule gel légère garantie sans huile est facile à appliquer et dépose un voile hâlé naturel et résistant à toutes les épreuves."
+;"p000480";"Poudre Bronzante Honey Bronze™";"Notre poudre bronzante enrichie en miel vous offre un teint hâlé naturel pour rayonner tout au long de l’année. Disponible en plusieurs nuances pour correspondre à toutes les carnations même les plus pâles, notre poudre Honey Bronze™ confère un effet soleil apprécié. Prélevez la quantité souhaitée de poudre compacte pour obtenir un teint mat hâlé homogène."
+;"p000499";"Bain Lait Et Miel D'Égypte Relaxant Spa of The World™";"Un lait en poudre relaxant. Le bain à base de lait adoucissant et de miel est connu pour être un rituel de beauté utilisé par Cléopâtre au temps de l’Égypte ancienne. Dès que la poudre au parfum crémeux est versée sous l’eau courante, une senteur relaxante en émane et fait voyager en une respiration. Pour un bain digne du rituel de beauté légendaire, versez cinq coupes sous une eau courante tiède et faites tourbillonner jusqu’à ce que la poudre soit dissoute. "
+;"p000621";"Crayon Lèvres";"Ce crayon à la texture douce aide à définir le contour des lèvres. Il permet au rouge à lèvres de tenir plus longtemps et ajoute un peu de pep's à votre sourire grâce à ses couleurs intenses."
+;"p000644";"Déodorant White Musk®";"Le Déodorant White Musk® For Men est infusé aux arômes frais et légers du musc, du vétiver et du bois de santal, garanti sans cruauté animale. À utiliser en complément des autres produits de la gamme White Musk® For Men pour un parfum plus intense."
+;"p000657";"Encre Lèvres Et Joues";"Ce produit double fonction dépose une touche de couleur naturelle sur les lèvres et les joues. Il s’utilise avant le gloss à lèvres pour un sourire ravageur ou sur les joues pour un éclat naturel."
+;"p000664";"Concentré Lotion Jeunesse Drops Of Youth™";"Avec sa texture gélifiée, le Concentré-Lotion Jeunesse s’applique après le nettoyage de la peau et avant l’application du sérum.Il apporte une hydratation légère en révélant la clarté, en affinant les pores et la texture de la peau."
+;"p000676";"Spray Rafraîchissant et Revitalisant Pieds Menthe Poivrée";"Finis les pieds fatigués et douloureux avec notre spray pour les pieds rafraîchissant. Enrichi en huile essentielle de menthe poivrée provenant d’Angleterre, il rafraîchit instantanément pour un soulagement immédiat."
+;"p000694";"Masque de Nuit Hydratation Intense Vitamine E";"Un masque léger et crémeux à la texture gel, qui soulage instantanément les peaux déshydratées en restaurant le niveau d'hydratation* de la peau. Il lisse visiblement les ridules causées par la déshydratation et laisse la peau douce et souple.*Hydratation des couches supérieures de l'épiderme."
+;"p000767";"Sérum Pour Les Cheveux Pépins De Raisin";"Faites le choix de la douceur et de la brillance avec ce sérum unique. Appliquez en petite quantité sur la chevelure pour de meilleurs résultats."
+;"p000787";"Crème Protectrice Pieds Chanvre";"Soulagez vos pieds et éliminez les peaux rugueuses avec cette crème spécialement conçue pour cette partie du corps fragilisée. Véritable indispensable beauté, elle aide à restaurer l’hydratation naturelle des pieds les plus secs."
+;"p000789";"Peigne Démêlant";"Un peigne efficace pour démêler les cheveux secs ou humides sans effort. Voilà l’outil qu’il vous manque pour répartir uniformément sur toute votre chevelure vos produits de soins préférés."
+;"p000795";"Gel Nettoyant Mains Clémentine";"Notre gel nettoyant mains au délicieux parfum de clémentine vous aide à garder des mains propres et fraîches tout au long de la journée. Son petit plus ? Son format pratique qui se glisse facilement dans le sac à mains."
+;"p000797";"Gel Nettoyant Mains Pamplemousse Rose";"Notre gel nettoyant mains au délicieux parfum de pamplemousse rose vous aide à garder des mains propres et fraîches tout au long de la journée. Son petit plus ? Son format pratique qui se glisse facilement dans le sac à mains."
+;"p000810";"Crème Contour Des Yeux Vitamine E";"Une crème hydratante* qui protège la peau fragile du contour des yeux, décongestionne et atténue les ridules et les cernes tout en laissant la peau douce et hydratée*.*Hydratation des couches supérieures de l'épiderme."
+;"p000851";"Fard à Joues All-In-One™";"Une poudre ultra-fine pour une touche de couleur intense sur les joues. Variez les nuances au gré de vos envies pour un coup d’éclat instantané et un teint sublimé. Enrichi en vitamine E et en huile de marula issue du commerce équitable, il apporte tous les bienfaits du soin et du produit de maquillage."
+;"p000936";"Démaquillant Doux Pour Les Yeux Camomille";"Pour dire adieu aux yeux de panda au réveil, notre démaquillant efficace pour les yeux s’occupe de tout. Notre démaquillant doux pour les yeux à la camomille agit en douceur pour une peau douce et propre."
+;"p000971";"Masque Nettoyant Équilibrant à l'Argile Algues";"Nettoyez votre peau en profondeur avec notre masque purifiant et rééquilibrant aux algues et à l’argile. Le résultat ? Une peau fraîche, purifiée et revitalisée."
+;"p001050";"CC Crème Instaglow SPF20";"Bien plus qu’une simple CC Cream, notre Révélateur d’Éclat Instantané Instaglow SPF 20 PA+++ ravive l’éclat et donne un effet bonne mine à la peau. Plus besoin de filtre !"
+;"p001081";"Créateur De Hâle Sur Mesure Honey Bronze ™";"Grâce à sa texture gel liquide teintée, notre Créateur de Hâle sur Mesure Honey Bronze™ illumine la peau d'un brin de soleil sans laisser de trace orange."
+;"p001102";"Ü3-en-1 NettoyÛage GÖmÇmageÊ Masque Arbre à ";"Notre nouveau nettoyant multitâches est doux avec la peau mais dur avec les imperfections. À base d’argile de kaolin moussant, de minérÙaux volcaÙniqÙues et d’huile d’arbre à thé issue du Commerce Équitable, il empêche les pores de s’obstruer, lutte contre les points noirs et la peau grasse. Il est l’allié idéal des peaux à imperfections. "
+;"p002002";"Masque Purifiant Éclat au Charbon de Bois de l’Himalaya";"Détoxifiez- vous avec notre Masque Purifiant Éclat au Charbon de bois de l’Himalaya ! Pour les peaux qui ont besoin d'éliminer les impuretés et les toxines et révéler un éclat sain et jeune. Instantanément, la peau est purifiée en profondeur, les pores débouchés et affinés. Application après application, la peau est régénérée et retrouve son éclat.Inspiré des traditions ayurvédiques, ce masque vivifiant 100% vegan contient des ingrédients puissants :"
+;"p002013";"Crème-gel pour les yeux revitalisant intense Oils Of Life";"Toujours en mouvement et montrant nos émotions, les yeux traduisent toutes les expressions de la vie. Mais avec le temps, ils sont aussi les 1er à montrer les signes de l’âge.   Notre nouvelle Crème-Gel pour les yeux est composée de trois huiles de graines, reconnues pour leurs bienfaits revitalisant et réparateur :"
+;"p002144";"Pinceau éventail";"Maîtriser l'application de votre blush avec ce pinceau idéal pour réaliser un maquillage tendance. Ce pinceau vous permet de passer au niveau supérieur sans effort ! Ce produit est vegan. Les poils qui composent tous nos pinceaux sont synthétiques."
+;"p002145";"Pinceau Biseauté pour Blush";"Maîtriser l'application de votre blush avec ce pinceau idéal pour réaliser un maquillage tendance. Ce pinceau vous permet de passer au niveau supérieur sans effort ! Ce produit est vegan. Les poils qui composent tous nos pinceaux sont synthétiques."
+;"p002171";"Rouge à Lèvres Liquide Mat";"Au top de la tendance des rouges à lèvres liquides, ces couleurs onctueuses vous permettent d’obtenir une finition à la fois mate et veloutée pour des selfies réussis pendant la soirée. Disponible en 17 teintes phénoménales, des tons naturels et discrets aux généreuses couleurs prunes."
+;"p002347";"Beurre Corporel Almond Milk & Honey";"Notre Beurre Corps riche et nourrissant contient des huiles naturelles pour assurer 48 heures d’intense d’hydratation et de confort."
+;"p002419";"Huile Corps Raffermissante au citron Spa of the World™";"Notre nouvelle Huile Spa of the World™ est infusée de citron combava, un agrume très apprécié par les femmes thaïlandaises pour son parfum revigorant - idéal pour réveiller vos sens après les mois froids d’hiver. Notre Huile tonifiante et raffermissante est aussi enrichie en huile de marula issue du Commerce Équitable pour nourrir votre peau."
+;"p002437";"Illuminateur Sur Mesure Drops of Glow";"Découvrez l’Illuminateur Sur Mesure Drops of Glow, votre nouvelle obsession maquillage. Idéal pour les filles qui ne s'arrêtent jamais, cette formule ingénieuse s’utilise telle quelle ou se mélange à vos produits de beauté préférés pour une luminosité instantanée. Que vous désiriez donner à votre base de teint de l’éclat ou l'ajouter à votre crème de jour pour une peau veloutée, seulement quelques gouttes de sérum suffiront pour illuminer votre visage en un clin d'oeil. Les possibilités sont infinies!"
+;"p002445";"Masque de Nuit Purifiant Arbre à Thé";"Une peau nette au saut du lit? C’est possible grâce à notre Masque de Nuit Purifiant, spécialement développé pour prendre soin des peaux grasses et à imperfections pendant  votre sommeil. Formulé à partir d’acide salicylique et d’huile d’arbre à thé - et sans alcool - ce masque pour peaux grasses, sans rinçage  et 100% vegan réduit les imperfections et rend la peau plus nette, plus douce et resplendissante de beauté. "
+;"p002449";"Shampooing Purifiant Fuji Green Tea™ ";"Optez pour notre Shampooing revigorant qui retire les impuretés et imprègne vos cheveux de fraîcheur."
+;"p002453";"Huile Cheveux Nourrissante Noix de Coco";"Récoltées sur l’île tropicale de Samoa, nos noix de coco sont pressées à froid pour en retirer leur huile délicieusement parfumée. En l’appliquant régulièrement, notre soin nourrissant rend votre chevelure plus forte, lisse et douce.Adaptée à tous les types de cheveux, notre Huile multifonction prend soin de vos cheveux:"
+;"p002457";"Masque au Thé Vert Matcha du Japon ";"Le Masque Anti-pollution au Thé Vert Matcha du Japon vient compléter la famille des Masques Experts. Enrichi en thé vert matcha de Kakegawa au Japon, en extrait de pissenlit, et en aloe vera du Mexique issu du Commerce équitable, sa formule 100% vegan élimine la pollution et purifie en profondeur en limitant l’adhérence des agents polluants. Sa texture crémeuse contient des particules de loofah qui exfolie légèrement la peau et sa formule 100% vegan révèle l’éclat et la jeunesse du teint."
+;"p002668";"Crayon Contour Brow Sculpt 3-en-1";"Arborez des sourcils impeccables grâce à notre Crayon Contour Brow Sculpt 3-en-1 qui contient un fard, une cire et un mascara. Que vous soyez plutôt naturel ou sourcils assumés, ce petit objet va vous aider à obtenir les sourcils que vous désirez. - Disponible en 3 teintes"
+;"p002733";"Après-Shampooing Brillance Fraise ";"Redonnez vie à vos cheveux ternes ! Formulé sans silicone et 100% vegan, l'Après-Shampooing Brillance Fraise donne aux cheveux tristes la douceur et la brillance qu'ils méritent, en utilisant des Fraises d'Italie et de l'Aloé Vera du Mexique.Il adoucit et et nourrit en laissant un parfum frais et fruité."
+;"p000042v";"Touche Lumière 200ml";"Vous êtes à la fois lève-tôt et couche-tard ? Avec notre correcteur lumière, éliminez les signes de fatigue en un geste. Il illumine le contour des yeux pour dissimuler les cernes et les ridules. Avec son pinceau applicateur, ce correcteur magique deviendra rapidement le héros de votre trousse à maquillage."
+;"p000048v";"Fond de Teint All-In-One™ 200ml";"Une texture poudre et crème pour un résultat soyeux. Polyvalente, elle s’utilise pour de multiples applications pour un teint impeccable. Imbibez l’éponge de produit et appliquez sur le visage pour une couvrance parfaite. Vous rêvez d’un maquillage qui tient toute la journée ? Appliquez notre base All-in-One à l’aide de notre Pinceau Visage et Corps pour fixer votre fond de teint ou sur peau nue pour un résultat léger. La polyvalence à son comble !"
+;"p000056v";"Éponge Nettoyante pour le Visage 200ml";"Une éponge douce pour nettoyer et démaquiller en douceur."
+;"p000067v";"Lingette en Mousseline 200ml";"Notre gant en mousseline nettoie et démaquille laissant la peau plus lisse et plus douce. Il s’utilise avec votre nettoyant préféré pour un résultat optimal."
+;"p000069v";"Rouge à Lèvres Colour Crush™ 200ml";"Un voile de notre rouge à lèvres crémeux et hydratant suffit pour déposer une touche de couleur éclatante sur vos lèvres. Avec son parfum subtil de rose et son huile de marula issue du commerce équitable, il hydrate en profondeur. Aucun doute, vous voudrez bientôt l’avoir dans toutes les teintes !"
+;"p000106v";"Crème Mains Mangue 200ml";"Indispensable du sac à mains, cette crème pour les mains s’utilise au quotidien pour une hydratation instantanée. Délicatement parfumée à la mangue tropicale, sa formule gel-crème légère pénètre facilement et laisse la peau douce et parfaitement protégée."
+;"p000111v";"Crème Mains Noix de Coco 200ml";"Indispensable du sac à mains, cette crème pour les mains s’utilise au quotidien pour une hydratation instantanée. Délicatement parfumée à la noix de coco, sa texture gel-crème légère pénètre facilement et laisse la peau douce et parfaitement protégée."
+;"p000120v";"Shampooing Antipelliculaire Gingembre 200ml";"Pour une sensation de fraîcheur et apaiser votre cuir chevelu, notre shampooing revigorant n’a pas d’égal. Enrichi en extraits de gingembre, d’écorces de bouleau et de saule et fabriqué à partir de miel d’Éthiopie issu du commerce équitable."
+;"p000184v";"Mascara Super Volume 200ml";"Grâce à sa formule anti-paquets, notre mascara super volume donne aux cils un volume longue tenue et une couleur intense."
+;"p000222v";"Instablur™ All-In-One™ Universal 200ml";"Un perfecteur de teint polyvalent pour un teint sublimé à chaque utilisation. Il contrôle l’excès de sébum, atténue les imperfections, lisse les pores et dévoile un teint zéro défaut. En un seul geste, ce perfecteur Instablur™ 5 actions, composé d’huile de marula issue du commerce équitable, apporte tous les bénéfices du soin et du maquillage. Il s’applique en base avant le fond de teint ou seul pour un résultat matifié impeccable. Instablur™ deviendra bientôt votre arme beauté secrète !"
+;"p000269v";"Huile Solide Lèvres Huile d'Argan Sauvage 200ml";"Cette huile solide fond sur les lèvres pour un résultat brillant et naturel grâce à sa formule nourrissante enrichie en huile d’argan du Maroc. Avec ses propriétés hautement hydratantes, elle prend soin et adoucit les lèvres à chaque utilisation."
+;"p000341v";"Masque de Nuit Effet Rebond Drops of Youth™ 200ml";"Ce masque pour le visage rafraîchissant lutte contre les premiers signes de vieillissement et laisse la peau plus douce, lisse et nettoyée en profondeur. "
+;"p000362v";"Gel Cils Et Sourcils 200ml";"Fourni avec un pinceau applicateur facile d’utilisation, ce gel transparent vous aide à dompter les sourcils rebelles. Sur les cils, il crée un look naturel remarqué. Simple comme bonjour."
+;"p000435v";"Eyeliner Feutre Fin Noir 200ml";"Un format stylo pour un maquillage de précision et un regard profond. Soulignez la ligne de vos cils d’un noir intense."
+;"p000436v";"Eyeliner Stylo Gel Noir 200ml";"Avec sa formule onctueuse et son fini gel, cet eyeliner s’adapte à tous les looks. Pour créer des lignes marquées ou simplement souligner le regard, il ajoute une touche d’intensité qui dure toute la journée. Disponible en trois nuances, il propose aussi une formule résistante à l’eau pour repousser toutes vos limites."
+;"p000461v";"Crème Mains Chanvre 200ml";"Notre best-seller pour les mains offrant jusqu'à 12 heures d'hydratation*. L'association d'huile de graines de chanvre, d'allantoïne et de panthénol apaisants rendent également aux ongles leur souplesse.*Hydratation des couches supérieures de l'épiderme."
+;"p000466v";"Activist™ Anti-Perspirant Deodorant 200ml";"Retrouvez la senteur épicée et boisée Activist dans notre déodorant bille pour homme."
+;"p000467v";"Brume Teintée Pour Les Jambes Honey Bronze™ 200ml";"Arborez un teint hâlé zéro défaut en quelques secondes avec notre brume auto-bronzante innovante. Sa formule gel légère garantie sans huile est facile à appliquer et dépose un voile hâlé naturel et résistant à toutes les épreuves."
+;"p000480v";"Poudre Bronzante Honey Bronze™ 200ml";"Notre poudre bronzante enrichie en miel vous offre un teint hâlé naturel pour rayonner tout au long de l’année. Disponible en plusieurs nuances pour correspondre à toutes les carnations même les plus pâles, notre poudre Honey Bronze™ confère un effet soleil apprécié. Prélevez la quantité souhaitée de poudre compacte pour obtenir un teint mat hâlé homogène."
+;"p000499v";"Bain Lait Et Miel D'Égypte Relaxant Spa of The World™ 200ml";"Un lait en poudre relaxant. Le bain à base de lait adoucissant et de miel est connu pour être un rituel de beauté utilisé par Cléopâtre au temps de l’Égypte ancienne. Dès que la poudre au parfum crémeux est versée sous l’eau courante, une senteur relaxante en émane et fait voyager en une respiration. Pour un bain digne du rituel de beauté légendaire, versez cinq coupes sous une eau courante tiède et faites tourbillonner jusqu’à ce que la poudre soit dissoute. "
+;"p000621v";"Crayon Lèvres 200ml";"Ce crayon à la texture douce aide à définir le contour des lèvres. Il permet au rouge à lèvres de tenir plus longtemps et ajoute un peu de pep's à votre sourire grâce à ses couleurs intenses."
+;"p000644v";"Déodorant White Musk® 200ml";"Le Déodorant White Musk® For Men est infusé aux arômes frais et légers du musc, du vétiver et du bois de santal, garanti sans cruauté animale. À utiliser en complément des autres produits de la gamme White Musk® For Men pour un parfum plus intense."
+;"p000664v";"Concentré Lotion Jeunesse Drops Of Youth™ 200ml";"Avec sa texture gélifiée, le Concentré-Lotion Jeunesse s’applique après le nettoyage de la peau et avant l’application du sérum.Il apporte une hydratation légère en révélant la clarté, en affinant les pores et la texture de la peau."
+;"p000676v";"Spray Rafraîchissant et Revitalisant Pieds Menthe Poivrée 200ml";"Finis les pieds fatigués et douloureux avec notre spray pour les pieds rafraîchissant. Enrichi en huile essentielle de menthe poivrée provenant d’Angleterre, il rafraîchit instantanément pour un soulagement immédiat."
+;"p000694v";"Masque de Nuit Hydratation Intense Vitamine E 200ml";"Un masque léger et crémeux à la texture gel, qui soulage instantanément les peaux déshydratées en restaurant le niveau d'hydratation* de la peau. Il lisse visiblement les ridules causées par la déshydratation et laisse la peau douce et souple.*Hydratation des couches supérieures de l'épiderme."
+;"p000767v";"Sérum Pour Les Cheveux Pépins De Raisin 200ml";"Faites le choix de la douceur et de la brillance avec ce sérum unique. Appliquez en petite quantité sur la chevelure pour de meilleurs résultats."
+;"p000787v";"Crème Protectrice Pieds Chanvre 200ml";"Soulagez vos pieds et éliminez les peaux rugueuses avec cette crème spécialement conçue pour cette partie du corps fragilisée. Véritable indispensable beauté, elle aide à restaurer l’hydratation naturelle des pieds les plus secs."
+;"p000789v";"Peigne Démêlant 200ml";"Un peigne efficace pour démêler les cheveux secs ou humides sans effort. Voilà l’outil qu’il vous manque pour répartir uniformément sur toute votre chevelure vos produits de soins préférés."
+;"p000795v";"Gel Nettoyant Mains Clémentine 200ml";"Notre gel nettoyant mains au délicieux parfum de clémentine vous aide à garder des mains propres et fraîches tout au long de la journée. Son petit plus ? Son format pratique qui se glisse facilement dans le sac à mains."
+;"p000797v";"Gel Nettoyant Mains Pamplemousse Rose 200ml";"Notre gel nettoyant mains au délicieux parfum de pamplemousse rose vous aide à garder des mains propres et fraîches tout au long de la journée. Son petit plus ? Son format pratique qui se glisse facilement dans le sac à mains."
+;"p000810v";"Crème Contour Des Yeux Vitamine E 200ml";"Une crème hydratante* qui protège la peau fragile du contour des yeux, décongestionne et atténue les ridules et les cernes tout en laissant la peau douce et hydratée*.*Hydratation des couches supérieures de l'épiderme."
+;"p000851v";"Fard à Joues All-In-One™ 200ml";"Une poudre ultra-fine pour une touche de couleur intense sur les joues. Variez les nuances au gré de vos envies pour un coup d’éclat instantané et un teint sublimé. Enrichi en vitamine E et en huile de marula issue du commerce équitable, il apporte tous les bienfaits du soin et du produit de maquillage."
+;"p000936v";"Démaquillant Doux Pour Les Yeux Camomille 200ml";"Pour dire adieu aux yeux de panda au réveil, notre démaquillant efficace pour les yeux s’occupe de tout. Notre démaquillant doux pour les yeux à la camomille agit en douceur pour une peau douce et propre."
+;"p000971v";"Masque Nettoyant Équilibrant à l'Argile Algues 200ml";"Nettoyez votre peau en profondeur avec notre masque purifiant et rééquilibrant aux algues et à l’argile. Le résultat ? Une peau fraîche, purifiée et revitalisée."
+;"p001050v";"CC Crème Instaglow SPF20 200ml";"Bien plus qu’une simple CC Cream, notre Révélateur d’Éclat Instantané Instaglow SPF 20 PA+++ ravive l’éclat et donne un effet bonne mine à la peau. Plus besoin de filtre !"
+;"p001081v";"Créateur De Hâle Sur Mesure Honey Bronze ™ 200ml";"Grâce à sa texture gel liquide teintée, notre Créateur de Hâle sur Mesure Honey Bronze™ illumine la peau d'un brin de soleil sans laisser de trace orange."
+;"p001102v";"Ü3-en-1 NettoyÛage GÖmÇmageÊ Masque Arbre à 200ml";"Notre nouveau nettoyant multitâches est doux avec la peau mais dur avec les imperfections. À base d’argile de kaolin moussant, de minérÙaux volcaÙniqÙues et d’huile d’arbre à thé issue du Commerce Équitable, il empêche les pores de s’obstruer, lutte contre les points noirs et la peau grasse. Il est l’allié idéal des peaux à imperfections. "
+;"p002002v";"Masque Purifiant Éclat au Charbon de Bois de l’Himalaya 200ml";"Détoxifiez- vous avec notre Masque Purifiant Éclat au Charbon de bois de l’Himalaya ! Pour les peaux qui ont besoin d'éliminer les impuretés et les toxines et révéler un éclat sain et jeune. Instantanément, la peau est purifiée en profondeur, les pores débouchés et affinés. Application après application, la peau est régénérée et retrouve son éclat.Inspiré des traditions ayurvédiques, ce masque vivifiant 100% vegan contient des ingrédients puissants :"
+;"p002013v";"Crème-gel pour les yeux revitalisant intense Oils Of Life 200ml";"Toujours en mouvement et montrant nos émotions, les yeux traduisent toutes les expressions de la vie. Mais avec le temps, ils sont aussi les 1er à montrer les signes de l’âge.   Notre nouvelle Crème-Gel pour les yeux est composée de trois huiles de graines, reconnues pour leurs bienfaits revitalisant et réparateur :"
+;"p002144v";"Pinceau éventail 200ml";"Maîtriser l'application de votre blush avec ce pinceau idéal pour réaliser un maquillage tendance. Ce pinceau vous permet de passer au niveau supérieur sans effort ! Ce produit est vegan. Les poils qui composent tous nos pinceaux sont synthétiques."
+;"p002145v";"Pinceau Biseauté pour Blush 200ml";"Maîtriser l'application de votre blush avec ce pinceau idéal pour réaliser un maquillage tendance. Ce pinceau vous permet de passer au niveau supérieur sans effort ! Ce produit est vegan. Les poils qui composent tous nos pinceaux sont synthétiques."
+;"p002171v";"Rouge à Lèvres Liquide Mat 200ml";"Au top de la tendance des rouges à lèvres liquides, ces couleurs onctueuses vous permettent d’obtenir une finition à la fois mate et veloutée pour des selfies réussis pendant la soirée. Disponible en 17 teintes phénoménales, des tons naturels et discrets aux généreuses couleurs prunes."
+;"p002347v";"Beurre Corporel Almond Milk & Honey 200ml";"Notre Beurre Corps riche et nourrissant contient des huiles naturelles pour assurer 48 heures d’intense d’hydratation et de confort."
+;"p002419v";"Huile Corps Raffermissante au citron Spa of the World™ 200ml";"Notre nouvelle Huile Spa of the World™ est infusée de citron combava, un agrume très apprécié par les femmes thaïlandaises pour son parfum revigorant - idéal pour réveiller vos sens après les mois froids d’hiver. Notre Huile tonifiante et raffermissante est aussi enrichie en huile de marula issue du Commerce Équitable pour nourrir votre peau."
+;"p002437v";"Illuminateur Sur Mesure Drops of Glow 200ml";"Découvrez l’Illuminateur Sur Mesure Drops of Glow, votre nouvelle obsession maquillage. Idéal pour les filles qui ne s'arrêtent jamais, cette formule ingénieuse s’utilise telle quelle ou se mélange à vos produits de beauté préférés pour une luminosité instantanée. Que vous désiriez donner à votre base de teint de l’éclat ou l'ajouter à votre crème de jour pour une peau veloutée, seulement quelques gouttes de sérum suffiront pour illuminer votre visage en un clin d'oeil. Les possibilités sont infinies!"
+;"p002445v";"Masque de Nuit Purifiant Arbre à Thé 200ml";"Une peau nette au saut du lit? C’est possible grâce à notre Masque de Nuit Purifiant, spécialement développé pour prendre soin des peaux grasses et à imperfections pendant  votre sommeil. Formulé à partir d’acide salicylique et d’huile d’arbre à thé - et sans alcool - ce masque pour peaux grasses, sans rinçage  et 100% vegan réduit les imperfections et rend la peau plus nette, plus douce et resplendissante de beauté. "
+;"p002449v";"Shampooing Purifiant Fuji Green Tea™ 200ml";"Optez pour notre Shampooing revigorant qui retire les impuretés et imprègne vos cheveux de fraîcheur."
+;"p002453v";"Huile Cheveux Nourrissante Noix de Coco 200ml";"Récoltées sur l’île tropicale de Samoa, nos noix de coco sont pressées à froid pour en retirer leur huile délicieusement parfumée. En l’appliquant régulièrement, notre soin nourrissant rend votre chevelure plus forte, lisse et douce.Adaptée à tous les types de cheveux, notre Huile multifonction prend soin de vos cheveux:"
+;"p002457v";"Masque au Thé Vert Matcha du Japon 200ml";"Le Masque Anti-pollution au Thé Vert Matcha du Japon vient compléter la famille des Masques Experts. Enrichi en thé vert matcha de Kakegawa au Japon, en extrait de pissenlit, et en aloe vera du Mexique issu du Commerce équitable, sa formule 100% vegan élimine la pollution et purifie en profondeur en limitant l’adhérence des agents polluants. Sa texture crémeuse contient des particules de loofah qui exfolie légèrement la peau et sa formule 100% vegan révèle l’éclat et la jeunesse du teint."
+;"p002668v";"Crayon Contour Brow Sculpt 3-en-1 200ml";"Arborez des sourcils impeccables grâce à notre Crayon Contour Brow Sculpt 3-en-1 qui contient un fard, une cire et un mascara. Que vous soyez plutôt naturel ou sourcils assumés, ce petit objet va vous aider à obtenir les sourcils que vous désirez. - Disponible en 3 teintes"
+;"p002733v";"Après-Shampooing Brillance Fraise 200ml";"Redonnez vie à vos cheveux ternes ! Formulé sans silicone et 100% vegan, l'Après-Shampooing Brillance Fraise donne aux cheveux tristes la douceur et la brillance qu'ils méritent, en utilisant des Fraises d'Italie et de l'Aloé Vera du Mexique.Il adoucit et et nourrit en laissant un parfum frais et fruité."
+
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+# Update review ratings
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];reviewRating;type(code)[default=SIZE];$catalogVersion;$approved
+;p003257;2.8
+;p000341;5.0
+;p002002;1.2
+;p002445;4.3
+;p003101;3.3
+;p001102;2.0
+;p002457;2.5
+;p000971;4.5
+;p003255;3.2
+;p003254;2.1
+;p003173;4.3
+;p000694;1.5
+;p002003;2.3
+;p000936;4.4
+;p002013;3.0
+;p000810;1.2
+;p002833;1.4
+;p003268;1.6
+;p002835;1.8
+;p000664;2.0
+;p003259;2.2
+;p000067;2.4
+;p000056;2.6
+;p002017;2.8
+;p000499;3.0
+;p000253;3.2
+;p000019;3.4
+;p002347;3.6
+;p002812;3.8
+;p002419;4.0
+;p000480;4.2
+;p002863;4.4
+;p000466;4.6
+;p000644;4.8
+;p000787;5.0
+;p000676;1.1
+;p000461;1.3
+;p000111;1.5
+;p000106;1.7
+;p000795;1.9
+;p000797;2.1
+;p003200;2.3
+;p000789;2.5
+;p000063;2.7
+;p003090;2.9
+;p002733;3.1
+;p000142;3.3
+;p000120;3.5
+;p002449;3.7
+;p003091;3.9
+;p000767;4.1
+;p002453;4.3
+;p002144;4.7
+;p002448;4.9
+;p002145;1.0
+;p003111;1.3
+;p000360;1.6;COLOUR
+;p001081;1.9
+;p002819;2.2
+;p000467;2.5
+;p000851;2.8
+;p000436;3.1
+;p000435;3.4
+;p002668;3.7
+;p000362;4.0
+;p000726;4.3
+;p002817;4.6
+;p003237;4.9
+;p002001;1.0
+;p000048;1.2
+;p002867;1.4
+;p000042;1.6
+;p002171;1.8
+;p000069;2.2
+;p000621;2.4
+;p003235;2.6
+;p000184;2.8
+;p002818;3.0
+;p000222;3.2
+;p002437;3.4
+;p001050;3.6
+;p000269;3.8
+;p003087;3.2
+;p000657;3.3;COLOUR
+;p000247;4.8

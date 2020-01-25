@@ -1,0 +1,22 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Store / Point of Service
+# English localisations
+
+$lang=en
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsSEProductCatalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$storeImage=storeImage(qualifier, $catalogVersion)
+
+$standardHours=tbs-se-store-standard-hours
+$weekendHours=tbs-se-store-weekend-hours
+
+UPDATE StoreLocatorFeature;code[unique=true];name[lang=$lang]
+
+UPDATE PointOfService;name[unique=true];displayName;
+
+

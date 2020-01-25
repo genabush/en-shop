@@ -1,0 +1,45 @@
+<ng-container *ngIf="order$ | async as order">
+  <div class="container" *ngIf="order?.loyaltyPoints">
+    <app-lybc-message [pointsValue]="order?.loyaltyPoints"></app-lybc-message>
+  </div>
+  <div class="container">
+    <div class="order-confirmation order-confirmation--has-top-img">
+      <header class="order-confirmation__header">
+        <h1 class="h1--alt">
+          {{ 'orderConfirmationPage.title' | cxTranslate }}
+        </h1>
+      </header>
+      <div class="order-confirmation__container">
+        <div class="order-confirmation__message">
+          <div class="row">
+            <div class="col-8">
+              <p>{{ 'orderConfirmationPage.thankyouMsg' | cxTranslate: { emailAddress: order?.user.uid } }}</p>
+            </div>
+            <div class="col-4 text-right">
+              <a class="btn btn--secondary" href="/my-account/orders">
+                {{ 'orderConfirmationPage.manageOrders' | cxTranslate }}</a
+              >
+              <span class="icon icon--print ml-4"></span>
+            </div>
+          </div>
+        </div>
+        <div class="order-confirmation__detail-headline mt-4">
+          <div class="row ">
+            <div class="col-6">{{ 'orderConfirmationPage.orderNo' | cxTranslate }}</div>
+            <div class="col-6 text-right">{{ order?.code }}</div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="border-bottom"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">{{ 'orderConfirmationPage.orderDate' | cxTranslate }}</div>
+            <div class="col-6 text-right">{{ order?.created | date: 'd/M/yyyy' }}</div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

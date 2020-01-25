@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright (c)
+  ~ 2019 THE BODY SHOP INTERNATIONAL LIMITED.
+  ~ All rights reserved.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        		   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+    <!-- AOP -->
+    <aop:config expose-proxy="true">
+
+        <aop:pointcut id="importTaskPointcut" expression="execution(* uk.co.thebodyshop.integration.ws.inbound.actions.*.execute(..)) || execution(* uk.co.thebodyshop.integration.csv.*.execute(..))" />
+
+        <aop:aspect ref="timeMeasurementAspect">
+            <aop:around pointcut-ref="importTaskPointcut" method="measure" />
+        </aop:aspect>
+
+        <aop:aspect ref="tenantActivationAspect">
+            <aop:around pointcut-ref="importTaskPointcut" method="execute" />
+        </aop:aspect>
+
+    </aop:config>
+
+</beans>

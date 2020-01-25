@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+	<extension abstractclassprefix="Generated" classprefix="TheBodyShopCms" managername="TheBodyShopCmsManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShopcms">
+
+		<requires-extension name="theBodyShopcore" />
+
+		<coremodule generated="true" manager="uk.co.thebodyshop.cms.jalo.TheBodyShopCmsManager" packageroot="uk.co.thebodyshop.cms" />
+
+	</extension>
+</extensioninfo>

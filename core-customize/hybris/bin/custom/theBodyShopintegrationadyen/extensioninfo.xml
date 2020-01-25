@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+           
+    <extension abstractclassprefix="Generated" classprefix="TheBodyShopintegrationadyen" jaloLogicFree="true" managername="TheBodyShopintegrationadyenManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShopintegrationadyen" usemaven="false">
+    
+    <requires-extension name="theBodyShopcore"/>   
+    <requires-extension name="adyenv6core"/>
+    <requires-extension name="adyenv6backoffice"/>
+               
+    <coremodule generated="true" manager="uk.co.thebodyshop.integration.adyen.jalo.TheBodyShopintegrationadyenManager" packageroot="uk.co.thebodyshop.integration.adyen"/>
+    
+    <meta key="backoffice-module" value="true"/>
+                					
+    </extension>
+              
+</extensioninfo>

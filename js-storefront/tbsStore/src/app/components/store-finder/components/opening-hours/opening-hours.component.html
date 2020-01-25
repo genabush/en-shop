@@ -1,0 +1,21 @@
+<div class="store-details">
+  <div class="store-details__section-heading">
+    <span class="icon icon--clock"></span>{{ 'storeFinder.openingHrs' | cxTranslate }}
+  </div>
+
+  <ul class="opening-hrs__list">
+    <li
+      *ngFor="let day of openingHrs"
+      class="opening-hrs__list-item"
+      [ngClass]="{ 'opening-hrs__list-item--closed': day.closed }"
+    >
+      <span class="opening-hrs__day"
+        ><ng-container *ngIf="day.weekDay">{{ day.weekDay }}:</ng-container></span
+      >
+      <span class="opening-hrs__times" *ngIf="!day.closed">
+        {{ day.openingTime.formattedHour }} - {{ day.closingTime.formattedHour }}</span
+      >
+      <span class="opening-hrs__times" *ngIf="day.closed"> {{ 'storeFinder.closed' | cxTranslate }}</span>
+    </li>
+  </ul>
+</div>

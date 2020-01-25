@@ -1,0 +1,15 @@
+<div class="gift-cards pt-3 pt-lg-0">
+  <h3 class="cx-checkout-title d-none d-lg-block d-xl-block">
+    {{ 'gift.card.useGiftCard' | cxTranslate }}
+  </h3>
+  <p>
+    {{ 'gift.card.howToUseCard' | cxTranslate }}
+  </p>
+  <ng-container *ngFor="let elem of giftCardFormElement">
+    <app-gift-card-form [cardInfo]="elem" class="d-flex flex-column mb-4"></app-gift-card-form>
+  </ng-container>
+  <hr />
+  <span class="action" *ngIf="canAddNewGiftCard()" (click)="addGiftCardForm()">
+    {{ 'gift.card.addAnotherCard' | cxTranslate }}
+  </span>
+</div>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://newsletterProfile.v1.ws.mercury.com" xmlns:ns1="http://thebodyshop/NewsLetterSignupSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://newsletterProfile.v1.ws.mercury.com">
+	<xs:element name="newsletterProfile" type="tns:newsletterProfile" />
+	<xs:element name="newsletterProfileResponse" type="tns:newsletterProfileResponse" />
+	<xs:complexType name="newsletterProfile">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="request">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="firstName" type="xs:string" />
+						<xs:element minOccurs="0" name="lastName" type="xs:string" />
+						<xs:element name="emailAddress" type="xs:string" />
+						<xs:element name="optInStatus" type="xs:boolean" />
+						<xs:element name="registrationDateTime" type="xs:dateTime" />
+						<xs:element name="channel" type="xs:string" />
+						<xs:element name="storeId" type="xs:string" />
+						<xs:element name="market" type="xs:string" />
+						<xs:element minOccurs="0" name="preferredLanguage" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="messageid" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="newsletterProfileResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:hybrisResponse" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="hybrisResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="messageId" type="xs:string" />
+			<xs:element minOccurs="0" name="requestId" type="xs:string" />
+			<xs:element minOccurs="0" name="status" type="xs:string" />
+			<xs:element minOccurs="0" name="statusMessage" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

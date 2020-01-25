@@ -1,0 +1,179 @@
+<div *ngIf="showList" class="col-12">
+  <div *ngIf="cart$ | async as cart">
+    <p>{{ (cart.eligibleForLoyalty ? 'paymentMethods.giftsAndRewards' : 'paymentMethods.onlyGifts') | cxTranslate }}</p>
+    <ngb-accordion>
+      <!-- GIFT CARDS -->
+      <ngb-panel id="payment-gift-card" [title]="'paymentMethods.giftCards' | cxTranslate">
+        <ng-template ngbPanelHeader let-opened="opened">
+          <div class="d-flex align-items-center justify-content-between">
+            <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+              <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+                'paymentMethods.giftCards' | cxTranslate
+              }}</mat-radio-button>
+            </button>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <app-gift-cards
+            *ngIf="isPaymentModeVisible('giftcard')"
+            [config]="(cart$ | async).giftCards"
+            [showAddButton]="(cart$ | async)?.hasOutstandingAmount"
+          ></app-gift-cards>
+        </ng-template>
+      </ngb-panel>
+      <!-- LOYALTY VOUCHERS -->
+      <ngb-panel
+        *ngIf="cart.eligibleForLoyalty"
+        id="payment-loyalty-vouchers"
+        [title]="'paymentMethods.loyaltyVouchers' | cxTranslate"
+      >
+        <ng-template ngbPanelHeader let-opened="opened">
+          <div class="d-flex align-items-center justify-content-between">
+            <button ngbPanelToggle class="d-flex btn p-0 justify-content-start">
+              <mat-radio-button class="mat-radio-button-primary" [checked]="opened ? true : false">{{
+                'paymentMethods.loyaltyVouchers' | cxTranslate
+              }}</mat-radio-button>
+            </button>
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <app-loyalty-voucher-list
+            [config]="voucherList$ | async"
+            [currency]="currency$ | async"
+          ></app-loyalty-voucher-list>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+  <!-- BILLING -->
+  <cx-checkout-payment-address
+    *ngIf="
+      (checkoutState.fullFillmentState &&
+        checkoutJourneyType === checkoutFulfillmentTabs.DELIVERY &&
+        checkoutState.deliveryModesState) ||
+      (checkoutState.fullFillmentState &&
+        checkoutJourneyType === checkoutFulfillmentTabs.COLLECTION_POINT &&
+        checkoutState.deliveryModesState &&
+        checkoutState.whoWillCollectState) ||
+      (checkoutState.fullFillmentState &&
+        checkoutJourneyType === checkoutFulfillmentTabs.COLLECT_IN_STORE &&
+        checkoutState.whoWillCollectState)
+    "
+    class="cx-payment-form-billing d-flex flex-column mb-4"
+    [checkoutJourneyType]="checkoutJourneyType"
+    [selectedBillingAddress]="selectedBillingAddress"
+    [sameAsShippingAddress]="sameAsShippingAddress"
+    [shippingAddress$]="shippingAddress$"
+    [existingAddresses$]="existingAddresses$"
+    (toggleShippingAddressEvent)="toggleSameAsShippingAddress()"
+    (addressAddEvent)="showAddressForm(false)"
+    (addressEditEvent)="addressEdit()"
+    (addressSelectedEvent)="addressSelect($event)"
+  ></cx-checkout-payment-address>
+  <!-- PAYMENT METHOD -->
+  <cx-payment-method-accordion
+    *ngIf="!!paymentMethodConfig && !!paymentMethodConfig.paymentMethods && (cart$ | async)?.hasOutstandingAmount"
+    class="d-flex flex-column"
+    [cart$]="cart$"
+    [savedCardSelectedCode]="savedCardSelectedCode"
+    [savedPaymentCards]="savedPaymentCards"
+    [paymentMethodConfig]="paymentMethodConfig"
+    [hasSavedPaymentCards]="hasSavedPaymentCards"
+    [savedPaymentData]="savedPaymentData"
+    (setSavedCardEvent)="setSavedCard($event)"
+    (setPaymentDetailEvent)="setPaymentDetail($event)"
+    (savedPaymentDataEmit)="setSavedPaymentData($event)"
+    (tabChangedEvent)="tabChanged($event)"
+  ></cx-payment-method-accordion>
+</div>
+
+<!-- BASKET SUMMARY -->
+<cx-checkout-basket-summary class="mt-4 w-100"></cx-checkout-basket-summary>
+<h2 class="cart-order-summary-title text-center w-100 mt-4 mb-0">{{ 'cartDetails.title' | cxTranslate }}</h2>
+<!-- ORDER SUMMARY -->
+<cx-order-summary
+  class="cart-order-summary col-12 col-lg-10 mt-4 mb-5 mx-auto px-3"
+  [isCheckout]="'true'"
+  [cart]="cart$ | async"
+></cx-order-summary>
+
+<!-- FINSIH && PAY BUTTONS -->
+<div
+  class="cx-checkout-btns col-12 col-lg-10 px-3 mt-0 mb-4 mx-auto d-flex flex-row flex-wrap flex-lg-nowrap flex-grow-1 justify-content-between"
+>
+  <!-- Terms && Conditions -->
+  <div class="col-12 col-md-6 pl-0 pr-3 mb-2 mb-md-0">
+    <div [formGroup]="paymentTandCs">
+      <mat-checkbox
+        class="mat-checkbox-primary w-100"
+        type="checkbox"
+        [attr.aria-label]="'payment.checkboxes.tAndCs' | cxTranslate"
+        formControlName="acceptedTandCs"
+        (change)="tandCsSelection($event)"
+        >{{ 'payment.checkboxes.tAndCs' | cxTranslate }}</mat-checkbox
+      >
+    </div>
+    <button
+      class="btn btn-primary col-12 col-md-5 mh-100"
+      [disabled]="
+        checkoutJourneyType
+          | payNowEnabled
+            : {
+                checkoutState: checkoutState,
+                isReadyToPay: isReadyToPay,
+                isTandCsAccepted: isTandCsAccepted,
+                hasOutstandingAmount: (cart$ | async)?.hasOutstandingAmount
+              }
+      "
+      (click)="makePayments()"
+    >
+      {{ 'payment.finishAndPay' | cxTranslate }}
+    </button>
+  </div>
+
+  <!-- MODAL -->
+  <ng-template #billingAddressModal let-c="close" let-d="dismiss" id="checkout-billing-address-modal">
+    <div *ngIf="openModalRef" class="modal-header flex-column">
+      <div class="row justify-content-between w-100 pl-4 pr-0 m-0">
+        <h2 class="modal-title">{{ 'addressForm.billingAddressHeader' | cxTranslate }}</h2>
+        <button
+          type="button"
+          class="close"
+          [attr.aria-label]="'common.closeBtn' | cxTranslate"
+          (click)="closeAddressFormModal()"
+        >
+          <span aria-hidden="true">
+            <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body d-flex flex-row flex-wrap pt-3">
+      <ng-container *ngIf="isExistingAddress; else initialAddressForm">
+        <cx-custom-address-form
+          [isEditing]="'true'"
+          [addressFormType]="'BILLING'"
+          [addressData]="editingAddress"
+          showTitleCode="true"
+          cancelBtnLabel="{{ 'common.cancel' | cxTranslate }}"
+          setAsDefaultField="false"
+          (backToAddress)="closeAddressFormModal()"
+          (submitAddress)="editSelectedAddress($event)"
+        ></cx-custom-address-form>
+      </ng-container>
+
+      <ng-template #initialAddressForm>
+        <cx-custom-address-form
+          [isEditing]="'false'"
+          [addressFormType]="'BILLING'"
+          [addressData]="null"
+          showTitleCode="true"
+          cancelBtnLabel="{{ 'common.cancel' | cxTranslate }}"
+          setAsDefaultField="false"
+          (backToAddress)="closeAddressFormModal()"
+          (submitAddress)="addNewAddress($event)"
+        ></cx-custom-address-form>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

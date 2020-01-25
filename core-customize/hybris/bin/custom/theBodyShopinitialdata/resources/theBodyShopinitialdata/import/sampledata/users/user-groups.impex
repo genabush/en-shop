@@ -1,0 +1,20 @@
+
+INSERT_UPDATE UserGroup ; UID[unique=true]            ; groups(uid)[mode=append]                 
+
+                        ; productmanagergroup         ; employeegroup                            ;
+                        ; globalproductmarketgroup    ; productmanagergroup                      ;  
+                        
+                        ; productmarketgroup          ; employeegroup                            ;  
+                        ; ukproductmarketgroup        ; productmarketgroup                       ;  
+                        ; usproductmarketgroup        ; productmarketgroup                       ;  
+                        ; deproductmarketgroup        ; productmarketgroup                       ;  
+                        ; dkproductmarketgroup        ; productmarketgroup                       ;  
+                        ; auproductmarketgroup        ; productmarketgroup                       ;  
+                        ; caproductmarketgroup        ; productmarketgroup                       ;  
+                        ; esproductmarketgroup        ; productmarketgroup                       ;  
+                        ; frproductmarketgroup        ; productmarketgroup                       ;  
+                        ; nlproductmarketgroup        ; productmarketgroup                       ;  
+                        ; seproductmarketgroup        ; productmarketgroup                       ;  
+                        ; atproductmarketgroup        ; productmarketgroup                       ;  
+                        ; hkproductmarketgroup        ; productmarketgroup                       ;  
+                        ; sgproductmarketgroup        ; productmarketgroup                       ;  

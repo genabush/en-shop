@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for SOLR Configuration
+
+# Macros / Replacement Parameter definitions
+
+$productCatalog=tbsESProductCatalog
+$defaultStagedSearchProfile=defaultStagedTbsESSearchProfile
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]), version[default=Staged])[unique=true, default=$productCatalog:Staged]
+
+
+# Category Search Profile Configurations
+
+INSERT_UPDATE AsCategoryAwareSearchConfiguration;searchProfile(code,$catalogVersion)[unique=true];uid[unique=true];category(code,$catalogVersion);facetsMergeMode(code);boostItemsMergeMode(code);boostRulesMergeMode(code);sortsMergeMode(code);uniqueIdx;$catalogVersion[unique=true]
+;$defaultStagedSearchProfile;c00143_SearchConfiguration;c00143;ADD_BEFORE;ADD_BEFORE;ADD;ADD_BEFORE;c00143_SearchConfigurationUniqueIndex
+
+INSERT_UPDATE AsBoostRule;searchConfiguration(uid,$catalogVersion)[unique=true];uid[unique=true];indexProperty;operator(code);value;boost;boostType(code);$catalogVersion[unique=true]
+;c00143_SearchConfiguration;c00143_BoostRule;price;EQUAL;10.0;1.3;MULTIPLICATIVE
+
+INSERT_UPDATE AsPromotedItem;searchConfiguration(uid,$catalogVersion)[unique=true];uid[unique=true];item(Product.code,Product.$catalogVersion)[unique=true];uniqueIdx;$catalogVersion[unique=true]
+;c00143_SearchConfiguration;c00143_PromotedItem;p003255;c00143_PromotedItem_UniqueIndex
+
+INSERT_UPDATE AsFacet;searchConfiguration(uid,$catalogVersion)[unique=true];uid[unique=true];indexProperty[unique=true];facetType(code);priority;uniqueIdx;$catalogVersion[unique=true]
+;c00143_SearchConfiguration;c00143_Facet;price;REFINE;12;c00143_Facet_UniqueIndex
+
+INSERT_UPDATE AsPromotedFacet;searchConfiguration(uid,$catalogVersion)[unique=true];uid[unique=true];indexProperty[unique=true];facetType(code);priority;uniqueIdx;$catalogVersion[unique=true]
+;c00143_SearchConfiguration;c00143_PromotedFacet;availableInStores;REFINE;;c00143_PromotedFacet_UniqueIndex
+
+INSERT_UPDATE AsExcludedFacet;searchConfiguration(uid,$catalogVersion)[unique=true];uid[unique=true];indexProperty[unique=true];facetType(code);priority;uniqueIdx;$catalogVersion[unique=true]
+;c00143_SearchConfiguration;c00143_ExcludedFacet;allPromotions;REFINE;;c00143_ExcludedFacet_UniqueIndex

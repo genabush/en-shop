@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="order-confirmation">
+    <div class="order-confirmation__container">
+      <div class="order-items" *ngIf="order$ | async as order">
+        <h4 class="order-items__heading order-confirmation__heading">
+          {{ 'orderConfirmationPage.orderSummary' | cxTranslate }}
+        </h4>
+        <div class="order-confirmation__list-header">
+          <div class="row">
+            <div class="item-col-name col-6">
+              {{ 'orderConfirmationPage.product' | cxTranslate }}
+            </div>
+            <div class="item-col-qty col-2">
+              {{ 'orderConfirmationPage.qty' | cxTranslate }}
+            </div>
+            <div class="item-col-value col-4">
+              {{ 'orderConfirmationPage.value' | cxTranslate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="order-confirmation__item" *ngFor="let item of order.entries">
+          <div class="row">
+            <div class="item-col-name col-6 ">
+              {{ item.product.name }}
+            </div>
+            <div class="item-col-qty col-2 ">
+              {{ item.quantity }}
+            </div>
+            <div class="item-col-value col-4 ">
+              {{ item.totalPrice.formattedValue }}
+            </div>
+          </div>
+        </div>
+        <div class="order-confirmation__order-subtotal mt-3">
+          <div class="row">
+            <div class="offset-4 col-4 text-right">{{ 'orderConfirmationPage.subTotal' | cxTranslate }}</div>
+            <div class="col-4 text-right">{{ order.subTotal.formattedValue }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

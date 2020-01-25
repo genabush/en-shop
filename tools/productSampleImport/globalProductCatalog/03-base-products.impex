@@ -1,0 +1,49 @@
+$productCatalog=tbsGlobalProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$approved=approvalstatus(code)[default='approved']
+
+#Accepted Values are pieces,KG,each,TON,G,LT,TO,MG,ML,L
+$unit=ML
+
+#Accepted Values are SIZE, COLOUR
+$type = SIZE
+
+#Base Product
+INSERT_UPDATE TbsBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'] ; code[unique=true] ; unit(code) ; ean ; variantType(code)[default=TbsVariantProduct] ; $catalogVersion ; $approved; type(code);keyIngredients(code)[default='Default']
+																							;p000019;$unit;;TbsVariantProduct;;approved;$type
+																							;p000551;$unit;;TbsVariantProduct;;approved;$type
+																							;p002347;$unit;;TbsVariantProduct;;approved;$type
+																							;p000014;$unit;;TbsVariantProduct;;approved;$type
+																							;p001113;$unit;;TbsVariantProduct;;approved;$type
+																							;p000873;$unit;;TbsVariantProduct;;approved;$type
+																							;p000016;$unit;;TbsVariantProduct;;approved;$type
+																							;p000087;$unit;;TbsVariantProduct;;approved;$type
+																							;p000015;$unit;;TbsVariantProduct;;approved;$type
+																							;p000247;$unit;;TbsVariantProduct;;approved;$type
+																							;p002421;$unit;;TbsVariantProduct;;approved;$type
+																							;p000018;$unit;;TbsVariantProduct;;approved;$type
+																							;p000626;$unit;;TbsVariantProduct;;approved;$type
+																							;p000874;$unit;;TbsVariantProduct;;approved;$type
+																							;p000379;$unit;;TbsVariantProduct;;approved;$type
+																							;p000698;$unit;;TbsVariantProduct;;approved;$type
+																							;p000017;$unit;;TbsVariantProduct;;approved;$type
+																							;p002727;$unit;;TbsVariantProduct;;approved;$type
+																							;p002811;$unit;;TbsVariantProduct;;approved;$type
+																							;p000274;$unit;;TbsVariantProduct;;approved;$type
+																							;p000297;$unit;;TbsVariantProduct;;approved;$type
+																							;p000206;$unit;;TbsVariantProduct;;approved;$type
+																							;p000810;$unit;;TbsVariantProduct;;approved;$type
+																							;p000090;$unit;;TbsVariantProduct;;approved;$type
+																							;p000207;$unit;;TbsVariantProduct;;approved;$type
+																							;p001070;$unit;;TbsVariantProduct;;approved;$type
+																							;p001065;$unit;;TbsVariantProduct;;approved;$type
+																							;p002826;$unit;;TbsVariantProduct;;approved;$type
+																							;p000177;$unit;;TbsVariantProduct;;approved;$type
+																							;p000456;$unit;;TbsVariantProduct;;approved;$type
+																							;p000150;$unit;;TbsVariantProduct;;approved;$type
+																							;p003255;$unit;;TbsVariantProduct;;approved;$type
+																							;p000149;$unit;;TbsVariantProduct;;approved;$type
+																							;p000147;$unit;;TbsVariantProduct;;approved;$type
+																							;p000148;$unit;;TbsVariantProduct;;approved;$type
+																							;p000694;$unit;;TbsVariantProduct;;approved;$type

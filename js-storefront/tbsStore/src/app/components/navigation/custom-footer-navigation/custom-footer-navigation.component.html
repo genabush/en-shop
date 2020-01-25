@@ -1,0 +1,12 @@
+<cx-navigation-ui
+  [attr.aria-label]="'common.siteNavigation' | cxTranslate"
+  [node]="node$ | async"
+  [flyout]="false"
+  [ngClass]="styleClass$ | async"
+  class="footer-nav footer-nav--desktop"
+></cx-navigation-ui>
+
+<app-accordion-navigation-ui
+  [node]="node$ | async"
+  class="accordion accordion-footer footer-nav footer-nav--mobile"
+></app-accordion-navigation-ui>

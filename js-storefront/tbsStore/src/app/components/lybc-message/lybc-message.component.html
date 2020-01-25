@@ -1,0 +1,19 @@
+<div
+  class="alert alert-warning alert-dismissible fade lybc-message"
+  [ngClass]="{ show: isActive, 'd-none': !isActive }"
+  role="alert"
+>
+  <p class="lybc-message__text" [attr.aria-label]="'lybcMessage.main' | cxTranslate: { points: pointsValue }">
+    {{ 'lybcMessage.main' | cxTranslate: { points: pointsValue } }}
+    <a
+      href="/my-account/points-rewards"
+      class="lybc-message__link"
+      [attr.aria-label]="'lybcMessage.linkText' | cxTranslate"
+    >
+      {{ 'lybcMessage.linkText' | cxTranslate }}</a
+    >
+  </p>
+  <button type="button" class="close lybc-message__close" data-dismiss="alert" aria-label="Close" (click)="close()">
+    <span aria-hidden="true" class="icon icon--close"></span>
+  </button>
+</div>

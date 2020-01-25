@@ -1,0 +1,14 @@
+<ng-container *ngFor="let image of images.names">
+  <img [src]="images.src + image + images.format" [alt]="image" />
+</ng-container>
+<div id="component-container" class="my-3"></div>
+<div [formGroup]="saveCardPaymentForm" class="mt-4 pl-2">
+  <mat-checkbox
+    class="mat-checkbox-primary"
+    type="checkbox"
+    [attr.aria-label]="'payment.saveCard' | cxTranslate"
+    formControlName="saveCardPayment"
+    (change)="savedCardSelected($event)"
+    >{{ 'payment.saveCard' | cxTranslate }}</mat-checkbox
+  >
+</div>

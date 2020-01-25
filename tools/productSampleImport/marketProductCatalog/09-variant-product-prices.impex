@@ -1,0 +1,126 @@
+#Accepted Values are tbsATProductCatalog, tbsAUProductCatalog, tbsCAProductCatalog, tbsDEProductCatalog, tbsDKProductCatalog, tbsESProductCatalog, tbsFRProductCatalog, tbsHKProductCatalog, tbsNLProductCatalog, tbsSEProductCatalog, tbsSGProductCatalog, tbsUKProductCatalog, tbsUSProductCatalog
+$productCatalog=tbsUKProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default='$productCatalog:Staged']
+$product=productId[unique=true]
+
+$prices=Europe1prices[translator=de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
+
+$taxGroup=Europe1PriceFactory_PTG(code)
+
+#Accepted Values are uk-vat-full, at-vat-full, au-vat-full, de-vat-full
+$taxGroupValue=uk-vat-full
+
+#Accepted Values are pieces,KG,each,TON,G,LT,TO,MG,ML,L
+$unit=ML
+
+#Accepted Values are EUR, GBP, AUD, USD, CAD, SEK, DKK, SEK, HKD, SGD
+$currency=GBP
+
+#Accepted Values are userpricegroup-at,userpricegroup-au,userpricegroup-ca,userpricegroup-de,userpricegroup-dk,userpricegroup-dk,userpricegroup-es,userpricegroup-fr,userpricegroup-hk,userpricegroup-nl,userpricegroup-sg,userpricegroup-uk,userpricegroup-us
+					
+$ug = userpricegroup-uk
+
+UPDATE Product ; code[unique=true] ; $catalogVersion ; $taxGroup     
+				;1019272			;			;$taxGroupValue;
+				;1019402;;$taxGroupValue;
+				;1000701;;$taxGroupValue;
+				;1094741;;$taxGroupValue;
+				;1094150;;$taxGroupValue;
+				;1094166;;$taxGroupValue;
+				;1019212;;$taxGroupValue;
+				;1019213;;$taxGroupValue;
+				;1094320;;$taxGroupValue;
+				;1094162;;$taxGroupValue;
+				;1092127;;$taxGroupValue;
+				;1092126;;$taxGroupValue;
+				;1094191;;$taxGroupValue;
+				;1094319;;$taxGroupValue;
+				;1097406;;$taxGroupValue;
+				;1097409;;$taxGroupValue;
+				;1094138;;$taxGroupValue;
+				;1094188;;$taxGroupValue;
+				;1097159;;$taxGroupValue;
+				;1097168;;$taxGroupValue;
+				;1093652;;$taxGroupValue;
+				;1094168;;$taxGroupValue;
+				;1094137;;$taxGroupValue;
+				;1094176;;$taxGroupValue;
+				;1094311;;$taxGroupValue;
+				;1097418;;$taxGroupValue;
+				;1097419;;$taxGroupValue;
+				;1096984;;$taxGroupValue;
+				;1097082;;$taxGroupValue;
+				;1016297;;$taxGroupValue;
+				;1016301;;$taxGroupValue;
+				;1018251;;$taxGroupValue;
+				;1096700;;$taxGroupValue;
+				;1094133;;$taxGroupValue;
+				;1093344;;$taxGroupValue;
+				;1093345;;$taxGroupValue;
+				;1094164;;$taxGroupValue;
+				;1096603;;$taxGroupValue;
+				;1096910;;$taxGroupValue;
+				;1094144;;$taxGroupValue;
+				;1048512;;$taxGroupValue;
+				;1096032;;$taxGroupValue;
+				;1093493;;$taxGroupValue;
+				;1094341;;$taxGroupValue;
+				;1096108;;$taxGroupValue;
+				;1096010;;$taxGroupValue;
+				;1089009;;$taxGroupValue;
+				;1087379;;$taxGroupValue;
+				;1086850;;$taxGroupValue;
+				;1052006;;$taxGroupValue;
+
+
+INSERT_UPDATE PriceRow ; $product ; price ; unit(code[unique=true]) ; currency(isocode)[unique=true] ; minqtd ; unitFactor ; net   ; ug(code)[default=$ug][unique=true]
+						;1019272	;15		;$unit					;$currency						;1			;1			;false	;;
+						;1019402;6;$unit;$currency;1;1;false;;
+						;1000701;7;$unit;$currency;1;1;false;;
+						;1094741;25;$unit;$currency;1;1;false;;
+						;1094150;15;$unit;$currency;1;1;false;;
+						;1094166;6;$unit;$currency;1;1;false;;
+						;1019212;15;$unit;$currency;1;1;false;;
+						;1019213;6;$unit;$currency;1;1;false;;
+						;1094320;15;$unit;$currency;1;1;false;;
+						;1094162;15;$unit;$currency;1;1;false;;
+						;1092127;15;$unit;$currency;1;1;false;;
+						;1092126;6;$unit;$currency;1;1;false;;
+						;1094191;15;$unit;$currency;1;1;false;;
+						;1094319;6;$unit;$currency;1;1;false;;
+						;1097406;15;$unit;$currency;1;1;false;;
+						;1097409;6;$unit;$currency;1;1;false;;
+						;1094138;15;$unit;$currency;1;1;false;;
+						;1094188;6;$unit;$currency;1;1;false;;
+						;1097159;25;$unit;$currency;1;1;false;;
+						;1097168;7;$unit;$currency;1;1;false;;
+						;1093652;15;$unit;$currency;1;1;false;;
+						;1094168;6;$unit;$currency;1;1;false;;
+						;1094137;15;$unit;$currency;1;1;false;;
+						;1094176;6;$unit;$currency;1;1;false;;
+						;1094311;15;$unit;$currency;1;1;false;;
+						;1097418;15;$unit;$currency;1;1;false;;
+						;1097419;6;$unit;$currency;1;1;false;;
+						;1096984;25;$unit;$currency;1;1;false;;
+						;1097082;7;$unit;$currency;1;1;false;;
+						;1016297;15;$unit;$currency;1;1;false;;
+						;1016301;6;$unit;$currency;1;1;false;;
+						;1018251;14;$unit;$currency;1;1;false;;
+						;1096700;15;$unit;$currency;1;1;false;;
+						;1094133;14;$unit;$currency;1;1;false;;
+						;1093344;19;$unit;$currency;1;1;false;;
+						;1093345;13;$unit;$currency;1;1;false;;
+						;1094164;14;$unit;$currency;1;1;false;;
+						;1096603;13;$unit;$currency;1;1;false;;
+						;1096910;5.5;$unit;$currency;1;1;false;;
+						;1094144;14;$unit;$currency;1;1;false;;
+						;1048512;10;$unit;$currency;1;1;false;;
+						;1096032;15;$unit;$currency;1;1;false;;
+						;1093493;13;$unit;$currency;1;1;false;;
+						;1094341;8;$unit;$currency;1;1;false;;
+						;1096108;9.5;$unit;$currency;1;1;false;;
+						;1096010;16;$unit;$currency;1;1;false;;
+						;1089009;3.5;$unit;$currency;1;1;false;;
+						;1087379;10;$unit;$currency;1;1;false;;
+						;1086850;8;$unit;$currency;1;1;false;;
+						;1052006;11;$unit;$currency;1;1;false;;

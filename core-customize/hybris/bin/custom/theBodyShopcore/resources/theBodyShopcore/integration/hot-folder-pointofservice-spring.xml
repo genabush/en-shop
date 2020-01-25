@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:file="http://www.springframework.org/schema/integration/file"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+  <import resource="classpath:/theBodyShopcore/integration/hot-folder-pointofservice-cloud-spring.xml" />
+  
+    <!-- Import processor for TBS Retail Store Data -->
+    
+    <bean id="pointOfServiceProcessor" class="uk.co.thebodyshop.core.data.processing.PointOfServiceFileProcessor"
+          scope="tenant">
+        <constructor-arg name="modelService" ref="modelService"/>
+        <constructor-arg name="pointOfServiceService" ref="pointOfServiceService"/>
+        <constructor-arg name="commonI18NService" ref="commonI18NService"/>
+        <constructor-arg name="storeLocatorFeatureService" ref="storeLocatorFeatureService"/>
+    </bean>
+
+    <bean id="baseDirectoryPointOfService" class="java.lang.String">
+        <constructor-arg value="#{baseDirectory}/${tenantId}/tbs"/>
+    </bean>
+
+    <!-- Configuration for the inbound channel adapter -->
+    <file:inbound-channel-adapter id="incomingPointOfServiceFeedChannel"
+                                  comparator="fileNameComparator"
+                                  directory="#{baseDirectoryPointOfService}"
+                                  filename-regex="#{configurationService.configuration.getProperty('tbsdataprocessing.csv.pointofservice.fillenamepattern')}"
+                                  auto-startup="#{configurationService.configuration.getProperty('tbsdataprocessing.csv.pointofservice.autostartup')}">
+        <int:poller fixed-delay="#{configurationService.configuration.getProperty('tbsdataprocessing.csv.pointofservice.basefolderpollperiod')}"/>
+    </file:inbound-channel-adapter>
+
+    <!-- 2) move the file to processing folder -->
+
+    <file:outbound-gateway id="pointofserviceFileMover"
+                           request-channel="incomingPointOfServiceFeedChannel"
+                           reply-channel="pointofserviceDataChannel"
+                           directory="#{baseDirectoryPointOfService}/processing"
+                           delete-source-files="true"/>
+
+    <!-- 3) execute the bean to process the file -->
+
+    <int:service-activator input-channel="pointofserviceDataChannel" ref="pointOfServiceProcessor"/>
+
+</beans>

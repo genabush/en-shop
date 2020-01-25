@@ -1,0 +1,252 @@
+
+
+INSERT_UPDATE FinishFacet       ; code[unique=true]                      ; name[lang=en]        ;name[lang=es]     ;name[lang=fr]         ;name[lang=da]
+                               ; CREAMY                                  ; Creamy               ;Cremoso           ;Crème                 ;Cremet
+                               ; GLOSSY                                  ; Glossy               ;Satinado          ;Brillant/Glossy       ;Glansfuld
+                               ; MATTE                                   ; Matte                ;Mate              ;Mat                   ;Mat
+                               ; NATURAL                                 ; Natural              ;Natural           ;Naturel               ;Naturlig
+                               ; SHIMMER                                 ; Shimmer              ;Con Brillo        ;Irisé/Nacré Lumineux  ;Glitrende
+
+INSERT_UPDATE TargetAreaFacet  ; code[unique=true]                            ; name[lang=en]        ;name[lang=es]     ;name[lang=fr]         ;name[lang=da]
+                               ; AREA_BODY                                    ; Body                 ;Cuerpo            ;Corps                 ;Krop
+                               ; AREA_EYES                                    ; Eyes                 ;Ojos              ;Yeux                  ;Øjne
+                               ; AREA_FACE                                    ; Face                 ;Rostro            ;Visage                ;Ansigt
+                               ; AREA_FEET                                    ; Feet                 ;Pies              ;Pieds                 ;Fødder
+                               ; AREA_HAIR                                    ; Hair                 ;Cabello           ;Cheveux               ;Hår
+                               ; AREA_HANDS                                   ; Hands                ;Manos             ;Mains                 ;Hænder
+                               ; AREA_LIPS                                    ; Lips                 ;Labios            ;Lèvres                ;Læber
+                               ; AREA_NAILS                                   ; Nails                ;                  ;Ongles                ;Negle
+
+INSERT_UPDATE ConcernFacet     ; code[unique=true]                       ; name[lang=en]                ;name[lang=es]                ;name[lang=fr]                 ;name[lang=da]
+                               ; AGING_SKIN                              ; Aging Skin                   ;Piel Madura                  ;Anti-âge                      ;Hud med tegn på alder
+                               ; ANTI_POLLUTION                          ; Anti-Pollution               ;Antipolución                 ;                              ;Forureningsforebyggende
+                               ; BLEMISHES_IMPERFECTIONS                 ; Blemishes & Imperfections    ;Imperfecciones               ;Imperfections & point noirs   ;Urenheder og skønhedsfejl
+                               ; COMBINATION_SKIN                        ; Combination Skin             ;Piel Mixta                   ;Peau mixte                    ;Kombineret hud
+                               ; DEHYDRATED_SKIN                         ; Dehydrated Skin              ;Piel Deshidratada            ;Peau déshydratée              ;Dehydreret hud
+                               ; DRY_HAIR                                ; Dry Hair                     ;Cabello Seco                 ;Cheveux secs                  ;Glansløst hår
+                               ; DRY_SKIN                                ; Dry Skin                     ;Piel Seca                    ;Peau sèche                    ;Tør hud
+                               ; DULL_HAIR                               ; Dull Hair                    ;Cabello Apagado              ;Cheveux fins                  ;Glansløs hud
+                               ; DULL_SKIN                               ; Dull Skin                    ;Piel Apagada                 ;Peau fatiguée /Peau terne     ;Trist hud
+                               ; FINE_HAIR                               ; Fine Hair                    ;Cabello Fino                 ;Cheveux fins                  ;Fint hår
+                               ; NORMAL_SKIN                             ; Normal Skin                  ;Piel Normal                  ;Peau normale                  ;Normal hud
+                               ; OILY_HAIR                               ; Oily Hair                    ;Cabello Graso	              ;Cheveux gras                  ;Fedtet hår
+                               ; OILY_SKIN                               ; Oily Skin                    ;Piel Grasa                   ;Peau grasse                   ;Fedtet hud
+                               ; SCALP_CARE                              ; Scalp Care                   ;Cuidado del Cuero Cabelludo  ;Anti-pelliculaire & apaisant  ;Hovedbundspleje
+                               ; SENSITIVE_SKIN                          ; Sensitive Skin               ;Piel Sensible                ;Peau sensible                 ;Følsom hud
+                               ; SUN_PROTECTION                          ; Sun Protection               ;Protección Solar             ;Protection anti-UV/SPF        ;Solbeskyttelse
+                               ; THICK_HAIR                              ; Thick Hair                   ;Cabello Grueso               ;Anti-tâches                   ;Tykt hår
+
+
+INSERT_UPDATE ScentFacet       ; code[unique=true]                       ; name[lang=en]                ;name[lang=es]                ;name[lang=fr]                 ;name[lang=da]
+                               ; CITRUS                                  ; Citrus                       ;Cítrico                      ;Agrumes                       ;
+                               ; FLORAL                                  ; Floral                       ;                             ;                              ;Blomster
+                               ; FRESH                                   ; Fresh                        ;Fresco                       ;Frais                         ;Frisk
+                               ; FRUITY                                  ; Fruity                       ;Afrutado                     ;Fruité                        ;Frugtig
+                               ; GOURMAND                                ; Gourmand                     ;Goloso                       ;                              ;
+                               ; GREEN                                   ; Green                        ;Verde                        ;Nature                        ;Grøn
+                               ; ORIENTAL                                ; Oriental                     ;                             ;                              ;Orientalsk
+                               ; WOODY                                   ; Woody                        ;Amaderado                    ;Boisé                         ;Træagtig
+
+INSERT_UPDATE CoverageFacet    ; code[unique=true]                       ; name[lang=en]                ;name[lang=es]                ;name[lang=fr]                 ;name[lang=da]
+                               ; HIGH_TO_FULL                            ; High to Full                 ;Alta a Total                 ;Totale / Maximale             ;Høj til komplet
+                               ; LIGHT                                   ; Light                        ;Ligera                       ;Légère / Naturelle            ;Let
+                               ; MEDIUM                                  ; Medium                       ;Media                        ;Moyenne                       ;
+
+INSERT_UPDATE RangeFacet       ; code[unique=true]                       ; name[lang=en]                            ;name[lang=es]                ;name[lang=fr]                 ;name[lang=da]
+                               ; ABSINTHE                                ; Absinthe                                 ;Absenta                      ;                              ;
+                               ; ACTIVIST                                ; Activist                                 ;                             ;                              ;
+                               ; ALMOND                                  ; Almond                                   ;Almendra                     ;                              ;
+                               ; ALMOND_MILK_HONEY                       ; Almond Milk & Honey                      ;Leche de Almendras y Miel    ;                              ;
+                               ; ALOE                                    ; Aloe                                     ;                             ;Aloès                         ;
+                               ; ARBER                                   ; Arber                                    ;                             ;                              ;
+                               ; ARGAN_OIL                               ; Argan Oil                                ;                             ;Huile d'Argan                 ;
+                               ; TLAS_MOUNTAIN_ROSE                      ; Atlas Mountain Rose                      ;                             ;                              ;
+                               ; BANANA                                  ; Banana                                   ;                             ;Banane                        ;
+                               ; BERRY_BONBON                            ; Berry Bonbon                             ;                             ;                              ;
+                               ; BLACK_MUSK                              ; Black Musk                               ;                             ;                              ;
+                               ; Black_Musk_Night_Bloom                  ; Black Musk Night Bloom                   ;                             ;                              ;
+                               ; BRITISH_ROSE                            ; British Rose                             ;                             ;                              ;
+                               ; CAMOMILE                                ; Camomile                                 ;Camomila                     ;Camomille                     ;
+                               ; CEDAR_SAGE                              ; Cedar & Sage                             ;Cedro y Salvia               ;Cèdre & Sauge                 ;
+                               ; COCONUT                                 ; Coconut                                  ;Coco                         ;Noix de Coco                  ;
+                               ; DROPS_OF_LIGHT                          ; Drops of Light                           ;                             ;                              ;
+                               ; DROPS_OF_YOUTH                          ; Drops of Youth                           ;                             ;                              ;
+                               ; EARLY_HARVEST_RASPBERRY                 ; Early-Harvest Raspberry                  ;Frambuesa                    ;                              ;
+                               ; ELIXIRS_OF_NATURE                       ; Elixirs of Nature                        ;                             ;                              ;
+                               ; ENGLISH_DAWN_GARDENIA                   ; English Dawn Gardenia                    ;                             ;                              ;
+                               ; EXPERT_FACIAL_MASKS                     ; Expert Facial Masks                      ;Mascarillas Cuidado Experto  ;Masques Experts               ;
+                               ; FIJIAN_WATER_LOTUS                      ; Fijian Water Lotus                       ;                             ;                              ;
+                               ; FROSTED_BERRIES                         ; Frosted Berries                          ;Arándanos Escarchados        ;Baies Givrées                 ;
+                               ; FROSTED_CRANBERRY                       ; Frosted Cranberry                        ;                             ;Canneberge Givrée             ;
+                               ; FROSTED_PLUM                            ; Frosted Plum                             ;Ciruela Escarchada           ;Prune Givrée                  ;
+                               ; FUJI_GREEN_TEA                          ; Fuji Green Tea                           ;                             ;                              ;
+                               ; GINGER                                  ; Ginger                                   ;Jengibre                     ;Gingembre                     ;
+                               ; GUARANA_COFFEE                          ; Guarana & Coffee                         ;Guaraná y Café               ;Guarana & Café                ;
+                               ; HEMP                                    ; Hemp                                     ;Cáñamo                       ;Chanvre                       ;
+                               ; HONEY_BRONZE                            ; Honey Bronze                             ;                             ;                              ;
+                               ; HONEYMANIA                              ; Honeymania                               ;                             ;                              ;
+                               ; INDIAN_NIGHT_JASMINE                    ; Indian Night Jasmine                     ;                             ;                              ;
+                               ; JAPANESE_CHERRY_BLOSSOM                 ; Japanese Cherry Blossom                  ;                             ;                              ;
+                               ; JAPANESE_CHERRY_BLOSSOM_STRAWBERRY_KISS ; Japanese Cherry Blossom Strawberry Kiss  ;                             ;                              ;
+                               ; KISTNA                                  ; Kistna                                   ;                             ;                              ;
+                               ; MACA_ROOT                               ; Maca Root                                ;Raíz de Maca                 ;Racine de Maca                ;
+                               ; MANGO                                   ; Mango                                    ;                             ;Mangue                        ;
+                               ; MORINGA                                 ; Moringa                                  ;                             ;                              ;
+                               ; NUTRIGANICS                             ; Nutriganics                              ;                             ;                              ;
+                               ; OILS_OF_LIFE                            ; Oils of Life                             ;                             ;                              ;
+                               ; OLIVE                                   ; Olive                                    ;Oliva                        ;                              ;
+                               ; PEPPERMINT                              ; Peppermint                               ;Menta                        ;                              ;
+                               ; PEPPERMINT_CANDY_CANE                   ; Peppermint Candy Cane                    ;                             ;                              ;
+                               ; PIÑITA_COLADA                           ; Piñita Colada                            ;                             ;                              ;
+                               ; PINK_GRAPEFRUIT                         ; Pink Grapefruit                          ;Pomelo Rosa                  ;Pamplemousse Rose             ;
+                               ; POMEGRANATE                             ; Pomegranate                              ;Granada                      ;Grenade                       ;
+                               ; RAINFOREST                              ; Rainforest                               ;                             ;                              ;
+                               ; RED_MUSK                                ; Red Musk                                 ;                             ;                              ;
+                               ; ROOTS_OF_STRENGTH                       ; Roots of Strength                        ;                             ;                              ;
+                               ; SATSUMA                                 ; Satsuma                                  ;Mandarina                    ;Clémentine                    ;
+                               ; SEAWEED                                 ; Seaweed                                  ;Algas Marinas                ;Algues                        ;
+                               ; SECRETS_OF_THE_WORLD                    ; Secrets of the World                     ;                             ;                              ;
+                               ; SHEA                                    ; Shea                                     ;Karité                       ;                              ;
+                               ; SPA_OF_THE_WORLD                        ; Spa of the World                         ;                             ;                              ;
+                               ; SPA_WISDOM                              ; Spa Wisdom                               ;                             ;                              ;
+                               ; STRAWBERRY                              ; Strawberry                               ;Fresa                        ;Fraise                        ;
+                               ; TEA_TREE                                ; Tea Tree                                 ;Árbol de Té                  ;Arbre à Thé                   ;
+                               ; VANILLA_CHAI                            ; Vanilla Chai                             ;Vainilla Chai                ;                              ;
+                               ; VANILLA_MARSHMALLOW                     ; Vanilla Marshmallow                      ;                             ;                              ;
+                               ; VANILLA_PUMPKIN                         ; Vanilla Pumpkin                          ;Vainilla y Calabaza          ;                              ;
+                               ; VINEYARD_PEACH                          ; Vineyard Peach                           ;Melocotón                    ;Pêche de Vigne                ;
+                               ; VIRGIN_MOJITO                           ; Virgin Mojito                            ;                             ;                              ;
+                               ; VITAMIN_C                               ; Vitamin C                                ;Vitamina C                   ;Vitamine C                    ;
+                               ; VITAMIN_E                               ; Vitamin E                                ;Vitamina E                   ;Vitamine E                    ;
+                               ; WHITE_MUSK                              ; White Musk                               ;                             ;                              ;
+                               ; WHITE_MUSK_LEAU                         ; White Musk L'Eau;                        ;                             ;                              ;
+                               ; WHITE_MUSK_FOR_MEN                      ; White Musk For Men                       ;White Musk para Hombre       ;                              ;
+                               ; WHITE_MUSK_SPORT                        ; White Musk Sport                         ;                             ;                              ;
+                               ; WHITE_MUSK_SMOKY_ROSE                   ; White Musk Smoky Rose                    ;                             ;                              ;
+                               ; WILD_ARGAN_OIL                          ; Wild Argan Oil                           ;Aceite de Argán              ;Huile d'Argan Sauvage         ;
+
+
+INSERT_UPDATE ProductTypeFacet ; code[unique=true]                       ; name[lang=en]                            ;name[lang=es]                ;name[lang=fr]                          ;name[lang=da]
+                               ; PRODUCT_TYPE_ADVENT_CALENDARS                        ; Advent Calendars                         ;Calendarios de Adviento      ;Calendrier de l'avent                  ;Pakkekalendere
+                               ; BAGS                                    ; Bags                                     ;Bolsas                       ;Sacs                                   ;Poser
+                               ; BAGS_BOXES                              ; Bags & Boxes                             ;                             ;                                       ;Poser og æsker
+                               ; BATH_BODY_GIFTS                         ; Bath & Body Gifts                        ;Regalos de Baño y Cuerpo     ;Coffret Corps & Bain                   ;Kropsplejegaver
+                               ; BATH_ACCESSORIES                        ; Bath Accessories                         ;Accesorios de Baño           ;Accessoires bain                       ;Accessories til badet
+                               ; BATH_TREATS                             ; Bath Treats                              ;                             ;                                       ;Forkælelse til badet
+                               ; BB_CC_CREAMS                            ; BB & CC Creams                           ;Cremas BB y CC               ;BB crème & CC crème                    ;
+                               ; BLUSHERS                                ; Blushers                                 ;Coloretes                    ;Blush                                  ;Blush
+                               ; BODY_MASSAGE_OILS                       ; Body & Massage Oils                      ;Aceites de Cuerpo y Masaje   ;Huile nourissante / Huile de massage   ;Krops- og massageolier
+                               ; BODY_ACCESSORIES                        ; Body Accessories                         ;Accesorios Corporales        ;Accessoires corps                      ;Accessories til kroppen
+                               ; BODY_BUTTERS                            ; Body Butters                             ;Mantecas Corporales          ;Beurre corporel                        ;
+                               ; BODY_CLAYS                              ; Body Clays                               ;Arcillas Corporales          ;Masque argile corps                    ;
+                               ; BODY_CREAMS                             ; Body Creams                              ;Cremas Corporales            ;Crème Corps                            ;
+                               ; BODY_LOTIONS                            ; Body Lotions                             ;Lociones Corporales          ;Lotion & Lait de Corps                 ;
+                               ; BODY_MISTS                              ; Body Mists                               ;Sprays Corporales            ;Brume Corps                            ;
+                               ; BODY_MOISTURISERS                       ; Body Moisturisers                        ;                             ;Hydratants corporels                   ;Fugtgivende produkter til kroppen
+                               ; BODY_SCRUBS                             ; Body Scrubs                              ;Exfoliantes Corporales       ;Gommage Corps                          ;
+                               ; BODY_SORBETS                            ; Body Sorbets                             ;Sorbetes Corporales          ;Sorbet Corps                           ;
+                               ; BODY_WASHES                             ; Body Washes                              ;Geles de Ducha               ;Gel Douche                             ;
+                               ; BODY_YOGURTS                            ; Body Yogurts                             ;                             ;                                       ;
+                               ; BRONZERS                                ; Bronzers                                 ;Bronceadores                 ;Bronzer                                ;Brozingprodukter
+                               ; BRUSHES_COMBS                           ; Brushes & Combs                          ;Cepillos y Peines            ;Brosse & Peigne                        ;Børster & kamme
+                               ; CANDLES                                 ; Candles                                  ;Velas                        ;Bougie                                 ;Lys
+                               ; CONCEALERS                              ; Concealers                               ;Correctores                  ;Correcteur                             ;Concealere
+                               ; CONDITIONERS                            ; Conditioners                             ;Acondicionadores             ;Après-shampooing                       ;Balsam
+                               ; DAY_MOISTURISERS                        ; Day Moisturisers                         ;Hidratantes de Día           ;Crème de jour                          ;Dagcremer
+                               ; DEODORANTS                              ; Deodorants                               ;Desodorantes                 ;Déodorant                              ;Deodoranter
+                               ; EAU_DE_COLOGNES                         ; Eau de Colognes                          ;Aguas de Colonias            ;                                       ;
+                               ; EAU_DE_PARFUMS                          ; Eau de Parfums                           ;Aguas de Perfumes            ;                                       ;
+                               ; EAU_DE_TOILETTES                        ; Eau de Toilettes                         ;Aguas de Colonias            ;                                       ;
+                               ; EYE_BRUSHES                             ; Eye Brushes                              ;                             ;                                       ;Pensler til øjnene
+                               ; EYE_CREAMS_TREATMENTS                   ; Eye Creams & Treatments                  ;Cremas y Tratamientos de Ojos;                                       ;Øjencremer & behandlinger
+                               ; EYE_GELS_SERUMS                         ; Eye Gels & Serums                        ;Geles y Sérums de Ojos       ;                                       ;Øjengel & serum
+                               ; EYE_LINERS                              ; Eye Liners                               ;Perfiladores de Ojos         ;                                       ;Eyelinere
+                               ; EYE_SHADOWS                             ; Eye Shadows                              ;Sombras de Ojos              ;                                       ;Øjenskygger
+                               ; EYEBROWS                                ; Eyebrows                                 ;Cejas                        ;                                       ;Øjenbryn
+                               ; FACE_ACCESSORIES                        ; Face Accessories                         ;Accesorios Faciales          ;                                       ;Accessories til ansigtet
+                               ; FACE_BRUSHES                            ; Face Brushes                             ;Brochas Faciales             ;                                       ;Pensler til ansigtet
+                               ; FACE_CLEANSERS                          ; Face Cleansers                           ;Limpiadores Faciales         ;                                       ;Cleanser
+                               ; FACE_MASKS                              ; Face Masks                               ;Mascarillas Faciales         ;                                       ;Ansigtsmasker
+                               ; FACE_MISTS                              ; Face Mists                               ;Brumas Faciales              ;                                       ;
+                               ; FACE_OILS_SERUMS                        ; Face Oils & Serums                       ;Aceites y Sérums Faciales    ;                                       ;
+                               ; FACE_SCRUBS_EXFOLIATORS                 ; Face Scrubs & Exfoliators                ;Exfoliantes Faciales         ;                                       ;Scrubs og eksfoliatorer til ansigtet
+                               ; FACE_MOISTURISER_DAY                    ; Face Moisturiser - Day                   ;                             ;                                       ;Ansigtscreme - dag
+                               ; FACE_MOISTURISER_NIGHT                  ; Face Moisturiser - Night                 ;                             ;                                       ;Ansigtscreme - nat
+                               ; FACE_TONER                              ; Face Toner                               ;Tónicos Faciales             ;                                       ;Toner
+                               ; FACE_WASHES                             ; Face Washes                              ;Limpiadores Faciales         ;                                       ;
+                               ; FACE_WIPES                              ; Face Wipes                               ;Toallitas Faciales           ;                                       ;
+                               ; FOOT_CREAMS                             ; Foot Creams                              ;Cremas de Pies               ;                                       ;Fodcremer
+                               ; FOOT_SCRUBS                             ; Foot Scrubs                              ;Exfoliantes de Pies          ;                                       ;Fodscrubs
+                               ; FOOT_TREATMENTS                         ; Foot Treatments                          ;Tratamientos de Pies         ;                                       ;Fodbehandlinger
+                               ; FOUNDATIONS                             ; Foundations                              ;Bases                        ;                                       ;
+                               ; FRAGRANCE_GIFTS                         ; Fragrance Gifts                          ;Regalos de Fragancias        ;                                       ;Parfumegaveæsker
+                               ; GIFT_BAGS_BOXES                         ; Gift Bags & Boxes                        ;Cofres Regalo                ;                                       ;Gaveæsker & poser
+                               ; GIFT_SETS                               ; Gift Sets                                ;                             ;                                       ;Gaveæsker
+                               ; HAIR_STYLING                            ; Hair Styling                             ;Productos para el Peinado    ;                                       ;Hårstyling
+                               ; HAIR_TREATMENTS                         ; Hair Treatments                          ;Tratamientos de Cabello      ;                                       ;Behandlinger til håret
+                               ; HAND_CREAMS                             ; Hand Creams                              ;Cremas de Manos              ;                                       ;Håndcremer
+                               ; HAND_GELS                               ; Hand Gels                                ;Geles Purificantes de Manos  ;                                       ;Håndgel
+                               ; HAND_WASHES                             ; Hand Washes                              ;Jabones de Manos             ;                                       ;Håndsæber
+                               ; HANDCARE_GIFTS                          ; Handcare Gifts                           ;Regalos de Manos             ;                                       ;Håndplejegaveæsker
+                               ; HIGHLIGHTERS                            ; Highlighters                             ;Iluminadores                 ;                                       ;
+                               ; HOME_FRAGRANCE_OILS                     ; Home Fragrance Oils                      ;Aceites Perfumados del Hogar ;                                       ;
+                               ; LIMITED_EDITION_GIFTS                   ; Limited Edition Gifts                    ;                             ;                                       ;Limited Edition gaveæsker
+                               ; LIP_CHEEK_STAINS                        ; Lip & Cheek Stains                       ;                             ;                                       ;
+                               ; LIP_BALMS                               ; Lip Balms                                ;                             ;                                       ;
+                               ; LIP_BRUSHES                             ; Lip Brushes                              ;                             ;                                       ;Pensler til læberne
+                               ; LIP_BUTTERS                             ; Lip Butters                              ;Mantecas Labiales            ;                                       ;
+                               ; LIP_LINERS                              ; Lip Liners                               ;Perfiladores de Labios       ;                                       ;
+                               ; LIPSTICKS                               ; Lipsticks                                ;Barras de Labios             ;                                       ;Læbestift
+                               ; LIQUID_LIPSTICKS                        ; Liquid Lipsticks                         ;Labiales Líquidos            ;                                       ;Flydende læbestifter
+                               ; MAKE_UP_GIFTS                           ; Make-up Gifts                            ;Regalos de Maquillaje        ;                                       ;Makeupgaveæsker
+                               ; MAKE_UP_REMOVERS                        ; Make-up Removers                         ;Desmaquillantes              ;                                       ;Makeupfjerner
+                               ; MAKE_UP_TOOLS                           ; Make-up Tools                            ;Accesorios de Maquillaje     ;                                       ;Makeupredskaber
+                               ; MASCARAS                                ; Mascaras                                 ;Máscaras de Pestañas         ;                                       ;
+                               ; NAIL_POLISHES                           ; Nail Polishes                            ;                             ;                                       ;Neglelak
+                               ; NIGHT_MOISTURISERS                      ; Night Moisturisers                       ;Hidratantes de Noche         ;                                       ;Natcremer
+                               ; PERFUME_OIL                             ; Perfume Oil                              ;Perfumes en Aceite           ;                                       ;Parfumeolier
+                               ; POWDERS                                 ; Powders                                  ;Polvos                       ;                                       ;Puddere
+                               ; PRIMERS                                 ; Primers                                  ;Pre-bases                    ;                                       ;Primere
+                               ; REED_DIFUSERS                           ; Reed Difusers                            ;Difusores                    ;                                       ;
+                               ; ROOM_SPRAYS                             ; Room Sprays                              ;Sprays para el Hogar         ;                                       ;
+                               ; SETTING_SPRAY                           ; Setting Spray                            ;                             ;                                       ;
+                               ; SHAMPOOS                                ; Shampoos                                 ;Champús                      ;                                       ;
+                               ; SHAVING                                 ; Shaving                                  ;Afeitado                     ;                                       ;Barbering
+                               ; SHOWER_GELS_CREAMS                      ; Shower Gels & Creams                     ;Geles de Ducha               ;                                       ;
+                               ; SKINCARE_GIFTS                          ; Skincare Gifts                           ;Regalos de Cuidado Facial    ;                                       ;Hudplejegaveæsker
+                               ; SOAPS                                   ; Soaps                                    ;Jabones                      ;                                       ;Sæber
+                               ; SPA_PAMPER_GIFTS                        ; Spa & Pamper Gifts                       ;Regalos de Spa               ;                                       ;Spa og forkælende gaveæsker
+                               ; TRAVEL_KITS                             ; Travel Kits                              ;Sets de Viaje                ;                                       ;Rejsekits
+                               ; WAX_MELTS                               ; Wax Melts                                ;Ceras Perfumadas             ;                                       ;
+
+
+INSERT_UPDATE CategoryTypeFacet; code[unique=true]                       ; name[lang=en]                            ;name[lang=es]                ;name[lang=fr]                          ;name[lang=da]
+                               ; ACCESSORIES                             ; Accessories                              ;Accesorios                   ;                                       ;
+                               ; BATH_SHOWER                             ; Bath & Shower                            ;Baño y Ducha                 ;Bain & Douche                          ;Bad
+                               ; BODY_CARE                               ; Body Care                                ;Cuidado Corporal             ;Soin corps                             ;Kropspleje
+                               ; EYE_CARE                                ; Eye Care                                 ;Cuidado de Ojos              ;Soin des yeux                          ;Øjenpleje
+                               ; EYE_MAKE_UP                             ; Eye Make-up                              ;Maquillaje de Ojos           ;Maquillage yeux                        ;Øjenmakeup
+                               ; FACE_MAKE_UP                            ; Face Make-up                             ;Maquillaje de Rostro         ;Maquillage teint                       ;Makeup til ansigtet
+                               ; FOOT_CARE                               ; Foot Care                                ;Cuidado de Pies              ;Soin des pieds                         ;Fodpleje
+                               ; FRAGRANCE                               ; Fragrance                                ;Fragancias                   ;Parfum                                 ;Dufte
+                               ; GIFTS                                   ; Gifts                                    ;Regalos                      ;Coffret                                ;Gaveæsker
+                               ; HAIR_CARE                               ; Hair Care                                ;Cuidado del Cabello          ;Soin des cheveux                       ;Hårpleje
+                               ; HAND_CARE                               ; Hand Care                                ;Cuidado de Manos             ;Soin des mains                         ;Håndpleje
+                               ; HOME_FRAGRANCE                          ; Home Fragrance                           ;Fragancias del Hogar         ;Parfum d'ambiance                      ;
+                               ; LIP_CARE                                ; Lip Care                                 ;Cuidado de Labios            ;Soin des lèvres                        ;Læbepleje
+                               ; LIP_MAKE_UP                             ; Lip Make-up                              ;Maquillaje de Labios         ;Maquillage lèvres                      ;Læbemakeup
+                               ; NAIL_MAKE_UP                            ; Nail Make-up                             ;                             ;Soin des ongles                        ;Makeup til negle
+                               ; SKIN_CARE                               ; Skin Care                                ;Cuidado Facial               ;Soin du visage                         ;Hudpleje
+
+INSERT_UPDATE VeganFacet        ; code[unique=true]                       ; name[lang=en]
+                               ; YES                                     ; Yes
+                               ; NO                                      ; No
+
+INSERT_UPDATE FreeFromFacet     ; code[unique=true]                       ; name[lang=en]
+                               ; GLUTEN                                  ; Gluten
+                               ; SOY                                     ; Soy
+                               ; SILICONE                                ; Silicone
+                               ; SULFATES                                ; Sulfates
+                               ; FRAGRANCE_FREE                          ; Fragrance
+                               ; NUTS                                    ; Nuts
+                               ; OIL                                     ; Oil

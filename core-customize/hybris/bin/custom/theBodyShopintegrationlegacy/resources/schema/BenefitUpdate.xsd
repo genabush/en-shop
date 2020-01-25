@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/benefitSchema" xmlns:tns="http://thebodyshop/benefitSchema" elementFormDefault="qualified">
+
+	<xs:element name="BenefitUpdateRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element form="unqualified" minOccurs="0" name="BenefitUpdate" type="tns:BenefitUpdate" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BenefitUpdateResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" name="messageId" type="xs:string" />
+				<xs:element minOccurs="0" name="requestId" type="xs:string" />
+				<xs:element minOccurs="0" name="status" type="xs:string" />
+				<xs:element minOccurs="0" name="statusMessage" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="BenefitUpdate">
+		<xs:sequence>
+			<xs:element name="CustomerID" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="ProgrammeID" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Market" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Benefit" type="tns:Benefit" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Benefit">
+		<xs:sequence>
+			<xs:element name="BenefitType" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="BenefitValue" type="xs:double" minOccurs="0" maxOccurs="1" />
+			<xs:element name="BenefitCode" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="UsedDate" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+			<xs:element name="OrderCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="StoreID" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

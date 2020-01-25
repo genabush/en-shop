@@ -1,0 +1,31 @@
+.amplience {
+  // example of custom component that's not on OOTB Spartacus
+}
+
+.media-block {
+  max-width: 400px;
+  &:hover {
+    .media-block__paragraph,
+    .media-block__title {
+      color: #3a857e;
+    }
+  }
+  &__img {
+    transition: transform 0.5s ease;
+
+    &-wrap {
+      overflow: hidden;
+      max-width: 382px;
+      margin-bottom: 20px;
+      &:hover {
+        .media-block__img {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+  &__title {
+    line-height: 20px;
+    padding-top: 10px;
+  }
+}

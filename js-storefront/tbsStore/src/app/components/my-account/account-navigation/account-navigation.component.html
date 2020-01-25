@@ -1,0 +1,17 @@
+<nav class="account-nav" *ngIf="node$ | async as node">
+  <ul class="account-nav__list list-unstyled">
+    <li
+      *ngFor="let navItem of node.children"
+      [ngClass]="{
+        'account-nav__list-item': true,
+        'account-nav__list-item--active': navItem.active,
+        'account-nav__list-item--break': navItem.hasBreakAfter
+      }"
+    >
+      <a class="account-nav__link" [href]="navItem.url">
+        <span [ngClass]="[navItem.icon ? 'account-nav__link-icon icon icon--' + navItem.icon : '']"></span>
+        {{ navItem.title }}
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://thebodyshop/posRefundSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://thebodyshop/posRefundSchema" targetNamespace="http://thebodyshop/posRefundSchema">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://thebodyshop/posRefundSchema" xmlns:tns="http://thebodyshop/posRefundSchema">
+			<xs:element name="RefundRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="PriceRecalculationRequired" type="xs:boolean" />
+						<xs:element name="ExecuteRefund" type="xs:boolean" />
+						<xs:element name="AgentID">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="255" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="StoreID">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="255" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Order" type="tns:Order" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RefundConfirmationResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Status">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="255" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="MessageId">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="255" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element minOccurs="0" name="MessageDescription">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="255" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element minOccurs="0" name="Order" type="tns:Order" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="Order">
+				<xs:sequence>
+					<xs:element name="Code">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" name="Status">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" name="OrderReturnReason">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" name="OrderPromotions" type="tns:OrderPromotions" />
+					<xs:element minOccurs="0" name="TotalDiscount" type="xs:double" />
+					<xs:element minOccurs="0" name="Payments" type="tns:Payments" />
+					<xs:element minOccurs="0" name="NetTotal" type="xs:double" />
+					<xs:element minOccurs="0" name="GrossTotal" type="xs:double" />
+					<xs:element minOccurs="0" name="Taxes" type="tns:Taxes" />
+					<xs:element name="Entries" type="tns:Entries" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="OrderPromotions">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="Code">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Payments">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="Payment" type="tns:Payment" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Payment">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="ID">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Type">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Amount" type="xs:double" />
+					<xs:element name="Status">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Taxes">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="Tax">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:double">
+									<xs:attribute name="code" type="tns:TaxCode" use="optional" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="TaxCode">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="255" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="Entries">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="Entry" type="tns:Entry" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Entry">
+				<xs:sequence>
+					<xs:element name="EntryNumber" type="xs:int" />
+					<xs:element minOccurs="0" name="Status">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element minOccurs="0" name="ArticleID">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Quantity" type="xs:int" />
+					<xs:element minOccurs="0" name="UnitPrice" type="xs:double" />
+					<xs:element minOccurs="0" name="LinePromotions" type="tns:LinePromotions" />
+					<xs:element minOccurs="0" name="LineDiscount" type="xs:double" />
+					<xs:element minOccurs="0" name="LineTotal" type="xs:double" />
+					<xs:element name="ReturnReason">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LinePromotions">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="Code">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="255" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="RefundRequest">
+		<wsdl:part element="tns:RefundRequest" name="RefundRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="RefundConfirmationResponse">
+		<wsdl:part element="tns:RefundConfirmationResponse" name="RefundConfirmationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="PosRefundService">
+		<wsdl:operation name="Refund">
+			<wsdl:input message="tns:RefundRequest" name="RefundRequest">
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="RefundConfirmation">
+			<wsdl:output message="tns:RefundConfirmationResponse" name="RefundConfirmationResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PosRefundServiceSoap11" type="tns:PosRefundService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Refund">
+			<soap:operation soapAction="" />
+			<wsdl:input name="RefundRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="RefundConfirmation">
+			<soap:operation soapAction="" />
+			<wsdl:output name="RefundConfirmationResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PosRefundService">
+		<wsdl:port binding="tns:PosRefundServiceSoap11" name="PosRefundServiceSoap11">
+			<soap:address location="http://thebodyshop.local:9001/tbsdataprocessing/endpoints" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

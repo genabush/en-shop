@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+	<extension abstractclassprefix="Generated" classprefix="TheBodyShopintegrationlegacy" jaloLogicFree="true" managername="TheBodyShopintegrationlegacyManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShopintegrationlegacy" usemaven="false">
+
+		<requires-extension name="theBodyShopcore" />
+		<requires-extension name="springintegrationlibs" />
+		<requires-extension name="acceleratorservices"/>
+		<coremodule generated="true" manager="uk.co.thebodyshop.integration.jalo.TheBodyShopintegrationlegacyManager" packageroot="uk.co.thebodyshop.integration" />
+
+		<webmodule jspcompile="false" webroot="/theBodyShopintegrationlegacy" />
+
+	</extension>
+</extensioninfo>

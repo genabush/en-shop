@@ -1,0 +1,86 @@
+<div class="who-will-collect d-flex flex-row position-relative mb-4">
+  <!-- SELECT DROPDOWN -->
+  <button
+    class="mat-form-field-address-overlay position-absolute w-100 h-100 m-0 border-0 p-0 text-hide"
+    (click)="openWhoWillCollectModal()"
+  >
+    {{ 'common.openModal' | cxTranslate }}
+  </button>
+  <!-- CHOOSE BUTTON -->
+  <button class="btn mat-form-field-address-btn m-0" (click)="openWhoWillCollectModal()">
+    <cx-icon [type]="iconTypes.EXPAND"></cx-icon>
+  </button>
+  <mat-select
+    appearance="fill"
+    class="pl-3 pr-0 mat-form-field-address"
+    placeholder="{{ 'whoWillCollect.title' | cxTranslate }}"
+    [value]="whoWillCollectDetails ? '1' : null"
+  >
+    <!-- Who Will Collect  -->
+    <mat-select-trigger class="cx-card-address-option cx-card-address-option-modes">
+      <div class="cx-card-inner h-100">
+        <div class="cx-card-container" *ngIf="whoWillCollectDetails">
+          <div class="card-body cx-card-body">
+            <div class="cx-card-label-bold">
+              {{ whoWillCollectDetails.firstName }} {{ whoWillCollectDetails.lastName }}
+            </div>
+            <div>{{ whoWillCollectDetails.cellphone }}</div>
+          </div>
+        </div>
+      </div>
+    </mat-select-trigger>
+    <mat-option value="1">
+      <!-- HACK: Needs to be here in order to display values from select <mat-select-trigger> field-->
+    </mat-option>
+  </mat-select>
+</div>
+
+<ng-template #whoWillCollectModal let-c="close" let-d="dismiss" id="checkout-delivery-modes-modal">
+  <div class="modal-header flex-column">
+    <div class="row justify-content-between w-100 pl-4 pr-0 m-0">
+      <h2 class="modal-title">{{ 'whoWillCollect.title' | cxTranslate }}</h2>
+      <button
+        type="button"
+        class="close"
+        [attr.aria-label]="'common.closeBtn' | cxTranslate"
+        (click)="closeWhoWillCollectModal()"
+      >
+        <span aria-hidden="true">
+          <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body d-flex flex-row flex-wrap pt-3">
+    <form [formGroup]="collectionPersonalDetails" class="form-collection" (submit)="submitForm($event)">
+      <mat-form-field appearance="fill" class="mat-input-primary form-collection__field">
+        <mat-label>{{ 'addressForm.firstName.label' | cxTranslate }}</mat-label>
+        <input matInput class="mat-form-control" type="text" formControlName="firstName" name="firstName" required />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="mat-input-primary form-collection__field">
+        <mat-label>{{ 'addressForm.lastName.label' | cxTranslate }}</mat-label>
+        <input matInput class="mat-form-control" type="text" formControlName="lastName" name="lastName" required />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="mat-input-primary form-collection__field">
+        <mat-label>{{ 'addressForm.phoneNumber.label' | cxTranslate }}</mat-label>
+        <input matInput class="mat-form-control" type="text" formControlName="cellphone" name="cellphone" required />
+        <mat-error class="pl-1" *ngIf="collectionPersonalDetails.controls['cellphone']?.hasError('pattern')"
+          >{{ 'addressForm.phoneNumberError' | cxTranslate }}
+          <span class="text-secondary">{{ 'addressForm.phoneNumber.placeholder' | cxTranslate }}</span></mat-error
+        >
+      </mat-form-field>
+      <div class="cx-checkout-btns row mt-4">
+        <div class="col-md-12 col-lg-6 mb-sm-2">
+          <button type="button" class="btn btn-block btn-action" (click)="closeWhoWillCollectModal()">
+            {{ 'common.cancel' | cxTranslate }}
+          </button>
+        </div>
+        <div class="col-md-12 col-lg-6">
+          <button class="btn btn-block btn-primary" type="submit" [disabled]="collectionPersonalDetails.invalid">
+            {{ 'common.continue' | cxTranslate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

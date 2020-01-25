@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype elementtype="ProductBarCode" code="ProductBarCodeSet" autocreate="true" generate="true" />
+	</collectiontypes>
+
+	<itemtypes>
+		<typegroup name="ODataIntegrationAPI">
+
+			<itemtype code="ProductBarCode" autocreate="true" generate="true">
+				<deployment table="tbs_prdctIngBarcode" typecode="10901" />
+				<attributes>
+					<attribute qualifier="value" type="java.lang.String">
+						<modifiers optional="false" initial="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="IntegrationS4Product" autocreate="true" generate="true">
+				<deployment table="tbs_integrationS4Product" typecode="10902" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="type">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="internalName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="unitOfMeasure">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="measurement">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mllVariant">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="flavour">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="colour">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="seasonYear">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="season">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="collection">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="hazardous">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="ProductBarCodeSet" qualifier="barcodes">
+						<modifiers optional="true" partof="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="IntegrationS4Price" autocreate="true" generate="true">
+				<deployment table="tbs_integrationS4Price" typecode="10903" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="country">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="productCode">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="priceValue">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="currency">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="IntegrationS4Stock" autocreate="true" generate="true">
+				<deployment table="tbs_integrationS4Stock" typecode="10904" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="warehouseCode">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="productCode">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="available">
+						<modifiers optional="false" />
+						<defaultvalue>new Integer(0)</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="activeEan">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="extended">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

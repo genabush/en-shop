@@ -1,0 +1,38 @@
+<div tabindex="0" class="vouchers-list" *ngIf="voucher">
+  <div class="vouchers-list__element vouchers-list__element--{{ voucher.type.toLowerCase() }}">
+    <div class="voucher-data">
+      <div class="voucher-data__currency">{{ voucher.value | currency: currency }}</div>
+      <div>
+        <span>{{ 'payment.vouchers.type' | cxTranslate }}:</span> {{ voucher.type }}
+      </div>
+      <div>
+        <span>{{ 'payment.vouchers.expires' | cxTranslate }}:</span> {{ voucher.expiryDate | cxDate }}
+      </div>
+      <div>
+        <span>{{ 'payment.vouchers.id' | cxTranslate }}:</span> {{ voucher.voucherId }}
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!voucher.applied"
+    role="button"
+    class="payment-action payment-action--{{ voucher.type.toLowerCase() }}"
+    [ngClass]="{ blocked: blocked }"
+    (click)="add.emit(voucher)"
+  >
+    {{ 'payment.vouchers.use' | cxTranslate }}
+  </div>
+
+  <div
+    *ngIf="voucher.applied"
+    role="button"
+    class="payment-action payment-action--{{ voucher.type.toLowerCase() }}"
+    (click)="remove.emit(voucher)"
+  >
+    {{ 'payment.vouchers.remove' | cxTranslate }}
+  </div>
+  <div class="terms">
+    <a role="link" [href]="termsLink" target="_blank">{{ 'payment.vouchers.terms' | cxTranslate }}</a>
+  </div>
+</div>

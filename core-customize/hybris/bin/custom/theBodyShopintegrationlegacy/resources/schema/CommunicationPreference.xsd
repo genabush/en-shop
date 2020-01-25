@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://thebodyshop/communicationPreferenceSchema" xmlns:tns="http://thebodyshop/communicationPreferenceSchema" elementFormDefault="qualified">
+
+    <xs:element name="CustomerCommunicationPreferenceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="CustomerCommunicationPreference" type="tns:CustomerCommunicationPreferenceType" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="CustomerCommunicationPreferenceType">
+        <xs:sequence>
+            <xs:element name="CustomerID" type="xs:string"/>
+            <xs:element name="CommunicationPreference" type="tns:CommunicationPreferenceType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CommunicationPreferenceType">
+        <xs:sequence>
+            <xs:element name="CommCategory" type="xs:string"/>
+            <xs:element name="CommunicationChannel" type="tns:CommunicationChannelType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CommunicationChannelType">
+        <xs:sequence>
+            <xs:element name="ChannelID" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="Value" type="tns:NotNullStringMaxLength256" minOccurs="0"/>
+            <xs:element name="CapturedDateTime" type="xs:dateTime"/>
+            <xs:element name="CapturedChannel" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="OptInStatus" type="xs:boolean" nillable="true"/>
+            <xs:element name="CapturedLocation" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="Address" type="tns:CommunicationAddressType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="CommunicationAddressType">
+        <xs:sequence>
+            <xs:element name="AddressID" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="AddressLine1" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="AddressLine2" minOccurs="0" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="AddressLine3" minOccurs="0" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="City" minOccurs="0" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="Province" minOccurs="0" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="Country" type="tns:NotNullStringMaxLength256"/>
+            <xs:element name="PostCode" minOccurs="0" type="tns:NotNullStringMaxLength256"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:simpleType name="NotNullStringMaxLength256">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".*\S.*"/>
+            <xs:minLength value="1"/>
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	<xs:element name="CustomerCommunicationPreferenceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="statusCode" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>The response of the Request</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="messageId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>The Hybris Id of the Feed</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
+

@@ -1,0 +1,517 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=tbsCAContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:ca.co.thebodyshop.initialdata.constants.TheBodyShopInitialDataConstants&/theBodyShopinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$productCatalog=tbsCAProductCatalog
+$productCatalogName=Canada Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+UPDATE CMSSite;uid[unique=true];defaultPreviewCategory(code, $productCV);defaultPreviewProduct(code, $productCV);defaultPreviewCatalog(id)
+;thebodyshop-ca;c00001;p003257;$productCatalog
+
+# CMS Navigation Nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)[mode=append]
+;caroot;;caroot;;
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+;;CAStoreFinderLink;CA Store Finder Link;/store-finder;CAStoreFinderLink;CAStoreFinderLink;;;;
+;;CALoginLink;CA Login Link;/login;CALoginLink;CALoginLink;;;;
+;;CABodyCategoryLink;CA Body Category Link;/Body/c/c00001;CABodyCategoryLink;CABodyCategoryLink;;c00001;;
+;;CABodyTreatsCategoryLink;CA Body Treats Category Link;/Body/Bath-Treats/c/c00013;CABodyTreatsCategoryLink;CABodyTreatsCategoryLink;;c00013;;
+;;CABodyButtersCategoryLink;CA Body Butters Category Link;/Body/Body-Butters/c/c00014;CABodyButtersCategoryLink;CABodyButtersCategoryLink;;c00014;;
+;;CABodyYogurtsCategoryLink;CA Body Yogurts Category Link;/Body/Body-Yogurts/c/c00284;CABodyYogurtsCategoryLink;CABodyYogurtsCategoryLink;;c00284;;
+;;CABodyMassageOilsCategoryLink;CA Body Massage Category Link;/Body/Body-Massage-Oils/c/c00024;CABodyMassageOilsCategoryLink;CABodyMassageOilsCategoryLink;;c00024;;
+;;CABodyBronzingCategoryLink;CA Body Bronzing Category Link;/Body/Body-Bronzing/c/c00018;CABodyBronzingCategoryLink;CABodyBronzingCategoryLink;;c00018;;
+;;CADeodorantCategoryLink;CA Deodorant Category Link;/Body/Deodorant/c/c00019;CADeodorantCategoryLink;CADeodorantCategoryLink;;c00019;;
+;;CAFootCareCategoryLink;CA Foot Care Category Link;/Body/Foot-Care/c/c00020;CAFootCareCategoryLink;CAFootCareCategoryLink;;c00020;;
+;;CATravelSizesCategoryLink;CA Travel Sizes Category Link;/Body/Travel-Sizes/c/c00021;CATravelSizesCategoryLink;CATravelSizesCategoryLink;;c00021;;
+;;CAFaceCategoryLink;CA Face Category Link;/Face/c/c00010;CAFaceCategoryLink;CAFaceCategoryLink;;c00010;;
+;;CAFaceMasksCategoryLink;CA Face Masks Category Link;/Face/Face-Masks/c/c00143;CAFaceMasksCategoryLink;CAFaceMasksCategoryLink;;c00143;;
+;;CAMakeUpRemoversCategoryLink;CA Make-up Removers Link;/Face/Make-up-Removers/c/c00145;CAMakeUpRemoversCategoryLink;CAMakeUpRemoversCategoryLink;;c00145;;
+;;CAEyeCareCategoryLink;CA Eye Care CategoryLink;/Face/Eye-Care/c/c00144;CAEyeCareCategoryLink;CAEyeCareCategoryLink;;c00144;;
+;;CANightTimeTreatmentsCategoryLink;CA Night Time Treatments CategoryLink;/Face/Night-Time-Treatments/c/c00149;CANightTimeTreatmentsCategoryLink;CANightTimeTreatmentsCategoryLink;;c00149;;
+;;CALipBalmCategoryLink;CA Lip Balm CategoryLink;/Face/Lip-Balm/c/c00146;CALipBalmCategoryLink;CALipBalmCategoryLink;;c00146;;
+;;CAMenShavingCategoryLink;"Men's Shaving CategoryLink";/Face/Mens-Shaving/c/c00147;CAMenShavingCategoryLink;CAMenShavingCategoryLink;;c00147;;
+;;CACleansersAndTonersCategoryLink;CA Cleansers and Toners CategoryLink;/Face/Cleansers-and-Toners/c/c00141;CACleansersAndTonersCategoryLink;CACleansersAndTonersCategoryLink;;c00141;;
+;;CAMoisturisersCategoryLink;CA Moisturisers CategoryLink;/Face/Moisturisers/c/c00148;CAMoisturisersCategoryLink;CAMoisturisersCategoryLink;;c00148;;
+;;CAAccessoriesCategoryLink;CA Accessories CategoryLink;/Face/Accessories/c/c00140;CAAccessoriesCategoryLink;CAAccessoriesCategoryLink;;c00140;;
+;;CAFaceScrubsCategoryLink;CA Face Scrubs CategoryLink;/Face/Face Scrubs/c/c00275;CAFaceScrubsCategoryLink;CAFaceScrubsCategoryLink;;c00275;;
+;;CAHandsCategoryLink;CA Hands CategoryLink;/Hands/c/c00006;CAHandsCategoryLink;CAHandsCategoryLink;;c00006;;
+;;CAHandsMoisturisersCategoryLink;CA Moisturisers CategoryLink;/Hands/Moisturisers/c/c00054;CAHandsMoisturisersCategoryLink;CAHandsMoisturisersCategoryLink;;c00054;;
+;;CAHandWashCategoryLink;CA Hand Wash CategoryLink;/Hands/Hand-Wash/c/c00056;CAHandWashCategoryLink;CAHandWashCategoryLink;;c00056;;
+;;CATargetedTreatmentCategoryLink;CA Targeted Treatment CategoryLink;/Hands/Targeted-Treatment/c/c00055;CATargetedTreatmentCategoryLink;CATargetedTreatmentCategoryLink;;c00055;;
+;;CAHairCategoryLink;CA Hair Category Link;/Hair/c/c00005;CAHairCategoryLink;CAHairCategoryLink;;c00005;;
+;;CABrushesAndCombsCategoryLink;CA Brushes and Combs Category Link;/Hair/Brushes-and-Combs/c/c00047;CABrushesAndCombsCategoryLink;CABrushesAndCombsCategoryLink;;c00047;;
+;;CAConditionerCategoryLink;CA Conditioner Category Link;/Hair/Conditioner/c/c00048;CAConditionerCategoryLink;CAConditionerCategoryLink;;c00048;;
+;;CAShampooCategoryLink;CA Shampoo Category Link;/Hair/Shampoo/c/c00051;CAShampooCategoryLink;CAShampooCategoryLink;;c00051;;
+;;CATreatmentCategoryLink;CA Treatment Category Link;/Hair/Treatment/c/c00050;CATreatmentCategoryLink;CATreatmentCategoryLink;;c00050;;
+;;CAStylingCategoryLink;CA Styling Category Link;/Hair/Styling/c/c00049;CAStylingCategoryLink;CAStylingCategoryLink;;c00049;;
+;;CAMakeUpCategoryLink;CA Make-up Category Link;/Make-up/c/c00007;CAMakeUpCategoryLink;CAMakeUpCategoryLink;;c00007;;
+;;CAFoundationsConcealersCategoryLink;CA Foundations Concealers Category Link;/Make-up/FoundationsConcealers/c/c00065;CAFoundationsConcealersCategoryLink;CAFoundationsConcealersCategoryLink;;c00065;;
+;;CABrushesAndToolsCategoryLink;CA Brushes and Tools Category Link;/Make-up/Brushes-and-Tools/c/c00059;CABrushesAndToolsCategoryLink;CABrushesAndToolsCategoryLink;;c00059;;
+;;CABBCreamsCategoryLink;CA BB Creams Category Link;/Make-up/BB-Creams/c/c00060;CABBCreamsCategoryLink;CABBCreamsCategoryLink;;c00060;;
+;;CABronzingCategoryLink;CA Bronzing Category Link;/Make-up/Bronzing/c/c00061;CABronzingCategoryLink;CA BronzingCategoryLink;;c00061;;
+;;CACheeksCategoryLink;CA Cheeks Category Link;/Make-up/Cheeks/c/c00062;CACheeksCategoryLink;CACheeksCategoryLink;;c00062;;CA
+;;CAEyeLinersCategoryLink;CA Eye Liners Category Link;/Make-up/Eye-Liners/c/c00064;CAEyeLinersCategoryLink;CAEyeLinersCategoryLink;;c00064;;
+;;CAEyeShadowCategoryLink;CA Eye Shadow Category Link;/Make-up/Eye-Shadow/c/c00063;CAEyeShadowCategoryLink;CAEyeShadowCategoryLink;;c00063;;
+;;CALipsCategoryLink;CA Lips Category Link;/Make-up/Lips/c/c00066;CALipsCategoryLink;CALipsCategoryLink;;c00066;;
+;;CAMascaraCategoryLink;CA Mascara Category Link;/Make-up/Mascara/c/c00067;CAMascaraCategoryLink;CAMascaraCategoryLink;;c00067;;
+;;CAPrimersCategoryLink;CA Primers Category Link;/Make-up/Primers/c/c00069;CAPrimersCategoryLink;CAPrimersCategoryLink;;c00069;;
+;;CADeliveryLink;CA Delivery Link;"https://www.thebodyshop.com/customer-care/delivery/options";CADeliveryLink;CADeliveryLink;newWindow;;;
+;;CAReturnsLink;CA Returns Link;"https://www.thebodyshop.com/customer-care/delivery/options";CAReturnsLink;CAReturnsLink;newWindow;;;
+;;CAFAQLink;CA FAQ Link;/faq;CAFAQLink;CAFAQLink;;;;
+;;CATermsAndConditionsLink;CA TermsAndConditions Link;"https://www.thebodyshop.com/termsconditions";CATermsAndConditionsLink;CATermsAndConditionsLink;newWindow;
+;;CAPrivacyPolicyLink;CA PrivacyPolicy Link;/privacy-policy;CAPrivacyPolicyLink;CAPrivacyPolicyLink;newWindow;
+;;CASitemapLink;CA Sitemap Link;/sitemap;CASitemapLink;CASitemapLink;newWindow;
+;;CAStoresLink;CA Stores Link;"https://www.thebodyshop.com/store-finder";CAStoresLink;CAStoresLink;newWindow;
+;;CALoveYourBodyClubLink;CA Love your body Club Link;"https://www.thebodyshop.com/love-your-body-club";CALoveYourBodyClubLink;CALoveYourBodyClubLink;newWindow;
+;;CAStudentDiscountLink;CA Student Discount Link;"https://www.thebodyshop.com/en-gb/trending/student-discount";CAStudentDiscountLink;CAStudentDiscountLink;newWindow;
+;;CAGiftCardsLink;CA Gift Cards Link;/gift-card-balance;CAGiftCardsLink;CAGiftCardsLink;newWindow;
+;;CAAboutUsLink;CA About us Link;"https://www.thebodyshop.com/about-us";CAAboutUsLink;CAAboutUsLink;newWindow;
+;;CATheBodyShopAtHomeLink;CA The Body shop at home Link;"https://www.thebodyshop.com/en-gb/landing-at-home";CATheBodyShopAtHomeLink;CATheBodyShopAtHomeLink;newWindow;
+;;CAAffiliatesLink;CA Affiliates Link;"https://www.thebodyshop.com/en-gb/affiliates";CAAffiliatesLink;CAAffiliatesLink;newWindow;
+;;CAGenderPayGapLink;CA Gender pay gap Link;"https://www.thebodyshop.com/en-gb/gender-pay-gap";CAGenderPayGapLink;CAGenderPayGapLink;newWindow;
+;;CAModernSlaveryStatementLink;CA Modern slavery statement Link;"https://www.thebodyshop.com/en-gb/about-us/our-commitment/modern-slavery";CAModernSlaveryStatementLink;CAModernSlaveryStatementLink;newWindow;
+;;CAAgainstAnimalTestingLink;CA Against Animal testing Link;"https://www.thebodyshop.com/en-gb/about-us/against-animal-testing";CAAgainstAnimalTestingLink;CAAgainstAnimalTestingLink;newWindow;
+;;CATaxStrategyLink;CA Tax strategy Link;"https://www.thebodyshop.com/en-gb/medias/Tax-strategy-2018-Final.pdf?context=pdf/h6a/h6b/30291971506206.pdf";CATaxStrategyLink;CATaxStrategyLink;newWindow;
+;;CACareersLink;CA Careers Link;"https://careers.thebodyshop.com/?utm_source=careersite?locale=en_GB&_ga=2.150003254.1237729985.1565697969-1630092100.1560429379";CACareersLink;CACareersLink;newWindow;
+
+
+# CMS Navigation Nodes
+# create navigation root node for categories & child nodes for the root node
+INSERT_UPDATE CMSNavigationNode ; uid[unique=true]				 ; $contentCV[unique=true] ; name                               ; parent(uid, $contentCV)       ; links(&linkRef)                                               																										; &nodeRef
+                                ; TbsCARootNode					 ;                         ; TBS CA Root Node                   ; caroot                        ;                                                               																										; TbsCARootNode
+                                ; TbsCANavNode                   ;                         ; TBS CA Site Nav Node               ; TbsCARootNode                 ;                                              																										; TbsCANavNode
+                                ; TbsCACategoryNavNode           ;                         ; TBS CA Category Navigation         ; TbsCANavNode                  ;                                                               																										; TbsCACategoryNavNode
+                                ; TbsCADiscoverNavNode           ;                         ; TBS CA Discover Navigation         ; TbsCANavNode                  ;                                                               																										; TbsCADiscoverNavNode
+                                ; TbsCAFooterNavNode             ;                         ; TBS CA Footer Navigation           ; TbsCANavNode                  ;                                                               																										; TbsCAFooterNavNode
+                                ; CAUsefullInformationNavNode    ;                         ; CA Useful Information   			; TbsCAFooterNavNode            ; CADeliveryLink,CAReturnsLink,CAFAQLink,CATermsAndConditionsLink,CAPrivacyPolicyLink,CASitemapLink                                										; CAUsefullInformationNavNode
+                                ; CAWaysToShopNavNode 		     ;                         ; CA Ways To Shop 					; TbsCAFooterNavNode            ; CAStoresLink,CALoveYourBodyClubLink,CAStudentDiscountLink,CAGiftCardsLink                                  															; CAWaysToShopNavNode
+                                ; CAAboutUsNavNode               ;                         ; CA About Us               			; TbsCAFooterNavNode            ; CAAboutUsLink,CATheBodyShopAtHomeLink,CAAffiliatesLink,CAGenderPayGapLink,CAModernSlaveryStatementLink,CAAgainstAnimalTestingLink,CATaxStrategyLink,CACareersLink 	; CAAboutUsNavNode
+
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsCACategoryNavNode;;Tbs CA Category;TbsCANavNode;CABodyCategoryNavNode,CAFaceCategoryNavNode,CAHandsCategoryNavNode,CAHairCategoryNavNode,CAMakeUpCategoryNavNode;TbsCACategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ;CABodyCategoryNavNode;;CA Body Nav Node;Body;CABodyByProductTypeNavNode,CABodyBySkinTypeNavNode;;CABodyCategoryNavNode
+                               ;CAFaceCategoryNavNode;;CA Face Nav Node;Face;CAFaceByProductTypeNavNode,CAFaceBySkinTypeNavNode;;CAFaceCategoryNavNode
+                               ;CAHandsCategoryNavNode;;CA Hands Nav Node;Hands;CAHandsByProductTypeNavNode,CAHandsBySkinTypeNavNode;;CAHandsCategoryNavNode
+                               ;CAHairCategoryNavNode;;CA Hair Nav Node;Hair;CAHairByProductTypeNavNode,CAHairByHairConcernTypeNavNode;;CAHairCategoryNavNode
+                               ;CAMakeUpCategoryNavNode;;CA MakeUp Nav Node;MakeUp;CAMakeUpByProductTypeNavNode,CAMakeUpBySkinTypeNavNode;;CAMakeUpCategoryNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#Body_Category_NavNodes
+                               ;CABodyByProductTypeNavNode;;CA Body By Product Type;CABodyTreatsCategoryNavNode,CABodyButtersCategoryNavNode,CABodyYogurtsCategoryNavNode,CABodyMassageOilsCategoryNavNode,CAFootCareCategoryNavNode;;CABodyByProductTypeNavNode;
+                               ;CABodyBySkinTypeNavNode;;CA Body By Skin Type;CADeodorantCategoryNavNode,CABodyBronzingCategoryNavNode,CATravelSizesCategoryNavNode,CABodyAllCategoryNavNode;;CABodyBySkinTypeNavNode;
+
+#Face_Category_NavNodes
+                               ;CAFaceByProductTypeNavNode;;CA Face By Product Type;CAFaceMasksCategoryNavNode,CAMakeUpRemoversCategoryNavNode,CAEyeCareCategoryNavNode,CANightTimeTreatmentsCategoryNavNode,CAMenShavingCategoryNavNode;;CAFaceByProductTypeNavNode;
+                               ;CAFaceBySkinTypeNavNode;;CA Face By Skin Type;CALipBalmCategoryNavNode,CACleansersAndTonersNavNode,CAMoisturisersCategoryNavNode,CAAccessoriesCategoryNavNode,CAFaceScrubsCategoryNavNode,CAFaceAllCategoryNavNode;;CAFaceBySkinTypeNavNode;
+
+#Hands_Category_NavNodes
+                               ;CAHandsByProductTypeNavNode;;CA Hands By Product Type;CAHandsMoisturisersCategoryNavNode,CAHandWashCategoryNavNode;;CAHandsByProductTypeNavNode;
+                               ;CAHandsBySkinTypeNavNode;;CA Hands By Skin Type;CATargetedTreatmentCategoryNavNode,CAHandsAllCategoryNavNode;;CAHandsBySkinTypeNavNode;
+
+#Hair_Category_NavNodes
+                               ;CAHairByProductTypeNavNode;;CA Hair By Product Type;CABrushesAndCombsCategoryNavNode,CAConditionerCategoryNavNode,CAShampooCategoryNavNode;;CAHairByProductTypeNavNode;
+                               ;CAHairByHairConcernTypeNavNode;;CA Hair By Hair Concern Type;CATreatmentCategoryNavNode,CAStylingCategoryNavNode,CAHairAllCategoryNavNode;;CAHairByHairConcernTypeNavNode;
+
+#Makeup_Category_NavNodes
+                               ;CAMakeUpByProductTypeNavNode;;AT MakeUp By Product Type;CAFoundationsConcealersCategoryNavNode,CABrushesAndToolsCategoryNavNode,CABBCreamsCategoryNavNode,CABronzingCategoryNavNode,CACheeksCategoryNavNode;;CAMakeUpByProductTypeNavNode;
+                               ;CAMakeUpBySkinTypeNavNode;;AT MakeUp By Skin Type;CAEyeLinersCategoryNavNode,CAEyeShadowCategoryNavNode,CALipsCategoryNavNode,CAMascaraCategoryNavNode,CAPrimersCategoryNavNode,CAMakeUpAllCategoryNavNode;;CAMakeUpBySkinTypeNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Child_Nodes_BodyByProductTypeNavNode
+                               ;CABodyTreatsCategoryNavNode;;CA Body Treats;;CABodyTreatsCategoryNavNode
+                               ;CABodyButtersCategoryNavNode;;CA Body Butters;;CABodyButtersCategoryNavNode
+                               ;CABodyYogurtsCategoryNavNode;;CA Body Yogurts;;CABodyYogurtsCategoryNavNode
+                               ;CABodyMassageOilsCategoryNavNode;;CA Body Massage Oils;;CABodyMassageOilsCategoryNavNode
+                               ;CAFootCareCategoryNavNode;;AT Foot Care;;CAFootCareCategoryNavNode
+#Child_Nodes_BodyBySkinTypeNavNode
+                               ;CABodyAllCategoryNavNode;;CA Body All Categories;;CABodyAllCategoryNavNode
+                               ;CABodyBronzingCategoryNavNode;;CA Body Bronzing;;CABodyBronzingCategoryNavNode
+                               ;CATravelSizesCategoryNavNode;;AT Travel Sizes;;CATravelSizesCategoryNavNode
+                               ;CADeodorantCategoryNavNode;;AT Deodorant;;CADeodorantCategoryNavNode
+
+#Child_Nodes_FaceByProductTypeNavNode
+                               ;CAFaceMasksCategoryNavNode;;CA Face Masks;;CAFaceMasksCategoryNavNode
+                               ;CAMakeUpRemoversCategoryNavNode;;CA Make-up Removers;;CAMakeUpRemoversCategoryNavNode
+                               ;CAEyeCareCategoryNavNode;;CA Eye Care;;CAEyeCareCategoryNavNode
+                               ;CANightTimeTreatmentsCategoryNavNode;;CA Night Time Treatments;;CANightTimeTreatmentsCategoryNavNode
+                               ;CAMenShavingCategoryNavNode;;CA Men's Shaving ;;CAMenShavingCategoryNavNode
+#Child_Nodes_FaceBySkinTypeNavNode
+                               ;CALipBalmCategoryNavNode;;CA Lip Balm;;CALipBalmCategoryNavNode
+                               ;CACleansersAndTonersNavNode;;CA Cleansers and Toners;;CACleansersAndTonersNavNode
+                               ;CAMoisturisersCategoryNavNode;;CA Moisturisers;;CAMoisturisersCategoryNavNode
+                               ;CAAccessoriesCategoryNavNode;;CA Accessories;;CAAccessoriesCategoryNavNode
+                               ;CAFaceScrubsCategoryNavNode;;CA Face Scrubs;;CAFaceScrubsCategoryNavNode
+                               ;CAFaceAllCategoryNavNode;;CA Face All Categories;;CAFaceAllCategoryNavNode
+
+#Child_Nodes_HandsByProductTypeNavNode
+                               ;CAHandsMoisturisersCategoryNavNode;;CA Hands Moisturisers;;CAHandsMoisturisersCategoryNavNode
+                               ;CAHandWashCategoryNavNode;;CA Hand Wash;;CAHandWashCategoryNavNode
+#Child_Nodes_HandsBySkinTypeNavNode
+                               ;CATargetedTreatmentCategoryNavNode;;CA Targeted Treatment;;CATargetedTreatmentCategoryNavNode
+                               ;CAHandsAllCategoryNavNode;;CA Hands All Categories;;CAHandsAllCategoryNavNode
+
+#Child_Nodes_HairByProductTypeNavNode
+                               ;CABrushesAndCombsCategoryNavNode;;CA Brushes And Combs;;CABrushesAndCombsCategoryNavNode
+                               ;CAConditionerCategoryNavNode;;CA Conditioner;;CAConditionerCategoryNavNode
+                               ;CAShampooCategoryNavNode;;CA Shampoo;;CAShampooCategoryNavNode
+#Child_Nodes_HairByHairConcernTypeNavNode
+                               ;CATreatmentCategoryNavNode;;CA Treatment;;CATreatmentCategoryNavNode
+                               ;CAStylingCategoryNavNode;;CA Styling;;CAStylingCategoryNavNode
+                               ;CAHairAllCategoryNavNode;;CA Hair All Categories;;CAHairAllCategoryNavNode
+
+#Child_Nodes_MakeUpByProductTypeNavNode
+                               ;CAFoundationsConcealersCategoryNavNode;;CA Foundations Concealers;;CAFoundationsConcealersCategoryNavNode
+                               ;CABrushesAndToolsCategoryNavNode;;CA Brushes and Tools;;CABrushesAndToolsCategoryNavNode
+                               ;CABBCreamsCategoryNavNode;;CA BB Creams;;CABBCreamsCategoryNavNode
+                               ;CABronzingCategoryNavNode;;CA Bronzing;;CABronzingCategoryNavNode
+                               ;CACheeksCategoryNavNode;;CA Cheeks;;CACheeksCategoryNavNode
+
+#Child_Nodes_MakeUpBySkinTypeNavNode
+                               ;CAEyeLinersCategoryNavNode;;CA Eye Liners;;CAEyeLinersCategoryNavNode
+                               ;CAEyeShadowCategoryNavNode;;CA Eye Shadow;;CAEyeShadowCategoryNavNode
+                               ;CALipsCategoryNavNode;;CA Lips;;CALipsCategoryNavNode
+                               ;CAMascaraCategoryNavNode;;CA Mascara;;CAMascaraCategoryNavNode
+                               ;CAPrimersCategoryNavNode;;CA Primers;;CAPrimersCategoryNavNode
+                               ;CAMakeUpAllCategoryNavNode;;CA Make-up All Categories;;CAMakeUpAllCategoryNavNode
+
+# create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;CABodyAllCategoryNavNodeEntry;;CABodyAllCategoryNavNodeEntry;CABodyAllCategoryNavNode;CABodyCategoryLink
+;CABodyTreatsCategoryNavNodeEntry;;CABodyTreatsCategoryNavNodeEntry;CABodyTreatsCategoryNavNode;CABodyTreatsCategoryLink;CA
+;CABodyButtersCategoryNavNodeEntry;;CABodyButtersCategoryNavNodeEntry;CABodyButtersCategoryNavNode;CABodyButtersCategoryLink;CA
+;CABodyYogurtsCategoryNavNodeEntry;;CABodyYogurtsCategoryNavNodeEntry;CABodyYogurtsCategoryNavNode;CABodyYogurtsCategoryLink
+;CABodyMassageOilsCategoryNavNodeEntry;;CABodyMassageOilsCategoryNavNodeEntry;CABodyMassageOilsCategoryNavNode;CABodyMassageOilsCategoryLink
+;CABodyBronzingCategoryNavNodeEntry;;CABodyBronzingCategoryNavNodeEntry;CABodyBronzingCategoryNavNode;CABodyBronzingCategoryLink
+;CADeodorantCategoryNavNodeEntry;;CADeodorantCategoryNavNodeEntry;CADeodorantCategoryNavNode;CADeodorantCategoryLink
+;CATravelSizesCategoryNavNodeEntry;;CATravelSizesCategoryNavNodeEntry;CATravelSizesCategoryNavNode;CATravelSizesCategoryLink
+;CAFootCareCategoryNavNodeEntry;;CAFootCareCategoryNavNodeEntry;CAFootCareCategoryNavNode;CAFootCareCategoryLink
+;CAFaceAllCategoryNavNodeEntry;;CAFaceAllCategoryNavNodeEntry;CAFaceAllCategoryNavNode;CAFaceCategoryLink;CA
+;CAFaceMasksCategoryNavNodeEntry;;CAFaceMasksCategoryNavNodeEntry;CAFaceMasksCategoryNavNode;CAFaceMasksCategoryLink;CA
+;CAMakeUpRemoversCategoryNavNodeEntry;;CAMakeUpRemoversCategoryNavNodeEntry;CAMakeUpRemoversCategoryNavNode;CAMakeUpRemoversCategoryLink;CA
+;CAEyeCareCategoryNavNodeEntry;;CAEyeCareCategoryNavNodeEntry;CAEyeCareCategoryNavNode;CAEyeCareCategoryLink
+;CANightTimeTreatmentsCategoryNavNodeEntry;;CANightTimeTreatmentsCategoryNavNodeEntry;CANightTimeTreatmentsCategoryNavNode;CANightTimeTreatmentsCategoryLink
+;CAMenShavingCategoryNavNodeEntry;;CAMenShavingCategoryNavNodeEntry;CAMenShavingCategoryNavNode;CAMenShavingCategoryLink
+;CALipBalmCategoryNavNodeEntry;;CALipBalmCategoryNavNodeEntry;CALipBalmCategoryNavNode;CALipBalmCategoryLink
+;CACleansersAndTonersNavNodeEntry;;CACleansersAndTonersNavNodeEntry;CACleansersAndTonersNavNode;CACleansersAndTonersCategoryLink
+;CAMoisturisersCategoryNavNodeEntry;;CAMoisturisersCategoryNavNodeEntry;CAMoisturisersCategoryNavNode;CAMoisturisersCategoryLink
+;CAAccessoriesCategoryNavNodeEntry;;CAAccessoriesCategoryNavNodeEntry;CAAccessoriesCategoryNavNode;CAAccessoriesCategoryLink
+;CAFaceScrubsCategoryNavNodeEntry;;CAFaceScrubsCategoryNavNodeEntry;CAFaceScrubsCategoryNavNode;CAFaceScrubsCategoryLink
+;CAHandsAllCategoryNavNodeEntry;;CAHandsAllCategoryNavNodeEntry;CAHandsAllCategoryNavNode;CAHandsCategoryLink
+;CAHandsMoisturisersCategoryNavNodeEntry;;CAHandsMoisturisersCategoryNavNodeEntry;CAHandsMoisturisersCategoryNavNode;CAHandsMoisturisersCategoryLink
+;CAHandWashCategoryNavNodeEntry;;CAHandWashCategoryNavNodeEntry;CAHandWashCategoryNavNode;CAHandWashCategoryLink
+;CATargetedTreatmentCategoryNavNodeEntry;;CATargetedTreatmentCategoryNavNodeEntry;CATargetedTreatmentCategoryNavNode;CATargetedTreatmentCategoryLink
+;CAHairAllCategoryNavNodeEntry;;CAHairAllCategoryNavNodeEntry;CAHairAllCategoryNavNode;CAHairCategoryLink
+;CABrushesAndCombsCategoryNavNodeEntry;;CABrushesAndCombsCategoryNavNodeEntry;CABrushesAndCombsCategoryNavNode;CABrushesAndCombsCategoryLink
+;CAConditionerCategoryNavNodeEntry;;CAConditionerCategoryNavNodeEntry;CAConditionerCategoryNavNode;CAConditionerCategoryLink
+;CAShampooCategoryNavNodeEntry;;CAShampooCategoryNavNodeEntry;CAShampooCategoryNavNode;CAShampooCategoryLink
+;CATreatmentCategoryNavNodeEntry;;CATreatmentCategoryNavNodeEntry;CATreatmentCategoryNavNode;CATreatmentCategoryLink
+;CAStylingCategoryNavNodeEntry;;CAStylingCategoryNavNodeEntry;CAStylingCategoryNavNode;CAStylingCategoryLink
+;CAMakeUpAllCategoryNavNodeEntry;;CAMakeUpAllCategoryNavNodeEntry;CAMakeUpAllCategoryNavNode;CAMakeUpCategoryLink
+;CAFoundationsConcealersCategoryNavNodeEntry;;CAFoundationsConcealersCategoryNavNodeEntry;CAFoundationsConcealersCategoryNavNode;CAFoundationsConcealersCategoryLink
+;CABrushesAndToolsCategoryNavNodeEntry;;CABrushesAndToolsCategoryNavNodeEntry;CABrushesAndToolsCategoryNavNode;CABrushesAndToolsCategoryLink
+;CABBCreamsCategoryNavNodeEntry;;CABBCreamsCategoryNavNodeEntry;CABBCreamsCategoryNavNode;CABBCreamsCategoryLink
+;CABronzingCategoryNavNodeEntry;;CABronzingCategoryNavNodeEntry;CABronzingCategoryNavNode;CABronzingCategoryLink
+;CACheeksCategoryNavNodeEntry;;CACheeksCategoryNavNodeEntry;CACheeksCategoryNavNode;CACheeksCategoryLink
+;CAEyeLinersCategoryNavNodeEntry;;CAEyeLinersCategoryNavNodeEntry;CAEyeLinersCategoryNavNode;CAEyeLinersCategoryLink
+;CAEyeShadowCategoryNavNodeEntry;;CAEyeShadowCategoryNavNodeEntry;CAEyeShadowCategoryNavNode;CAEyeShadowCategoryLink
+;CALipsCategoryNavNodeEntry;;CALipsCategoryNavNodeEntry;CALipsCategoryNavNode;CALipsCategoryLink
+;CAMascaraCategoryNavNodeEntry;;CAMascaraCategoryNavNodeEntry;CAMascaraCategoryNavNode;CAMascaraCategoryLink
+;CAPrimersCategoryNavNodeEntry;;CAPrimersCategoryNavNodeEntry;CAPrimersCategoryNavNode;CAPrimersCategoryLink
+
+# Discover navigation start
+UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);children(uid,$contentCV);&nodeRef
+                        ;TbsCADiscoverNavNode;;Tbs CA Discover;TbsCANavNode;CADiscoverPartyNavNode,CADiscoverTipsAndAdviceNavNode,CADiscoverAboutUsNavNode;TbsCADiscoverNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;title;children(uid,$contentCV);links(&linkRef);&nodeRef;
+                               ; CADiscoverPartyNavNode;;CA Party Nav Node;Party;CA_Discover_TheBodyShopAtHomeNavNode;;CADiscoverPartyNavNode
+                               ; CADiscoverTipsAndAdviceNavNode;;CA Tips & Advice Nav Node;Tips & Advice;CASkincareArticlesNavNode,CABodyCareArticlesNavNode,CAMake-UpAeticlesNavNode,CALifeStyleArticlesNavNode,CAIngredientBenefitsNavNode;;CADiscoverTipsAndAdviceNavNode
+                               ; CADiscoverAboutUsNavNode;;CA About us Nav Node;About Us;CAWhoWeAreNavNode,CALoyaltyProgramNavNode,CASustainabilityNavNode,CAPlasticsNavNode;;CADiscoverAboutUsNavNode
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV);links(&linkRef);&nodeRef
+#CA_Discover_Party_NavNodes
+                               ;CA_Discover_TheBodyShopAtHomeNavNode;;CA BodyShop AtHome;CABeYourOwnBossNavNode,CAHostAPartyNavNode;;CA_Discover_TheBodyShopAtHomeNavNode ;
+
+#CA_Discover_Tips_And_Advice_NavNode
+
+                               ;CASkincareArticlesNavNode;;CA Skin Care Articles;CAHowToReduceBlackheadsNavNode,CASummerSkincareNavNode,CAHowToGetRidOfDarkCirclesNavNode,CABestFaceMoisturisersNavNode,CAHowToKeepSkinLookingYouthfulNavNode,CAGymSkincareTipsNavNode;;CASkincareArticlesNavNode ;
+                               ;CABodyCareArticlesNavNode;;CA Body Care Articles;CABenefitsOfDryBrushingNavNode,CAUnderstandingDrySkinNavNode,CABestBodyExfoliatorsNavNode;;CABodyCareArticlesNavNode ;
+                               ;CAMake-UpAeticlesNavNode;;CA Make-Up Articles;CAHowToFindTheRightFoundationNavNode,CAHowToApplyFoundationNavNode,CAHowToShapeEyebrowsNavNode,CAHowToGetASunKissedGlowNavNode;;CAMake-UpAeticlesNavNode ;
+                               ;CALifeStyleArticlesNavNode;;CA LifeStyle Articles;CABestVeganCitiesInTheCANavNode,CALongHaulFlightTipsNavNode,CAGymSkincareRoutineNavNode,CAChildhoodDreamsNavNode,CAPixieGeldof’sTravelEssentialsNavNode;;CALifeStyleArticlesNavNode ;
+                               ;CAIngredientBenefitsNavNode;;CA Ingedients Benefits;CABenefitsOfCharcoalNavNode,CAHyaluronicAcidBenefitsNavNode,CADiscoverAllIngredientsNavNode,CASourcingOurIngredientsNavNode;;CAIngredientBenefitsNavNode ;
+
+#CA_Discover_AboutUs_NavNode
+
+                               ;CAWhoWeAreNavNode;;CA Who We Are;CAOurHeritageNavNode,CAForeverAgainstAnimalTestingNavNode,CALatestNewsNavNode,CANatura_CoNavNode,CAB_CorpNavNode,CAEducationalProgrammeNavNode,CADonateMenstrualProductsNavNode,CAVegetarianBeautyNavNode;;CAWhoWeAreNavNode ;
+                               ;CALoyaltyProgramNavNode;;CA Loyalty Program;CA_Loyalty_JoinNowNavNode;;CALoyaltyProgramNavNode;
+                               ;CASustainabilityNavNode;;CA Sustainability;CAOurCommitmentNavNode,CACommunityTradeNavNode,CABio-BridgesNavNode,CAReducingEnvironmentalFootprintNavNode,CAEmpoweringWomenNavNode,CAModernSlaveryNavNode;;CASustainabilityNavNode;
+                               ;CAPlasticsNavNode;;CA Plastics;CAPlasticRecyclingInTheCANavNode,CATerraCycleInterviewNavNode,CAReturnRecycleRepeatNavNode,CACommunityTradePlasticsNavNode,CAPackagingAtTheBodyShopNavNode;;CAPlasticsNavNode;
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;links(&linkRef);&nodeRef
+#Party
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                               ;CABeYourOwnBossNavNode;;CA Be your own boss;;CABeYourOwnBossNavNode
+                               ;CAHostAPartyNavNode;;CA Host a party;;CAHostAPartyNavNode
+
+#Tips & Advice
+#Child_Nodes_SkincareArticles_NavNode
+                               ;CAHowToReduceBlackheadsNavNode;;CA How to reduce Blackheads;;CAHowToReduceBlackheadsNavNode
+                               ;CASummerSkincareNavNode;;CA Summer Skincare;;CASummerSkincareNavNode
+                               ;CAHowToGetRidOfDarkCirclesNavNode;;CA How To Get Rid Of Dark Circles;;CAHowToGetRidOfDarkCirclesNavNode
+                               ;CABestFaceMoisturisersNavNode;;CA Best Face Moisturisers;;CABestFaceMoisturisersNavNode
+                               ;CAHowToKeepSkinLookingYouthfulNavNode;;CA How To Keep Skin Looking Youthful;;CAHowToKeepSkinLookingYouthfulNavNode
+                               ;CAGymSkincareTipsNavNode;;CA Gym Skincare Tips;;CAGymSkincareTipsNavNode
+
+#Child_Nodes_CABodyCareArticles_NavNode
+
+                               ;CABenefitsOfDryBrushingNavNode;;CA Benefits Of Dry Brushing;;CABenefitsOfDryBrushingNavNode
+                               ;CAUnderstandingDrySkinNavNode;;CA Understanding Dry Skin;;CAUnderstandingDrySkinNavNode
+                               ;CABestBodyExfoliatorsNavNode;;CA Best Body Exfoliators;;CABestBodyExfoliatorsNavNode
+
+#Child_Nodes_Make-UpAeticles_NavNodes
+
+                               ;CAHowToFindTheRightFoundationNavNode;;CA How to find the right foundation;;CAHowToFindTheRightFoundationNavNode
+                               ;CAHowToApplyFoundationNavNode;;CA How to apply foundation;;CAHowToApplyFoundationNavNode
+                               ;CAHowToShapeEyebrowsNavNode;;CA How to shape eyebrows;;CAHowToShapeEyebrowsNavNode
+                               ;CAHowToGetASunKissedGlowNavNode;;CA How to get a sun kissed glow;;CAHowToGetASunKissedGlowNavNode
+
+#Child_Nodes_LifeStyleArticles_NavNode
+
+                               ;CABestVeganCitiesInTheCANavNode;;Best Vegan Cities in the CA;;CABestVeganCitiesInTheCANavNode
+                               ;CALongHaulFlightTipsNavNode;;CA Long haul flight tips;;CALongHaulFlightTipsNavNode
+                               ;CAGymSkincareRoutineNavNode;;CA Gym skincare routine;;CAGymSkincareRoutineNavNode
+                               ;CAChildhoodDreamsNavNode;;CA Childhood Dreams;;CAChildhoodDreamsNavNode
+                               ;CAPixieGeldof’sTravelEssentialsNavNode;;CA Pixie Geldof’s Travel Essentials;;CAPixieGeldof’sTravelEssentialsNavNode
+
+#Child_Nodes_IngredientBenefits_NavNode
+
+                               ;CABenefitsOfCharcoalNavNode;;CA Benefits of charcoal;;CABenefitsOfCharcoalNavNode
+                               ;CAHyaluronicAcidBenefitsNavNode;;CA Hyaluronic Acid Benefits;;CAHyaluronicAcidBenefitsNavNode
+                               ;CADiscoverAllIngredientsNavNode;;CA Discover all ingredients;;CADiscoverAllIngredientsNavNode
+                               ;CASourcingOurIngredientsNavNode;;CA Sourcing our ingredients;;CASourcingOurIngredientsNavNode
+#About_US
+#Child_Nodes_CAWhoWeAreNavNode
+                               ;CAOurHeritageNavNode;;CA Our Heritage;;CAOurHeritageNavNode
+                               ;CAForeverAgainstAnimalTestingNavNode;;CA Forever Against Animal Testing;;CAForeverAgainstAnimalTestingNavNode
+                               ;CAB_CorpNavNode;;CA B Corp;;CAB_CorpNavNode
+                               ;CALatestNewsNavNode;;CA Latest News;;CALatestNewsNavNode
+                               ;CANatura_CoNavNode;;CA Natura & co;;CANatura_CoNavNode
+                               ;CAEducationalProgrammeNavNode;;CA Educational Programme;;CAEducationalProgrammeNavNode
+                               ;CADonateMenstrualProductsNavNode;;CA Donate Menstrual Products;;CADonateMenstrualProductsNavNode
+                               ;CAVegetarianBeautyNavNode;;CA Vegetarian Beauty;;CAVegetarianBeautyNavNode
+
+#Child_Nodes_CALoyaltyProgramNavNode
+                               ;CA_Loyalty_JoinNowNavNode;;CA Join Now;;CA_Loyalty_JoinNowNavNode
+
+#Child_Nodes_CASustainabilityNavNode
+                               ;CAOurCommitmentNavNode;;CA Our Commitment;;CAOurCommitmentNavNode
+                               ;CACommunityTradeNavNode;;CA Community Trade;;CACommunityTradeNavNode
+                               ;CABio-BridgesNavNode;;CA Bio-Bridges;;CABio-BridgesNavNode
+                               ;CAReducingEnvironmentalFootprintNavNode;;CA Reducing Environmental Footprint;;CAReducingEnvironmentalFootprintNavNode
+                               ;CAEmpoweringWomenNavNode;;CA EmpoweringWomen;;CAEmpoweringWomenNavNode
+                               ;CAModernSlaveryNavNode;;CA ModernSlavery;;CAModernSlaveryNavNode
+
+#Child_Nodes_CAPlasticsNavNode
+                               ;CAPlasticRecyclingInTheCANavNode;;CA Plastic Recycling In The CA;;CAPlasticRecyclingInTheCANavNode
+                               ;CATerraCycleInterviewNavNode;;CA Terra Cycle Interview;;CATerraCycleInterviewNavNode
+                               ;CAReturnRecycleRepeatNavNode;;CA Return Recycle Repeat;;CAReturnRecycleRepeatNavNode
+                               ;CACommunityTradePlasticsNavNode;;CA Community Trade Plastics;;CACommunityTradePlasticsNavNode
+                               ;CAPackagingAtTheBodyShopNavNode;;CA Packaging At The Body Shop;;CAPackagingAtTheBodyShopNavNode
+
+#Links of Above navigation nodes
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow'];$category;$product;
+#Party
+                              ;;CABeYourOwnBossLink;CA Be your own boss Link;/;CABeYourOwnBossLink;CABeYourOwnBossLink;;;;
+                              ;;CAHostAPartyNavNodeLink;CA Host a party Link;/;CAHostAPartyNavNodeLink;CAHostAPartyNavNodeLink;;;;
+
+#Tips & Advice
+                              ;;CASummerSkincareLink;CA Summer Skincare Link;/;CASummerSkincareLink;CASummerSkincareLink;;;;
+                              ;;CAHowToReduceBlackheadsLink;CA How to reduce blackheads Link;/;CAHowToReduceBlackheadsLink;CAHowToReduceBlackheadsLink;;;;
+                              ;;CAHowToGetRidOfDarkCirclesLink;CA How to get rid of dark circles Link;/;CAHowToGetRidOfDarkCirclesLink;CAHowToGetRidOfDarkCirclesLink;;;;
+                              ;;CABestFaceMoisturisersLink;CA Best Face Moisturisers Link;/;CABestFaceMoisturisersLink;CABestFaceMoisturisersLink;;;;
+                              ;;CAHowToKeepSkinLookingYouthfulLink;CA How to keep skin looking youthful Link;/;CAHowToKeepSkinLookingYouthfulLink;CAHowToKeepSkinLookingYouthfulLink;;;;
+                              ;;CAGymSkincareTipsLink;CA Gym Skincare Tips Link;/;CAGymSkincareTipsLink;CAGymSkincareTipsLink;;;;
+
+                              ;;CABenefitsOfDryBrushingLink;CA Benefits of dry brushing Link;/;CABenefitsOfDryBrushingLink;CABenefitsOfDryBrushingLink;;;;
+                              ;;CAUnderstandingDrySkinLink;CA Understanding dry skin Link;/;CAUnderstandingDrySkinLink;CAUnderstandingDrySkinLink;;;;
+                              ;;CABestBodyExfoliatorsLink;CA Best body exfoliators Link;/;CABestBodyExfoliatorsLink;CABestBodyExfoliatorsLink;;;;
+
+                              ;;CAHowToFindTheRightFoundationLink;CA How to find the right foundation Link;/;CAHowToFindTheRightFoundationLink;CAHowToFindTheRightFoundationLink;;;;
+                              ;;CAHowToApplyFoundationLink;CA How to apply foundation Link;/;CAHowToApplyFoundationLink;CAHowToApplyFoundationLink;;;;
+                              ;;CAHowToShapeEyebrowsLink;CA How to shape eyebrows youthful Link;/;CAHowToShapeEyebrowsLink;CAHowToShapeEyebrowsLink;;;;
+                              ;;CAHowToGetASunKissedGlowLink;CA How to get a sun kissed glow Link;/;CAHowToGetASunKissedGlowLink;CAHowToGetASunKissedGlowLink;;;;
+
+                              ;;CABestVeganCitiesInTheCALink;Best Vegan Cities in the CA Link;/;CABestVeganCitiesInTheCALink;CABestVeganCitiesInTheCALink;;;;
+                              ;;CALongHaulFlightTipsLink;CA Long haul flight tips Link;/;CALongHaulFlightTipsLink;CALongHaulFlightTipsLink;;;;
+                              ;;CAGymSkincareRoutineLink;CA Gym skincare routine Link;/;CAGymSkincareRoutineLink;CAGymSkincareRoutineLink;;;;
+                              ;;CAChildhoodDreamsLink;CA Childhood Dreams Link;/;CAChildhoodDreamsLink;CAChildhoodDreamsLink;;;;
+                              ;;CAPixieGeldof’sTravelEssentialsLink;CA Pixie Geldof’s Travel Essentials Link;/;CAPixieGeldof’sTravelEssentialsLink;CAPixieGeldof’sTravelEssentialsLink;;;;
+
+                              ;;CABenefitsOfCharcoalLink;CA Benefits of charcoal Link;/;CABenefitsOfCharcoalLink;CABenefitsOfCharcoalLink;;;;
+                              ;;CAHyaluronicAcidBenefitsLink;CA Hyaluronic Acid Benefits Link;/;CAHyaluronicAcidBenefitsLink;CAHyaluronicAcidBenefitsLink;;;;
+                              ;;CADiscoverAllIngredientsLink;CA Discover all ingredients Link;/;CADiscoverAllIngredientsLink;CADiscoverAllIngredientsLink;;;;
+                              ;;CASourcingOurIngredientsLink;CA Sourcing our ingredients Link;/;CASourcingOurIngredientsLink;CASourcingOurIngredientsLink;;;;
+
+#AboutUs_Links
+                              ;;CAOurHeritageLink;CA Our Heritage Link;/;CAOurHeritageLink;CAOurHeritageLink;;;;
+                              ;;CAForeverAgainstAnimalTestingLink;CA How to reduce blackheads Link;/;CAForeverAgainstAnimalTestingLink;CAForeverAgainstAnimalTestingLink;;;;
+                              ;;CAB_CorpLink;CA B Corp Link;/;CAB_CorpLink;CAB_CorpLink;;;;
+                              ;;CALatestNewsLink;CA Latest News Link;/;CALatestNewsLink;CALatestNewsLink;;;;
+                              ;;CANatura_CoLink;CA Natura & co Link;/;CANatura_CoLink;CANatura_CoLink;;;;
+                              ;;CAEducationalProgrammeLink;CA Educational PRogramme Link;/;CAEducationalProgrammeLink;CAEducationalProgrammeLink;;;;
+                              ;;CADonateMenstrualProductsLink;CA Donate Menstrual Products Link;/;CADonateMenstrualProductsLink;CADonateMenstrualProductsLink;;;;
+                              ;;CAVegetarianBeautyLink;CA Vegetarian Beauty Link;/;CAVegetarianBeautyLink;CAVegetarianBeautyLink;;;;
+
+                              ;;CA_Loyalty_JoinNowLink;CA Join Now Link;/;CA_Loyalty_JoinNowLink;CA_Loyalty_JoinNowLink;;;;
+
+                              ;;CAOurCommitmentLink;CA Our Commitment Link;/;CAOurCommitmentLink;CAOurCommitmentLink;;;;
+                              ;;CACommunityTradeLink;CA Community Trade Link;/;CACommunityTradeLink;CACommunityTradeLink;;;;
+                              ;;CABio-BridgesLink;CA Bio-Bridges Link;/;CABio-BridgesLink;CABio-BridgesLink;;;;
+                              ;;CAReducingEnvironmentalFootprintLink;CA Reducing Environmental Footprint Link;/;CAReducingEnvironmentalFootprintLink;CAReducingEnvironmentalFootprintLink;;;;
+                              ;;CAEmpoweringWomenLink;CA Empowering Women Link;/;CAEmpoweringWomenLink;CAEmpoweringWomenLink;;;;
+                              ;;CAModernSlaveryLink;CA Modern Slavery Link;/;CAModernSlaveryLink;CAModernSlaveryLink;;;;
+
+                              ;;CAPlasticRecyclingInTheCALink;Plastic recycling in the CA Link;/;CAPlasticRecyclingInTheCALink;CAPlasticRecyclingInTheCALink;;;;
+                              ;;CATerraCycleInterviewLink;CA TerraCycle Interview Link;/;CATerraCycleInterviewLink;CATerraCycleInterviewLink;;;;
+                              ;;CAReturnRecycleRepeatNavNodeLink;CA Return. Recycle. Repeat Link;/;CAReturnRecycleRepeatNavNodeLink;CAReturnRecycleRepeatNavNodeLink;;;;
+                              ;;CACommunityTradePlasticsLink;CA Community Trade Plastics Link;/;CACommunityTradePlasticsLink;CACommunityTradePlasticsLink;;;;
+                              ;;CAPackagingAtTheBodyShopLink;CA Packaging at The Body Shop Link;/;CAPackagingAtTheBodyShopLink;CAPackagingAtTheBodyShopLink;;;;
+
+# CMS NAvigation Entry for navaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+#Child_Nodes_TheBodyShopAtHomeNavNode
+                                ;CABeYourOwnBossNavNodeEntry;;CABeYourOwnBossNavNodeEntry;CABeYourOwnBossNavNode;CABeYourOwnBossLink
+                                ;CAHostAPartyNavNodeEntry;;CAHostAPartyNavNodeEntry;CAHostAPartyNavNode;CAHostAPartyNavNodeLink
+
+#Entry_CASkincareArticlesNavNode
+                                ;CAHowToReduceBlackheadsNavNodeEntry;;CAHowToReduceBlackheadsNavNodeEntry;CAHowToReduceBlackheadsNavNode;CAHowToReduceBlackheadsLink
+                                ;CASummerSkincareNavNodeEntry;;CASummerSkincareNavNodeEntry;CASummerSkincareNavNode;CASummerSkincareLink
+                                ;CAHowToGetRidOfDarkCirclesNavNodeEntry;;CAHowToGetRidOfDarkCirclesNavNodeEntry;CAHowToGetRidOfDarkCirclesNavNode;CAHowToGetRidOfDarkCirclesLink
+                                ;CABestFaceMoisturisersNavNodeEntry;;CABestFaceMoisturisersNavNodeEntry;CABestFaceMoisturisersNavNode;CABestFaceMoisturisersLink
+                                ;CAHowToKeepSkinLookingYouthfulNavNodeEntry;;CAHowToKeepSkinLookingYouthfulNavNodeEntry;CAHowToKeepSkinLookingYouthfulNavNode;CAHowToKeepSkinLookingYouthfulLink
+                                ;CAGymSkincareTipsNavNodeEntry;;CAGymSkincareTipsNavNodeEntry;CAGymSkincareTipsNavNode;CAGymSkincareTipsLink
+
+#Entry_CABodyCareArticlesNavNode
+                                ;CABenefitsOfDryBrushingNavNodeEntry;;CABenefitsOfDryBrushingNavNodeEntry;CABenefitsOfDryBrushingNavNode;CABenefitsOfDryBrushingLink
+                                ;CAUnderstandingDrySkinNavNodeEntry;;CAUnderstandingDrySkinNavNodeEntry;CAUnderstandingDrySkinNavNode;CAUnderstandingDrySkinLink
+                                ;CABestBodyExfoliatorsNavNodeEntry;;CABestBodyExfoliatorsNavNodeEntry;CABestBodyExfoliatorsNavNode;CABestBodyExfoliatorsLink
+
+#Entry_CAMake-UpAeticlesNavNode
+                                ;CAHowToFindTheRightFoundationNavNodeEntry;;CAHowToFindTheRightFoundationNavNodeEntry;CAHowToFindTheRightFoundationNavNode;CAHowToFindTheRightFoundationLink
+                                ;CAHowToApplyFoundationNavNodeEntry;;CAHowToApplyFoundationNavNodeEntry;CAHowToApplyFoundationNavNode;CAHowToApplyFoundationLink
+                                ;CAHowToShapeEyebrowsNavNodeEntry;;CAHowToShapeEyebrowsNavNodeEntry;CAHowToShapeEyebrowsNavNode;CAHowToShapeEyebrowsLink
+                                ;CAHowToGetASunKissedGlowNavNodeEntry;;CAHowToGetASunKissedGlowNavNodeEntry;CAHowToGetASunKissedGlowNavNode;CAHowToGetASunKissedGlowLink
+
+#Entry_CALifeStyleArticlesNavNode
+                                ;CABestVeganCitiesInTheCANavNodeEntry;;CABestVeganCitiesInTheCANavNodeEntry;CABestVeganCitiesInTheCANavNode;CABestVeganCitiesInTheCALink
+                                ;CALongHaulFlightTipsNavNodeEntry;;CALongHaulFlightTipsNavNodeEntry;CALongHaulFlightTipsNavNode;CALongHaulFlightTipsLink
+                                ;CAGymSkincareRoutineNavNodeEntry;;CAGymSkincareRoutineNavNodeEntry;CAGymSkincareRoutineNavNode;CAGymSkincareRoutineLink
+                                ;CAChildhoodDreamsNavNodeEntry;;CAChildhoodDreamsNavNodeEntry;CAChildhoodDreamsNavNode;CAChildhoodDreamsLink
+                                ;CAPixieGeldof’sTravelEssentialsNavNodeEntry;;CAPixieGeldof’sTravelEssentialsNavNodeEntry;CAPixieGeldof’sTravelEssentialsNavNode;CAPixieGeldof’sTravelEssentialsLink
+
+#Entry_CAIngredientBenefitsNavNode
+
+                                ;CABenefitsOfCharcoalNavNodeEntry;;CABenefitsOfCharcoalNavNodeEntry;CABenefitsOfCharcoalNavNode;CABenefitsOfCharcoalLink
+                                ;CAHyaluronicAcidBenefitsNavNodeEntry;;CAHyaluronicAcidBenefitsNavNodeEntry;CAHyaluronicAcidBenefitsNavNode;CAHyaluronicAcidBenefitsLink
+                                ;CADiscoverAllIngredientsNavNodeEntry;;CADiscoverAllIngredientsNavNodeEntry;CADiscoverAllIngredientsNavNode;CADiscoverAllIngredientsLink
+                                ;CASourcingOurIngredientsNavNodeEntry;;CASourcingOurIngredientsNavNodeEntry;CASourcingOurIngredientsNavNode;CASourcingOurIngredientsLink
+
+#Entry_CAWhoWeAre_NavNode
+                                ;CAOurHeritageNavNodeEntry;;CAOurHeritageNavNodeEntry;CAOurHeritageNavNode;CAOurHeritageLink
+                                ;CAForeverAgainstAnimalTestingNavNodeEntry;;CAForeverAgainstAnimalTestingNavNodeEntry;CAForeverAgainstAnimalTestingNavNode;CAForeverAgainstAnimalTestingLink
+                                ;CAB_CorpNavNodeEntry;;CAB_CorpNavNodeEntry;CAB_CorpNavNode;CAB_CorpLink
+                                ;CALatestNewsNavNodeEntry;;CALatestNewsNavNodeEntry;CALatestNewsNavNode;CALatestNewsLink
+                                ;CANatura_CoNavNodeEntry;;CANatura_CoNavNodeEntry;CANatura_CoNavNode;CANatura_CoLink
+                                ;CAEducationalProgrammeNavNodeEntry;;CAEducationalProgrammeNavNodeEntry;CAEducationalProgrammeNavNode;CAEducationalProgrammeLink
+                                ;CADonateMenstrualProductsNavNodeEntry;;CADonateMenstrualProductsNavNodeEntry;CADonateMenstrualProductsNavNode;CADonateMenstrualProductsLink
+                                ;CAVegetarianBeautyNavNodeEntry;;CAVegetarianBeautyNavNodeEntry;CAVegetarianBeautyNavNode;CAVegetarianBeautyLink
+
+#Entry_CALoyaltyProgramNavNode
+                                ;CA_Loyalty_JoinNowNavNodeEntry;;CA_Loyalty_JoinNowNavNodeEntry;CA_Loyalty_JoinNowNavNode;CA_Loyalty_JoinNowLink
+
+#Entry_CASustainabilityNavNode
+                                ;CAOurCommitmentNavNodeEntry;;CAOurCommitmentNavNodeEntry;CAOurCommitmentNavNode;CAOurCommitmentLink
+                                ;CACommunityTradeNavNodeEntry;;CACommunityTradeNavNodeEntry;CACommunityTradeNavNode;CACommunityTradeLink
+                                ;CABio-BridgesNavNodeEntry;;CABio-BridgesNavNodeEntry;CABio-BridgesNavNode;CABio-BridgesLink
+                                ;CAReducingEnvironmentalFootprintNavNodeEntry;;CAReducingEnvironmentalFootprintNavNodeEntry;CAReducingEnvironmentalFootprintNavNode;CAReducingEnvironmentalFootprintLink
+                                ;CAEmpoweringWomenNavNodeEntry;;CAEmpoweringWomenNavNodeEntry;CAEmpoweringWomenNavNode;CAEmpoweringWomenLink
+                                ;CAModernSlaveryNavNodeEntry;;CAModernSlaveryNavNodeEntry;CAModernSlaveryNavNode;CAModernSlaveryLink
+
+#Child_Nodes_CAPlasticsNavNode
+                                ;CAPlasticRecyclingInTheCANavNodeEntry;;CAPlasticRecyclingInTheCANavNodeEntry;CAPlasticRecyclingInTheCANavNode;CAPlasticRecyclingInTheCALink
+                                ;CATerraCycleInterviewNavNodeEntry;;CATerraCycleInterviewNavNodeEntry;CATerraCycleInterviewNavNode;CATerraCycleInterviewLink
+                                ;CAReturnRecycleRepeatNavNodeEntry;;CAReturnRecycleRepeatNavNodeEntry;CAReturnRecycleRepeatNavNode;CAReturnRecycleRepeatNavNodeLink
+                                ;CACommunityTradePlasticsNavNodeEntry;;CACommunityTradePlasticsNavNodeEntry;CACommunityTradePlasticsNavNode;CACommunityTradePlasticsLink
+                                ;CAPackagingAtTheBodyShopNavNodeEntry;;CAPackagingAtTheBodyShopNavNodeEntry;CAPackagingAtTheBodyShopNavNode;CAPackagingAtTheBodyShopLink
+
+# Discover navigation end
+
+# children of FooterNavNode #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef)
+;CAUsefullInformationNavNode;;CA Useful Information;CAUsefullInformationNavNode;CADeliveryNavNode,CAReturnsNavNode,CAFAQNavNode,CATermsAndConditionsNavNode,CAPrivacyPolicyNavNode,CASitemapNavNode
+;CAWaysToShopNavNode;;CA Ways to Shop;CAWaysToShopNavNode;CAStoresNavNode,CALoveYourBodyClubNavNode,CAStudentDiscountNavNode,CAGiftCardsNavNode
+;CAAboutUsNavNode;;CA About Us;CAAboutUsNavNode;CAAboutUsInternalNavNode,CATheBodyShopAtHomeNavNode,CAAffiliatesNavNode,CAGenderPayGapNavNode,CAModernSlaveryStatementNavNode,CAAgainstAnimalTestingNavNode,CATaxStrategyNavNode,CACareersNavNode
+
+
+# children of above navigation nodes #
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
+;CADeliveryNavNode;;CADeliveryNavNode;CADeliveryNavNode;
+;CAReturnsNavNode;;CAReturnsNavNode;CAReturnsNavNode;
+;CAFAQNavNode;;CAFAQ Page;CAFAQNavNode
+;CATermsAndConditionsNavNode;;CATermsAndConditionsNavNode;CATermsAndConditionsNavNode;
+;CAPrivacyPolicyNavNode;;CAPrivacyPolicyNavNode;CAPrivacyPolicyNavNode;
+;CASitemapNavNode;;CASitemapNavNode;CASitemapNavNode;
+;CAStoresNavNode;;CAStoresNavNode;CAStoresNavNode;
+;CALoveYourBodyClubNavNode;;CALoveYourBodyClubNavNode;CALoveYourBodyClubNavNode;
+;CAStudentDiscountNavNode;;CAStudentDiscountNavNode;CAStudentDiscountNavNode;
+;CAGiftCardsNavNode;;CAGiftCardsNavNode;CAGiftCardsNavNode;
+;CAAboutUsInternalNavNode;;CAAboutUsInternalNavNode;CAAboutUsInternalNavNode
+;CATheBodyShopAtHomeNavNode;;CATheBodyShopAtHomeNavNode;CATheBodyShopAtHomeNavNode
+;CAAffiliatesNavNode;;CAAffiliatesNavNode;CAAffiliatesNavNode
+;CAGenderPayGapNavNode;;CAGenderPayGapNavNode;CAGenderPayGapNavNode
+;CAModernSlaveryStatementNavNode;;CAModernSlaveryStatementNavNode;CAModernSlaveryStatementNavNode
+;CAAgainstAnimalTestingNavNode;;CAAgainstAnimalTestingNavNode;CAAgainstAnimalTestingNavNode
+;CATaxStrategyNavNode;;CATaxStrategyNavNode;CATaxStrategyNavNode
+;CACareersNavNode;;CACareersNavNode;CACareersNavNode
+
+# entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
+;CADeliveryNavNodeEntry;;CADeliveryNavNodeEntry;CADeliveryNavNode;CADeliveryLink;
+;CAReturnsNavNodeEntry;;CAReturnsNavNodeEntry;CAReturnsNavNode;CAReturnsLink;
+;CAFAQNavNodeEntry;;CA FAQ Navigation Node Entry;CAFAQNavNode;CAFAQLink;
+;CATermsAndConditionsNavNodeEntry;;CATermsAndConditionsNavNodeEntry;CATermsAndConditionsNavNode;CATermsAndConditionsLink;
+;CAPrivacyPolicyNavNodeEntry;;CAPrivacyPolicyNavNodeEntry;CAPrivacyPolicyNavNode;CAPrivacyPolicyLink;
+;CASitemapNavNodeEntry;;CASitemapNavNodeEntry;CASitemapNavNode;CASitemapLink;
+;CAStoresNavNodeEntry;;CAStoresNavNodeEntry;CAStoresNavNode;CAStoresLink;
+;CALoveYourBodyClubNavNodeEntry;;CALoveYourBodyClubNavNodeEntry;CALoveYourBodyClubNavNode;CALoveYourBodyClubLink;
+;CAStudentDiscountNavNodeEntry;;CAStudentDiscountNavNodeEntry;CAStudentDiscountNavNode;CAStudentDiscountLink;
+;CAGiftCardsNavNodeEntry;;CAGiftCardsNavNodeEntry;CAGiftCardsNavNode;CAGiftCardsLink;
+;CAAboutUsInternalNavNodeEntry;;CAAboutUsInternalNavNodeEntry;CAAboutUsInternalNavNode;CAAboutUsLink;
+;CATheBodyShopAtHomeNavNodeEntry;;CATheBodyShopAtHomeNavNodeEntry;CATheBodyShopAtHomeNavNode;CATheBodyShopAtHomeLink;
+;CAAffiliatesNavNodeEntry;;CAAffiliatesNavNodeEntry;CAAffiliatesNavNode;CAAffiliatesLink;
+;CAGenderPayGapNavNodeEntry;;CAGenderPayGapNavNodeEntry;CAGenderPayGapNavNode;CAGenderPayGapLink;
+;CAModernSlaveryStatementNavNodeEntry;;CAModernSlaveryStatementNavNodeEntry;CAModernSlaveryStatementNavNode;CAModernSlaveryStatementLink;
+;CAAgainstAnimalTestingNavNodeEntry;;CAAgainstAnimalTestingNavNodeEntry;CAAgainstAnimalTestingNavNode;CAAgainstAnimalTestingLink;
+;CATaxStrategyNavNodeEntry;;CATaxStrategyNavNodeEntry;CATaxStrategyNavNode;CATaxStrategyLink;
+;CACareersNavNodeEntry;;CACareersNavNodeEntry;CACareersNavNode;CACareersLink;
+
+##CategoryBannerCMSComponent Start ##
+INSERT_UPDATE CategoryBannerCMSComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef
+;;CACategoryBannerCMSComponent;CA CategoryBanner CMSComponent;CACategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef)
+;;Section1Slot-CACategorybannerSlot;CACategory Banner Slot;true;CACategoryBannerCMSComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='defaultCategoryContentPage'];contentSlot(uid,$contentCV)[unique=true];;;
+;;Section1Slot-CACategoryPage;Section1;;Section1Slot-CACategorybannerSlot;;;
+##CategorybannerCMSComponent End ##

@@ -1,0 +1,42 @@
+@import './mixins';
+//////////////////////////////
+////// CUSTOM GRID ///////////
+//////////////////////////////
+
+// Grid and gutters setting are a mix of breakpoints used on
+// wireframes: https://5sxkmq.axshare.com/
+// and InVision: https://salmon.invisionapp.com/d/main#/console/16404606/340230414/preview
+//////////////////////////////
+
+$breakpoint-sm: 375px;
+$breakpoint-sm-max: 767px;
+$breakpoint-md: 768px;
+$breakpoint-md-max: 1023px;
+$breakpoint-lg: 1024px;
+$breakpoint-lg-max: 1365px;
+$breakpoint-xl: 1366px;
+
+// Gutters
+$gutter-sm: 12px;
+$gutter-md: 18px;
+$gutter-lg: 30px;
+
+$grid-breakpoints: (
+  xs: 0px,
+  sm: $breakpoint-sm,
+  md: $breakpoint-md,
+  lg: $breakpoint-lg,
+  xl: $breakpoint-xl
+);
+
+$container-max-widths: (
+  sm: $breakpoint-sm-max,
+  lg: 1230px // specified in invison
+);
+
+$offset: 40px;
+
+// Create custom grid
+@include custom-grid(0, $breakpoint-sm-max, $offset, $gutter-sm);
+@include custom-grid($breakpoint-md, $breakpoint-md-max, $offset, $gutter-md);
+// Large screen should use default grid setup which is $gutter-lg: 30px;

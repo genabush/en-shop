@@ -1,0 +1,54 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import Constraints for Product Cockpit
+#
+INSERT_UPDATE CoverageConstraintGroup ; id[unique=true]                       ; coverageDomainID ; dedicatedTypes(code) ; interfaceName
+                                      ; baseProductCoverageConstraintGroup    ; defaultDomain    ; TbsBaseProduct       ; de.hybris.platform.validation.groupinterfaces.BaseProductCoverageConstraintGroup   
+                                      ; variantProductCoverageConstraintGroup ; defaultDomain    ; TbsVariantProduct    ; de.hybris.platform.validation.groupinterfaces.VariantProductCoverageConstraintGroup
+
+INSERT_UPDATE SizeConstraint ; descriptor(enclosingType(code),qualifier) ; id[unique=true,allownull=true]                  ; max[allownull=true] ; min[allownull=true] ; qualifier[allownull=true] ; severity(code,itemtype(code)) ; target[allownull=true]                              ; type(code)        ; constraintGroups(id)                 ; message[lang=de] ; message[lang=en]
+                             ; TbsBaseProduct:code                       ; BaseProductCodeMinSizeCoverageConstraint        ; 255                 ; 5                   ; code                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsBaseProductModel    ; TbsBaseProduct    ; baseProductCoverageConstraintGroup   
+                             ; TbsBaseProduct:name                       ; BaseProductNameMinSizeCoverageConstraint        ; 255                 ; 3                   ; name                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsBaseProductModel    ; TbsBaseProduct    ; baseProductCoverageConstraintGroup   
+                             ; TbsBaseProduct:description                ; BaseProductDescriptionMinSizeCoverageConstraint ; 10000               ; 20                  ; description               ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsBaseProductModel    ; TbsBaseProduct    ; baseProductCoverageConstraintGroup   
+
+                             ; TbsVariantProduct:code                    ; VariantProductCodeMinSizeCoverageConstraint     ; 255                 ; 5                   ; code                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+                             ; TbsVariantProduct:name                    ; VariantProductNameMinSizeCoverageConstraint     ; 255                 ; 3                   ; name                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+
+                             ; Category:description                      ; CategoryDescriptionMaxSizeCoverageConstraint    ; 500                 ; 0                   ; description               ; ERROR:Severity                ; de.hybris.platform.category.model.CategoryModel     ; Category          ;
+
+                             ; KeyIngredient:description                 ; KeyIngredientDescriptionMaxSizeCoverageConstraint    ; 500                 ; 0                   ; description               ; ERROR:Severity                ; uk.co.thebodyshop.core.model.KeyIngredientModel     ; KeyIngredient          ;
+                             ; KeyIngredient:name                        ; KeyIngredientNameMaxSizeCoverageConstraint    ; 50                 ; 0                   ; name               ; ERROR:Severity                ; uk.co.thebodyshop.core.model.KeyIngredientModel     ; KeyIngredient          ;
+
+INSERT_UPDATE DecimalMinConstraint ; descriptor(enclosingType(code),qualifier) ; id[unique=true,allownull=true]           ; message[lang=en]          ; qualifier ; severity(code,itemtype(code)) ; target                                              ; type(code)        ; value[allownull=false] ; constraintGroups(id)                 
+                                   ; TbsVariantProduct:size                    ; VariantProductSizeMinimumValueConstraint ; must be greater than zero ; size      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; 1                      ; variantProductCoverageConstraintGroup
+
+INSERT_UPDATE NotNullConstraint ; descriptor(enclosingType(code),qualifier) ; id[unique=true,allownull=true]                      ; qualifier[allownull=true] ; severity(code,itemtype(code)) ; target[allownull=true]                              ; type(code)        ; constraintGroups(id)                 
+                                ; TbsBaseProduct:code                       ; BaseProductCodeNotNullConstraint                    ; code                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsBaseProductModel    ; TbsBaseProduct    ; baseProductCoverageConstraintGroup   
+                                ; TbsBaseProduct:onlineDate                 ; BaseProductOnlineDateNotNullConstraint              ; onlineDate                ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsBaseProductModel    ; TbsBaseProduct    ; baseProductCoverageConstraintGroup   
+                                ; TbsBaseProduct:type                       ; BaseProductTypeNotNullConstraint                    ; type                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsBaseProductModel    ; TbsBaseProduct    ; baseProductCoverageConstraintGroup   
+
+                                ; TbsVariantProduct:code                    ; VariantProductCodeNotNullConstraint                 ; code                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+                                ; TbsVariantProduct:onlineDate              ; VariantProductOnlineDateNotNullConstraint           ; onlineDate                ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+                                ; TbsVariantProduct:unit                    ; VariantProductUnitNotNullConstraint                 ; unit                      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+                                ; TbsVariantProduct:sample                  ; VariantProductSampleNotNullConstraint               ; sample                    ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+                                ; TbsVariantProduct:baseProduct             ; VariantProductBaseProductNotNullConstraint          ; baseProduct               ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+
+                                ; TbsVariantProduct:technicalIngredients    ; VariantProductTechnicalIngredientsNotNullConstraint ; technicalIngredients      ; ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ; TbsVariantProduct ; variantProductCoverageConstraintGroup
+                                ; TbsVariantProduct:size                    ;VariantProductSizeNotNullConstraint                  ; size                       ;ERROR:Severity                ; uk.co.thebodyshop.core.model.TbsVariantProductModel ;TbsVariantProduct  ; variantProductCoverageConstraintGroup
+INSERT_UPDATE AttributeConstraint ; id[unique=true]         ; annotation[allownull=true]                                 ; descriptor(enclosingType(code),qualifier) ; qualifier     ; severity(code,itemtype(code)) ; target                                             ; type(code)
+                                  ; ProductBadgesConstraint ; uk.co.thebodyshop.core.validation.annotation.ProductBadges ; Product:productBadges                     ; productBadges ; ERROR:Severity                ; de.hybris.platform.core.model.product.ProductModel ; Product   
+
+UPDATE AttributeConstraint ; id[unique=true]         ; message[lang=en]                             
+                           ; ProductBadgesConstraint ; "Product can contain maximum of four badges."
+
+INSERT_UPDATE TypeConstraint;id[unique=true];target;severity(code,itemtype(code));type(code);message[lane=en];annotation
+                            ;keyIngredientsConstraint;uk.co.thebodyshop.core.model.TbsBaseProductModel;ERROR:Severity;TbsBaseProduct;"key Ingredients should not be empty";uk.co.thebodyshop.core.validation.annotation.KeyIngredients
+                            ;variantMarkDownPriceConstraint;uk.co.thebodyshop.core.model.TbsVariantProductModel;ERROR:Severity;TbsVariantProduct;"Invalid Mark Down Price Row - please check mark down price rows values and dates";uk.co.thebodyshop.core.validation.annotation.VariantMarkDownPriceRows
+                            ;markDownPriceValueConstraint;uk.co.thebodyshop.core.model.MarkDownPriceRowModel;ERROR:Severity;MarkDownPriceRow;"Price is invalid due to empty price value OR price value less than zero OR greater than product base price";uk.co.thebodyshop.core.validation.annotation.MarkDownPriceValue
+                            ;markDownPriceDateConstraint;uk.co.thebodyshop.core.model.MarkDownPriceRowModel;ERROR:Severity;MarkDownPriceRow;"Dates are invalid due to empty start/end date OR end date is before start date OR start date is same as for previous price row of this product";uk.co.thebodyshop.core.validation.annotation.MarkDownPriceRowDates
+                            ;productDescriptionConstraint;de.hybris.platform.core.model.product.ProductModel;ERROR:Severity;Product;"Product Description can't be empty for English and market specific locales";uk.co.thebodyshop.core.validation.annotation.ProductDescription
+
+ 
+$de.hybris.platform.core.Registry.getApplicationContext().getBean(de.hybris.platform.validation.services.ValidationService.class).reloadValidationEngine()

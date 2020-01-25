@@ -1,0 +1,37 @@
+cx-checkout-basket-summary {
+  .order-summary-accordion {
+    .card {
+      margin-bottom: -1px;
+      padding: 0;
+      &-header {
+        padding: 0;
+        margin-bottom: 0 !important;
+        border-bottom: 1px solid rgba($core-primary, 0.4);
+        .strong {
+          font-family: $work-sans-bold;
+        }
+        &-btn {
+          font-size: $font-size-base;
+          color: var(--cx-color-core-primary);
+          border: none;
+          &__count {
+            display: inline-block;
+            font-family: $work-sans-bold;
+            width: 1.6rem;
+            height: 1.6rem;
+            line-height: 1.6rem;
+            border-radius: 50%;
+            background-color: var(--cx-color-core-tertiary);
+          }
+        }
+
+        .icon {
+          font-size: 1.25rem;
+        }
+      }
+      &-body {
+        padding: 20px 0;
+      }
+    }
+  }
+}

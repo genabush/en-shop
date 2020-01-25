@@ -1,0 +1,7 @@
+<a [href]="item.url">
+  <div class="articles__thumbnail">
+    <img *ngIf="item.imageUrl" [src]="item.imageUrl" [alt]="item.title" />
+  </div>
+  <h1 [innerHTML]="item.title" class="articles__heading"></h1>
+  <p [innerHTML]="item.summary" class="articles__summary"></p>
+</a>

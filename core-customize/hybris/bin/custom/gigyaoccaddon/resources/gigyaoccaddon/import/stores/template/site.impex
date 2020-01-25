@@ -1,0 +1,21 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+######
+## PARAMETERS REQUIRED FOR THIS SCRIPT
+##
+##   * contentCatalog   - content catalog id
+##   * productCatalog   = product catalog id
+##   * storeUid - site id
+##   * storeUid - id of the store
+##   * channel - site channel
+#######
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$defaultLanguage=en
+$webServiceSiteUid=$siteUidWS
+$gigyaConfig=gigya_$siteUid
+
+### TODO add all the required mappings
+INSERT_UPDATE GigyaFieldMapping;gigyaAttributeName;syncDirection(code);hybrisAttributeName;hybrisType(code);code[unique=true];gigyaConfig(code)[default=$gigyaConfig]
+;data.nationalId;BOTH;nationalId;string;nationalId;
+;data.accountType;H2G;accountType;string;accountType;

@@ -1,0 +1,11 @@
+{{#if (test this.[@type] (toRegex ".*/banner")) }}
+    {{> banner-template}}
+{{/if}}
+
+{{#if (test this.[@type] (toRegex ".*/image")) }}
+    {{> image-partial}}
+{{/if}}
+
+{{#if (test this.[@type] (toRegex ".*/video")) }}
+    {{> video-partial}}
+{{/if}}

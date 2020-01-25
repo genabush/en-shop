@@ -1,0 +1,12 @@
+@import '~@spartacus/styles/scss/theme/sparta/variables';
+
+%cx-promotions {
+  .cx-promotions {
+    @include type('7');
+    color: var(--cx-color-success);
+    padding: 0.5rem 0;
+  }
+  .cx-promotions li {
+    list-style-type: none;
+  }
+}

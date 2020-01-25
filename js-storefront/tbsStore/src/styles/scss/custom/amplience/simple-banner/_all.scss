@@ -1,0 +1,49 @@
+.amp-dc-simple-banner {
+  padding-top: 4.35rem;
+  width: 50%;
+  margin: 0 auto;
+  background-color: $base-nourishing-white;
+
+  &__media {
+    max-width: 297px;
+    height: 410px;
+    margin: 0 auto;
+
+    video,
+    img {
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__text-content {
+    padding: 1.25rem 0 3.75rem 0;
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+  &__body {
+    margin-bottom: 1.5rem;
+  }
+
+  @include media-breakpoint-down(md) {
+    width: 100%;
+    padding-top: 2.875rem;
+
+    &__text-content {
+      padding-bottom: 3.125rem;
+    }
+
+    &__media {
+      max-width: 243px;
+      height: 336px;
+    }
+
+    .btn {
+      width: auto;
+    }
+  }
+}

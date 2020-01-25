@@ -1,0 +1,66 @@
+<div class="m-auto amp-dc-banner-with-bg{{#if backgroundPalette}} bg--{{backgroundPalette}}{{/if}}"
+    style="{{#with bg}}background: url('https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}') 50% 50% / cover no-repeat!important{{else}}background-color:{{backgroundColour}}!important{{/with}}">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1 col-sm-12 amp-dc-banner-with-bg__content {{#if textBackgroundPalette}}bg--{{textBackgroundPalette}} {{#if textBackgroundPaletteOpacity}}
+        bg--{{textBackgroundPalette}}-{{textBackgroundPaletteOpacity.value}}{{/if}}{{/if}}"
+            style="{{#if textBackgroundPalette}}{{else}}background-color:{{textBackgroundColour}}!important{{/if}}">
+            <div
+                class="row amp-dc-banner-with-bg__row {{#if textPositionMobile}}block-mobile-pos--{{textPositionMobile}} {{/if}}{{#if textPositionDesktop}}block-desktop-pos--{{textPositionDesktop}}{{/if}}">
+                <div class="amp-dc-banner-with-bg__content-inner col-6">
+                    {{#if heading2}}
+                        <h2
+                            class="amp-dc-banner-with-bg__h2 font--{{heading2Font}} {{#with heading2Colour}}txt--{{heading2Colour}}{{/with}}">
+                            {{heading2}}</h2>
+                    {{/if}}
+
+                    {{#if bodyCopy}}
+                        <div
+                            class="amp-dc-banner-with-bg__body font--{{bodyCopyFont}} {{#with bodyCopyColour}}txt--{{colour}}{{/with}}">
+                            <p>{{bodyCopy}}</p>
+                        </div>
+                    {{/if}}
+                    <div class="amp-dc-banner-with-bg__hero-cta-section">
+                        {{#if ctaUrl}}
+                            <a href="{{ctaUrl}}" {{#is ctaBehaviour 'new-tab'}} target="_blank" {{/is}}
+                                class="btn {{#contains ctaStyle "secondary"}} btn--secondary{{else}}btn--primary{{/contains}}{{#contains ctaStyle "light"}} btn--invert{{/contains}}">{{ctaCopy}}</a>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="amp-dc-banner-with-bg__media px-md-0 col-6">
+                    {{#each mediaField}}
+                        {{#if (test this.[@type] (toRegex ".*/image")) }}
+                            <img class="amp-dc-banner__bg-image"
+                                src="https://{{this.image.defaultHost}}/i/{{this.image.endpoint}}/{{this.image.name}}"
+                                alt="{{this.image.name}}" />
+                        {{/if}}
+                        {{#if (test this.[@type] (toRegex ".*/video"))}}
+                            <video controls autoplay loop
+                                src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{video.name}}/mp4_720p">
+                                <source
+                                    src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_480p"
+                                    data-res="Medium" data-bitrate="689" label="Medium" type="video/mpeg4"
+                                    codecs="h264" />
+                                <source
+                                    src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_240p"
+                                    data-res="Low" data-bitrate="325" label="Low" type="video/mpeg4" codecs="h264" />
+                                <source
+                                    src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_720p"
+                                    data-res="High" data-bitrate="2000" label="High" type="video/webm" codecs="vp8" />
+                                <source
+                                    src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_480p"
+                                    data-res="Medium" data-bitrate="624" label="Medium" type="video/webm"
+                                    codecs="vp8" />
+                                <source
+                                    src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/webm_240p"
+                                    data-res="Low" data-bitrate="325" label="Low" type="video/webm" codecs="vp8" />
+                                <source
+                                    src="https://{{this.video.defaultHost}}/v/{{this.video.endpoint}}/{{this.video.name}}/mp4_720p?protocol=https"
+                                    data-res="High" data-bitrate="2119" label="High" type="video/mpeg4" codecs="h264" />
+                            </video>
+                        {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

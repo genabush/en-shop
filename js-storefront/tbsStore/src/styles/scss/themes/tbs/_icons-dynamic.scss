@@ -1,0 +1,108 @@
+// WITH DYNAMIC HOVER STATES
+
+.icon--basket-dynamic {
+  &:before {
+    content: $icon--basket;
+  }
+  &:hover {
+    &:before {
+      content: $icon--basket_hover;
+    }
+  }
+}
+
+.icon--box-dynamic {
+  &:before {
+    content: $icon--box;
+  }
+  &:hover {
+    &:before {
+      content: $icon--box_hover;
+    }
+  }
+}
+
+.icon--heart-dynamic {
+  &:before {
+    content: $icon--heart;
+  }
+  &:hover {
+    &:before {
+      content: $icon--heart_hover;
+    }
+  }
+}
+
+.icon--location-dynamic {
+  &:before {
+    content: $icon--location;
+  }
+  &:hover {
+    &:before {
+      content: $icon--location_hover;
+    }
+  }
+}
+
+.icon--search-dynamic {
+  &:before {
+    content: $icon--search;
+  }
+  &:hover {
+    &:before {
+      content: $icon--search_hover;
+    }
+  }
+}
+
+.icon--shop-dynamic {
+  &:before {
+    content: $icon--shop;
+  }
+  &:hover {
+    &:before {
+      content: $icon--shop_hover;
+    }
+  }
+}
+
+.icon--trash-dynamic {
+  &:before {
+    content: $icon--trash;
+  }
+  &:hover {
+    &:before {
+      content: $icon--trash_hover;
+    }
+  }
+}
+
+.icon--truck-dynamic {
+  &:before {
+    content: $icon--truck;
+  }
+  &:hover {
+    &:before {
+      content: $icon--truck_hover;
+    }
+  }
+}
+
+.icon--my-account-dynamic {
+  &:before {
+    content: $icon--my-account;
+  }
+  &:hover {
+    &:before {
+      content: $icon--my-account_hover;
+    }
+  }
+}
+
+// Modifiers
+.icon {
+  &--add-set {
+    margin-right: 0;
+    font-size: 23px;
+  }
+}

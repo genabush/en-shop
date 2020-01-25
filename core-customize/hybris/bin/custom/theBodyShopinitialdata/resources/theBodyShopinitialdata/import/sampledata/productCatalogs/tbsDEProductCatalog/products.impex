@@ -1,0 +1,338 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+#% impex.setLocale( Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tbsDEProductCatalog
+$productCatalogName=Germany Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+$onlineDate=onlineDate[dateformat=dd-MM-yyyy HH:mm:ss,default='01-01-2019 06:30:00']
+
+$lang=de
+
+# Insert Products
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];$supercategories;type(code)[default=SIZE];$catalogVersion;$approved;$onlineDate
+;p003257;c00143;
+;p000341;c00149;
+;p002002;c00143;
+;p002445;c00143;
+;p003101;c00143;
+;p001102;c00143;
+;p002457;c00143;
+;p000971;c00143;
+;p003255;c00143;
+;p003254;c00143;
+;p003173;c00143;
+;p000694;c00143;
+;p002003;c00143;
+;p000936;c00145;
+;p002013;c00144;
+;p000810;c00144;
+;p002833;c00147;
+;p003268;c00147;
+;p002835;c00141;
+;p000664;c00148;
+;p003259;c00148;
+;p000067;c00140;
+;p000056;c00140;
+;p002017;c00140;
+;p000499;c00013;
+;p000253;c00013;
+;p000019;c00014;
+;p002347;c00014;
+;p002812;c00284;
+;p002419;c00024;
+;p000480;c00018;
+;p002863;c00019;
+;p000466;c00019;
+;p000644;c00019;
+;p000787;c00020,c00021;
+;p000676;c00020,c00021;
+;p000461;c00054;
+;p000111;c00054;
+;p000106;c00054;
+;p000795;c00056;
+;p000797;c00056;
+;p003200;c00047;
+;p000789;c00047;
+;p000063;c00047;
+;p003090;c00048;
+;p002733;c00048;
+;p000142;c00051;
+;p000120;c00051;
+;p002449;c00051;
+;p003091;c00050;
+;p000767;c00050;
+;p002453;c00050;
+;p000767;c00049;
+;p002144;c00065;
+;p002448;c00059;
+;p002145;c00059;
+;p003111;c00060;
+;p000360;c00060;COLOUR
+;p001081;c00061;
+;p002819;c00061;
+;p000467;c00061;
+;p000851;c00062;
+;p000436;c00064;
+;p000435;c00064;
+;p002668;c00064;
+;p000362;c00064;
+;p000726;c00064;
+;p002817;c00064;
+;p003237;c00063;
+;p002001;c00063;
+;p000048;c00065;
+;p002867;c00065;
+;p000042;c00065;
+;p002171;c00066;
+;p000657;c00066;COLOUR
+;p000069;c00066;
+;p000621;c00066;
+;p003235;c00067;
+;p000184;c00067;
+;p002818;c00067;
+;p000222;c00069;
+;p002437;c00069;
+;p001050;c00069;
+;p000269;c00146;
+;p003087;c00051;
+;p000247;c00014;
+;0000000000;;
+
+UPDATE Product;code[unique=true];name[lang=$lang];description[lang=$lang];doNotSearch[default=false];$catalogVersion;$onlineDate
+;"1030196";"01 - Hellere Hauttöne - 25ml";"Wenn Sie keine Zeit zu verlieren haben, ist unsere All-in-One BB Cream ein Must-have-Schönheitsprodukt für superschnelle Ergebnisse. Unsere effektive BB Cream, die 24 Stunden Feuchtigkeit spendet, vereint alle Eigenschaften – sie verleiht Ihrer Haut ein Strahlen und bildschönes Aussehen. Für ein angleichendes, taufrisches und gleichmäßiges Finish, das perfekt auf Ihren Hautton abgestimmt ist, auf der Gesichtshaut verteilen. Wie Ihre eigene Haut, nur besser."
+;"1030226";"02 - Mittlere Hauttöne -25l";"Wenn Sie keine Zeit zu verlieren haben, ist unsere All-in-One BB Cream ein Must-have-Schönheitsprodukt für superschnelle Ergebnisse. Unsere effektive BB Cream, die 24 Stunden Feuchtigkeit spendet, vereint alle Eigenschaften – sie verleiht Ihrer Haut ein Strahlen und bildschönes Aussehen. Für ein angleichendes, taufrisches und gleichmäßiges Finish, das perfekt auf Ihren Hautton abgestimmt ist, auf der Gesichtshaut verteilen. Wie Ihre eigene Haut, nur besser."
+;"1030227";"03 - Dunklere Hauttöne - 25ml";"Wenn Sie keine Zeit zu verlieren haben, ist unsere All-in-One BB Cream ein Must-have-Schönheitsprodukt für superschnelle Ergebnisse. Unsere effektive BB Cream, die 24 Stunden Feuchtigkeit spendet, vereint alle Eigenschaften – sie verleiht Ihrer Haut ein Strahlen und bildschönes Aussehen. Für ein angleichendes, taufrisches und gleichmäßiges Finish, das perfekt auf Ihren Hautton abgestimmt ist, auf der Gesichtshaut verteilen. Wie Ihre eigene Haut, nur besser."
+;"1032512";"04 - Dunklere Hauttöne 30ml";"Wenn Sie keine Zeit zu verlieren haben, ist unsere All-in-One BB Cream ein Must-have-Schönheitsprodukt für superschnelle Ergebnisse. Unsere effektive BB Cream, die 24 Stunden Feuchtigkeit spendet, vereint alle Eigenschaften – sie verleiht Ihrer Haut ein Strahlen und bildschönes Aussehen. Für ein angleichendes, taufrisches und gleichmäßiges Finish, das perfekt auf Ihren Hautton abgestimmt ist, auf der Gesichtshaut verteilen. Wie Ihre eigene Haut, nur besser."
+;"1055790";"Sondergröße! Shea Body Butter 200ml";"Unsere herrlich zart schmelzende Sheabutter versorgt Ihre Haut intensiv mit Feuchtigkeit. Sie hinterlässt mit jeder Anwendung ein zartes, frisches Hautgefühl und spendet rund um die Uhr Feuchtigkeit."
+;"1059021";"Shea Body Butter 500ml";"Unsere herrlich zart schmelzende Sheabutter versorgt Ihre Haut intensiv mit Feuchtigkeit. Sie hinterlässt mit jeder Anwendung ein zartes, frisches Hautgefühl und spendet rund um die Uhr Feuchtigkeit."
+;"1076327";"Sondergröße! Shea Body Butter 400ml";"Unsere herrlich zart schmelzende Sheabutter versorgt Ihre Haut intensiv mit Feuchtigkeit. Sie hinterlässt mit jeder Anwendung ein zartes, frisches Hautgefühl und spendet rund um die Uhr Feuchtigkeit."
+;"p000019";"Shea Body Butter";"Unsere herrlich zart schmelzende Sheabutter versorgt Ihre Haut intensiv mit Feuchtigkeit. Ihre opulente Textur offenbart das Beauty-Geheimnis natürlicher Sheabutter, deren Pflegeeigenschaften wohl einzigartig sind. Das perfekte Pflege-Vergnügen – mit viel Liebe und einem Hauch Nussaroma."
+;"p000042";"Concealer";"Spät ins Bett – früh raus? Mit unserem lichtreflektierenden Concealer verschwinden dunkle Augenringe und kleine Fältchen fast wie von selbst. Tragen Sie den Concealer für ein optimales Ergebnis mit einem Pinsel auf. Dieser kleine Helfer gehört in jede Kosmetiktasche!"
+;"p000048";"All-In-One™ Grundierung";"Diese Kompaktgrundierung mit samtweichem Finish ist Foundation und Puder in einem und lässt sich leicht verblenden. Mit diesem vielseitig anwendbaren Produkt gelingt das perfekte Finish. Befeuchten Sie für besonders hohe Deckkraft das Schwämmchen, das in der Dose mit dabei ist. Tipp für ein besonders lang anhaltendes Ergebnis: Tragen Sie die All-in-One™ Grundierung mit unserem Pinsel für Gesicht und Körper zum Fixieren über der Foundation auf oder tragen Sie die Grundierung für ein leichtes, gleichmäßiges Finish auf das ungeschminkte Gesicht auf. Dieses Produkt ist der perfekte Allrounder."
+;"p000056";"Gesichtsschwamm Für reine Haut";"Dieser weiche Reinigungsschwamm reinigt die Haut und entfernt Make-up."
+;"p000063";"Bambus Haarbürste";"Entwirren, aufpeppen und viel Volumen stylen: Unsere Bambus Haarbürste besitzt extra eng stehende Stifte, die das Haar beim Fönen perfekt in Schwung bringen. Dabei wird die Kopfhaut mit jedem Bürstenstrich sanft stimuliert und haareigene, natürliche Öle verteilen sich von der Wurzel bis in die Spitzen. Das Ergebnis: glänzend gepflegte Volumen-Looks."
+;"p000067";"Musselintuch";"Unser besonders feines Musselintuch entfernt sanft Make-up, reinigt die Haut und sorgt für ein zartes, geschmeidiges Gefühl. Verwenden Sie das Tuch für ein optimales Ergebnis zusammen mit Ihrem Lieblings-Gesichtsreiniger."
+;"p000069";"Colour Crush™ Lippenstifte";"Unsere cremigen, feuchtigkeitsspendenden Lippenstifte verleihen Ihren Lippen intensive Farbakzente. Das darin enthaltene Community Trade Marulaöl versorgt die Lippen mit Feuchtigkeit und der dezente Rosenduft sorgt für gute Laune. In vielen Farben zum Verlieben!"
+;"p000106";"Mango Handcreme";"Diese feuchtigkeitsspendende Handcreme für die tägliche Pflege darf in keiner Handtasche fehlen. Das leichte, cremige Gel zieht schnell ein und versprüht einen Hauch von frischem, tropischem Mangoduft. Das Ergebnis sind geschmeidige und gepflegte Hände."
+;"p000111";"Coconut Handcreme";"Diese feuchtigkeitsspendende Handcreme für die tägliche Pflege darf in keiner Handtasche fehlen. Das leichte, cremige Gel zieht schnell ein und versprüht einen Hauch von frischem Kokosduft. Das Ergebnis sind geschmeidige und gepflegte Hände."
+;"p000120";"Anti-Schuppen Shampoo mit Ingwer";"Erfrischen und beruhigen Sie Ihre Kopfhaut mit diesem belebenden Shampoo. Es enthält Ingwerextrakt, Birkenrindenextrakt, Silberweidenextrakt und Community Trade Honig aus Äthiopien."
+;"p000142";"Arber Shampoo & Duschgel";"Das praktische Arber Shampoo & Duschgel reinigt, und verleiht Haut und Haar einen aufregend männlichen, holzigen Duft. Dazu enthält es Kamillenöl aus unserem Community Trade-Programm und wirkt beruhigend auf die Haut."
+;"p000184";"Super Volume Mascara";"Unsere klumpenfreie Mascara verleiht ihren Augen mit nur einem Applikatorschwung ein farbintensives und voluminöses Finish."
+;"p000222";"All-In-One Instablur™ Universal";"Diese starke Wunderwaffe gegen Glanz, Unreinheiten und sichtbare Poren sorgt für ein perfektes Hauterscheinungsbild. Unser Instablur™ ist mit Community Trade Marulaöl angereichert und eignet sich mit seinen fünf hautverbessernden Eigenschaften als perfekte Basis für Foundation. Unebenheiten werden sofort abgedeckt und glänzende Stellen perfekt mattiert. Instablur™ – das kleine Geheimnis für perfekte Schönheit."
+;"p000253";"Wild Argan Oil Badeschaum";"Steigen Sie in ein warmes, duftendes Schaumbad mit intensiv nahrhaften Arganöl angereichert. Machen Sie sich anschließend bereit zum Entspannen. Ihre Haut wird  sich nach jedem Einweichen schöner und weicher anfühlen."
+;"p000269";"Wild Argan Oil Lippenpflege";"Unsere stärkende Lippenpflege ist mit luxuriösem Arganöl aus Morokko angereichert und sorgt für einen wunderschönen, natürlichen Glanz. Die intensiv feuchtigkeitsspendende Rezeptur pflegt die Lippen und macht sie wunderbar geschmeidig."
+;"p000341";"Drops Of Youth™ Bouncy Sleeping Mask";"Diese belebende Gesichtsmaske wurde eigens zur Bekämpfung der ersten Anzeichen von Hautalterung entwickelt und hinterlässt eine weichere, glattere und wunderbar reine Haut."
+;"p000360";"All-In-One™ BB Cream";"Wenn Sie keine Zeit zu verlieren haben, ist unsere All-in-One BB Cream ein Must-have-Schönheitsprodukt für superschnelle Ergebnisse. Unsere effektive BB Cream, die 24 Stunden Feuchtigkeit spendet, vereint alle Eigenschaften – sie verleiht Ihrer Haut ein Strahlen und bildschönes Aussehen. Für ein angleichendes, taufrisches und gleichmäßiges Finish, das perfekt auf Ihren Hautton abgestimmt ist, auf der Gesichtshaut verteilen. Wie Ihre eigene Haut, nur besser."
+;"p000362";"Wimpern- und Augenbrauengel";"Dieses klare Gel mit einer handlichen Applikationsbürste zähmt widerspenstige Brauen und hält sie an Ort und Stelle. Für einen natürlichen und doch definierten Look auf den Wimpern verwenden. Einfach."
+;"p000435";"Dünner Filzstift";"Unser präziser Eyeliner ist ideal, um flüssige Linien zu ziehen, die Augen zu betonen und Ihrem Look Intensität zu verleihen. Zur Betonung des Wimpernkranzes mit pechschwarzer Farbe verwenden."
+;"p000436";"Gel-Stift Eyeliner";"Dieser cremige, geschmeidige Eyeliner gleitet auf der Haut und kreiert eine langanhaltende Intensität, schmeichelt und verstärkt den Ausdruck. Unsere wasserfeste Rezeptur in drei hochpigmentierten Farben hält stundenlang."
+;"p000461";"Hemp Hand Protector";"Verabschieden Sie sich von  rauer Haut und schützen Sie Ihre Hände mit beruhigendem und pflegendem Hanf vor Wind und Wetter. Unser Bestseller ist dermatologisch für sehr trockene Haut getestet und beinhaltet Community Trade Hanfsamen-Öl."
+;"p000466";"Activist Deodorant Roller";"Effektives, schnell trocknendes Deodorant. Mit einem aromatischen, lange anhaltenden Duft aus Zitrus- und holzigen Noten."
+;"p000467";"Honey Bronze™ Leg Mist";"Erzielen Sie mit unserem innovativen Bräunungsspray in Sekunden eine gleichmäßige, makellos aussehende Bräune. Unser leichtes, ölfreies Gel-Spray ist ganz einfach anzuwenden und hinterlässt einen natürlichen sonnengeküssten Look. Und das Beste: das Spray lässt sich ganz einfach wieder abwaschen und färbt nicht ab!"
+;"p000480";"Honey Bronze™ Bronzing Powder";"Für die natürlichste Bräune und ein leuchtendes goldenes Strahlen das ganze Jahr über tragen Sie unseren sonnengeküssten, mit Honig angereicherten Bräunungspuder auf Ihre Haut auf. Mit unserem Honey Bronze™ Bräunungspuder mit Nuancen, die auch zu den blassesten Hauttönen passen, imitieren Sie mühelos die Urlaubsbräune. Tragen Sie diesen glanzfreien, gepressten Puder für ein ebenmäßiges, gebräuntes, mattes Finish auf."
+;"p000499";"Spa Of The World™ Egyptian Milk & Honey Bath";"Inspiriert von dem verwöhnenden Bad aus Milch und Honig, in das schon Kleopatra eintauchte, schenkt unsere Rezeptur aus drei Öl-Extrakten ein luxuriöses, seidig-weiches Hautgefühl. Verwenden Sie die verwöhnende Bademilch als Teil unseres entspannenden Pflegerituals, wenn Sie schnell Ruhe und Entspannung finden möchten."
+;"p000621";"Lipliner";"Dieser weich stukturierte Stift definiert Lippen und hilft dabei den Lippenstift innherhalb der Lippenlinie zu halten."
+;"p000644";"White Musk® For Men Deodorant";"White Musk® For Men Deodorant ist von der sauberen, frischen, leichten Mischung aus tierversuchsfreiem Moschus, Vetiver und Sandelholz durchdrungen. Kombinieren Sie es mit anderen White Musk® For Men Produkten, um den Duft zu betonen."
+;"p000657";"Lip & Cheek Stain";"Dieser flüssige Stain gibt Lippen und Wangen herrliche, natürlich aussehende Farbakzente, die Sie aufbauen können. Unter dem Lipgloss verwendet setzt er Ihren Kussmund in Szene, während er auf die Wangen aufgetragen einen natürlichen, rosigen Look verleiht."
+;"p000664";"Drops Of Youth™ Essence Lotion";"Der entscheidende erste Schritt in der Pflege nach der Verwendung von Reinigungsprodukt und Gesichtswasser. Aktiviert die Haut für die weiteren Schritte des Gesichtspflege-Programms."
+;"p000676";"Peppermint kühlendes Fußspray";"Erfrischen und beleben Sie müde, beanspruchte Füße mit diesem kühlenden Fußspray. Die mit englischem Pfefferminzöl angereicherte Rezeptur sorgt bei jeder Anwendung für ein minzig erfrischendes Fußgefühl."
+;"p000694";"Vitamin E Feuchtigkeitsspendende Maske";"Ein wahrer Schub an Feuchtigkeit und Vitamin E: Da erholt sich der Teint sofort!Unsere Vitamin E Sink In Moisture Mask spendet optimalen Ausgleich bei Trockenheit und Spannungsgefühlen, die Haut wird intensiv durchfeuchtet und wirkt wieder prall, glatt und frisch."
+;"p000726";"Augenbrauen- und Eyeliner-Set";"Mit dem doppelseitigen Pinsel des handlichen Augenbrauen- und Liner-Sets setzen Sie Ihre Augenbrauen perfekt in Szene. Die weichen Farbnuancen eignen sich hervorragend zum Definieren, Formen, Auffüllen und Nachziehen für ein makelloses Finish."
+;"p000767";"Glanzserum mit Traubenöl";"Verleihen Sie Ihrem Haar mit diesem Serum Geschmeidigkeit und Glanz. Für ein optimales Ergebnis reicht schon eine kleine Menge."
+;"p000787";"Hemp Schützende Fußcreme";"Pflegen Sie Ihre Füße mit unserer Hemp Fußcreme für beanspruchte Füße, die raue Hautstellen bis in die Zehenspitzen streichelzart macht. Diese unverzichtbare Fußpflege reguliert den Feuchtigkeitsgehalt der Haut und lässt sehr trockene Hautpartien wieder weich werden."
+;"p000789";"Kamm";"Mühelos nasses oder trockenes Haar mit unserem breiten Kamm entwirren. Das perfekte Werkzeug, um ein Stylingprodukt auf dem Haar zu verteilen."
+;"p000795";"Satsuma Handwaschgel";"Gönnen Sie sich mit unserem nach Satsuma duftenden Handwaschgel das gute Gefühl frischer und sauberer Hände. Perfekt für die Handtasche und die schnelle Reinigung zwischendurch."
+;"p000797";"Pink Grapefruit Handwaschgel";"Gönnen Sie sich mit unserem nach Pink Grapefruit duftenden Handwaschgel den ganzen Tag das gute Gefühl frischer und sauberer Hände. Perfekt für die Handtasche und die schnelle Reinigung zwischendurch."
+;"p000810";"Vitamin E Augencreme";"Vitamin E wird wegen seiner pflegenden Eigenschaften geschätzt. Die Vitamin E Augencreme pflegt und schützt die zarte Haut der Augenpartie und versorgt sie optimal mit Feuchtigkeit. Tipp: Eine leichte Klopfmassage am Morgen hilft beim Abschwellen der Augenpartie."
+;"p000851";"All-In-One™ Rouge";"Dieses extrafeine Puderrouge lässt sich für variable Farbintensität mühelos auf den Wangen verteilen. Sorgen Sie mit einer der hinreißenden Farbnuancen im Handumdrehen für ein strahlendes Erscheinungsbild. Die perfekte Kombination aus Make-up und Gesichtspflege dank Vitamin E und Community Trade Marulaöl."
+;"p000936";"Camomile milder Augen-Make-Up Entferner";"Entfernen Sie spielend leicht Make-up von Ihrer Augenpartie. Unser Make-up-Entferner mit Kamille reinigt sanft und hinterlässt eine reine und glatte Haut."
+;"p000971";"Seaweed Maske mit Tonerde";"Reinigen Sie Ihre Haut mit dieser regulierenden Maske mit Seetang und Tonerde. Hinterlässt eine reine Haut, die sich frisch und belebt anfühlt."
+;"p001050";"Instaglow CC Cream LSF 20";"Ob hell, mittel oder dunkler - bei dieser CC Cream findet jeder seine richtige Farbe. Diese Make-up-Basis mit hautpflegenden Eigenschaften sorgt für natürlich gesunde Leuchtkraft bei allen Hauttönen durch Lichtreflektierende Perlchen. Diese lassen die Farbpigmente optimal wirken indem sie die Haut ebnen, mattieren und das Erscheinungsbild von Poren sichtlich reduzieren - für perfekte Hautkorrekturen. Zusätzlich schenkt sie Ihrer Haut 24h Feuchtigkeit und schütz mit SPF 20 und PA+++** vor Sonnenstrahlen."
+;"p001081";"Honey Bronze™ Drops Of Sun";"Das glanzfreie, gefärbte Flüssig-Gel schenkt Ihrem Teint ein bronzefarbenes Finish und lässt die Haut natürlich gesund leuchten. Der sommerliche Teint lässt sich täglich durch die Mischung unseres Honey Bronze™ Drops of Sun Holiday Glow Creator mit Ihrer Tagespflege oder Foundation erzeugen. Von Kopf bis Fuß von der Sonne geküsst. Tipp: Beim Vermischen mit der Feuchtigkeitspflege oder Flüssiggrundierung zunächst nur einen Tropfen verwenden. Falls gewünscht nach und nach je einen weiterenTropfen zufügen, um die Farbintensität zu erhöhen – je mehr Tropfen, desto wärmer wirkt die Farbe."
+;"p002001";"Down To Earth Lidschatten 4 Farben";
+;"p002002";"Himalayan Charcoal reinigende Maske";"Unsere Himalayan Charcoal Maske verfeinert das Hautbild und wirkt belebend. Diese 100% vegane Gesichtsmaske ohne Parabene, Paraffin, Silikone oder Mineralöl ist mit Bambuskohle, Grünteeblättern und Bio-Teebaumöl angereichert. Sie entzieht Hautunreinheiten und verfeinert das Erscheinungsbild der Poren für gesund aussehende, strahlende Haut. Tragen Sie die Maske mit unserer Facial Mask Brush auf für ein optimales Ergebnis."
+;"p002013";"Oils of Life™ Revitalisierende Augencreme";"Das frische Creme-Gel enthält drei wertvolle Samenöle, Koffein und lichtreflektierende Partikel. Die drei wertvollen Öle sorgen für die Leistungskraft der Serie Oils of Life™. Schwarzkümmelöl enthält in hohen Anteilen Antioxidanzien, Hagebuttenkernöl ist reich an Omega 3 und 6. Kamelienöl besitzt eine hohe Konzentration von Ölsäure. Alle drei Öle gemeinsam sorgen für revitalisierte Haut. Zudem wirkt das Koffein effektiv belebend und korrigiert Anzeichen von Müdigkeit. Dieser Mix an Inhaltsstoffen revitalisiert die Augenpartie und reduziert sichtbar Anzeichen von Hautalterung. Die einzigartige Textur verschmilzt mit der Haut, versorgt sie mit Feuchtigkeit, glättet die Augenkontur und macht die Haut samtig-weich. Das Produkt zieht rückstandslos in die Haut ein. Die Augenkontur wirkt unmittelbar jugendlich strahlend, dunkle Augenringe werden kaschiert."
+;"p002017";"Super Soft Cleansing Brush";"Die Super Soft Cleansing Brush ist sehr sanft zur Haut und perfekt für alle Hauttypen. Die 350.000 seidig-weichen Fasern des Pinsels sind so fein, dass sie sogar an schwer erreichbare Stellen kommen."
+;"p002144";;"Wir sind grosse Fans (sorry) von diesem raffinierten Schattierungspinsel – eignet sich perfekt für Blushers & Highlighters. Mit unseren professionellen mit Holzkohle beschichteten Make-Up-Pinseln meistern Sie die heissesten Make-Up-Trends, zudem ergänzen diese Pinsel unsere begehrte Produktpalette und bringen Ihren Look auf die nächste Stufe. Auch wenn sich unsere Pinsel sanfter als ein flauschiges Tierfell anfühlen, müssen Sie sich keine Sorgen machen. Denn ganz nach Ihren Erwartungen an The Body Shop sind sie von ihren synthetischen Borsten bis zu ihrem nachhaltigen FSC Holzgriff zu 100% tierfreundlich. Und haben wir schon erwähnt, dass sie absolut vegan sind?"
+;"p002145";;"Ein Must-Have Make-up Pinsel in jeder Beauty-Bag, verwenden Sie die flache Bürste, um Ihren Lidschatten zu verlängern. Er ist entworfen, um die heißesten Make-up-Trends zu meistern. Wie Sie es von The Body Shop erwarten, ist der Pinsel zu 100% tierversuchsfrei und das Material ist aus nachhaltig gefertigtem FSC Holz. Oh, und haben wir erwähnt, sie sind völlig vegan?"
+;"p002171";"MATTE LIP LIQUID";"Lässt sich mühelos wie ein Gloss auftragen und liegt dabei mit der reichhaltigen, cremigen Farbe und dem samtigen Gefühl eines matten Lippenstifts auf den Lippen. Unser flüssiger Lippenstift ist in 17 Farbtönen erhältlich. Er ist lang anhaltend, leicht und sinnlich-weich. Dazu ist er vegetarisch, wie all unser tierfreundliches Make-up."
+;"p002347";"Almond Milk & Honey Body Butter";"Diese wundervolle, reichhaltige Body Butter ist mit natürlichen Ölen angereichert und wurde speziell dafür entwickelt, empfindliche und trockene Haut zu beruhigen, zu pflegen und zu schützen. Mit dieser himmlischen Pflege, die 48 Stunden intensive Feuchtigkeit spendet, gehört trockene, angespannte und juckende Haut der Vergangenheit an. Angereichert mit biologischer Mandelmilch aus Spanien sowie Community Trade Honig aus Äthiopien, wurde unsere neue wohltuende Pflegeserie Almond Milk & Honey gezielt für die Bedürfnisse empfindlicher und trockener Haut entwickelt. Die Pflegeserie vereint nährende, pflegende Inhaltsstoffe mit sinnlichen Texturen und einem dezenten, sanften Duft."
+;"p002419";"Spa of the World™ Thai Makrut Lime Firming Oil";"Unser neues Pflegeöl für den Körper ist mit spritziger Kaffir-Limette angereichert, deren stimulierender und belebender Duft von Thailänderinnen geliebt wird und die Sinne weckt. Erleben Sie dieses schnell einziehende, straffende und festigende Körperöl mit pflegendem Marulaöl aus unserem Community Trade-Programm. Verwenden Sie  es als Teil unseres straffenden Pflegerituals  unserer Spa of The World™ Kollektion. "
+;"p002437";"Drops of Glow";"Lernen Sie unsere neue Obsession kennen: Drops of Glow! Mit diesen vielseitigen Tropfen können Sie Ihren Look ganz leicht auffrischen, auch unterwegs! Vermischen Sie ein paar Tropfen mit Ihrer Lieblingscreme, dann verleiht Drops of Glow Ihrer Haut einen gesunden Glanz. Sie können Drops of Glow auch als Highlighter benutzen: Tragen Sie die Tropfen gezielt auf Ihren Wangenknochen, unter den Augen oder als Top-Coat über Ihren Lidschatten auf, um Gesichtszüge zu definieren und wacher auszusehen. Probieren Sie Drops of Glow einfach aus, Ihnen sind keine Grenzen gesetzt. "
+;"p002445";"Tea Tree Anti-Unreinheiten Maske Für Die Nacht";"Wachen Sie mit reiner aussehender Haut auf! Unsere frische und leichte Tea Tree Anti-Unreinheiten Maske Für Die Nacht wurde formuliert, um unreine Haut im Schlaf zu pflegen und Unreinheiten zu bekämpfen. Die 100 % vegane Maske ist mit Salicylsäure und Community Trade Teebaumöl angereichert und reduziert die Größe und Anzahl von Unreinheiten*. Die Haut sieht weicher und gesünder aus. "
+;"p002448";"Complexion Blender";"Unser neuer Complexion Blender ist ein wahres Multitalent, mit dem Sie ein wunderbar ebenmäßiges Make-up erzielen. Dank der glatten Form und dem schwammartigen Material wird das Make-up perfekt verwischt und Sie erreichen selbst knifflige Stellen. Nutzen Sie den Blender mit unserer neuen Matte Clay Foundation, für einen makellos aussehenden Teint."
+;"p002449";"Fuji Green Tea™ Refreshingly Purifying Shampoo";"Dieses erfrischende Shampoo enthält revitalisierenden japanischen grünen Tee, reinigt und befreit von Schmutzpartikeln und schenkt ein herrlich belebendes Frischegefühl. "
+;"p002453";"Coconut Oil Brilliantly Nourishing Pre-Shampoo Hair Oil";"Natives, biologisches Kokosnussöl aus Samoa, Sojaöl und Pracaxiöl aus Brasilien machen aus unserem 100% veganen Pflegeöl ein köstlich duftendes Multi-Talent, das vor der Haarwäsche, über Nacht oder zur Pflege trockener Spitzen in das Haar eingearbeitet werden kann. Das Haar wird kraftvoller, glatter und geschmeidiger.  "
+;"p002457";"Japanese Matcha Tea Anti-Verschmutzungen Maske";"Unsere angenehm cremige, 100% vegane Maskenformel reinigt bis in die Tiefen, peelt sanft und hilft, die Haut von durch Umwelteinflüsse hervorgerufenen Verunreinigungen zu befreien. Sie ist mit grünem Matcha-Tee aus Kakegawa in Japan, Löwenzahnextrakt und wohltuender Community Trade Aloe vera aus Mexiko angereichert."
+;"p002668";"Brow Sculpt 3 in 1";"Egal ob natürlich oder gewagt, mit unserem Brow Sculpt kreieren Sie Ihren ganz eigenen Brauen-Look. Der Stift ist Wachs, Puder und Augenbrauen-Mascara in einem und ist dazu in 3 Nuancen erhältlich."
+;"p003087";"Sheabutter Reichhaltiges Shampoo";"<p>Unser Sheabutter-Shampoo mit reichhaltiger Auffrischung ist mit Sheabutter von Community Trade aus Ghana angereichert, die von Frauen handgefertigt wird, die Sheabutter seit Generationen verwenden, um trockenes Haar intensiv zu pflegen. Diese sanfte Reinigungsformel hinterlässt kein Feuchtigkeitsgefühl in Ihrem Haar und ist perfekt für trockenes Haar, das zu Beschädigungen neigt. Gönnen Sie Ihrem Haar diese nussige Wohltat, um gesündere Locken zu genießen, die sich satt anfühlen.</p> <ul><li> Für trockenes und anfälliges Haar </ li><li> Das Haar fühlt sich intensiv genährt und reichhaltig aufgefüllt an * </ li><li> Das Haar sieht gesünder und weniger kraus aus * </ li><li> Reduziert Haarbruch ** </ li><li> Nussiger Duft und reichhaltige Textur</ li><li> Angereichert mit Sheabutter aus dem Gemeinschaftshandel aus Ghana </ li><li> 100% vegan <br> * Basierend auf einer Testversion von 103 Frauen mit Sheabutter, Shampoo, Conditioner und Haarmaske, die reich an Nährstoffen sind. <br> ** Basierend auf In-vitro-Tests mit Sheabutter, Shampoo, Conditioner und Haarmaske, die reich an Nährstoffen sind. </ li></ ul>"
+;"p000657";"Lippen- und Wangenfleck";"<p>Dieser flüssige Zweifach-Fleck verleiht Lippen und Wangen einen natürlichen Farbtupfer. Verwenden Sie es unter Lipgloss, um einen strahlenden Auftritt zu erzielen, und tupfen Sie es auf die Wangen, um einen natürlich aussehenden rosigen Schimmer zu erzielen.</p> <ul><li> Flüssigkeitsfleck </ li><li> Für Lippen und Wangen </ li><li> Natürlicher Effekt </ li><li> Erstellbare Farbe </ li><li> Dermatologisch getestet </ li><li> Wussten Sie, dass Emma Watson unseren Lippen- und Wangenfleck für rote Granatäpfel wegen der Arbeit liebt, die The Body Shop für die Umwelt und den fairen Handel leistet? </ li></ ul>"
+;"p000247";"Wild Argan Oil Sublime Nährende Körperbutter";"<p> Transportieren Sie die Hammam-Umgebung in Ihr Badezimmer und geben Sie Ihrer Haut eine Portion reichhaltiger Feuchtigkeit, wenn Sie diese pflegende Wildarganöl-Körperbutter auftragen. Durch die 48-Stunden-Feuchtigkeitsversorgung bleibt Ihre Haut länger weich.</p> <ul> <li> Körperfeuchtigkeitscreme </li> <li>Erhabene Nahrung</li> <li>Geeignet für sehr trockene Haut</li> <li>Dezenter, raffinierter, wärmender Duft</li> <li>48 Stunden Flüssigkeitszufuhr</li> <li>Community Trade Arganöl aus Marokko</li></ul>"
+;"p002733";"Strawberry Clearly Glossing Spülung";"Hauchen Sie glanzlosem Haar neues Leben ein mit unserer Strawberry Clearly Glossing Spülung. Die 100% vegane Formel enthält keine Silikone, spendet Feuchtigkeit und sorgt für leichtere Kämmbarkeit. Dazu verleiht die Spülung Ihren Haaren einen köstlichen Duft."
+;"p000042v";"Concealer 200ml";"Spät ins Bett – früh raus? Mit unserem lichtreflektierenden Concealer verschwinden dunkle Augenringe und kleine Fältchen fast wie von selbst. Tragen Sie den Concealer für ein optimales Ergebnis mit einem Pinsel auf. Dieser kleine Helfer gehört in jede Kosmetiktasche!"
+;"p000048v";"All-In-One™ Grundierung 200ml";"Diese Kompaktgrundierung mit samtweichem Finish ist Foundation und Puder in einem und lässt sich leicht verblenden. Mit diesem vielseitig anwendbaren Produkt gelingt das perfekte Finish. Befeuchten Sie für besonders hohe Deckkraft das Schwämmchen, das in der Dose mit dabei ist. Tipp für ein besonders lang anhaltendes Ergebnis: Tragen Sie die All-in-One™ Grundierung mit unserem Pinsel für Gesicht und Körper zum Fixieren über der Foundation auf oder tragen Sie die Grundierung für ein leichtes, gleichmäßiges Finish auf das ungeschminkte Gesicht auf. Dieses Produkt ist der perfekte Allrounder."
+;"p000056v";"Gesichtsschwamm Für reine Haut 200ml";"Dieser weiche Reinigungsschwamm reinigt die Haut und entfernt Make-up."
+;"p000063v";"Bambus Haarbürste 200ml";"Entwirren, aufpeppen und viel Volumen stylen: Unsere Bambus Haarbürste besitzt extra eng stehende Stifte, die das Haar beim Fönen perfekt in Schwung bringen. Dabei wird die Kopfhaut mit jedem Bürstenstrich sanft stimuliert und haareigene, natürliche Öle verteilen sich von der Wurzel bis in die Spitzen. Das Ergebnis: glänzend gepflegte Volumen-Looks."
+;"p000067v";"Musselintuch 200ml";"Unser besonders feines Musselintuch entfernt sanft Make-up, reinigt die Haut und sorgt für ein zartes, geschmeidiges Gefühl. Verwenden Sie das Tuch für ein optimales Ergebnis zusammen mit Ihrem Lieblings-Gesichtsreiniger."
+;"p000069v";"Colour Crush™ Lippenstifte 200ml";"Unsere cremigen, feuchtigkeitsspendenden Lippenstifte verleihen Ihren Lippen intensive Farbakzente. Das darin enthaltene Community Trade Marulaöl versorgt die Lippen mit Feuchtigkeit und der dezente Rosenduft sorgt für gute Laune. In vielen Farben zum Verlieben!"
+;"p000106v";"Mango Handcreme 200ml";"Diese feuchtigkeitsspendende Handcreme für die tägliche Pflege darf in keiner Handtasche fehlen. Das leichte, cremige Gel zieht schnell ein und versprüht einen Hauch von frischem, tropischem Mangoduft. Das Ergebnis sind geschmeidige und gepflegte Hände."
+;"p000111v";"Coconut Handcreme 200ml";"Diese feuchtigkeitsspendende Handcreme für die tägliche Pflege darf in keiner Handtasche fehlen. Das leichte, cremige Gel zieht schnell ein und versprüht einen Hauch von frischem Kokosduft. Das Ergebnis sind geschmeidige und gepflegte Hände."
+;"p000120v";"Anti-Schuppen Shampoo mit Ingwer 200ml";"Erfrischen und beruhigen Sie Ihre Kopfhaut mit diesem belebenden Shampoo. Es enthält Ingwerextrakt, Birkenrindenextrakt, Silberweidenextrakt und Community Trade Honig aus Äthiopien."
+;"p000142v";"Arber Shampoo & Duschgel 200ml";"Das praktische Arber Shampoo & Duschgel reinigt, und verleiht Haut und Haar einen aufregend männlichen, holzigen Duft. Dazu enthält es Kamillenöl aus unserem Community Trade-Programm und wirkt beruhigend auf die Haut."
+;"p000184v";"Super Volume Mascara 200ml";"Unsere klumpenfreie Mascara verleiht ihren Augen mit nur einem Applikatorschwung ein farbintensives und voluminöses Finish."
+;"p000222v";"All-In-One Instablur™ Universal 200ml";"Diese starke Wunderwaffe gegen Glanz, Unreinheiten und sichtbare Poren sorgt für ein perfektes Hauterscheinungsbild. Unser Instablur™ ist mit Community Trade Marulaöl angereichert und eignet sich mit seinen fünf hautverbessernden Eigenschaften als perfekte Basis für Foundation. Unebenheiten werden sofort abgedeckt und glänzende Stellen perfekt mattiert. Instablur™ – das kleine Geheimnis für perfekte Schönheit."
+;"p000253v";"Wild Argan Oil Badeschaum 200ml";"Steigen Sie in ein warmes, duftendes Schaumbad mit intensiv nahrhaften Arganöl angereichert. Machen Sie sich anschließend bereit zum Entspannen. Ihre Haut wird  sich nach jedem Einweichen schöner und weicher anfühlen."
+;"p000269v";"Wild Argan Oil Lippenpflege 200ml";"Unsere stärkende Lippenpflege ist mit luxuriösem Arganöl aus Morokko angereichert und sorgt für einen wunderschönen, natürlichen Glanz. Die intensiv feuchtigkeitsspendende Rezeptur pflegt die Lippen und macht sie wunderbar geschmeidig."
+;"p000341v";"Drops Of Youth™ Bouncy Sleeping Mask 200ml";"Diese belebende Gesichtsmaske wurde eigens zur Bekämpfung der ersten Anzeichen von Hautalterung entwickelt und hinterlässt eine weichere, glattere und wunderbar reine Haut."
+;"p000362v";"Wimpern- und Augenbrauengel 200ml";"Dieses klare Gel mit einer handlichen Applikationsbürste zähmt widerspenstige Brauen und hält sie an Ort und Stelle. Für einen natürlichen und doch definierten Look auf den Wimpern verwenden. Einfach."
+;"p000435v";"Dünner Filzstift 200ml";"Unser präziser Eyeliner ist ideal, um flüssige Linien zu ziehen, die Augen zu betonen und Ihrem Look Intensität zu verleihen. Zur Betonung des Wimpernkranzes mit pechschwarzer Farbe verwenden."
+;"p000436v";"Gel-Stift Eyeliner 200ml";"Dieser cremige, geschmeidige Eyeliner gleitet auf der Haut und kreiert eine langanhaltende Intensität, schmeichelt und verstärkt den Ausdruck. Unsere wasserfeste Rezeptur in drei hochpigmentierten Farben hält stundenlang."
+;"p000461v";"Hemp Hand Protector 200ml";"Verabschieden Sie sich von  rauer Haut und schützen Sie Ihre Hände mit beruhigendem und pflegendem Hanf vor Wind und Wetter. Unser Bestseller ist dermatologisch für sehr trockene Haut getestet und beinhaltet Community Trade Hanfsamen-Öl."
+;"p000466v";"Activist Deodorant Roller 200ml";"Effektives, schnell trocknendes Deodorant. Mit einem aromatischen, lange anhaltenden Duft aus Zitrus- und holzigen Noten."
+;"p000467v";"Honey Bronze™ Leg Mist 200ml";"Erzielen Sie mit unserem innovativen Bräunungsspray in Sekunden eine gleichmäßige, makellos aussehende Bräune. Unser leichtes, ölfreies Gel-Spray ist ganz einfach anzuwenden und hinterlässt einen natürlichen sonnengeküssten Look. Und das Beste: das Spray lässt sich ganz einfach wieder abwaschen und färbt nicht ab!"
+;"p000480v";"Honey Bronze™ Bronzing Powder 200ml";"Für die natürlichste Bräune und ein leuchtendes goldenes Strahlen das ganze Jahr über tragen Sie unseren sonnengeküssten, mit Honig angereicherten Bräunungspuder auf Ihre Haut auf. Mit unserem Honey Bronze™ Bräunungspuder mit Nuancen, die auch zu den blassesten Hauttönen passen, imitieren Sie mühelos die Urlaubsbräune. Tragen Sie diesen glanzfreien, gepressten Puder für ein ebenmäßiges, gebräuntes, mattes Finish auf."
+;"p000499v";"Spa Of The World™ Egyptian Milk & Honey Bath 200ml";"Inspiriert von dem verwöhnenden Bad aus Milch und Honig, in das schon Kleopatra eintauchte, schenkt unsere Rezeptur aus drei Öl-Extrakten ein luxuriöses, seidig-weiches Hautgefühl. Verwenden Sie die verwöhnende Bademilch als Teil unseres entspannenden Pflegerituals, wenn Sie schnell Ruhe und Entspannung finden möchten."
+;"p000621v";"Lipliner 200ml";"Dieser weich stukturierte Stift definiert Lippen und hilft dabei den Lippenstift innherhalb der Lippenlinie zu halten."
+;"p000644v";"White Musk® For Men Deodorant 200ml";"White Musk® For Men Deodorant ist von der sauberen, frischen, leichten Mischung aus tierversuchsfreiem Moschus, Vetiver und Sandelholz durchdrungen. Kombinieren Sie es mit anderen White Musk® For Men Produkten, um den Duft zu betonen."
+;"p000664v";"Drops Of Youth™ Essence Lotion 200ml";"Der entscheidende erste Schritt in der Pflege nach der Verwendung von Reinigungsprodukt und Gesichtswasser. Aktiviert die Haut für die weiteren Schritte des Gesichtspflege-Programms."
+;"p000676v";"Peppermint kühlendes Fußspray 200ml";"Erfrischen und beleben Sie müde, beanspruchte Füße mit diesem kühlenden Fußspray. Die mit englischem Pfefferminzöl angereicherte Rezeptur sorgt bei jeder Anwendung für ein minzig erfrischendes Fußgefühl."
+;"p000694v";"Vitamin E Feuchtigkeitsspendende Maske 200ml";"Ein wahrer Schub an Feuchtigkeit und Vitamin E: Da erholt sich der Teint sofort!Unsere Vitamin E Sink In Moisture Mask spendet optimalen Ausgleich bei Trockenheit und Spannungsgefühlen, die Haut wird intensiv durchfeuchtet und wirkt wieder prall, glatt und frisch."
+;"p000726v";"Augenbrauen- und Eyeliner-Set 200ml";"Mit dem doppelseitigen Pinsel des handlichen Augenbrauen- und Liner-Sets setzen Sie Ihre Augenbrauen perfekt in Szene. Die weichen Farbnuancen eignen sich hervorragend zum Definieren, Formen, Auffüllen und Nachziehen für ein makelloses Finish."
+;"p000767v";"Glanzserum mit Traubenöl 200ml";"Verleihen Sie Ihrem Haar mit diesem Serum Geschmeidigkeit und Glanz. Für ein optimales Ergebnis reicht schon eine kleine Menge."
+;"p000787v";"Hemp Schützende Fußcreme 200ml";"Pflegen Sie Ihre Füße mit unserer Hemp Fußcreme für beanspruchte Füße, die raue Hautstellen bis in die Zehenspitzen streichelzart macht. Diese unverzichtbare Fußpflege reguliert den Feuchtigkeitsgehalt der Haut und lässt sehr trockene Hautpartien wieder weich werden."
+;"p000789v";"Kamm 200ml";"Mühelos nasses oder trockenes Haar mit unserem breiten Kamm entwirren. Das perfekte Werkzeug, um ein Stylingprodukt auf dem Haar zu verteilen."
+;"p000795v";"Satsuma Handwaschgel 200ml";"Gönnen Sie sich mit unserem nach Satsuma duftenden Handwaschgel das gute Gefühl frischer und sauberer Hände. Perfekt für die Handtasche und die schnelle Reinigung zwischendurch."
+;"p000797v";"Pink Grapefruit Handwaschgel 200ml";"Gönnen Sie sich mit unserem nach Pink Grapefruit duftenden Handwaschgel den ganzen Tag das gute Gefühl frischer und sauberer Hände. Perfekt für die Handtasche und die schnelle Reinigung zwischendurch."
+;"p000810v";"Vitamin E Augencreme 200ml";"Vitamin E wird wegen seiner pflegenden Eigenschaften geschätzt. Die Vitamin E Augencreme pflegt und schützt die zarte Haut der Augenpartie und versorgt sie optimal mit Feuchtigkeit. Tipp: Eine leichte Klopfmassage am Morgen hilft beim Abschwellen der Augenpartie."
+;"p000851v";"All-In-One™ Rouge 200ml";"Dieses extrafeine Puderrouge lässt sich für variable Farbintensität mühelos auf den Wangen verteilen. Sorgen Sie mit einer der hinreißenden Farbnuancen im Handumdrehen für ein strahlendes Erscheinungsbild. Die perfekte Kombination aus Make-up und Gesichtspflege dank Vitamin E und Community Trade Marulaöl."
+;"p000936v";"Camomile milder Augen-Make-Up Entferner 200ml";"Entfernen Sie spielend leicht Make-up von Ihrer Augenpartie. Unser Make-up-Entferner mit Kamille reinigt sanft und hinterlässt eine reine und glatte Haut."
+;"p000971v";"Seaweed Maske mit Tonerde 200ml";"Reinigen Sie Ihre Haut mit dieser regulierenden Maske mit Seetang und Tonerde. Hinterlässt eine reine Haut, die sich frisch und belebt anfühlt."
+;"p001050v";"Instaglow CC Cream LSF 20 200ml";"Ob hell, mittel oder dunkler - bei dieser CC Cream findet jeder seine richtige Farbe. Diese Make-up-Basis mit hautpflegenden Eigenschaften sorgt für natürlich gesunde Leuchtkraft bei allen Hauttönen durch Lichtreflektierende Perlchen. Diese lassen die Farbpigmente optimal wirken indem sie die Haut ebnen, mattieren und das Erscheinungsbild von Poren sichtlich reduzieren - für perfekte Hautkorrekturen. Zusätzlich schenkt sie Ihrer Haut 24h Feuchtigkeit und schütz mit SPF 20 und PA+++** vor Sonnenstrahlen."
+;"p001081v";"Honey Bronze™ Drops Of Sun 200ml";"Das glanzfreie, gefärbte Flüssig-Gel schenkt Ihrem Teint ein bronzefarbenes Finish und lässt die Haut natürlich gesund leuchten. Der sommerliche Teint lässt sich täglich durch die Mischung unseres Honey Bronze™ Drops of Sun Holiday Glow Creator mit Ihrer Tagespflege oder Foundation erzeugen. Von Kopf bis Fuß von der Sonne geküsst. Tipp: Beim Vermischen mit der Feuchtigkeitspflege oder Flüssiggrundierung zunächst nur einen Tropfen verwenden. Falls gewünscht nach und nach je einen weiterenTropfen zufügen, um die Farbintensität zu erhöhen – je mehr Tropfen, desto wärmer wirkt die Farbe."
+;"p002001v";"Down To Earth Lidschatten 4 Farben 200ml";
+;"p002002v";"Himalayan Charcoal reinigende Maske 200ml";"Unsere Himalayan Charcoal Maske verfeinert das Hautbild und wirkt belebend. Diese 100% vegane Gesichtsmaske ohne Parabene, Paraffin, Silikone oder Mineralöl ist mit Bambuskohle, Grünteeblättern und Bio-Teebaumöl angereichert. Sie entzieht Hautunreinheiten und verfeinert das Erscheinungsbild der Poren für gesund aussehende, strahlende Haut. Tragen Sie die Maske mit unserer Facial Mask Brush auf für ein optimales Ergebnis."
+;"p002013v";"Oils of Life™ Revitalisierende Augencreme 200ml";"Das frische Creme-Gel enthält drei wertvolle Samenöle, Koffein und lichtreflektierende Partikel. Die drei wertvollen Öle sorgen für die Leistungskraft der Serie Oils of Life™. Schwarzkümmelöl enthält in hohen Anteilen Antioxidanzien, Hagebuttenkernöl ist reich an Omega 3 und 6. Kamelienöl besitzt eine hohe Konzentration von Ölsäure. Alle drei Öle gemeinsam sorgen für revitalisierte Haut. Zudem wirkt das Koffein effektiv belebend und korrigiert Anzeichen von Müdigkeit. Dieser Mix an Inhaltsstoffen revitalisiert die Augenpartie und reduziert sichtbar Anzeichen von Hautalterung. Die einzigartige Textur verschmilzt mit der Haut, versorgt sie mit Feuchtigkeit, glättet die Augenkontur und macht die Haut samtig-weich. Das Produkt zieht rückstandslos in die Haut ein. Die Augenkontur wirkt unmittelbar jugendlich strahlend, dunkle Augenringe werden kaschiert."
+;"p002017v";"Super Soft Cleansing Brush 200ml";"Die Super Soft Cleansing Brush ist sehr sanft zur Haut und perfekt für alle Hauttypen. Die 350.000 seidig-weichen Fasern des Pinsels sind so fein, dass sie sogar an schwer erreichbare Stellen kommen."
+;"p002144v";"Fan Brush 200ml";"Wir sind grosse Fans (sorry) von diesem raffinierten Schattierungspinsel – eignet sich perfekt für Blushers & Highlighters. Mit unseren professionellen mit Holzkohle beschichteten Make-Up-Pinseln meistern Sie die heissesten Make-Up-Trends, zudem ergänzen diese Pinsel unsere begehrte Produktpalette und bringen Ihren Look auf die nächste Stufe. Auch wenn sich unsere Pinsel sanfter als ein flauschiges Tierfell anfühlen, müssen Sie sich keine Sorgen machen. Denn ganz nach Ihren Erwartungen an The Body Shop sind sie von ihren synthetischen Borsten bis zu ihrem nachhaltigen FSC Holzgriff zu 100% tierfreundlich. Und haben wir schon erwähnt, dass sie absolut vegan sind?"
+;"p002145v";"Slanted Blusher Brush 200ml";"Ein Must-Have Make-up Pinsel in jeder Beauty-Bag, verwenden Sie die flache Bürste, um Ihren Lidschatten zu verlängern. Er ist entworfen, um die heißesten Make-up-Trends zu meistern. Wie Sie es von The Body Shop erwarten, ist der Pinsel zu 100% tierversuchsfrei und das Material ist aus nachhaltig gefertigtem FSC Holz. Oh, und haben wir erwähnt, sie sind völlig vegan?"
+;"p002171v";"MATTE LIP LIQUID 200ml";"Lässt sich mühelos wie ein Gloss auftragen und liegt dabei mit der reichhaltigen, cremigen Farbe und dem samtigen Gefühl eines matten Lippenstifts auf den Lippen. Unser flüssiger Lippenstift ist in 17 Farbtönen erhältlich. Er ist lang anhaltend, leicht und sinnlich-weich. Dazu ist er vegetarisch, wie all unser tierfreundliches Make-up."
+;"p002347v";"Almond Milk & Honey Body Butter 200ml";"Diese wundervolle, reichhaltige Body Butter ist mit natürlichen Ölen angereichert und wurde speziell dafür entwickelt, empfindliche und trockene Haut zu beruhigen, zu pflegen und zu schützen. Mit dieser himmlischen Pflege, die 48 Stunden intensive Feuchtigkeit spendet, gehört trockene, angespannte und juckende Haut der Vergangenheit an. Angereichert mit biologischer Mandelmilch aus Spanien sowie Community Trade Honig aus Äthiopien, wurde unsere neue wohltuende Pflegeserie Almond Milk & Honey gezielt für die Bedürfnisse empfindlicher und trockener Haut entwickelt. Die Pflegeserie vereint nährende, pflegende Inhaltsstoffe mit sinnlichen Texturen und einem dezenten, sanften Duft."
+;"p002419v";"Spa of the World™ Thai Makrut Lime Firming Oil 200ml";"Unser neues Pflegeöl für den Körper ist mit spritziger Kaffir-Limette angereichert, deren stimulierender und belebender Duft von Thailänderinnen geliebt wird und die Sinne weckt. Erleben Sie dieses schnell einziehende, straffende und festigende Körperöl mit pflegendem Marulaöl aus unserem Community Trade-Programm. Verwenden Sie  es als Teil unseres straffenden Pflegerituals  unserer Spa of The World™ Kollektion. "
+;"p002437v";"Drops of Glow 200ml";"Lernen Sie unsere neue Obsession kennen: Drops of Glow! Mit diesen vielseitigen Tropfen können Sie Ihren Look ganz leicht auffrischen, auch unterwegs! Vermischen Sie ein paar Tropfen mit Ihrer Lieblingscreme, dann verleiht Drops of Glow Ihrer Haut einen gesunden Glanz. Sie können Drops of Glow auch als Highlighter benutzen: Tragen Sie die Tropfen gezielt auf Ihren Wangenknochen, unter den Augen oder als Top-Coat über Ihren Lidschatten auf, um Gesichtszüge zu definieren und wacher auszusehen. Probieren Sie Drops of Glow einfach aus, Ihnen sind keine Grenzen gesetzt. "
+;"p002445v";"Tea Tree Anti-Unreinheiten Maske Für Die Nacht 200ml";"Wachen Sie mit reiner aussehender Haut auf! Unsere frische und leichte Tea Tree Anti-Unreinheiten Maske Für Die Nacht wurde formuliert, um unreine Haut im Schlaf zu pflegen und Unreinheiten zu bekämpfen. Die 100 % vegane Maske ist mit Salicylsäure und Community Trade Teebaumöl angereichert und reduziert die Größe und Anzahl von Unreinheiten*. Die Haut sieht weicher und gesünder aus. "
+;"p002448v";"Complexion Blender 200ml";"Unser neuer Complexion Blender ist ein wahres Multitalent, mit dem Sie ein wunderbar ebenmäßiges Make-up erzielen. Dank der glatten Form und dem schwammartigen Material wird das Make-up perfekt verwischt und Sie erreichen selbst knifflige Stellen. Nutzen Sie den Blender mit unserer neuen Matte Clay Foundation, für einen makellos aussehenden Teint."
+;"p002449v";"Fuji Green Tea™ Refreshingly Purifying Shampoo 200ml";"Dieses erfrischende Shampoo enthält revitalisierenden japanischen grünen Tee, reinigt und befreit von Schmutzpartikeln und schenkt ein herrlich belebendes Frischegefühl. "
+;"p002453v";"Coconut Oil Brilliantly Nourishing Pre-Shampoo Hair Oil 200ml";"Natives, biologisches Kokosnussöl aus Samoa, Sojaöl und Pracaxiöl aus Brasilien machen aus unserem 100% veganen Pflegeöl ein köstlich duftendes Multi-Talent, das vor der Haarwäsche, über Nacht oder zur Pflege trockener Spitzen in das Haar eingearbeitet werden kann. Das Haar wird kraftvoller, glatter und geschmeidiger.  "
+;"p002457v";"Japanese Matcha Tea Anti-Verschmutzungen Maske 200ml";"Unsere angenehm cremige, 100% vegane Maskenformel reinigt bis in die Tiefen, peelt sanft und hilft, die Haut von durch Umwelteinflüsse hervorgerufenen Verunreinigungen zu befreien. Sie ist mit grünem Matcha-Tee aus Kakegawa in Japan, Löwenzahnextrakt und wohltuender Community Trade Aloe vera aus Mexiko angereichert."
+;"p002668v";"Brow Sculpt 3 in 1 200ml";"Egal ob natürlich oder gewagt, mit unserem Brow Sculpt kreieren Sie Ihren ganz eigenen Brauen-Look. Der Stift ist Wachs, Puder und Augenbrauen-Mascara in einem und ist dazu in 3 Nuancen erhältlich."
+;"p002733v";"Strawberry Clearly Glossing Spülung 200ml";"Hauchen Sie glanzlosem Haar neues Leben ein mit unserer Strawberry Clearly Glossing Spülung. Die 100% vegane Formel enthält keine Silikone, spendet Feuchtigkeit und sorgt für leichtere Kämmbarkeit. Dazu verleiht die Spülung Ihren Haaren einen köstlichen Duft."
+;"1055311";"Sheabutter Reichhaltiges Shampoo 250ml";"<p>Unser Sheabutter-Shampoo mit reichhaltiger Auffrischung ist mit Sheabutter von Community Trade aus Ghana angereichert, die von Frauen handgefertigt wird, die Sheabutter seit Generationen verwenden, um trockenes Haar intensiv zu pflegen. Diese sanfte Reinigungsformel hinterlässt kein Feuchtigkeitsgefühl in Ihrem Haar und ist perfekt für trockenes Haar, das zu Beschädigungen neigt. Gönnen Sie Ihrem Haar diese nussige Wohltat, um gesündere Locken zu genießen, die sich satt anfühlen.</p> <ul><li> Für trockenes und anfälliges Haar </ li><li> Das Haar fühlt sich intensiv genährt und reichhaltig aufgefüllt an * </ li><li> Das Haar sieht gesünder und weniger kraus aus * </ li><li> Reduziert Haarbruch ** </ li><li> Nussiger Duft und reichhaltige Textur</ li><li> Angereichert mit Sheabutter aus dem Gemeinschaftshandel aus Ghana </ li><li> 100% vegan <br> * Basierend auf einer Testversion von 103 Frauen mit Sheabutter, Shampoo, Conditioner und Haarmaske, die reich an Nährstoffen sind. <br> ** Basierend auf In-vitro-Tests mit Sheabutter, Shampoo, Conditioner und Haarmaske, die reich an Nährstoffen sind. </ li></ ul>"
+;"1062021";"Sheabutter Reichhaltiges Shampoo 400ml";"<p>Unser Sheabutter-Shampoo mit reichhaltiger Auffrischung ist mit Sheabutter von Community Trade aus Ghana angereichert, die von Frauen handgefertigt wird, die Sheabutter seit Generationen verwenden, um trockenes Haar intensiv zu pflegen. Diese sanfte Reinigungsformel hinterlässt kein Feuchtigkeitsgefühl in Ihrem Haar und ist perfekt für trockenes Haar, das zu Beschädigungen neigt. Gönnen Sie Ihrem Haar diese nussige Wohltat, um gesündere Locken zu genießen, die sich satt anfühlen.</p> <ul><li> Für trockenes und anfälliges Haar </ li><li> Das Haar fühlt sich intensiv genährt und reichhaltig aufgefüllt an * </ li><li> Das Haar sieht gesünder und weniger kraus aus * </ li><li> Reduziert Haarbruch ** </ li><li> Nussiger Duft und reichhaltige Textur</ li><li> Angereichert mit Sheabutter aus dem Gemeinschaftshandel aus Ghana </ li><li> 100% vegan <br> * Basierend auf einer Testversion von 103 Frauen mit Sheabutter, Shampoo, Conditioner und Haarmaske, die reich an Nährstoffen sind. <br> ** Basierend auf In-vitro-Tests mit Sheabutter, Shampoo, Conditioner und Haarmaske, die reich an Nährstoffen sind. </ li></ ul>"
+;"1094138";"Wild Argan Oil Sublime Nährende Körperbutter 200ml";"<p> Transportieren Sie die Hammam-Umgebung in Ihr Badezimmer und geben Sie Ihrer Haut eine Portion reichhaltiger Feuchtigkeit, wenn Sie diese pflegende Wildarganöl-Körperbutter auftragen. Durch die 48-Stunden-Feuchtigkeitsversorgung bleibt Ihre Haut länger weich.</p> <ul> <li> Körperfeuchtigkeitscreme </li> <li>Erhabene Nahrung</li> <li>Geeignet für sehr trockene Haut</li> <li>Dezenter, raffinierter, wärmender Duft</li> <li>48 Stunden Flüssigkeitszufuhr</li> <li>Community Trade Arganöl aus Marokko</li></ul>"
+;"1094188";"Wild Argan Oil Sublime Nährende Körperbutter 50ml";"<p> Transportieren Sie die Hammam-Umgebung in Ihr Badezimmer und geben Sie Ihrer Haut eine Portion reichhaltiger Feuchtigkeit, wenn Sie diese pflegende Wildarganöl-Körperbutter auftragen. Durch die 48-Stunden-Feuchtigkeitsversorgung bleibt Ihre Haut länger weich.</p> <ul> <li> Körperfeuchtigkeitscreme </li> <li>Erhabene Nahrung</li> <li>Geeignet für sehr trockene Haut</li> <li>Dezenter, raffinierter, wärmender Duft</li> <li>48 Stunden Flüssigkeitszufuhr</li> <li>Community Trade Arganöl aus Marokko</li></ul>"
+;"1096109";"Lippen- und Wangenfleck 7.2ml";"<p>Dieser flüssige Zweifach-Fleck verleiht Lippen und Wangen einen natürlichen Farbtupfer. Verwenden Sie es unter Lipgloss, um einen strahlenden Auftritt zu erzielen, und tupfen Sie es auf die Wangen, um einen natürlich aussehenden rosigen Schimmer zu erzielen.</p> <ul><li> Flüssigkeitsfleck </ li><li> Für Lippen und Wangen </ li><li> Natürlicher Effekt </ li><li> Erstellbare Farbe </ li><li> Dermatologisch getestet </ li><li> Wussten Sie, dass Emma Watson unseren Lippen- und Wangenfleck für rote Granatäpfel wegen der Arbeit liebt, die The Body Shop für die Umwelt und den fairen Handel leistet? </ li></ ul>"
+;"1096148";"Lippen- und Wangenfleck 7.2ml";"<p>Dieser flüssige Zweifach-Fleck verleiht Lippen und Wangen einen natürlichen Farbtupfer. Verwenden Sie es unter Lipgloss, um einen strahlenden Auftritt zu erzielen, und tupfen Sie es auf die Wangen, um einen natürlich aussehenden rosigen Schimmer zu erzielen.</p> <ul><li> Flüssigkeitsfleck </ li><li> Für Lippen und Wangen </ li><li> Natürlicher Effekt </ li><li> Erstellbare Farbe </ li><li> Dermatologisch getestet </ li><li> Wussten Sie, dass Emma Watson unseren Lippen- und Wangenfleck für rote Granatäpfel wegen der Arbeit liebt, die The Body Shop für die Umwelt und den fairen Handel leistet? </ li></ ul>"
+;"1096261";"Lippen- und Wangenfleck 7.2ml";"<p>Dieser flüssige Zweifach-Fleck verleiht Lippen und Wangen einen natürlichen Farbtupfer. Verwenden Sie es unter Lipgloss, um einen strahlenden Auftritt zu erzielen, und tupfen Sie es auf die Wangen, um einen natürlich aussehenden rosigen Schimmer zu erzielen.</p> <ul><li> Flüssigkeitsfleck </ li><li> Für Lippen und Wangen </ li><li> Natürlicher Effekt </ li><li> Erstellbare Farbe </ li><li> Dermatologisch getestet </ li><li> Wussten Sie, dass Emma Watson unseren Lippen- und Wangenfleck für rote Granatäpfel wegen der Arbeit liebt, die The Body Shop für die Umwelt und den fairen Handel leistet? </ li></ ul>"
+
+
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+# Update review ratings
+INSERT_UPDATE TBSBaseProduct[disable.interceptor.beans='baseProductCodePrepareInterceptor'];code[unique=true];reviewRating;type(code)[default=SIZE];$catalogVersion;$approved
+;p003257;2.8
+;p000341;5.0
+;p002002;1.2
+;p002445;4.3
+;p003101;3.3
+;p001102;2.0
+;p002457;2.5
+;p000971;4.5
+;p003255;3.2
+;p003254;2.1
+;p003173;4.3
+;p000694;1.5
+;p002003;2.3
+;p000936;4.4
+;p002013;3.0
+;p000810;1.2
+;p002833;1.4
+;p003268;1.6
+;p002835;1.8
+;p000664;2.0
+;p003259;2.2
+;p000067;2.4
+;p000056;2.6
+;p002017;2.8
+;p000499;3.0
+;p000253;3.2
+;p000019;3.4
+;p002347;3.6
+;p002812;3.8
+;p002419;4.0
+;p000480;4.2
+;p002863;4.4
+;p000466;4.6
+;p000644;4.8
+;p000787;5.0
+;p000676;1.1
+;p000461;1.3
+;p000111;1.5
+;p000106;1.7
+;p000795;1.9
+;p000797;2.1
+;p003200;2.3
+;p000789;2.5
+;p000063;2.7
+;p003090;2.9
+;p002733;3.1
+;p000142;3.3
+;p000120;3.5
+;p002449;3.7
+;p003091;3.9
+;p000767;4.1
+;p002453;4.3
+;p002144;4.7
+;p002448;4.9
+;p002145;1.0
+;p003111;1.3
+;p000360;1.6;COLOUR
+;p001081;1.9
+;p002819;2.2
+;p000467;2.5
+;p000851;2.8
+;p000436;3.1
+;p000435;3.4
+;p002668;3.7
+;p000362;4.0
+;p000726;4.3
+;p002817;4.6
+;p003237;4.9
+;p002001;1.0
+;p000048;1.2
+;p002867;1.4
+;p000042;1.6
+;p002171;1.8
+;p000069;2.2
+;p000621;2.4
+;p003235;2.6
+;p000184;2.8
+;p002818;3.0
+;p000222;3.2
+;p002437;3.4
+;p001050;3.6
+;p000269;3.8
+;p003087;3.2
+;p000657;3.3;COLOUR
+;p000247;4.8

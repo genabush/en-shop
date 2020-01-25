@@ -1,0 +1,100 @@
+/*
+
+    THIS IS SCSS FOR STYLEGUIDE ONLY 
+    DO NOT REUSE ANY CLASSES FROM HERE
+
+*/
+
+.sg-headings {
+  color: black;
+  border-bottom: 1px solid grey;
+  margin: 20px 0 10px 0;
+  padding: 20px 0 10px 0;
+}
+
+.sg-sub-headings {
+  color: #626262;
+  border-bottom: 1px solid #ccc;
+  margin: 10px 0 5px 0;
+  padding: 10px 0 5px 0;
+}
+
+.sg-sub-sub-headings {
+  color: #626262;
+  margin: 15px 0 10px 0;
+  padding: 15px 0 10px 0;
+}
+
+.box-padding {
+  padding: 20px;
+}
+
+.sg-colors {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.sg-colors li {
+  flex: auto;
+  padding: 0.3em;
+  margin: 0 0.5em 0.5em 0;
+  min-width: 5em;
+  // max-width: 14em;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.sg-swatch {
+  display: block;
+  height: 7em;
+  margin-bottom: 0.5em;
+  border-radius: 5px;
+}
+
+.sg-label {
+  font-size: 90%;
+  line-height: 1;
+}
+.sg-code {
+  padding: 7px 15px;
+  color: red;
+  background: #f7dee1;
+  border-radius: 4px;
+  margin: 8px 0;
+  display: inline-block;
+}
+
+.sg-list-card {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  &__item {
+    flex: auto;
+    padding: 0.3em;
+    margin: 0 0.5em 0.5em 0;
+    min-width: 5em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+  }
+  &__details {
+    padding: 7px;
+    border: 1px solid black;
+    border-radius: 4px;
+  }
+  &__desc {
+  }
+  &--icons {
+    .sg-list-card__details {
+      text-align: center;
+      font-size: 40px;
+    }
+  }
+}

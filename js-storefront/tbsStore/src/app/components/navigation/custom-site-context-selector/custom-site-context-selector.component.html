@@ -1,0 +1,19 @@
+<ng-container *ngIf="(items$ | async)?.length > 1 && (items$ | async) as items">
+  <!-- TODO REPLACE WITH ICON MOON -->
+  <span class="fas fa-globe fa-lg mr-2 d-flex d-md-none cx-site-context-selector--icon"></span>
+  <!--  -->
+  <label class="cx-site-context-selector--label">
+    <span>{{ label$ | async }}</span>
+    <select class="lang-dropdown" (change)="active = $event.target.value">
+      <option
+        class="lang-dropdown__option"
+        *ngFor="let item of items"
+        value="{{ item.isocode }}"
+        [selected]="(activeItem$ | async) === item.isocode"
+      >
+        {{ item | contextSelector | uppercase }}
+      </option>
+    </select>
+    <cx-icon [type]="'CHEVRON_DOWN'" class="small"></cx-icon>
+  </label>
+</ng-container>

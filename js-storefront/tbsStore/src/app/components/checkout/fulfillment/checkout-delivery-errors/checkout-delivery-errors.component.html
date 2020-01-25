@@ -1,0 +1,35 @@
+<h3 class="cx-checkout-title d-flex mb-3">&nbsp;</h3>
+<!-- DELVIERY ADDRESS PRODUCTS RESTRICTED -->
+<div
+  *ngIf="deliveryRestricted?.isDeliveryRestricted"
+  class="alert alert-danger col-12 flex-column align-items-start"
+  role="alert"
+>
+  <h3 class="alert-heading">{{ 'delivery.errorMessages.restrictedProductsHeading' | cxTranslate }}</h3>
+  <p>{{ 'delivery.errorMessages.restrictedProducts1' | cxTranslate }}</p>
+  <ul *ngIf="deliveryRestricted?.restrictedProducts as products">
+    <li *ngFor="let product of products">{{ product }}</li>
+  </ul>
+  <p>
+    {{ 'delivery.errorMessages.restrictedProducts2' | cxTranslate }}
+  </p>
+</div>
+<!-- DELIVERY MODES RESTRICTED -->
+<div
+  *ngIf="deliveryModesRestricted?.isDeliveryModesRestricted"
+  class="alert alert-danger col-12 flex-column align-items-start mt-5"
+  role="alert"
+>
+  <h3 class="alert-heading">{{ 'delivery.errorMessages.restrictedProductsHeading' | cxTranslate }}</h3>
+  <div *ngIf="deliveryModesRestricted?.errorsList as errors$" class="cx-delivery-errors">
+    <p *ngFor="let error of errors$">
+      {{ 'delivery.errorMessages.' + error | cxTranslate }}
+      <ng-container *ngIf="error == 'hazmatDeliveryMode'">
+        <cx-generic-link [url]="'/cart'" [title]="'delivery.shoppingBagLink' | cxTranslate">{{
+          'delivery.shoppingBagLink' | cxTranslate
+        }}</cx-generic-link
+        >.
+      </ng-container>
+    </p>
+  </div>
+</div>

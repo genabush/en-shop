@@ -1,0 +1,70 @@
+@import '~@spartacus/styles/scss/theme/sparta/variables';
+
+%cx-checkout-delivery-mode {
+  @include checkout-media-style();
+}
+
+.checkout-delivery-modes-modal {
+  .cx-delivery-form-check {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 0;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: 3rem;
+    &-input {
+      margin-left: 1rem;
+      min-width: 24px;
+      min-height: 24px;
+      @include media-breakpoint-down(sm) {
+        margin-left: 0;
+      }
+    }
+    &-label {
+      padding: 0;
+      margin: 0 auto 1.5rem 0.75rem;
+      width: 100%;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+    }
+    &-shipping {
+      -webkit-box-flex: 50%;
+      -ms-flex: 50%;
+      flex: 50%;
+    }
+
+    &-price {
+      -webkit-box-flex: 50%;
+      -ms-flex: 50%;
+      flex: 50%;
+      text-align: right;
+      position: absolute;
+      right: 0;
+    }
+
+    &-details {
+      -webkit-box-flex: 100%;
+      -ms-flex: 100%;
+      flex: 100%;
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+      color: var(--cx-color-success);
+    }
+  }
+}

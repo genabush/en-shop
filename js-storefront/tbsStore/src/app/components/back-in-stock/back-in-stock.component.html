@@ -1,0 +1,36 @@
+<button class="btn btn--primary btn-block" (click)="openBackInStockModal(backInStockModal)">
+  {{ 'backInStock.button' | cxTranslate }}
+</button>
+
+<ng-template #backInStockModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn close"
+      [attr.aria-label]="'common.closeBtn' | cxTranslate"
+      (click)="closeBackInStockModal()"
+    >
+      <span aria-hidden="true">
+        <cx-icon [type]="iconTypes.CLOSE"></cx-icon>
+      </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="modal-title mt-3">
+          {{ 'backInStock.modalTitle' | cxTranslate }}
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 px-0">
+        <p class="mt-2 mx-3">{{ 'backInStock.modalText' | cxTranslate }}</p>
+        <app-back-in-stock-form [model]="model" (submitEvent)="onSubmitEvent($event)"></app-back-in-stock-form>
+        <a target="_blank" class="m-3" routerLink="{{ privacyUrl }}">
+          {{ 'backInStock.privacyPolicy.text' | cxTranslate }} {{ 'backInStock.privacyPolicy.text' | cxTranslate }}</a
+        >
+      </div>
+    </div>
+  </div>
+</ng-template>

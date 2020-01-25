@@ -1,0 +1,58 @@
+$caretSize: 7px;
+
+%cx-site-context-selector {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 !important;
+  -webkit-box-flex: 0 !important;
+  -ms-flex: 0 !important;
+  flex: 0 !important;
+  @include media-breakpoint-down(sm) {
+    &:first-of-type() {
+      display: none;
+    }
+  }
+  @include media-breakpoint-down(md) {
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+  label {
+    span {
+      @include sr-only();
+    }
+  }
+  cx-icon {
+    margin-left: -10px;
+  }
+
+  select {
+    color: inherit;
+    background-color: transparent;
+    border: 0;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    padding-right: $caretSize * 2;
+
+    outline: none;
+
+    position: relative;
+    z-index: 1;
+    margin-right: 10px;
+    font-size: $font-size-base;
+  }
+  cx-icon.small {
+    margin-right: 24px;
+    &:before {
+      font-size: 1.2rem;
+    }
+  }
+}

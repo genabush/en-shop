@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. -->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+
+
+	<extension abstractclassprefix="Generated" classprefix="TheBodyShopintegrationsvs" jaloLogicFree="true" managername="TheBodyShopintegrationsvsManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="theBodyShopintegrationsvs" usemaven="false">
+
+		<requires-extension name="cmsfacades" />
+		
+		<coremodule generated="true" manager="uk.co.thebodyshop.integration.svs.jalo.TheBodyShopintegrationsvsManager" packageroot="uk.co.thebodyshop.integration.svs" />
+
+	</extension>
+
+</extensioninfo>
